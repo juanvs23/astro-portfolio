@@ -1,0 +1,46 @@
+---
+interface Props {
+  name: string;
+  label?: string;
+  value?: string;
+  placeholder?: string;
+  error?: string | null;
+  required?: boolean;
+  rows?: number;
+  class?: string;
+}
+
+const {
+  name,
+  label,
+  value = '',
+  placeholder = '',
+  error = null,
+  required = false,
+  rows = 4,
+  class: className = '',
+} = Astro.props;
+
+const textareaClasses = `w-full font-mono text-body-md bg-surface-soft text-ink rounded-sm p-md border transition-colors duration-150 outline-none resize-y ${
+  error
+    ? 'border-danger bg-canvas'
+    : 'border-hairline focus:bg-canvas focus:border-ink'
+} ${className}`;
+---
+
+{label && (
+  <label for={name} class="block text-body-md font-medium text-ink mb-xs">
+    {label}
+  </label>
+)}
+<textarea
+  id={name}
+  name={name}
+  placeholder={placeholder}
+  required={required}
+  rows={rows}
+  class={textareaClasses}
+>{value}</textarea>
+{error && (
+  <p class="text-caption-md text-danger mt-xs">{error}</p>
+)}

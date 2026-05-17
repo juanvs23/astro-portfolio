@@ -1,0 +1,69 @@
+---
+import { getTranslations, getLocalizedPathname, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+  currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props;
+const t = await getTranslations(locale);
+
+const navLinks = [
+  { key: 'menu.home', path: '/' },
+  { key: 'menu.about', path: '/#about' },
+  { key: 'menu.skills', path: '/#skills' },
+  { key: 'menu.works', path: '/#experience' },
+  { key: 'menu.projects', path: '/#projects' },
+  { key: 'menu.contact', path: '/#contact' },
+];
+
+const enPath = getLocalizedPathname(currentPath, 'en');
+const esPath = getLocalizedPathname(currentPath, 'es');
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-canvas border-b border-hairline h-[56px]">
+  <nav class="max-w-[1100px] mx-auto px-lg h-full flex items-center justify-between">
+    <a href={`/${locale}`} class="text-heading-md font-bold text-ink no-underline">
+      <pre class="text-body-tight leading-none m-0">
+ _   _ _____  ____  _____  __  __
+| \ | | ____|/ ___||  _  \|  \/  |
+|  \| |  _|  \___ \| | | | |\/| |
+| |\  | |___  ___) | |_| | |  | |
+|_| \_|_____| \____/ \___/|_|  |_|</pre
+      >
+    </a>
+
+    <div class="hidden md:flex items-center gap-xl">
+      {navLinks.map((link) => (
+        <a
+          href={link.path}
+          class="text-body-strong text-ink no-underline hover:text-mute transition-colors"
+        >
+          {t(link.key)}
+        </a>
+      ))}
+    </div>
+
+    <div class="flex items-center gap-md">
+      <a
+        href={locale === 'es' ? enPath : esPath}
+        class="text-body-md text-mute no-underline hover:text-ink transition-colors"
+      >
+        {locale === 'es' ? 'EN' : 'ES'}
+      </a>
+
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden text-ink p-xs cursor-pointer"
+        aria-label={t('menu.open')}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+</header>

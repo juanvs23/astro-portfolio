@@ -1,0 +1,112 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import Badge from '../ui/Badge.astro';
+import AsciiMarker from '../ui/AsciiMarker.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+
+const jobs = [
+  {
+    id: 1,
+    title: t('ama.title'),
+    company: t('ama.company'),
+    start: t('ama.start'),
+    end: t('ama.end'),
+    description: t('ama.description'),
+  },
+  {
+    id: 2,
+    title: t('ciancoder.title'),
+    company: t('ciancoder.company'),
+    start: t('ciancoder.start'),
+    end: t('ciancoder.end'),
+    description: t('ciancoder.description'),
+  },
+  {
+    id: 3,
+    title: t('tremgroup.title'),
+    company: t('tremgroup.company'),
+    start: t('tremgroup.start'),
+    end: t('tremgroup.end'),
+    description: t('tremgroup.description'),
+  },
+  {
+    id: 4,
+    title: t('conocimiento.title'),
+    company: t('conocimiento.company'),
+    start: t('conocimiento.start'),
+    end: t('conocimiento.end'),
+    description: t('conocimiento.description'),
+  },
+  {
+    id: 5,
+    title: t('nivelics.title'),
+    company: t('nivelics.company'),
+    start: t('nivelics.start'),
+    end: t('nivelics.end'),
+    description: t('nivelics.description'),
+  },
+  {
+    id: 6,
+    title: t('ztgroup.title'),
+    company: t('ztgroup.company'),
+    start: t('ztgroup.start'),
+    end: t('ztgroup.end'),
+    description: t('ztgroup.description'),
+  },
+  {
+    id: 7,
+    title: t('hispano.title'),
+    company: t('hispano.company'),
+    start: t('hispano.start'),
+    end: t('hispano.end'),
+    description: t('hispano.description'),
+  },
+];
+
+function formatDate(dateStr: string): string {
+  const [year, month] = dateStr.split('-');
+  const months = locale === 'es'
+    ? ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+    : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return `${months[parseInt(month, 10) - 1]} ${year}`;
+}
+---
+
+<Section id="experience">
+  <Badge variant="section-label" class="mb-sm">
+    {t('jobs.title')}
+  </Badge>
+
+  <div class="border-b border-hairline mb-xl"></div>
+
+  <div class="space-y-0">
+    {jobs.map((job, index) => (
+      <div class={`py-lg ${index < jobs.length - 1 ? 'border-b border-hairline' : ''}`}>
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-sm mb-sm">
+          <div>
+            <h3 class="text-body-strong text-ink">
+              <AsciiMarker state={index === 0 ? 'done' : 'add'} class="mr-xs inline" />
+              {job.title}
+            </h3>
+            <p class="text-body-md text-mute mt-xs">{job.company}</p>
+          </div>
+
+          <span class="text-caption-md text-ash whitespace-nowrap">
+            {formatDate(job.start)} — {job.end !== 'null' && job.end ? formatDate(job.end) : (locale === 'es' ? 'Presente' : 'Present')}
+          </span>
+        </div>
+
+        <p class="text-body-md text-body leading-[1.5] pl-lg md:pl-[calc(1rem+1.5em)]">
+          {job.description}
+        </p>
+      </div>
+    ))}
+  </div>
+</Section>

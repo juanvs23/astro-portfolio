@@ -1,0 +1,38 @@
+---
+import { getTranslations, getLocalizedPathname, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+  currentPath: string;
+}
+
+const { locale, currentPath } = Astro.props;
+const t = await getTranslations(locale);
+
+const enPath = getLocalizedPathname(currentPath, 'en');
+const esPath = getLocalizedPathname(currentPath, 'es');
+---
+
+<div class="flex items-center gap-xs">
+  <a
+    href={esPath}
+    class={`text-body-md px-xs py-xs no-underline transition-colors ${
+      locale === 'es'
+        ? 'text-ink border-b-2 border-ash'
+        : 'text-mute hover:text-ink'
+    }`}
+  >
+    ES
+  </a>
+  <span class="text-stone">|</span>
+  <a
+    href={enPath}
+    class={`text-body-md px-xs py-xs no-underline transition-colors ${
+      locale === 'en'
+        ? 'text-ink border-b-2 border-ash'
+        : 'text-mute hover:text-ink'
+    }`}
+  >
+    EN
+  </a>
+</div>

@@ -1,0 +1,47 @@
+---
+interface Props {
+  name: string;
+  label?: string;
+  type?: 'text' | 'email' | 'tel' | 'password' | 'number' | 'search' | 'url';
+  value?: string;
+  placeholder?: string;
+  error?: string | null;
+  required?: boolean;
+  class?: string;
+}
+
+const {
+  name,
+  label,
+  type = 'text',
+  value = '',
+  placeholder = '',
+  error = null,
+  required = false,
+  class: className = '',
+} = Astro.props;
+
+const inputClasses = `w-full font-mono text-body-md bg-surface-soft text-ink rounded-sm px-md h-[40px] border transition-colors duration-150 outline-none ${
+  error
+    ? 'border-danger bg-canvas'
+    : 'border-hairline focus:bg-canvas focus:border-ink'
+} ${className}`;
+---
+
+{label && (
+  <label for={name} class="block text-body-md font-medium text-ink mb-xs">
+    {label}
+  </label>
+)}
+<input
+  id={name}
+  name={name}
+  type={type}
+  value={value}
+  placeholder={placeholder}
+  required={required}
+  class={inputClasses}
+/>
+{error && (
+  <p class="text-caption-md text-danger mt-xs">{error}</p>
+)}

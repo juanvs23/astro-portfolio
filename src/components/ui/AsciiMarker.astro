@@ -1,0 +1,16 @@
+---
+interface Props {
+  state?: 'add' | 'remove' | 'done';
+  class?: string;
+}
+
+const { state = 'add', class: className = '' } = Astro.props;
+
+const markers = {
+  add: '[+]',
+  remove: '[-]',
+  done: '[x]',
+};
+---
+
+<span class={`text-ink font-bold ${className}`}>{markers[state]}</span>

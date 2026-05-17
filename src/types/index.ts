@@ -1,15 +1,15 @@
-import nodemailer from "nodemailer";
+/* import nodemailer from "nodemailer";
 import { ElementType } from "react";
+export interface CardSkill {
+    title: string;
+    icon: React.ReactNode | ElementType;
+    points: string[];
+    color: string;
+} */
 export interface ItemView {
   title: string;
   class: string;
   icon: string;
-}
-export interface CardSkill {
-  title: string;
-  icon: React.ReactNode | ElementType;
-  points: string[];
-  color: string;
 }
 export interface JobItem {
   id: number;

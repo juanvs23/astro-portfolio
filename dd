@@ -1,0 +1,19 @@
+revisa el proyecto y crea un archivo de context. Este es un portafolio moderno en astro que trabajara con 2 idiomas (españpol e ingles), utilizaremos, tailwindcss (version mas reciente), adaptado de accuerdo ala archivo /media/1tb/proyects/astro/portfolio/DESIGN.md. El proyecto debe utilizar componentes reutilizables pensando en codigo y arquitectura limpia. A nivel de frontend tendra una frontpage que me mediante un selector  con threejs para seleccionar entre las secciones del proyecto.
+
+el proyecto tendra las siguientes secciones:
+
+1. quien soy, 
+
+2. skills
+
+3. empresas con las que he trabajado
+
+4. proyectos 
+
+seccion de contacto. 
+
+(las imagenes estan en la carpeta public)
+
+el portafolio estaba ogirinalme realizado en nexts con tawilnd, nodemailer, swiper, next-intl y typescript.
+
+mantendremos typescript

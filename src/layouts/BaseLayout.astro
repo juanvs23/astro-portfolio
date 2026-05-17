@@ -1,0 +1,46 @@
+---
+import '../styles/global.css';
+import { getTranslations, type Locale } from '@/i18n';
+
+interface Props {
+  title?: string;
+  description?: string;
+  locale?: Locale;
+}
+
+const {
+  title = 'Juan Carlos Ávila – Full Stack Developer',
+  description = 'Desarrollador Full Stack con 6+ años de experiencia | PHP, Python, JavaScript (React, Next.js), WordPress, Laravel & Django',
+  locale = 'es',
+} = Astro.props;
+
+const t = await getTranslations(locale);
+const seoTitle = t('seo.title');
+const seoDescription = t('seo.description');
+const finalTitle = title === 'Juan Carlos Ávila – Full Stack Developer' ? seoTitle : title;
+const finalDescription = description === 'Desarrollador Full Stack con 6+ años de experiencia | PHP, Python, JavaScript (React, Next.js), WordPress, Laravel & Django' ? seoDescription : description;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{finalTitle}</title>
+    <meta name="description" content={finalDescription} />
+    <meta name="author" content="Juan Carlos Ávila" />
+    <meta property="og:title" content={finalTitle} />
+    <meta property="og:description" content={finalDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={locale} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={finalTitle} />
+    <meta name="twitter:description" content={finalDescription} />
+  </head>
+  <body class="font-mono bg-canvas text-ink antialiased">
+    <slot />
+  </body>
+</html>

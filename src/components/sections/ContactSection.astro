@@ -1,0 +1,167 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import Badge from '../ui/Badge.astro';
+import Input from '../ui/Input.astro';
+import Textarea from '../ui/Textarea.astro';
+import Button from '../ui/Button.astro';
+import AsciiMarker from '../ui/AsciiMarker.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+
+const socialLinks = [
+  { name: 'GitHub', href: 'https://github.com/juanvs23', icon: 'github' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/juanvs23/', icon: 'linkedin' },
+  { name: 'X', href: 'https://twitter.com/juanvs23', icon: 'twitter' },
+  { name: 'Facebook', href: 'https://www.facebook.com/juancarlos.avila.1420/', icon: 'facebook' },
+];
+---
+
+<Section id="contact">
+  <Badge variant="section-label" class="mb-sm">
+    {t('contactUs.title')}
+  </Badge>
+
+  <div class="border-b border-hairline mb-xl"></div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-xxl">
+    <div>
+      <h3 class="text-heading-md font-bold text-ink mb-md">
+        <AsciiMarker state="add" class="mr-xs inline" />
+        {t('contactUs.subtitle')}
+      </h3>
+
+      <p class="text-body-md text-body mb-xl">
+        {t('contactUs.formTitle')}
+      </p>
+
+      <form id="contact-form" class="space-y-lg">
+        <Input
+          name="name"
+          label={t('inputField.fullName')}
+          required
+        />
+
+        <Input
+          name="phone"
+          label={t('inputField.phone')}
+          type="tel"
+        />
+
+        <Input
+          name="email"
+          label={t('inputField.email')}
+          type="email"
+          required
+        />
+
+        <Input
+          name="subject"
+          label={t('inputField.subject')}
+          required
+        />
+
+        <Textarea
+          name="message"
+          label={t('inputField.message')}
+          rows={5}
+          required
+        />
+
+        <Button type="submit" variant="primary" class="w-full">
+          {t('inputField.send')}
+        </Button>
+
+        <div id="form-status" class="hidden text-body-md mt-lg"></div>
+      </form>
+    </div>
+
+    <div>
+      <h3 class="text-heading-md font-bold text-ink mb-md">
+        <AsciiMarker state="add" class="mr-xs inline" />
+        {t('social.title')}
+      </h3>
+
+      <div class="border-b border-hairline mb-xl"></div>
+
+      <ul class="space-y-0">
+        {socialLinks.map((link) => (
+          <li class="py-lg border-b border-hairline">
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-body-strong text-ink no-underline hover:text-mute transition-colors flex items-center gap-sm"
+            >
+              <AsciiMarker state="add" class="inline" />
+              {link.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="mt-xl">
+        <h4 class="text-body-strong text-ink mb-sm">
+          Email
+        </h4>
+        <a
+          href="mailto:contact@coltmandev.dev"
+          class="text-body-md text-accent no-underline hover:text-accent-hover transition-colors"
+        >
+          contact@coltmandev.dev
+        </a>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const statusEl = document.getElementById('form-status');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    if (statusEl) {
+      statusEl.classList.remove('hidden', 'text-success', 'text-danger');
+      statusEl.classList.add('text-mute');
+      statusEl.textContent = 'Sending...';
+    }
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (statusEl) {
+        statusEl.classList.remove('hidden', 'text-mute');
+        if (response.ok) {
+          statusEl.classList.add('text-success');
+          statusEl.textContent = 'Message sent successfully!';
+          form.reset();
+        } else {
+          statusEl.classList.add('text-danger');
+          statusEl.textContent = result.error || 'Error sending message. Please try again.';
+        }
+      }
+    } catch (error) {
+      if (statusEl) {
+        statusEl.classList.remove('hidden', 'text-mute');
+        statusEl.classList.add('text-danger');
+        statusEl.textContent = 'Network error. Please try again later.';
+      }
+    }
+  });
+</script>

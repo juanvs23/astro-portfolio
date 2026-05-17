@@ -1,62 +1,28 @@
 {
-  "name": "next-portfolio",
-  "version": "0.1.0",
-  "private": true,
+  "name": "major-meteor",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
-    "dev": "cross-env NODE_OPTIONS='--inspect' next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "@fortawesome/free-solid-svg-icons": "^6.4.2",
-    "@hcaptcha/react-hcaptcha": "^1.8.1",
-    "@react-email/render": "^0.0.7",
-    "@react-three/drei": "^9.82.0",
-    "@react-three/fiber": "^8.13.7",
-    "@tailwindcss/forms": "^0.5.6",
-    "@types/node": "20.5.7",
-    "@types/react": "19.0.12",
-    "@types/react-dom": "19.0.4",
-    "@types/three": "^0.155.1",
-    "aos": "^3.0.0-beta.6",
-    "atropos": "^2.0.2",
-    "autoprefixer": "10.4.15",
-    "cross-env": "^7.0.3",
-    "eslint": "8.48.0",
-    "eslint-config-next": "15.2.4",
-    "gaxios": "^6.1.1",
-    "gsap": "^3.12.2",
-    "mailersend": "^2.2.0",
-    "next": "15.2.4",
-    "next-intl": "^4.0.2",
-    "node-fetch": "^3.3.2",
-    "nodemailer": "^6.9.5",
-    "postcss": "8.4.29",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "react-international-phone": "^3.1.2",
-    "react-redux": "^8.1.2",
-    "react-toastify": "^11.0.5",
-    "react-ts-typewriter": "^0.1.8-b",
-    "resend": "^4.2.0",
-    "solid-hcaptcha": "^0.3.0",
-    "swiper": "^10.2.0",
-    "tailwindcss": "3.3.3",
-    "three": "^0.155.0",
-    "typescript": "5.2.2",
-    "usehooks-ts": "^2.9.1"
+    "@astrojs/tailwind": "^6.0.2",
+    "@tailwindcss/postcss": "^4.3.0",
+    "@types/three": "^0.184.1",
+    "astro": "^6.3.3",
+    "nodemailer": "^8.0.7",
+    "tailwindcss": "^3.4.19",
+    "three": "^0.184.0"
   },
   "devDependencies": {
-    "@types/animejs": "^3.1.7",
-    "@types/aos": "^3.0.4",
-    "@types/nodemailer": "^6.4.10",
-    "encoding": "^0.1.13",
-    "sass": "^1.66.1"
-  },
-  "resolutions": {
-    "@types/react": "19.0.12",
-    "@types/react-dom": "19.0.4"
-  },
-  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+    "@astrojs/check": "^0.9.9",
+    "@types/node": "^25.8.0",
+    "typescript": "^6.0.3"
+  }
 }

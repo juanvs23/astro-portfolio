@@ -1,0 +1,73 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+
+const navLinks = [
+  { key: 'menu.home', path: '/' },
+  { key: 'menu.about', path: '/#about' },
+  { key: 'menu.skills', path: '/#skills' },
+  { key: 'menu.works', path: '/#experience' },
+  { key: 'menu.projects', path: '/#projects' },
+  { key: 'menu.contact', path: '/#contact' },
+];
+---
+
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-40 bg-canvas transform translate-x-full transition-transform duration-300 md:hidden"
+>
+  <div class="flex flex-col h-full pt-[56px]">
+    <div class="flex justify-end px-lg py-md">
+      <button
+        id="mobile-menu-close"
+        class="text-ink p-xs cursor-pointer"
+        aria-label={t('menu.close')}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+
+    <nav class="flex flex-col px-lg">
+      {navLinks.map((link) => (
+        <a
+          href={link.path}
+          class="text-body-strong text-ink py-md border-b border-hairline no-underline hover:text-mute transition-colors"
+        >
+          {t(link.key)}
+        </a>
+      ))}
+    </nav>
+  </div>
+</div>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const menuClose = document.getElementById('mobile-menu-close');
+  const menu = document.getElementById('mobile-menu');
+
+  menuBtn?.addEventListener('click', () => {
+    menu?.classList.remove('translate-x-full');
+    menu?.classList.add('translate-x-0');
+  });
+
+  menuClose?.addEventListener('click', () => {
+    menu?.classList.add('translate-x-full');
+    menu?.classList.remove('translate-x-0');
+  });
+
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      menu?.classList.add('translate-x-full');
+      menu?.classList.remove('translate-x-0');
+    });
+  });
+</script>

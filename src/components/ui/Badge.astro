@@ -1,0 +1,17 @@
+---
+interface Props {
+  variant?: 'news' | 'section-label';
+  class?: string;
+}
+
+const { variant = 'news', class: className = '' } = Astro.props;
+
+const variantClasses = {
+  news: 'bg-surface-dark text-on-dark text-caption-md rounded-sm px-xs py-[2px] inline-block',
+  'section-label': 'bg-transparent text-ink text-heading-md rounded-none inline-block',
+};
+---
+
+<span class={`${variantClasses[variant]} ${className}`}>
+  <slot />
+</span>

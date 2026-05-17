@@ -1,0 +1,18 @@
+---
+interface Props {
+  id?: string;
+  class?: string;
+  bordered?: boolean;
+}
+
+const { id, class: className = '', bordered = true } = Astro.props;
+---
+
+<section
+  id={id}
+  class={`py-section ${bordered ? 'border-b border-hairline' : ''} ${className}`}
+>
+  <div class="max-w-[960px] mx-auto px-lg">
+    <slot />
+  </div>
+</section>

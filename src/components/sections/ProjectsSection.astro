@@ -1,0 +1,77 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import Badge from '../ui/Badge.astro';
+import AsciiMarker from '../ui/AsciiMarker.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+
+const projects = [
+  { id: 1, name: 'Gericht', url: 'https://restaurant.coltmandev.dev/', img: '/img/gericht.jpg' },
+  { id: 2, name: 'Cesde', url: 'https://www.cesde.edu.co/', img: '/img/cesde.jpg' },
+  { id: 3, name: 'Thinkus', url: 'https://thinkus.io/', img: '/img/thinkous.jpg' },
+  { id: 4, name: 'Proyectos Cesde', url: 'https://proyectos.cesde.edu.co/', img: '/img/cesde-proyectos.jpg' },
+  { id: 5, name: 'Cesde Colegios', url: 'https://colegios.cesde.edu.co/', img: '/img/colegios.jpg' },
+  { id: 6, name: 'Centro de empleo Cesde', url: 'https://centrodeempleo.cesde.edu.co/', img: '/img/empleo.jpg' },
+  { id: 7, name: 'Dogtorscat', url: 'https://www.dogtorscat.com/', img: '/img/dogtor.jpg' },
+  { id: 8, name: 'Hisomos', url: 'https://hisomos.com/', img: '/img/hisomo.jpg' },
+  { id: 9, name: 'Book project', url: 'https://projects.coltmandev.dev/product-book/', img: '/img/book-test.jpg' },
+  { id: 10, name: 'LuxlifemiamiBlog', url: 'https://luxlifemiamiblog.com/market-statistics/', img: '/img/luxlife.jpg' },
+  { id: 11, name: 'Boreal Expedition', url: 'https://borealexpedition.com/', img: '/img/boreal.jpg' },
+  { id: 12, name: 'Emprende', url: 'https://emprende.cesde.edu.co/', img: '/img/emprende.jpg' },
+  { id: 13, name: 'Fancy Login', url: 'https://projects.coltmandev.dev/fancy-login/', img: 'https://github.com/juanvs23/fancy-login/raw/master/public/demo.jpg' },
+  { id: 14, name: 'Incredible Table', url: 'https://incredible-table.vercel.app/', img: '/img/incredible-room.jpg' },
+  { id: 15, name: 'Pokemon API', url: 'https://next-pokemon-coral.vercel.app/', img: '/img/pockemon.webp' },
+  { id: 16, name: 'News App', url: 'https://news-app-sage-theta.vercel.app/', img: '/img/news-app.webp' },
+  { id: 17, name: 'Bajalenx', url: 'https://projects.coltmandev.dev/bajalenx/', img: '/img/bajalenx.webp' },
+  { id: 18, name: 'Clima App', url: 'https://clima-gray-nine.vercel.app/', img: '/img/clima-app.webp' },
+];
+---
+
+<Section id="projects">
+  <Badge variant="section-label" class="mb-sm">
+    {t('projects.title')}
+  </Badge>
+
+  <div class="border-b border-hairline mb-xl"></div>
+
+  <p class="text-body-md text-body mb-xl">
+    {t('projects.subtitle')}
+  </p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-xl">
+    {projects.map((project) => (
+      <a
+        href={project.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group bg-canvas border border-hairline no-underline hover:border-ink transition-colors duration-200"
+      >
+        <div class="aspect-video overflow-hidden bg-surface-card">
+          <img
+            src={project.img}
+            alt={project.name}
+            class="w-full h-full object-cover group-hover:opacity-80 transition-opacity duration-200"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="p-lg">
+          <h3 class="text-body-strong text-ink mb-xs">
+            <AsciiMarker state="add" class="mr-xs inline" />
+            {project.name}
+          </h3>
+
+          <span class="text-caption-md text-mute group-hover:text-ink transition-colors">
+            {t('projects.button')} →
+          </span>
+        </div>
+      </a>
+    ))}
+  </div>
+</Section>

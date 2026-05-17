@@ -1,0 +1,94 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import Badge from '../ui/Badge.astro';
+import AsciiMarker from '../ui/AsciiMarker.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+
+const skillCategories = locale === 'es'
+  ? [
+      {
+        title: 'Frontend',
+        skills: ['React', 'Next.js', 'JavaScript ES6+', 'HTML5', 'CSS3', 'Tailwind CSS', 'Swiper'],
+      },
+      {
+        title: 'Backend',
+        skills: ['Node.js', 'PHP', 'Python', 'REST APIs', 'Express'],
+      },
+      {
+        title: 'CMS',
+        skills: ['WordPress', 'Temas nativos', 'Plugins nativos', 'CPT', 'Taxonomías', 'WooCommerce'],
+      },
+      {
+        title: 'DevOps & Tools',
+        skills: ['Docker', 'Git', 'Linux', 'SSH', 'CI/CD', 'Vercel'],
+      },
+      {
+        title: 'APIs & Integraciones',
+        skills: ['PayPal', 'Stripe', 'Google Maps', 'Google APIs'],
+      },
+      {
+        title: 'Bases de Datos',
+        skills: ['MySQL', 'PostgreSQL', 'MongoDB'],
+      },
+    ]
+  : [
+      {
+        title: 'Frontend',
+        skills: ['React', 'Next.js', 'JavaScript ES6+', 'HTML5', 'CSS3', 'Tailwind CSS', 'Swiper'],
+      },
+      {
+        title: 'Backend',
+        skills: ['Node.js', 'PHP', 'Python', 'REST APIs', 'Express'],
+      },
+      {
+        title: 'CMS',
+        skills: ['WordPress', 'Native Themes', 'Native Plugins', 'CPT', 'Taxonomies', 'WooCommerce'],
+      },
+      {
+        title: 'DevOps & Tools',
+        skills: ['Docker', 'Git', 'Linux', 'SSH', 'CI/CD', 'Vercel'],
+      },
+      {
+        title: 'APIs & Integrations',
+        skills: ['PayPal', 'Stripe', 'Google Maps', 'Google APIs'],
+      },
+      {
+        title: 'Databases',
+        skills: ['MySQL', 'PostgreSQL', 'MongoDB'],
+      },
+    ];
+---
+
+<Section id="skills">
+  <Badge variant="section-label" class="mb-sm">
+    {locale === 'es' ? 'HABILIDADES' : 'SKILLS'}
+  </Badge>
+
+  <div class="border-b border-hairline mb-xl"></div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-xl">
+    {skillCategories.map((category) => (
+      <div class="bg-canvas">
+        <h3 class="text-heading-md font-bold text-ink mb-md">
+          <AsciiMarker state="add" class="mr-xs inline" />
+          {category.title}
+        </h3>
+
+        <ul class="space-y-xs">
+          {category.skills.map((skill) => (
+            <li class="text-body-md text-body py-xs border-b border-hairline">
+              {skill}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</Section>
