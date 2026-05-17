@@ -8,7 +8,7 @@ Migración desde Next.js → Astro + TypeScript + Tailwind CSS + Three.js.
 ## 📋 Estado Actual del Proyecto
 
 ### ✅ Completado
-- Astro 6.3.3 instalado
+- Astro 5.18.1 instalado
 - TypeScript configurado (`astro/tsconfigs/strict`)
 - Archivos de traducción: `messages/en.json`, `messages/es.json`
 - Tipos TypeScript definidos (`src/types/index.ts`)

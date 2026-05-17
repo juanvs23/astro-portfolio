@@ -3,12 +3,75 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --color-canvas: #fdfcfc;
+    --color-ink: #201d1d;
+    --color-ink-deep: #0f0000;
+    --color-charcoal: #302c2c;
+    --color-body: #424245;
+    --color-mute: #646262;
+    --color-stone: #6e6e73;
+    --color-ash: #9a9898;
+    --color-surface-soft: #f8f7f7;
+    --color-surface-card: #f1eeee;
+    --color-surface-dark: #201d1d;
+    --color-surface-dark-elevated: #302c2c;
+    --color-hairline: rgba(15, 0, 0, 0.12);
+    --color-hairline-strong: #646262;
+    --color-on-dark: #fdfcfc;
+    --color-on-dark-mute: #9a9898;
+    --color-on-primary: #fdfcfc;
+    --color-primary: #201d1d;
+    --color-accent: #007aff;
+    --color-accent-hover: #0056b3;
+    --color-accent-active: #004085;
+    --color-warning: #ff9f0a;
+    --color-warning-hover: #cc7f08;
+    --color-warning-active: #995f06;
+    --color-danger: #ff3b30;
+    --color-danger-hover: #d70015;
+    --color-danger-active: #a50011;
+    --color-success: #30d158;
+  }
+
+  html.dark {
+    --color-canvas: #1a1a1a;
+    --color-ink: #e8e8e8;
+    --color-ink-deep: #ffffff;
+    --color-charcoal: #c8c8c8;
+    --color-body: #b0b0b0;
+    --color-mute: #888888;
+    --color-stone: #7a7a7a;
+    --color-ash: #6a6a6a;
+    --color-surface-soft: #242424;
+    --color-surface-card: #2a2a2a;
+    --color-surface-dark: #0d0d0d;
+    --color-surface-dark-elevated: #1a1a1a;
+    --color-hairline: rgba(255, 255, 255, 0.12);
+    --color-hairline-strong: #888888;
+    --color-on-dark: #fdfcfc;
+    --color-on-dark-mute: #9a9898;
+    --color-on-primary: #1a1a1a;
+    --color-primary: #e8e8e8;
+    --color-accent: #4da3ff;
+    --color-accent-hover: #66b3ff;
+    --color-accent-active: #80c3ff;
+    --color-warning: #ffb84d;
+    --color-warning-hover: #ffcc80;
+    --color-warning-active: #ffe0b2;
+    --color-danger: #ff6b63;
+    --color-danger-hover: #ff8a84;
+    --color-danger-active: #ffa8a3;
+    --color-success: #5ddb7d;
+  }
+
   html {
     font-family: theme('fontFamily.mono');
-    background-color: theme('colors.canvas');
-    color: theme('colors.ink');
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   body {
@@ -17,7 +80,7 @@
   }
 
   ::selection {
-    background-color: theme('colors.ink');
-    color: theme('colors.on-primary');
+    background-color: var(--color-ink);
+    color: var(--color-on-primary);
   }
 }

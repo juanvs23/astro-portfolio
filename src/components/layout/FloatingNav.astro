@@ -1,0 +1,137 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import { navLinks } from '@/constants/nav-links';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+---
+
+<button
+  id="floating-theme-toggle"
+  class="fixed top-[16px] right-[16px] z-50 text-on-dark bg-surface-dark border border-hairline-strong rounded-sm p-xs hover:bg-surface-dark-elevated transition-colors cursor-pointer"
+  aria-label={t('theme.toggle')}
+>
+  <svg id="theme-icon-sun" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="5" />
+    <line x1="12" y1="1" x2="12" y2="3" />
+    <line x1="12" y1="21" x2="12" y2="23" />
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+    <line x1="1" y1="12" x2="3" y2="12" />
+    <line x1="21" y1="12" x2="23" y2="12" />
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+  </svg>
+  <svg id="theme-icon-moon" class="hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+  </svg>
+</button>
+
+<button
+  id="mobile-menu-btn"
+  class="fixed bottom-[16px] right-[16px] z-50 md:hidden text-on-dark bg-surface-dark border border-hairline-strong rounded-sm p-sm hover:bg-surface-dark-elevated transition-colors cursor-pointer"
+  aria-label={t('menu.open')}
+>
+  <svg id="menu-icon-open" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="3" y1="6" x2="21" y2="6" />
+    <line x1="3" y1="12" x2="21" y2="12" />
+    <line x1="3" y1="18" x2="21" y2="18" />
+  </svg>
+  <svg id="menu-icon-close" class="w-6 h-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+</button>
+
+<nav id="floating-nav" class="hidden md:block fixed bottom-[16px] left-1/2 -translate-x-1/2 z-50 w-auto max-w-[95vw]">
+  <ul class="flex items-center gap-[2px] bg-surface-dark rounded-sm px-md py-sm shadow-none border border-hairline-strong whitespace-nowrap">
+    {navLinks.map((link) => (
+      <li>
+        <a
+          href={`/${locale}${link.path}`}
+          class="text-on-dark text-body-md no-underline px-xs py-xs hover:bg-surface-dark-elevated hover:text-on-dark transition-colors rounded-sm block whitespace-nowrap"
+          aria-label={t(link.key)}
+        >
+          {t(link.key)}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-40 bg-surface-dark/95 backdrop-blur-sm transform translate-y-full transition-transform duration-300 md:hidden"
+>
+  <nav class="flex flex-col items-center justify-center h-full gap-lg">
+    {navLinks.map((link) => (
+      <a
+        href={`/${locale}${link.path}`}
+        class="mobile-nav-link text-on-dark text-heading-md no-underline px-lg py-md hover:bg-surface-dark-elevated transition-colors rounded-sm"
+      >
+        {t(link.key)}
+      </a>
+    ))}
+  </nav>
+</div>
+
+<script>
+  import { getCurrentTheme, toggleTheme } from '@/lib/theme';
+
+  const themeBtn = document.getElementById('floating-theme-toggle');
+  const sunIcon = document.getElementById('theme-icon-sun');
+  const moonIcon = document.getElementById('theme-icon-moon');
+
+  function updateIcons(theme: string) {
+    if (theme === 'dark') {
+      sunIcon?.classList.remove('hidden');
+      moonIcon?.classList.add('hidden');
+    } else {
+      sunIcon?.classList.add('hidden');
+      moonIcon?.classList.remove('hidden');
+    }
+  }
+
+  const initialTheme = getCurrentTheme();
+  updateIcons(initialTheme);
+
+  themeBtn?.addEventListener('click', () => {
+    const next = toggleTheme();
+    updateIcons(next);
+  });
+
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+  let menuOpen = false;
+
+  menuBtn?.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    if (menuOpen) {
+      menu?.classList.remove('translate-y-full');
+      menu?.classList.add('translate-y-0');
+      iconOpen?.classList.add('hidden');
+      iconClose?.classList.remove('hidden');
+    } else {
+      menu?.classList.add('translate-y-full');
+      menu?.classList.remove('translate-y-0');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+    }
+  });
+
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      menuOpen = false;
+      menu?.classList.add('translate-y-full');
+      menu?.classList.remove('translate-y-0');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+    });
+  });
+</script>

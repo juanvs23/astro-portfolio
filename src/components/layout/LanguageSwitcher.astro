@@ -22,9 +22,9 @@ const esPath = getLocalizedPathname(currentPath, 'es');
         : 'text-mute hover:text-ink'
     }`}
   >
-    ES
+    {t('common.langEs')}
   </a>
-  <span class="text-stone">|</span>
+  <span class="text-stone">{t('common.separator')}</span>
   <a
     href={enPath}
     class={`text-body-md px-xs py-xs no-underline transition-colors ${
@@ -33,6 +33,6 @@ const esPath = getLocalizedPathname(currentPath, 'es');
         : 'text-mute hover:text-ink'
     }`}
   >
-    EN
+    {t('common.langEn')}
   </a>
 </div>

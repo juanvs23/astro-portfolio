@@ -6,6 +6,7 @@ import Input from '../ui/Input.astro';
 import Textarea from '../ui/Textarea.astro';
 import Button from '../ui/Button.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
+import { socialLinks } from '@/constants/social-links';
 
 interface Props {
   locale: Locale;
@@ -13,13 +14,6 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
-
-const socialLinks = [
-  { name: 'GitHub', href: 'https://github.com/juanvs23', icon: 'github' },
-  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/juanvs23/', icon: 'linkedin' },
-  { name: 'X', href: 'https://twitter.com/juanvs23', icon: 'twitter' },
-  { name: 'Facebook', href: 'https://www.facebook.com/juancarlos.avila.1420/', icon: 'facebook' },
-];
 ---
 
 <Section id="contact">
@@ -107,20 +101,22 @@ const socialLinks = [
 
       <div class="mt-xl">
         <h4 class="text-body-strong text-ink mb-sm">
-          Email
+          {t('contact.emailTitle')}
         </h4>
         <a
-          href="mailto:contact@coltmandev.dev"
+          href={`mailto:${t('contact.emailAddress')}`}
           class="text-body-md text-accent no-underline hover:text-accent-hover transition-colors"
         >
-          contact@coltmandev.dev
+          {t('contact.emailAddress')}
         </a>
       </div>
     </div>
   </div>
 </Section>
 
-<script>
+<script define:vars={{ formMessages: { sending: t('contact.form.sending'), success: t('contact.form.success'), error: t('contact.form.error'), networkError: t('contact.form.networkError') } }}>
+  import { submitContactForm } from '@/lib/contact-form';
+
   const form = document.getElementById('contact-form') as HTMLFormElement;
   const statusEl = document.getElementById('form-status');
 
@@ -128,40 +124,26 @@ const socialLinks = [
     e.preventDefault();
 
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+    const data = Object.fromEntries(formData.entries()) as Record<string, string>;
 
-    if (statusEl) {
-      statusEl.classList.remove('hidden', 'text-success', 'text-danger');
-      statusEl.classList.add('text-mute');
-      statusEl.textContent = 'Sending...';
-    }
+    await submitContactForm(
+      data as any,
+      formMessages,
+      (status) => {
+        if (statusEl) {
+          statusEl.classList.remove('hidden', 'text-success', 'text-danger', 'text-mute');
+          statusEl.textContent = status.message;
 
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (statusEl) {
-        statusEl.classList.remove('hidden', 'text-mute');
-        if (response.ok) {
-          statusEl.classList.add('text-success');
-          statusEl.textContent = 'Message sent successfully!';
-          form.reset();
-        } else {
-          statusEl.classList.add('text-danger');
-          statusEl.textContent = result.error || 'Error sending message. Please try again.';
+          if (status.state === 'sending') {
+            statusEl.classList.add('text-mute');
+          } else if (status.state === 'success') {
+            statusEl.classList.add('text-success');
+            form?.reset();
+          } else {
+            statusEl.classList.add('text-danger');
+          }
         }
-      }
-    } catch (error) {
-      if (statusEl) {
-        statusEl.classList.remove('hidden', 'text-mute');
-        statusEl.classList.add('text-danger');
-        statusEl.textContent = 'Network error. Please try again later.';
-      }
-    }
+      },
+    );
   });
 </script>

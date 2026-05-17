@@ -1,11 +1,7 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroSection from '../../components/sections/HeroSection.astro';
-import AboutSection from '../../components/sections/AboutSection.astro';
-import SkillsSection from '../../components/sections/SkillsSection.astro';
-import ExperienceSection from '../../components/sections/ExperienceSection.astro';
-import ProjectsSection from '../../components/sections/ProjectsSection.astro';
-import ContactSection from '../../components/sections/ContactSection.astro';
+import SectionButtons from '../../components/layout/SectionButtons.astro';
 import { locales, type Locale } from '@/i18n';
 
 export function getStaticPaths() {
@@ -17,11 +13,7 @@ export function getStaticPaths() {
 const locale = Astro.params.locale as Locale;
 ---
 
-<Layout>
+<BaseLayout locale={locale}>
   <HeroSection locale={locale} />
-  <AboutSection locale={locale} />
-  <SkillsSection locale={locale} />
-  <ExperienceSection locale={locale} />
-  <ProjectsSection locale={locale} />
-  <ContactSection locale={locale} />
-</Layout>
+  <SectionButtons locale={locale} />
+</BaseLayout>

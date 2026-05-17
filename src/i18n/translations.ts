@@ -1,6 +1,6 @@
 import type { Locale } from './utils';
 
-type TranslationValue = string | number | boolean | TranslationObject;
+type TranslationValue = string | number | boolean | unknown[] | TranslationObject;
 type TranslationObject = { [key: string]: TranslationValue };
 
 let translationsCache: Record<Locale, TranslationObject> = {} as Record<Locale, TranslationObject>;
@@ -40,9 +40,12 @@ function getNestedValue(obj: TranslationObject, path: string): TranslationValue 
 export async function getTranslations(locale: Locale) {
   const translations = await loadTranslations(locale);
 
-  return function t(path: string): string {
+  return function t(path: string): TranslationValue {
     const value = getNestedValue(translations, path);
-    return String(value);
+    if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+      return String(value);
+    }
+    return value;
   };
 }
 

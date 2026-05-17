@@ -1,0 +1,51 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+
+const buttons = [
+  { label: t('menu.about'), href: `/${locale}/about`, position: 'top-left' },
+  { label: t('menu.skills'), href: `/${locale}/skills`, position: 'top-right' },
+  { label: t('menu.works'), href: `/${locale}/experience`, position: 'mid-left' },
+  { label: t('menu.projects'), href: `/${locale}/projects`, position: 'mid-right' },
+  { label: t('menu.contact'), href: `/${locale}/contact`, position: 'bottom-center' },
+];
+
+const positionClasses: Record<string, string> = {
+  'top-left': 'top-[28%] left-[25%]',
+  'top-right': 'top-[28%] right-[25%]',
+  'mid-left': 'top-[50%] left-[16%] -translate-y-1/2',
+  'mid-right': 'top-[50%] right-[16%] -translate-y-1/2',
+  'bottom-center': 'bottom-[22%] left-1/2 -translate-x-1/2',
+};
+---
+
+<div id="section-buttons" class="fixed inset-0 pointer-events-none z-30">
+  {buttons.map((btn) => (
+    <a
+      href={btn.href}
+      class={`absolute pointer-events-auto ${positionClasses[btn.position]} px-4 py-2 rounded-lg bg-surface-dark/80 border border-on-dark-mute/30 text-on-dark text-sm font-medium hover:scale-110 hover:bg-surface-dark transition-all duration-200`}
+    >
+      {btn.label}
+    </a>
+  ))}
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('#section-buttons a');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('mouseenter', () => {
+      window.dispatchEvent(new CustomEvent('bubble-hover', { detail: btn.textContent }));
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      window.dispatchEvent(new CustomEvent('bubble-hover-end'));
+    });
+  });
+</script>

@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/SectionLayout.astro';
+import ExperienceSection from '../../components/sections/ExperienceSection.astro';
+import { locales, type Locale } from '@/i18n';
+
+export function getStaticPaths() {
+  return locales.map((locale) => ({
+    params: { locale },
+  }));
+}
+
+const locale = Astro.params.locale as Locale;
+---
+
+<Layout locale={locale}>
+  <ExperienceSection locale={locale} />
+</Layout>

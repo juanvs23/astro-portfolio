@@ -76,6 +76,26 @@ Se utiliza **Tailwind CSS (versión más reciente)**, adaptado de acuerdo al arc
 
 El proyecto debe utilizar **componentes reutilizables** pensando en **código limpio y arquitectura limpia**.
 
+### Principio: Separación de Lógica y Vista
+
+**La lógica debe estar separada de la vista.** Los componentes `.astro` deben contener únicamente la estructura HTML/JSX y la presentación visual. Toda lógica de negocio, procesamiento de datos, validaciones, transformaciones y manipulación de estado debe residir en archivos TypeScript separados (`.ts`).
+
+#### Reglas
+- Los componentes `.astro` solo reciben props y renderizan contenido
+- La lógica de negocio va en archivos `.ts` dentro de `src/lib/`, `src/utils/` o `src/constants/`
+- Las funciones de transformación de datos se importan desde módulos externos
+- Los scripts de cliente (`<script>`) en componentes `.astro` se limitan a interacciones UI puras (toggle, scroll, animaciones)
+- La validación de formularios, envío de datos y manejo de errores se extrae a funciones utilitarias
+
+#### Ejemplo
+```
+src/
+├── components/sections/ContactSection.astro  # Solo vista (HTML + Tailwind)
+├── lib/contact.ts                            # Lógica: validación, envío, estados
+├── utils/formatDate.ts                       # Utilidades puras
+└── constants/projects.ts                     # Datos estáticos
+```
+
 ### Estructura de Carpetas
 ```
 src/
@@ -208,7 +228,7 @@ Las imágenes del proyecto están en la carpeta `public/`:
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^6.3.3"
+    "astro": "^5.18.1"
   }
 }
 ```

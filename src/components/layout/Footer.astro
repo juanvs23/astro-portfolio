@@ -40,16 +40,16 @@ const currentYear = new Date().getFullYear();
 
       <div class="flex items-center gap-lg">
         <a href={`/${locale}`} class="text-caption-md text-mute no-underline hover:text-ink transition-colors">
-          Brand
+          {t('footer.brand')}
         </a>
         <a href={`/${locale}`} class="text-caption-md text-mute no-underline hover:text-ink transition-colors">
-          Privacy
+          {t('footer.privacy')}
         </a>
         <a href={`/${locale}`} class="text-caption-md text-mute no-underline hover:text-ink transition-colors">
-          Terms
+          {t('footer.terms')}
         </a>
         <span class="text-caption-md text-mute">
-          {locale === 'es' ? 'Español' : 'English'}
+          {t('footer.language')}
         </span>
       </div>
     </div>

@@ -11,64 +11,12 @@ interface Props {
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
-const skillCategories = locale === 'es'
-  ? [
-      {
-        title: 'Frontend',
-        skills: ['React', 'Next.js', 'JavaScript ES6+', 'HTML5', 'CSS3', 'Tailwind CSS', 'Swiper'],
-      },
-      {
-        title: 'Backend',
-        skills: ['Node.js', 'PHP', 'Python', 'REST APIs', 'Express'],
-      },
-      {
-        title: 'CMS',
-        skills: ['WordPress', 'Temas nativos', 'Plugins nativos', 'CPT', 'Taxonomías', 'WooCommerce'],
-      },
-      {
-        title: 'DevOps & Tools',
-        skills: ['Docker', 'Git', 'Linux', 'SSH', 'CI/CD', 'Vercel'],
-      },
-      {
-        title: 'APIs & Integraciones',
-        skills: ['PayPal', 'Stripe', 'Google Maps', 'Google APIs'],
-      },
-      {
-        title: 'Bases de Datos',
-        skills: ['MySQL', 'PostgreSQL', 'MongoDB'],
-      },
-    ]
-  : [
-      {
-        title: 'Frontend',
-        skills: ['React', 'Next.js', 'JavaScript ES6+', 'HTML5', 'CSS3', 'Tailwind CSS', 'Swiper'],
-      },
-      {
-        title: 'Backend',
-        skills: ['Node.js', 'PHP', 'Python', 'REST APIs', 'Express'],
-      },
-      {
-        title: 'CMS',
-        skills: ['WordPress', 'Native Themes', 'Native Plugins', 'CPT', 'Taxonomies', 'WooCommerce'],
-      },
-      {
-        title: 'DevOps & Tools',
-        skills: ['Docker', 'Git', 'Linux', 'SSH', 'CI/CD', 'Vercel'],
-      },
-      {
-        title: 'APIs & Integrations',
-        skills: ['PayPal', 'Stripe', 'Google Maps', 'Google APIs'],
-      },
-      {
-        title: 'Databases',
-        skills: ['MySQL', 'PostgreSQL', 'MongoDB'],
-      },
-    ];
+const skillCategories = t('skills.categories') as { title: string; skills: string[] }[];
 ---
 
 <Section id="skills">
   <Badge variant="section-label" class="mb-sm">
-    {locale === 'es' ? 'HABILIDADES' : 'SKILLS'}
+    {t('skills.title')}
   </Badge>
 
   <div class="border-b border-hairline mb-xl"></div>

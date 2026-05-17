@@ -1,5 +1,6 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
+import { navLinks } from '@/constants/nav-links';
 
 interface Props {
   locale: Locale;
@@ -7,15 +8,6 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
-
-const navLinks = [
-  { key: 'menu.home', path: '/' },
-  { key: 'menu.about', path: '/#about' },
-  { key: 'menu.skills', path: '/#skills' },
-  { key: 'menu.works', path: '/#experience' },
-  { key: 'menu.projects', path: '/#projects' },
-  { key: 'menu.contact', path: '/#contact' },
-];
 ---
 
 <div
@@ -39,7 +31,7 @@ const navLinks = [
     <nav class="flex flex-col px-lg">
       {navLinks.map((link) => (
         <a
-          href={link.path}
+          href={`/${locale}${link.path}`}
           class="text-body-strong text-ink py-md border-b border-hairline no-underline hover:text-mute transition-colors"
         >
           {t(link.key)}
@@ -50,24 +42,6 @@ const navLinks = [
 </div>
 
 <script>
-  const menuBtn = document.getElementById('mobile-menu-btn');
-  const menuClose = document.getElementById('mobile-menu-close');
-  const menu = document.getElementById('mobile-menu');
-
-  menuBtn?.addEventListener('click', () => {
-    menu?.classList.remove('translate-x-full');
-    menu?.classList.add('translate-x-0');
-  });
-
-  menuClose?.addEventListener('click', () => {
-    menu?.classList.add('translate-x-full');
-    menu?.classList.remove('translate-x-0');
-  });
-
-  menu?.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
-      menu?.classList.add('translate-x-full');
-      menu?.classList.remove('translate-x-0');
-    });
-  });
+  import { initMobileMenu } from '@/lib/mobile-menu';
+  initMobileMenu();
 </script>

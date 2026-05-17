@@ -121,5 +121,85 @@
     "seo":{
         "title": "Juan Carlos Avila – Desarrollador Full Stack con 6+ Años de Experiencia | Buscando Nuevos Retos",
         "description": "🚀 Desarrollador Web Full Stack con 6+ años de experiencia | PHP, Python, JavaScript (React, Next.js), WordPress, Laravel & Django | ¡Buscando trabajo inmediato! 📢 Apasionado por soluciones escalables y código limpio. Contáctame para proyectos desafiantes o colaboraciones."
+    },
+    "hero": {
+        "badge": "Desarrollador Full Stack",
+        "title": "Construyo experiencias web escalables",
+        "description": "6+ años de experiencia en PHP, Python, JavaScript (React, Next.js), WordPress y más."
+    },
+    "about": {
+        "title": "CONÓCEME",
+        "description": "¡Hola! Soy Juan Carlos Ávila, Desarrollador Full Stack con 5+ años de experiencia en tecnologías como JavaScript (React, Node.js), PHP y WordPress, complementados con conocimientos en Python, administración de servidores Linux y desarrollo con Node.js. Fuera del trabajo, mi pasión por la tecnología se extiende a mis hobbies, donde disfruto experimentando con nuevas herramientas y desarrollando proyectos personales. <br/><br/> Especializado en crear aplicaciones web escalables, integraciones con APIs (PayPal, Stripe, Google) y soluciones personalizadas para e-commerce y sitios institucionales.  Apasionado por el código limpio, la optimización de rendimiento y el aprendizaje continuo. Experiencia trabajando en equipo y en proyectos autónomos, entregando productos robustos y eficientes.",
+        "skills": "Mis Habilidades",
+        "skillsList": [
+            "JavaScript (React, Next.js, Node.js)",
+            "PHP, WordPress (temas y plugins nativos)",
+            "Python, Linux, administración de servidores",
+            "APIs: PayPal, Stripe, Google Maps",
+            "Docker, Git, despliegue en servidores Linux",
+            "CSS moderno (Grid, Flexbox, Tailwind)"
+        ]
+    },
+    "skills": {
+        "title": "HABILIDADES",
+        "categories": [
+            {
+                "title": "Frontend",
+                "skills": ["React", "Next.js", "JavaScript ES6+", "HTML5", "CSS3", "Tailwind CSS", "Swiper"]
+            },
+            {
+                "title": "Backend",
+                "skills": ["Node.js", "PHP", "Python", "REST APIs", "Express"]
+            },
+            {
+                "title": "CMS",
+                "skills": ["WordPress", "Temas nativos", "Plugins nativos", "CPT", "Taxonomías", "WooCommerce"]
+            },
+            {
+                "title": "DevOps & Tools",
+                "skills": ["Docker", "Git", "Linux", "SSH", "CI/CD", "Vercel"]
+            },
+            {
+                "title": "APIs & Integraciones",
+                "skills": ["PayPal", "Stripe", "Google Maps", "Google APIs"]
+            },
+            {
+                "title": "Bases de Datos",
+                "skills": ["MySQL", "PostgreSQL", "MongoDB"]
+            }
+        ]
+    },
+    "common": {
+        "months": ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+        "present": "Presente",
+        "langEs": "ES",
+        "langEn": "EN",
+        "separator": "|"
+    },
+    "contact": {
+        "emailTitle": "Email",
+        "emailAddress": "contact@coltmandev.dev",
+        "form": {
+            "sending": "Enviando...",
+            "success": "¡Mensaje enviado con éxito!",
+            "error": "Error al enviar el mensaje. Por favor intenta de nuevo.",
+            "networkError": "Error de red. Por favor intenta más tarde."
+        }
+    },
+    "footer": {
+        "develop": "Desarrollado por ",
+        "copy": "Copyright © ",
+        "brand": "Marca",
+        "privacy": "Privacidad",
+        "terms": "Términos",
+        "language": "Español"
+    },
+    "LocaleSwitcher":{
+        "label":"El idioma actual es ",
+        "en": "Ingles",
+        "es": "Español"
+    },
+    "theme": {
+        "toggle": "Cambiar modo oscuro"
     }
 }

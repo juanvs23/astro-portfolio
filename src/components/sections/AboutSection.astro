@@ -11,23 +11,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
-const skillsList = locale === 'es'
-  ? [
-      'JavaScript (React, Next.js, Node.js)',
-      'PHP, WordPress (temas y plugins nativos)',
-      'Python, Linux, administración de servidores',
-      'APIs: PayPal, Stripe, Google Maps',
-      'Docker, Git, despliegue en servidores Linux',
-      'CSS moderno (Grid, Flexbox, Tailwind)',
-    ]
-  : [
-      'JavaScript (React, Next.js, Node.js)',
-      'PHP, WordPress (native themes and plugins)',
-      'Python, Linux, server administration',
-      'APIs: PayPal, Stripe, Google Maps',
-      'Docker, Git, Linux server deployment',
-      'Modern CSS (Grid, Flexbox, Tailwind)',
-    ];
+const skillsList = t('about.skillsList') as string[];
 ---
 
 <Section id="about">

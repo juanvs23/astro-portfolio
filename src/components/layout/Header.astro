@@ -1,5 +1,7 @@
 ---
 import { getTranslations, getLocalizedPathname, type Locale } from '@/i18n';
+import { navLinks } from '@/constants/nav-links';
+import ThemeToggle from './ThemeToggle.astro';
 
 interface Props {
   locale: Locale;
@@ -9,35 +11,18 @@ interface Props {
 const { locale, currentPath } = Astro.props;
 const t = await getTranslations(locale);
 
-const navLinks = [
-  { key: 'menu.home', path: '/' },
-  { key: 'menu.about', path: '/#about' },
-  { key: 'menu.skills', path: '/#skills' },
-  { key: 'menu.works', path: '/#experience' },
-  { key: 'menu.projects', path: '/#projects' },
-  { key: 'menu.contact', path: '/#contact' },
-];
-
 const enPath = getLocalizedPathname(currentPath, 'en');
 const esPath = getLocalizedPathname(currentPath, 'es');
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 bg-canvas border-b border-hairline h-[56px]">
   <nav class="max-w-[1100px] mx-auto px-lg h-full flex items-center justify-between">
-    <a href={`/${locale}`} class="text-heading-md font-bold text-ink no-underline">
-      <pre class="text-body-tight leading-none m-0">
- _   _ _____  ____  _____  __  __
-| \ | | ____|/ ___||  _  \|  \/  |
-|  \| |  _|  \___ \| | | | |\/| |
-| |\  | |___  ___) | |_| | |  | |
-|_| \_|_____| \____/ \___/|_|  |_|</pre
-      >
-    </a>
+    <div class="w-[80px] md:w-auto"></div>
 
     <div class="hidden md:flex items-center gap-xl">
       {navLinks.map((link) => (
         <a
-          href={link.path}
+          href={`/${locale}${link.path}`}
           class="text-body-strong text-ink no-underline hover:text-mute transition-colors"
         >
           {t(link.key)}
@@ -46,11 +31,13 @@ const esPath = getLocalizedPathname(currentPath, 'es');
     </div>
 
     <div class="flex items-center gap-md">
+      <ThemeToggle locale={locale} />
+
       <a
         href={locale === 'es' ? enPath : esPath}
         class="text-body-md text-mute no-underline hover:text-ink transition-colors"
       >
-        {locale === 'es' ? 'EN' : 'ES'}
+        {locale === 'es' ? t('common.langEn') : t('common.langEs')}
       </a>
 
       <button

@@ -39,6 +39,16 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={finalTitle} />
     <meta name="twitter:description" content={finalDescription} />
+    <script is:inline>
+      (function() {
+        var stored = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = stored || (prefersDark ? 'dark' : 'light');
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
   </head>
   <body class="font-mono bg-canvas text-ink antialiased">
     <slot />

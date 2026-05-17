@@ -1,0 +1,23 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import MobileMenu from '../components/layout/MobileMenu.astro';
+import { getPathWithoutLocale, type Locale } from '@/i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const currentPath = getPathWithoutLocale(Astro.url.pathname);
+---
+
+<BaseLayout locale={locale}>
+  <Header locale={locale} currentPath={currentPath} />
+  <MobileMenu locale={locale} />
+  <main class="pt-[56px]">
+    <slot />
+  </main>
+  <Footer locale={locale} />
+</BaseLayout>
