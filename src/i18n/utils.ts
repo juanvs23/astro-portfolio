@@ -2,7 +2,7 @@ export type Locale = 'es' | 'en';
 
 export const locales: Locale[] = ['es', 'en'];
 
-export const defaultLocale: Locale = 'es';
+export const defaultLocale: Locale = 'en';
 
 export function getLocaleFromPath(pathname: string): Locale {
   const segments = pathname.split('/').filter(Boolean);

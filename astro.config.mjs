@@ -12,7 +12,7 @@ export default defineConfig({
     service: { entrypoint: 'astro/assets/services/sharp' },
   },
   i18n: {
-    defaultLocale: 'es',
+    defaultLocale: 'en',
     locales: ['es', 'en'],
     routing: {
       prefixDefaultLocale: true,
