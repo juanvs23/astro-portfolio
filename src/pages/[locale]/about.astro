@@ -2,6 +2,7 @@
 import Layout from '../../layouts/SectionLayout.astro';
 import AboutSection from '../../components/sections/AboutSection.astro';
 import { getTranslations, locales, type Locale } from '@/i18n';
+export const prerender = true;
 
 export function getStaticPaths() {
   return locales.map((locale) => ({
