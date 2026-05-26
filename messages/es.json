@@ -66,6 +66,14 @@
         "company": "Hispano Soluciones CA",
         "description": "Desarrollar interfaces para proyectos de clientes en Drupal, WordPress y maquetación para sitios estáticos"
     },
+    "newmovement": {
+        "id": 8,
+        "title": "Desarrollador Fullstack con IA",
+        "start": "2025-6",
+        "end": "2026-5",
+        "company": "New Movement Agency",
+        "description": "Desarrollo de proyectos complejos utilizando agentes de IA. Selección de arquitectura, lenguaje de programación y medidas de seguridad para guiar a la inteligencia artificial con parámetros claros. Implementación de técnicas de prueba y code review para evitar código con problemas de seguridad."
+    },
     "menu":{
         "home": "Inicio",
         "about": "Acerca de mí",
@@ -75,6 +83,13 @@
         "contact": "Contacto",
         "open": "Abrir Menú",
         "close": "Cerrar Menú"
+    },
+    "navigation":{
+        "menu": "Menú de navegación",
+        "mobile": "Navegación móvil",
+        "main": "Navegación principal",
+        "sections": "Secciones del portafolio",
+        "skipToContent": "Saltar al contenido"
     },
     "contactUs":{
         "title": "Contáctame",
@@ -120,12 +135,34 @@
     },
     "seo":{
         "title": "Juan Carlos Avila – Desarrollador Full Stack con 6+ Años de Experiencia | Buscando Nuevos Retos",
-        "description": "🚀 Desarrollador Web Full Stack con 6+ años de experiencia | PHP, Python, JavaScript (React, Next.js), WordPress, Laravel & Django | ¡Buscando trabajo inmediato! 📢 Apasionado por soluciones escalables y código limpio. Contáctame para proyectos desafiantes o colaboraciones."
+        "description": "Desarrollador Web Full Stack con 6+ años de experiencia | PHP, Python, JavaScript (React, Next.js), WordPress, Laravel & Django | Apasionado por soluciones escalables y código limpio.",
+        "pages": {
+            "about": "Sobre Mí – Juan Carlos Avila | Desarrollador Full Stack",
+            "skills": "Habilidades – Juan Carlos Avila | Desarrollador Full Stack",
+            "experience": "Experiencia – Juan Carlos Avila | Desarrollador Full Stack",
+            "projects": "Proyectos – Juan Carlos Avila | Desarrollador Full Stack",
+            "contact": "Contacto – Juan Carlos Avila | Desarrollador Full Stack"
+        },
+        "descriptions": {
+            "about": "Conoce a Juan Carlos Avila, Desarrollador Full Stack con 6+ años de experiencia en PHP, Python, JavaScript y WordPress.",
+            "skills": "Habilidades técnicas de Juan Carlos Avila: Frontend, Backend, CMS, DevOps, APIs y Bases de Datos.",
+            "experience": "Experiencia profesional de Juan Carlos Avila: 8+ años trabajando en agencias y empresas de desarrollo web.",
+            "projects": "Proyectos de Juan Carlos Avila: aplicaciones web, e-commerce, APIs y más.",
+            "contact": "Contacta a Juan Carlos Avila para proyectos de desarrollo web, colaboraciones u oportunidades laborales."
+        },
+        "h1": {
+            "about": "Sobre Mí – Desarrollador Web Full Stack",
+            "skills": "Habilidades y Tecnologías – Desarrollo Full Stack",
+            "experience": "Experiencia Profesional – Desarrollador Web",
+            "projects": "Portafolio – Proyectos de Desarrollo Web",
+            "contact": "Contáctame – Ponte en Contacto"
+        }
     },
     "hero": {
         "badge": "Desarrollador Full Stack",
         "title": "Construyo experiencias web escalables",
-        "description": "6+ años de experiencia en PHP, Python, JavaScript (React, Next.js), WordPress y más."
+        "description": "6+ años de experiencia en PHP, Python, JavaScript (React, Next.js), WordPress y más.",
+        "canvasLabel": "Animación 3D interactiva del portafolio"
     },
     "about": {
         "title": "CONÓCEME",
@@ -145,27 +182,73 @@
         "categories": [
             {
                 "title": "Frontend",
-                "skills": ["React", "Next.js", "JavaScript ES6+", "HTML5", "CSS3", "Tailwind CSS", "Swiper"]
+                "skills": [
+                    { "name": "React", "description": "Librería para construir interfaces con componentes reutilizables" },
+                    { "name": "Next.js", "description": "Framework de React con SSR, SSG y App Router" },
+                    { "name": "JavaScript ES6+", "description": "JavaScript moderno con características ES6+" },
+                    { "name": "HTML5", "description": "Marcado semántico y estándares de accesibilidad" },
+                    { "name": "CSS3", "description": "CSS moderno con Flexbox, Grid y animaciones" },
+                    { "name": "Tailwind CSS", "description": "Framework CSS utility-first para desarrollo rápido" },
+                    { "name": "Swiper", "description": "Librería de sliders y carruseles táctiles" }
+                ]
             },
             {
                 "title": "Backend",
-                "skills": ["Node.js", "PHP", "Python", "REST APIs", "Express"]
+                "skills": [
+                    { "name": "Node.js", "description": "Entorno JS para aplicaciones escalables del lado del servidor" },
+                    { "name": "PHP", "description": "Scripting del lado del servidor para apps web dinámicas" },
+                    { "name": "Python", "description": "Lenguaje versátil para desarrollo web y automatización" },
+                    { "name": "REST APIs", "description": "Diseño de APIs siguiendo principios REST" },
+                    { "name": "Express", "description": "Framework web minimalista para APIs en Node.js" }
+                ]
             },
             {
                 "title": "CMS",
-                "skills": ["WordPress", "Temas nativos", "Plugins nativos", "CPT", "Taxonomías", "WooCommerce"]
+                "skills": [
+                    { "name": "WordPress", "description": "Sistema de gestión de contenidos con temas y plugins" },
+                    { "name": "Temas nativos", "description": "Temas de WordPress personalizados desde cero" },
+                    { "name": "Plugins nativos", "description": "Desarrollo de plugins personalizados para WordPress" },
+                    { "name": "CPT", "description": "Custom Post Types para contenido estructurado" },
+                    { "name": "Taxonomías", "description": "Taxonomías personalizadas para organización de contenido" },
+                    { "name": "WooCommerce", "description": "Plugin de comercio electrónico para WordPress" }
+                ]
             },
             {
                 "title": "DevOps & Tools",
-                "skills": ["Docker", "Git", "Linux", "SSH", "CI/CD", "Vercel"]
+                "skills": [
+                    { "name": "Docker", "description": "Contenedores para desarrollo y despliegue consistentes" },
+                    { "name": "Git", "description": "Sistema de control de versiones distribuido" },
+                    { "name": "Linux", "description": "Administración de servidores y operaciones en línea de comandos" },
+                    { "name": "SSH", "description": "Acceso remoto seguro y gestión de servidores" },
+                    { "name": "CI/CD", "description": "Pipelines automatizados de prueba y despliegue" },
+                    { "name": "Vercel", "description": "Plataforma cloud para despliegue de frontend" }
+                ]
             },
             {
-                "title": "APIs & Integraciones",
-                "skills": ["PayPal", "Stripe", "Google Maps", "Google APIs"]
+                "title": "APIs e Integraciones",
+                "skills": [
+                    { "name": "PayPal", "description": "Integración de procesamiento de pagos" },
+                    { "name": "Stripe", "description": "Integración de pasarela de pagos moderna" },
+                    { "name": "Google Maps", "description": "Servicios de geolocalización y mapas" },
+                    { "name": "Google APIs", "description": "Integración de varios servicios de Google" }
+                ]
             },
             {
                 "title": "Bases de Datos",
-                "skills": ["MySQL", "PostgreSQL", "MongoDB"]
+                "skills": [
+                    { "name": "MySQL", "description": "Gestión de bases de datos relacionales" },
+                    { "name": "PostgreSQL", "description": "BD relacional avanzada con soporte JSON" },
+                    { "name": "MongoDB", "description": "Base de datos NoSQL documental" }
+                ]
+            },
+            {
+                "title": "Inteligencia Artificial",
+                "skills": [
+                    { "name": "Manejo de Modelos", "description": "Integración y gestión de modelos de IA/LLM vía APIs y despliegue local" },
+                    { "name": "Spec-driven Development", "description": "Redacción de especificaciones como requisitos comprobables antes de implementar" },
+                    { "name": "Desarrollo de Agentes", "description": "Creación de agentes autónomos de IA para automatización de tareas y flujos de trabajo" },
+                    { "name": "Claude Code", "description": "Experiencia con Claude Code para desarrollo de software asistido por IA" }
+                ]
             }
         ]
     },
@@ -177,8 +260,9 @@
         "separator": "|"
     },
     "contact": {
-        "emailTitle": "Email",
-        "emailAddress": "contact@coltmandev.dev",
+        "emailTitle": "WhatsApp",
+        "emailAddress": "Escríbeme por WhatsApp",
+        "whatsappNumber": "584248310009",
         "form": {
             "sending": "Enviando...",
             "success": "¡Mensaje enviado con éxito!",

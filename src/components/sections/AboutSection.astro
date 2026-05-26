@@ -3,6 +3,8 @@ import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
 import Badge from '../ui/Badge.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
+import { Image } from 'astro:assets';
+import aboutMeImg from '@/assets/img/aboutme.jpg';
 
 interface Props {
   locale: Locale;
@@ -17,32 +19,37 @@ const skillsList = t('about.skillsList') as string[];
 <Section id="about">
   <div class="grid grid-cols-1 md:grid-cols-[320px_1fr] gap-xl items-start">
     <div class="w-full">
-      <img
-        src="/img/aboutme.jpg"
+      <Image
+        src={aboutMeImg}
         alt={t('about.title')}
         class="w-full rounded-sm"
-        loading="lazy"
+        loading="eager"
+        fetchpriority="high"
+        widths={[320, 640, 960]}
+        formats={['webp', 'jpeg']}
       />
     </div>
 
     <div>
-      <Badge variant="section-label" class="mb-sm">
-        {t('about.title')}
-      </Badge>
+      <h1 data-typewriter data-aos="fade-down" class="text-[30px] md:text-[35px] lg:text-[38px] font-bold mb-sm">
+        {t('seo.h1.about')}
+      </h1>
 
-      <div class="border-b border-hairline mb-xl"></div>
+      <div class="border-b border-hairline mb-xl" data-aos="fade-up" data-aos-delay="100"></div>
 
       <div
         class="text-body-md text-body leading-[1.5] mb-xl"
+        data-aos="fade-up"
+        data-aos-delay="150"
         set:html={t('about.description')}
       ></div>
 
-      <h3 class="text-heading-md font-bold text-ink mb-md">
+      <h3 class="text-heading-md font-bold text-ink mb-md" data-aos="fade-up" data-aos-delay="200">
         <AsciiMarker state="add" class="mr-xs inline" />
         {t('about.skills')}
       </h3>
 
-      <ul class="space-y-sm">
+      <ul class="space-y-sm" data-aos="fade-up" data-aos-delay="250">
         {skillsList.map((skill) => (
           <li class="text-body-md text-body py-sm border-b border-hairline">
             <AsciiMarker state="add" class="mr-xs inline" />

@@ -3,6 +3,24 @@ import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
 import Badge from '../ui/Badge.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
+import { Image } from 'astro:assets';
+import gericht from '@/assets/img/gericht.jpg';
+import cesde from '@/assets/img/cesde.jpg';
+import thinkous from '@/assets/img/thinkous.jpg';
+import cesdeProyectos from '@/assets/img/cesde-proyectos.jpg';
+import colegios from '@/assets/img/colegios.jpg';
+import empleo from '@/assets/img/empleo.jpg';
+import dogtor from '@/assets/img/dogtor.jpg';
+import hisomo from '@/assets/img/hisomo.jpg';
+import bookTest from '@/assets/img/book-test.jpg';
+import luxlife from '@/assets/img/luxlife.jpg';
+import boreal from '@/assets/img/boreal.jpg';
+import emprende from '@/assets/img/emprende.jpg';
+import incredibleRoom from '@/assets/img/incredible-room.jpg';
+import pockemon from '@/assets/img/pockemon.webp';
+import newsApp from '@/assets/img/news-app.webp';
+import bajalenx from '@/assets/img/bajalenx.webp';
+import climaApp from '@/assets/img/clima-app.webp';
 
 interface Props {
   locale: Locale;
@@ -12,35 +30,34 @@ const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
 const projects = [
-  { id: 1, name: 'Gericht', url: 'https://restaurant.coltmandev.dev/', img: '/img/gericht.jpg' },
-  { id: 2, name: 'Cesde', url: 'https://www.cesde.edu.co/', img: '/img/cesde.jpg' },
-  { id: 3, name: 'Thinkus', url: 'https://thinkus.io/', img: '/img/thinkous.jpg' },
-  { id: 4, name: 'Proyectos Cesde', url: 'https://proyectos.cesde.edu.co/', img: '/img/cesde-proyectos.jpg' },
-  { id: 5, name: 'Cesde Colegios', url: 'https://colegios.cesde.edu.co/', img: '/img/colegios.jpg' },
-  { id: 6, name: 'Centro de empleo Cesde', url: 'https://centrodeempleo.cesde.edu.co/', img: '/img/empleo.jpg' },
-  { id: 7, name: 'Dogtorscat', url: 'https://www.dogtorscat.com/', img: '/img/dogtor.jpg' },
-  { id: 8, name: 'Hisomos', url: 'https://hisomos.com/', img: '/img/hisomo.jpg' },
-  { id: 9, name: 'Book project', url: 'https://projects.coltmandev.dev/product-book/', img: '/img/book-test.jpg' },
-  { id: 10, name: 'LuxlifemiamiBlog', url: 'https://luxlifemiamiblog.com/market-statistics/', img: '/img/luxlife.jpg' },
-  { id: 11, name: 'Boreal Expedition', url: 'https://borealexpedition.com/', img: '/img/boreal.jpg' },
-  { id: 12, name: 'Emprende', url: 'https://emprende.cesde.edu.co/', img: '/img/emprende.jpg' },
-  { id: 13, name: 'Fancy Login', url: 'https://projects.coltmandev.dev/fancy-login/', img: 'https://github.com/juanvs23/fancy-login/raw/master/public/demo.jpg' },
-  { id: 14, name: 'Incredible Table', url: 'https://incredible-table.vercel.app/', img: '/img/incredible-room.jpg' },
-  { id: 15, name: 'Pokemon API', url: 'https://next-pokemon-coral.vercel.app/', img: '/img/pockemon.webp' },
-  { id: 16, name: 'News App', url: 'https://news-app-sage-theta.vercel.app/', img: '/img/news-app.webp' },
-  { id: 17, name: 'Bajalenx', url: 'https://projects.coltmandev.dev/bajalenx/', img: '/img/bajalenx.webp' },
-  { id: 18, name: 'Clima App', url: 'https://clima-gray-nine.vercel.app/', img: '/img/clima-app.webp' },
+  { id: 1, name: 'Gericht', url: 'https://restaurant.coltmandev.dev/', img: gericht },
+  { id: 2, name: 'Cesde', url: 'https://www.cesde.edu.co/', img: cesde },
+  { id: 3, name: 'Thinkus', url: 'https://thinkus.io/', img: thinkous },
+  { id: 4, name: 'Proyectos Cesde', url: 'https://proyectos.cesde.edu.co/', img: cesdeProyectos },
+  { id: 5, name: 'Cesde Colegios', url: 'https://colegios.cesde.edu.co/', img: colegios },
+  { id: 6, name: 'Centro de empleo Cesde', url: 'https://centrodeempleo.cesde.edu.co/', img: empleo },
+  { id: 7, name: 'Dogtorscat', url: 'https://www.dogtorscat.com/', img: dogtor },
+  { id: 8, name: 'Hisomos', url: 'https://hisomos.com/', img: hisomo },
+  { id: 9, name: 'Book project', url: 'https://projects.coltmandev.dev/product-book/', img: bookTest },
+  { id: 10, name: 'LuxlifemiamiBlog', url: 'https://luxlifemiamiblog.com/market-statistics/', img: luxlife },
+  { id: 11, name: 'Boreal Expedition', url: 'https://borealexpedition.com/', img: boreal },
+  { id: 12, name: 'Emprende', url: 'https://emprende.cesde.edu.co/', img: emprende },
+  { id: 13, name: 'Incredible Table', url: 'https://incredible-table.vercel.app/', img: incredibleRoom },
+  { id: 14, name: 'Pokemon API', url: 'https://next-pokemon-coral.vercel.app/', img: pockemon },
+  { id: 15, name: 'News App', url: 'https://news-app-sage-theta.vercel.app/', img: newsApp },
+  { id: 16, name: 'Bajalenx', url: 'https://projects.coltmandev.dev/bajalenx/', img: bajalenx },
+  { id: 17, name: 'Clima App', url: 'https://clima-gray-nine.vercel.app/', img: climaApp },
 ];
 ---
 
 <Section id="projects">
-  <Badge variant="section-label" class="mb-sm">
-    {t('projects.title')}
-  </Badge>
+  <h1 data-typewriter data-aos="fade-down" class="text-[30px] md:text-[35px] lg:text-[38px] font-bold mb-sm">
+    {t('seo.h1.projects')}
+  </h1>
 
-  <div class="border-b border-hairline mb-xl"></div>
+  <div class="border-b border-hairline mb-xl" data-aos="fade-up" data-aos-delay="100"></div>
 
-  <p class="text-body-md text-body mb-xl">
+  <p class="text-body-md text-body mb-xl" data-aos="fade-up" data-aos-delay="150">
     {t('projects.subtitle')}
   </p>
 
@@ -51,13 +68,17 @@ const projects = [
         target="_blank"
         rel="noopener noreferrer"
         class="group bg-canvas border border-hairline no-underline hover:border-ink transition-colors duration-200"
+        data-aos="fade-in"
+        data-aos-delay="300"
       >
         <div class="aspect-video overflow-hidden bg-surface-card">
-          <img
+          <Image
             src={project.img}
             alt={project.name}
             class="w-full h-full object-cover group-hover:opacity-80 transition-opacity duration-200"
             loading="lazy"
+            widths={[400, 800]}
+            formats={['webp', 'jpeg']}
           />
         </div>
 

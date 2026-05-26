@@ -4,33 +4,42 @@ import { getTranslations, getLocalizedPathname, type Locale } from '@/i18n';
 interface Props {
   locale: Locale;
   currentPath: string;
+  variant?: 'default' | 'hero';
 }
 
-const { locale, currentPath } = Astro.props;
+const { locale, currentPath, variant = 'default' } = Astro.props;
 const t = await getTranslations(locale);
 
 const enPath = getLocalizedPathname(currentPath, 'en');
 const esPath = getLocalizedPathname(currentPath, 'es');
+
+const isHero = variant === 'hero';
+const activeClass = isHero
+  ? 'text-on-dark border-b-2 border-on-dark-mute'
+  : 'text-ink border-b-2 border-ash';
+const inactiveClass = isHero
+  ? 'text-on-dark-mute hover:text-on-dark'
+  : 'text-mute hover:text-ink';
 ---
 
-<div class="flex items-center gap-xs">
+<div role="group" aria-label={t('LocaleSwitcher.label')} class="flex items-center gap-xs">
   <a
     href={esPath}
+    aria-label={t('LocaleSwitcher.es')}
+    hreflang="es"
     class={`text-body-md px-xs py-xs no-underline transition-colors ${
-      locale === 'es'
-        ? 'text-ink border-b-2 border-ash'
-        : 'text-mute hover:text-ink'
+      locale === 'es' ? activeClass : inactiveClass
     }`}
   >
     {t('common.langEs')}
   </a>
-  <span class="text-stone">{t('common.separator')}</span>
+  <span class={isHero ? 'text-on-dark-mute' : 'text-stone'}>{t('common.separator')}</span>
   <a
     href={enPath}
+    aria-label={t('LocaleSwitcher.en')}
+    hreflang="en"
     class={`text-body-md px-xs py-xs no-underline transition-colors ${
-      locale === 'en'
-        ? 'text-ink border-b-2 border-ash'
-        : 'text-mute hover:text-ink'
+      locale === 'en' ? activeClass : inactiveClass
     }`}
   >
     {t('common.langEn')}

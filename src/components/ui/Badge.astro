@@ -4,7 +4,7 @@ interface Props {
   class?: string;
 }
 
-const { variant = 'news', class: className = '' } = Astro.props;
+const { variant = 'news', class: className = '', ...rest } = Astro.props;
 
 const variantClasses = {
   news: 'bg-surface-dark text-on-dark text-caption-md rounded-sm px-xs py-[2px] inline-block',
@@ -12,6 +12,6 @@ const variantClasses = {
 };
 ---
 
-<span class={`${variantClasses[variant]} ${className}`}>
+<span class={`${variantClasses[variant]} ${className}`} {...rest}>
   <slot />
 </span>

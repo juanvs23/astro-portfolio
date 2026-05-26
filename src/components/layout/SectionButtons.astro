@@ -9,31 +9,60 @@ const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
 const buttons = [
-  { label: t('menu.about'), href: `/${locale}/about`, position: 'top-left' },
-  { label: t('menu.skills'), href: `/${locale}/skills`, position: 'top-right' },
-  { label: t('menu.works'), href: `/${locale}/experience`, position: 'mid-left' },
-  { label: t('menu.projects'), href: `/${locale}/projects`, position: 'mid-right' },
-  { label: t('menu.contact'), href: `/${locale}/contact`, position: 'bottom-center' },
+  {
+    label: t('menu.about'),
+    href: `/${locale}/about`,
+    position: 'top-left',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+  },
+  {
+    label: t('menu.skills'),
+    href: `/${locale}/skills`,
+    position: 'top-right',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+  },
+  {
+    label: t('menu.works'),
+    href: `/${locale}/experience`,
+    position: 'mid-left',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+  },
+  {
+    label: t('menu.projects'),
+    href: `/${locale}/projects`,
+    position: 'mid-right',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>`,
+  },
+  {
+    label: t('menu.contact'),
+    href: `/${locale}/contact`,
+    position: 'bottom-center',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>`,
+  },
 ];
 
 const positionClasses: Record<string, string> = {
-  'top-left': 'top-[28%] left-[25%]',
-  'top-right': 'top-[28%] right-[25%]',
-  'mid-left': 'top-[50%] left-[16%] -translate-y-1/2',
-  'mid-right': 'top-[50%] right-[16%] -translate-y-1/2',
-  'bottom-center': 'bottom-[22%] left-1/2 -translate-x-1/2',
+  'top-left': 'top-[20%] left-[18%]',
+  'top-right': 'top-[20%] right-[18%]',
+  'mid-left': 'top-[50%] left-[12%] -translate-y-1/2',
+  'mid-right': 'top-[50%] right-[12%] -translate-y-1/2',
+  'bottom-center': 'bottom-[15%] left-1/2 -translate-x-1/2',
 };
 ---
 
-<div id="section-buttons" class="fixed inset-0 pointer-events-none z-30">
-  {buttons.map((btn) => (
-    <a
-      href={btn.href}
-      class={`absolute pointer-events-auto ${positionClasses[btn.position]} px-4 py-2 rounded-lg bg-surface-dark/80 border border-on-dark-mute/30 text-on-dark text-sm font-medium hover:scale-110 hover:bg-surface-dark transition-all duration-200`}
-    >
-      {btn.label}
-    </a>
-  ))}
+<div id="section-buttons" role="navigation" aria-label={t('navigation.sections')} class="fixed top-[50%] left-0 right-0 h-[50%] md:top-[26%] md:h-[75%] flex items-center justify-center pointer-events-none z-30">
+  <div class="relative w-full lg:max-w-[50vw] h-full">
+    {buttons.map((btn) => (
+      <a
+        href={btn.href}
+        title={btn.label}
+        aria-label={btn.label}
+        data-section={btn.label}
+        class={`absolute pointer-events-auto ${positionClasses[btn.position]} flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-surface-dark/80 border border-on-dark-mute/30 text-on-dark text-sm font-medium hover:scale-110 hover:bg-surface-dark transition-all duration-200`}
+        set:html={btn.icon + `<span class="hidden md:inline">${btn.label}</span>`}
+      />
+    ))}
+  </div>
 </div>
 
 <script>
@@ -41,7 +70,7 @@ const positionClasses: Record<string, string> = {
 
   buttons.forEach((btn) => {
     btn.addEventListener('mouseenter', () => {
-      window.dispatchEvent(new CustomEvent('bubble-hover', { detail: btn.textContent }));
+      window.dispatchEvent(new CustomEvent('bubble-hover', { detail: btn.dataset.section }));
     });
 
     btn.addEventListener('mouseleave', () => {

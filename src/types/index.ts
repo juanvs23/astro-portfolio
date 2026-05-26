@@ -1,11 +1,3 @@
-/* import nodemailer from "nodemailer";
-import { ElementType } from "react";
-export interface CardSkill {
-    title: string;
-    icon: React.ReactNode | ElementType;
-    points: string[];
-    color: string;
-} */
 export interface ItemView {
   title: string;
   class: string;
@@ -14,10 +6,8 @@ export interface ItemView {
 export interface JobItem {
   id: number;
   title: string;
-  date: {
-    startDate: Date;
-    endDate: Date | null;
-  };
+  start: string;
+  end: string;
   company: string;
   description: string;
 }
@@ -46,9 +36,9 @@ export interface NetworkItem {
   icon: string;
   color: string;
 }
-export interface SocialNetWorksInterface {
+export interface SocialNetworksInterface {
   title: string;
-  netWorks: NetworkItem[];
+  networks: NetworkItem[];
 }
 export interface EmailMe {
   emailTitle: string;
@@ -67,7 +57,7 @@ export interface ContactUsInterface {
   formTitle: string;
   emailData: EmailMe;
   form: FormInterface;
-  networks: SocialNetWorksInterface;
+  networks: SocialNetworksInterface;
 }
 
 export interface FormInterface {
@@ -85,17 +75,4 @@ export interface ProjectItem {
 export interface ProjectSectionType {
   title: string;
   projectsItems: ProjectItem[];
-}
-export interface sendMailType {
-  nodemailer?: any;
-  auth: {
-    user: string;
-    password: string;
-  };
-  mailData: {
-    from: string;
-    to: string;
-    subject: string;
-    html: string;
-  };
 }

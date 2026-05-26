@@ -2,22 +2,21 @@
 
 ## 1. Descripción General
 
-Este es un portafolio moderno construido con **Astro** que trabaja con **2 idiomas**: español (es) e inglés (en).
+Portafolio profesional de Juan Carlos Ávila, construido con **Astro 5** (migrado desde Next.js). Multilingüe (español e inglés) con arquitectura de componentes, Three.js interactivo, formulario de contacto vía Resend, y desplegado en **Vercel**.
 
-El portafolio fue originalmente realizado en **Next.js** con las siguientes tecnologías:
-- Tailwind CSS
-- Nodemailer
-- Swiper
-- next-intl
-- TypeScript
-
-Se mantiene **TypeScript** como lenguaje obligatorio para todo el código.
+**Stack actual:**
+- Astro 5 + TypeScript (strict)
+- Tailwind CSS v3
+- Three.js (carga diferida, bundle separado)
+- Resend (API de emails transaccionales)
+- Nodemailer ha sido reemplazado por Resend
+- Despliegue: **Vercel** (anteriormente Next.js en Vercel, migrado a Astro)
 
 ## 2. Estilizado con Tailwind CSS
 
-Se utiliza **Tailwind CSS (versión más reciente)**, adaptado de acuerdo al archivo `DESIGN.md` ubicado en la raíz del proyecto.
+Adaptado de acuerdo al archivo `DESIGN.md` en la raíz.
 
-### Paleta de Colores (DESIGN.md)
+### Paleta de Colores
 | Token | Valor | Uso |
 |---|---|---|
 | canvas | `#fdfcfc` | Fondo principal |
@@ -40,9 +39,9 @@ Se utiliza **Tailwind CSS (versión más reciente)**, adaptado de acuerdo al arc
 | success | `#30d158` | Indicador de éxito |
 
 ### Tipografía
-- **Fuente principal:** Berkeley Mono (con fallback a JetBrains Mono, IBM Plex Mono, Geist Mono)
-- Todos los roles de texto usan la misma familia monoespaciada
-- Pesos disponibles: 400 (regular), 500 (medium), 700 (bold)
+- **Fuente principal:** Berkeley Mono (fallback: JetBrains Mono, IBM Plex Mono, Geist Mono)
+- 100% monoespaciada
+- Pesos: 400 (regular), 500 (medium), 700 (bold)
 
 ### Spacing
 | Token | Valor |
@@ -56,214 +55,195 @@ Se utiliza **Tailwind CSS (versión más reciente)**, adaptado de acuerdo al arc
 | xxl | 32px |
 | section | 96px |
 
-### Border Radius
-| Token | Valor | Uso |
-|---|---|---|
-| none | 0px | Secciones, contenedores |
-| sm | 4px | Elementos interactivos |
-| full | 9999px | Avatar circles |
-
 ### Principios de Diseño
-- 100% tipografía monoespaciada (Berkeley Mono o sustituto)
+- 100% tipografía monoespaciada
 - Fondo crema `#fdfcfc` como único background de body
 - Sin sombras, sin gradientes, sin imágenes decorativas
 - Marcadores ASCII `[+]`, `[-]`, `[x]` como bullets/iconos
 - Secciones separadas por reglas hairline de 1px
 - Ritmo de sección: 96px entre bloques de contenido
-- Solo una superficie dark (`#201d1d`) por página (hero mockup)
+- Solo una superficie dark (`#201d1d`) por página (hero)
 
-## 3. Arquitectura y Componentes Reutilizables
-
-El proyecto debe utilizar **componentes reutilizables** pensando en **código limpio y arquitectura limpia**.
-
-### Principio: Separación de Lógica y Vista
-
-**La lógica debe estar separada de la vista.** Los componentes `.astro` deben contener únicamente la estructura HTML/JSX y la presentación visual. Toda lógica de negocio, procesamiento de datos, validaciones, transformaciones y manipulación de estado debe residir en archivos TypeScript separados (`.ts`).
-
-#### Reglas
-- Los componentes `.astro` solo reciben props y renderizan contenido
-- La lógica de negocio va en archivos `.ts` dentro de `src/lib/`, `src/utils/` o `src/constants/`
-- Las funciones de transformación de datos se importan desde módulos externos
-- Los scripts de cliente (`<script>`) en componentes `.astro` se limitan a interacciones UI puras (toggle, scroll, animaciones)
-- La validación de formularios, envío de datos y manejo de errores se extrae a funciones utilitarias
-
-#### Ejemplo
-```
-src/
-├── components/sections/ContactSection.astro  # Solo vista (HTML + Tailwind)
-├── lib/contact.ts                            # Lógica: validación, envío, estados
-├── utils/formatDate.ts                       # Utilidades puras
-└── constants/projects.ts                     # Datos estáticos
-```
+## 3. Arquitectura
 
 ### Estructura de Carpetas
 ```
 src/
-├── assets/          # Archivos estáticos importados
-├── components/      # Componentes reutilizables (Astro + TypeScript)
-│   ├── ui/          # Componentes base (botones, inputs, badges)
-│   ├── layout/      # Header, Footer, Nav
-│   └── sections/    # Secciones del portafolio
-├── constants/       # Datos estáticos y configuraciones
-├── layouts/         # Layouts principales
-├── pages/           # Páginas de Astro
-├── types/           # Interfaces y tipos TypeScript
-└── i18n/            # Configuración de internacionalización
+├── assets/img/        # Imágenes (optimizadas con <Image /> de Astro)
+├── components/
+│   ├── ui/            # Button, Input, Textarea, Badge, Section, AsciiMarker
+│   ├── layout/        # Header, Footer, LanguageSwitcher, MobileMenu, ThemeToggle, SectionButtons
+│   └── sections/      # HeroSection, AboutSection, SkillsSection, ExperienceSection, ProjectsSection, ContactSection
+├── constants/         # Datos estáticos (jobs, proyectos, redes)
+├── i18n/              # Utilidades de internacionalización
+├── layouts/           # BaseLayout.astro
+├── lib/               # Lógica: three-scene.ts (escena 3D)
+├── pages/
+│   ├── index.astro    # Homepage (redirige a /es/)
+│   ├── [locale]/      # Rutas multilingües (about, contact, experience, projects, skills, index)
+│   └── api/contact.ts # Endpoint POST con Resend
+├── types/             # Interfaces TypeScript
+└── styles/            # global.css
+
+public/
+├── favicon.ico, favicon.svg
+└── robots.txt
 ```
 
 ### Mensajes de Internacionalización
-Los archivos de traducción se encuentran en `messages/`:
 - `messages/en.json` - Inglés
 - `messages/es.json` - Español
+- 26 secciones, completamente traducidas y pareadas
 
-### Tipos TypeScript
-Definidos en `src/types/index.ts`:
-- `ItemView` - Elementos de vista
-- `JobItem` - Experiencia laboral
-- `JobToolItem` - Herramientas por trabajo
-- `InputInterface` - Campos de formulario
-- `Status` - Enum de estados (idle, loading, succeeded, failed, error)
-- `NetworkItem` - Redes sociales
-- `SocialNetWorksInterface` - Sección de redes
-- `EmailMe` - Datos de email
-- `ContactUsInterface` - Sección de contacto
+### Tipos TypeScript (`src/types/index.ts`)
+- `ItemView`, `JobItem`, `JobToolItem` - Elementos de vista y experiencia
+- `InputInterface`, `Status` - Formulario y estados
+- `NetworkItem`, `SocialNetworksInterface` - Redes sociales
+- `EmailMe`, `ContactUsInterface` - Contacto
 - `FormInterface` - Estado del formulario
-- `ProjectItem` - Proyectos
-- `ProjectSectionType` - Sección de proyectos
-- `sendMailType` - Configuración de envío de email
+- `ProjectItem`, `ProjectSectionType` - Proyectos
 
-### Constantes
-Definidas en `src/constants/index.ts`:
-- `useSocialNetWorks` - Redes sociales (GitHub, Facebook, LinkedIn, X)
-- `UseAbout` - Datos de "Acerca de mí"
-- `useJobs` - Experiencia laboral (7 trabajos)
-- `useProjects` - Proyectos (21 proyectos)
-- `useInitialForm` - Estado inicial del formulario de contacto
-- `useContactUs` - Datos de contacto
-- `useFormMessage` - Mensajes del formulario
-- `useFooter` - Datos del footer
+### Constantes (`src/constants/`)
+- `getJobs()` - 8 experiencias laborales
+- Proyectos, redes sociales, formulario de contacto
 
-## 4. Frontend y Navegación Three.js
+## 4. Three.js (Hero Section)
 
-La **frontpage** tendrá un **selector con Three.js** para navegar entre las secciones del proyecto de forma interactiva en 3D.
-
-### Implementación
-- Three.js se usará como componente cliente (`client:load` o `client:visible`)
-- El selector 3D permitirá transicionar entre las secciones del portafolio
-- Las imágenes de referencia están en la carpeta `public/`
+La frontpage tiene una escena 3D interactiva:
+- **Burbuja deformable** con cursor tracking (restringido a 25% del viewport)
+- Partículas flotantes
+- Mouse/touch interaction con deformación de malla
+- **Carga diferida**: dynamic import(), bundle separado (HeroSection: 5.71KB vs 509KB original)
+- Colores HSL animados en el tiempo
+- **Estados**: ✅ WebGL fallback probado, View Transitions cleanup + re-init funcional
+- **Nota**: En sandbox del navegador aparece "WebGL Disabled" — es esperado, funciona en entorno real
 
 ## 5. Secciones del Portafolio
 
-El proyecto tendrá las siguientes secciones:
-
-### a. Quién Soy (About Me)
-- Presentación personal como Full Stack Developer
-- Descripción de experiencia y habilidades
-- Imagen: `public/img/aboutme.jpg`
+### a. Quién Soy
+- Imagen: `src/assets/img/aboutme.jpg` (optimizada con Astro `<Image />`)
+- Descripción bilingüe, skills list con ASCII markers `[+]`
 
 ### b. Skills
-- Habilidades técnicas organizadas por categoría
-- Marcadores ASCII `[+]` para listar tecnologías
+- 7 categorías: Frontend, Backend, CMS, DevOps & Tools, APIs & Integraciones, Bases de Datos, Inteligencia Artificial
+- Skills como objetos `{name, description}` con toggle expand/collapse
+- Categorías con efecto underline vía IntersectionObserver
 
-### c. Empresas (Work Experience)
-- Experiencia laboral con 7 empresas:
-  1. Addiction Marketing Agency (2024-8 a 2025-4)
-  2. Ciancoders (2024-5 a 2024-8)
-  3. TREMGROUP LLC (2022-8 a 2024-4)
-  4. Conocimiento Corporativo S.A.S (2021-12 a 2022-6)
-  5. Nivelics SAS (2021-6 a 2021-11)
-  6. ZtGroup LLC (2020-3 a 2021-6)
-  7. Hispano Soluciones CA (2018-3 a 2020-1)
+### c. Empresas (8 trabajos)
+1. New Movement Agency (2024-actual)
+2. Addiction Marketing Agency (2024-2025)
+3. Ciancoders (2024)
+4. TREMGROUP LLC (2022-2024)
+5. Conocimiento Corporativo S.A.S (2021-2022)
+6. Nivelics SAS (2021)
+7. ZtGroup LLC (2020-2021)
+8. Hispano Soluciones CA (2018-2020)
 
 ### d. Proyectos
-- Galería de 21 proyectos con imagen, nombre, URL y descripción
-- Incluye: Gericht, Cesde, Thinkus, Dogtorscat, Boreal Expedition, etc.
-- Imágenes en `public/img/`
+- 18 proyectos con imágenes optimizadas desde `src/assets/img/`
+- Grid responsive 1-2-3 columnas
 
 ### e. Contacto
-- Formulario de contacto con validación
-- Campos: Full Name, Phone, Email, Subject, Message
-- Integración con Nodemailer para envío de emails
-- Links a redes sociales (GitHub, Facebook, LinkedIn, X)
+- Formulario con validación: Name, Phone, Email, Subject, Message
+- Envío via **Resend** (API key, dominio verificado coltmandev.dev)
+- Redes sociales: GitHub, Facebook, LinkedIn, X
 
-## 6. Imágenes y Assets
+## 6. Configuración Actual
 
-Las imágenes del proyecto están en la carpeta `public/`:
+### Dependencias clave
+- `astro` ^5.18.1, `@astrojs/vercel` ^9.0.5 (serverless), `@astrojs/tailwind`
+- `three` ^0.184.0, `resend`
+- `tailwindcss` ^3.4.19, `typescript` ^6.0.3
+- Dev: `vitest`, `@vitest/coverage-v8`
 
-### public/img/
-- aboutme.jpg, asipi-mexico.jpg, bajalenx.webp, book-test.jpg, boreal.jpg
-- boulton.jpg, cesde-proyectos.jpg, cesde.jpg, clima-app.webp, colegios.jpg
-- dogtor.jpg, email-icon.png, empleo.jpg, emprende.jpg, gericht.jpg
-- globe.png, hisomo.jpg, incredible-room.jpg, luxlife.jpg, news-app.webp
-- pockemon.webp, portfolio.jpg, thinkous.jpg, venecredits.jpg
-- icons8-left-94.png, icons8-right-94.png
-- screencapture-clima-gray-nine-vercel-app-2025-06-22-10_32_39.jpg
+### Scripts
+- `npm run dev` - Desarrollo
+- `npm run build` - Build producción (output para Vercel)
+- `npm run preview` - Preview local del build
+- `npm test` / `npm run test:run` / `npm run test:coverage` - Testing
 
-### public/shiba/
-- Assets relacionados con Shiba
+### Variables de Entorno
+- `RESEND_API_KEY` - API key de Resend
+- `FROM_EMAIL` - contact@coltmandev.dev
+- `TO_EMAIL` - Destino del formulario
 
-### public/flags/
-- Banderas para selector de idioma
+## 7. SEO y Accesibilidad
+- Sitemap XML dinámico (`/sitemap.xml`)
+- robots.txt configurado
+- Open Graph tags (og:title, og:description, og:image, og:url)
+- Canonical URLs
+- ARIA labels, roles, keyboard navigation (Escape cierra menú)
+- hreflang en links de idioma
+- Dark/light mode con persistencia
+- SEO por página: titles, descriptions y h1 descriptivos vía traducciones (`seo.pages`, `seo.descriptions`, `seo.h1`)
 
-### public/videos/
-- numbers.mp4
-
-### Otros
-- favicon.ico, favicon.svg
-- apply-webdev-img.svg, web-desing-job.svg
-
-## 7. Configuración Actual del Proyecto
-
-### package.json
-```json
-{
-  "name": "major-meteor",
-  "type": "module",
-  "version": "0.0.1",
-  "engines": { "node": ">=22.12.0" },
-  "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "astro": "^5.18.1"
-  }
-}
-```
-
-### astro.config.mjs
-Configuración básica de Astro sin plugins adicionales aún configurados.
-
-### tsconfig.json
-Configuración de TypeScript para el proyecto.
-
-## 8. Dependencias a Instalar
-
-Para migrar desde Next.js y cumplir con los requisitos, se necesitarán:
-
-- **@astrojs/tailwind** - Integración de Tailwind CSS con Astro
-- **three** + **@types/three** - Three.js para el selector 3D
-- **nodemailer** - Envío de emails (formulario de contacto)
-- **astro-i18n** o solución custom - Internacionalización (reemplazo de next-intl)
-- **swiper** o alternativa - Carrusel/slider si es necesario
-
-## 9. Breakpoints Responsivos
-
+## 8. Breakpoints Responsivos
 | Nombre | Ancho | Cambios |
 |---|---|---|
 | desktop-large | 1280px+ | Layout por defecto |
 | desktop | 1024px | Nav horizontal |
 | tablet | 850px | Footer 2-up, layouts apilados |
 | tablet-narrow | 768px | Nav hamburger drawer |
-| mobile | 640px | Single-column, display 38px → 28px |
+| mobile | 640px | Single-column |
 
-## 10. Notas de Migración desde Next.js
+## 9. Animaciones
+- **AOS (Animate On Scroll)**: Instalado vía npm, CSS importado en global.css, init en BaseLayout con `astro:page-load`
+- **Typewriter**: Efecto en h1 de cada sección
+- **Underline**: Categorías de skills con animación de subrayado (IntersectionObserver via inline script)
+- **View Transitions**: Navegación SPA-like entre páginas con transiciones del navegador
 
-- Reemplazar `next-intl` con solución de i18n para Astro
-- Reemplazar componentes React con componentes Astro
-- Usar `client:load`, `client:visible`, `client:only` para componentes interactivos (Three.js, formularios)
-- Mantener los archivos de traducción en `messages/`
-- Adaptar los hooks de React (`useTranslations`) a utilidades compatibles con Astro
-- Nodemailer debe usarse en endpoints de Astro (API routes)
+## 10. Notas Técnicas
+- Three.js se carga con `import()` dinámico (no bloquea render inicial)
+- Imágenes optimizadas con `<Image />` de Astro (WebP, múltiples widths)
+- Tests unitarios con Vitest (validación de i18n)
+- El adaptador `@astrojs/vercel/serverless` despliega API routes como serverless functions
+- El formulario de contacto usa Resend, no Nodemailer
+- Todos los scripts cliente usan `is:inline` o `data-astro-rerun` para compatibilidad con View Transitions
+- El proyecto se desplegó originalmente como **Next.js en Vercel**; migrado a **Astro 5** con adapter `@astrojs/vercel`
+
+## 11. Roadmap
+
+### ✅ Completados
+- Migración de Next.js a Astro 5
+- Contacto: migrado Nodemailer → Resend
+- Three.js: carga diferida, fallback WebGL, View Transitions cleanup/re-init
+- Skills: estructura `{name, description}`, 7 categorías (incluyendo IA)
+- SEO: titles, descriptions, h1 por página
+- Animaciones: AOS, typewriter, underline en skills
+- WhatsApp en contacto
+- Dark mode toggle: `data-astro-rerun` + IDs únicas
+- Favicon: actualizado a `</>`
+- Adapter migrado: `@astrojs/node` → `@astrojs/vercel` (serverless)
+- Lighthouse fixes: ARIA i18n, skip link, robots meta, canvas role, numbers.mp4 eliminado
+
+### ⬜ Pendientes
+- Deploy en Vercel (pendiente de push al repo y conexión con Vercel)
+- Verificar funcionalidad completa en entorno de producción
+- Monitorear emails vía Resend en producción
+
+### ✅ Performance Optimizations (26 May 2026)
+- **Three.js deferido**: Ahora se carga 800ms después de `window.load` — no bloquea FCP/LCP
+- **~36 MB de assets no utilizados eliminados**: `public/videos/` (8 videos, 29 MB), `numbers.mp4` (6.9 MB), `shiba/`, SVGs, flags
+- **9 imágenes no utilizadas eliminadas** de `src/assets/img/`
+- **`aboutme.jpg`**: cambiado a `loading="eager"` + `fetchpriority="high"`
+- **`astro.config.mjs`**: añadido `image.service = sharp` + `vercel({ imageService: true })`
+- **Dist size**: 44 MB → 8.4 MB (sin cambios en funcionalidad)
+
+### 🏆 Lighthouse Scores (26 May 2026)
+
+| Categoría | Local (sandbox) | Mobile (real, pre-opt) |
+|---|---|---|
+| **Performance** | **71** | **61** |
+| **Accessibility** | **98** | — |
+| **Best Practices** | **100** | — |
+| **SEO** | **100** | — |
+
+Mobile score (61) fue antes de las optimizaciones. Pendiente re-evaluar en producción.
+
+### ✅ Fixes aplicados del audit manual
+- ARIA labels: 4 hardcoded en español migrados a claves `navigation.*` con traducción EN/ES
+- Skip link: añadido como primer elemento focusable en `<body>` con traducción `navigation.skipToContent`
+- Three.js canvas: `role="img"` + `aria-label` vía `hero.canvasLabel`
+- `<meta name="robots" content="index, follow">` explícito en BaseLayout
+- `numbers.mp4` eliminado (archivo no utilizado, ~6.9 MB)
+- Heading hierarchy: verificado que cada sección ya renderiza `<h1>` desde `seo.h1.*` — no requiere cambios

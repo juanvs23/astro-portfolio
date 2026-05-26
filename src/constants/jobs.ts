@@ -10,6 +10,14 @@ export interface JobItem {
 export function getJobs(t: (key: string) => string): JobItem[] {
   return [
     {
+      id: 8,
+      title: t('newmovement.title'),
+      company: t('newmovement.company'),
+      start: t('newmovement.start'),
+      end: t('newmovement.end'),
+      description: t('newmovement.description'),
+    },
+    {
       id: 1,
       title: t('ama.title'),
       company: t('ama.company'),

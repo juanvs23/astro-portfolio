@@ -4,13 +4,17 @@ export interface ThreeSceneConfig {
   backgroundColor: string;
   particleColor: string;
   bubbleWidthPercent: number;
+  bubbleMaxPx: number;
 }
 
 const DEFAULT_CONFIG: ThreeSceneConfig = {
   backgroundColor: '#201d1d',
   particleColor: '#9a9898',
-  bubbleWidthPercent: 0.15,
+  bubbleWidthPercent: 0.10,
+  bubbleMaxPx: 200,
 };
+
+let baseRadius = 1;
 
 export function initThreeScene(
   container: HTMLElement,
@@ -18,9 +22,6 @@ export function initThreeScene(
   config: Partial<ThreeSceneConfig> = {},
 ): () => void {
   const settings = { ...DEFAULT_CONFIG, ...config };
-
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(settings.backgroundColor);
 
   const camera = new THREE.PerspectiveCamera(
     75,
@@ -30,9 +31,19 @@ export function initThreeScene(
   );
   camera.position.z = 5;
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  let renderer: THREE.WebGLRenderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  } catch {
+    console.warn('WebGL not available, skipping 3D scene');
+    return () => {};
+  }
+
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const scene = new THREE.Scene();
+  scene.background = null;
 
   const bubble = createBubble();
   scene.add(bubble);
@@ -50,11 +61,11 @@ export function initThreeScene(
   pointLight.position.set(3, 3, 4);
   scene.add(pointLight);
 
-  let isDragging = false;
-  let targetRotation = { x: 0, y: 0 };
   let isRunning = true;
 
   let bubbleTargetPos = new THREE.Vector3(0, 0, 0);
+  let currentHoverScale = 1;
+  let targetHoverScale = 1;
 
   const raycaster = new THREE.Raycaster();
   const mouse = new THREE.Vector2(-999, -999);
@@ -64,6 +75,18 @@ export function initThreeScene(
 
   const currentPositions = new Float32Array(originalPositions);
   const velocities = new Float32Array(originalPositions.length);
+
+  function calcBubbleRadius(): number {
+    const fovRad = camera.fov * (Math.PI / 180);
+    const visibleHeight = 2 * Math.tan(fovRad / 2) * camera.position.z;
+    const visibleWidth = visibleHeight * camera.aspect;
+    const radiusFromPercent = (visibleWidth * settings.bubbleWidthPercent) / 2;
+    const maxRadiusFromPx = settings.bubbleMaxPx / (2 * renderer.getPixelRatio());
+    return Math.min(radiusFromPercent, maxRadiusFromPx);
+  }
+
+  baseRadius = calcBubbleRadius();
+  bubble.scale.setScalar(baseRadius);
 
   function updateMouse(event: MouseEvent | Touch) {
     const rect = canvas.getBoundingClientRect();
@@ -104,8 +127,8 @@ export function initThreeScene(
           const influence = Math.pow(1 - dist / radius, 2);
           const direction = vertex.clone().sub(cursorWorldPos).normalize();
 
-          const pushStrength = isDragging ? 1.2 : 0.6;
-          const pullStrength = isDragging ? 0.8 : 0.3;
+          const pushStrength = 0.6;
+          const pullStrength = 0.3;
 
           targetX += direction.x * influence * pushStrength + cursorForce.x * influence * pullStrength;
           targetY += direction.y * influence * pushStrength + cursorForce.y * influence * pullStrength;
@@ -146,15 +169,25 @@ export function initThreeScene(
   const onMouseMove = (event: MouseEvent) => {
     updateMouse(event);
 
-    if (isDragging) {
-      const deltaX = event.clientX - (event as any).previousX || 0;
-      const deltaY = event.clientY - (event as any).previousY || 0;
-      targetRotation.y += deltaX * 0.005;
-      targetRotation.x += deltaY * 0.005;
+    const fovRad = camera.fov * (Math.PI / 180);
+    const visibleHeight = 2 * Math.tan(fovRad / 2) * camera.position.z;
+    const visibleWidth = visibleHeight * camera.aspect;
+
+    const maxRadius = Math.min(visibleWidth, visibleHeight) * 0.25;
+
+    let targetX = mouse.x * (visibleWidth / 2);
+    let targetY = mouse.y * (visibleHeight / 2);
+
+    const distance = Math.sqrt(targetX * targetX + targetY * targetY);
+    if (distance > maxRadius) {
+      const scale = maxRadius / distance;
+      targetX *= scale;
+      targetY *= scale;
     }
 
-    (event as any).previousX = event.clientX;
-    (event as any).previousY = event.clientY;
+    bubbleTargetPos.x = targetX;
+    bubbleTargetPos.y = targetY;
+    bubbleTargetPos.z = 0;
 
     const worldPoint = getWorldPoint(event);
     if (worldPoint) {
@@ -171,45 +204,18 @@ export function initThreeScene(
     }
   };
 
-  const onMouseDown = (event: MouseEvent) => {
-    updateMouse(event);
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObject(bubble);
-
-    if (intersects.length > 0) {
-      isDragging = true;
-      canvas.style.cursor = 'grabbing';
-    }
-  };
-
-  const onMouseUp = () => {
-    isDragging = false;
-    canvas.style.cursor = 'default';
-  };
-
   const onResize = () => {
     camera.aspect = container.clientWidth / container.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(container.clientWidth, container.clientHeight);
-    updateBubbleSize();
+    baseRadius = calcBubbleRadius();
   };
-
-  function updateBubbleSize() {
-    const fovRad = camera.fov * (Math.PI / 180);
-    const visibleHeight = 2 * Math.tan(fovRad / 2) * camera.position.z;
-    const visibleWidth = visibleHeight * camera.aspect;
-    const targetRadius = (visibleWidth * settings.bubbleWidthPercent) / 2;
-    bubble.scale.setScalar(targetRadius);
-  }
-
-  updateBubbleSize();
 
   const onTouchStart = (event: TouchEvent) => {
     if (event.touches.length === 1) {
       const touch = event.touches[0];
       const worldPoint = getWorldPoint(touch);
       if (worldPoint) {
-        isDragging = true;
         hasCursor = true;
         cursorWorldPos.copy(worldPoint);
         (event as any).previousX = touch.clientX;
@@ -226,9 +232,6 @@ export function initThreeScene(
       const deltaX = touch.clientX - prevX;
       const deltaY = touch.clientY - prevY;
 
-      targetRotation.y += deltaX * 0.005;
-      targetRotation.x += deltaY * 0.005;
-
       (event as any).previousX = touch.clientX;
       (event as any).previousY = touch.clientY;
 
@@ -242,27 +245,16 @@ export function initThreeScene(
   };
 
   const onTouchEnd = () => {
-    isDragging = false;
     hasCursor = false;
     cursorForce.set(0, 0, 0);
   };
 
-  const onBubbleHover = (event: Event) => {
-    const section = (event as CustomEvent).detail;
-    const sectionMap: Record<string, THREE.Vector3> = {
-      'About': new THREE.Vector3(-0.7, 0.5, 0),
-      'Skills': new THREE.Vector3(0.7, 0.5, 0),
-      'Experience': new THREE.Vector3(-0.85, 0, 0),
-      'Projects': new THREE.Vector3(0.85, 0, 0),
-      'Contact': new THREE.Vector3(0, -0.7, 0),
-    };
-    if (sectionMap[section]) {
-      bubbleTargetPos.copy(sectionMap[section]);
-    }
+  const onBubbleHover = (_event: Event) => {
+    targetHoverScale = 1.1;
   };
 
   const onBubbleHoverEnd = () => {
-    bubbleTargetPos.set(0, 0, 0);
+    targetHoverScale = 1;
   };
 
   function animate() {
@@ -271,17 +263,15 @@ export function initThreeScene(
 
     const currentTime = performance.now();
 
-    bubble.rotation.x += (targetRotation.x - bubble.rotation.x) * 0.05;
-    bubble.rotation.y += (targetRotation.y - bubble.rotation.y) * 0.05;
+    bubble.rotation.x += 0.001;
+    bubble.rotation.y += 0.002;
 
-    bubble.position.x += (bubbleTargetPos.x - bubble.position.x) * 0.05;
-    bubble.position.y += (bubbleTargetPos.y - bubble.position.y) * 0.05;
-    bubble.position.z += (bubbleTargetPos.z - bubble.position.z) * 0.05;
+    bubble.position.x += (bubbleTargetPos.x - bubble.position.x) * 0.08;
+    bubble.position.y += (bubbleTargetPos.y - bubble.position.y) * 0.08;
+    bubble.position.z += (bubbleTargetPos.z - bubble.position.z) * 0.08;
 
-    if (!isDragging) {
-      bubble.rotation.x += 0.001;
-      bubble.rotation.y += 0.002;
-    }
+    currentHoverScale += (targetHoverScale - currentHoverScale) * 0.1;
+    bubble.scale.setScalar(currentHoverScale * baseRadius);
 
     updateCursorDeformation();
     updateColor(currentTime);
@@ -297,8 +287,6 @@ export function initThreeScene(
   }
 
   canvas.addEventListener('mousemove', onMouseMove);
-  canvas.addEventListener('mousedown', onMouseDown);
-  canvas.addEventListener('mouseup', onMouseUp);
   canvas.addEventListener('touchstart', onTouchStart, { passive: true });
   canvas.addEventListener('touchmove', onTouchMove, { passive: true });
   canvas.addEventListener('touchend', onTouchEnd);
@@ -311,8 +299,6 @@ export function initThreeScene(
   return () => {
     isRunning = false;
     canvas.removeEventListener('mousemove', onMouseMove);
-    canvas.removeEventListener('mousedown', onMouseDown);
-    canvas.removeEventListener('mouseup', onMouseUp);
     canvas.removeEventListener('touchstart', onTouchStart);
     canvas.removeEventListener('touchmove', onTouchMove);
     canvas.removeEventListener('touchend', onTouchEnd);

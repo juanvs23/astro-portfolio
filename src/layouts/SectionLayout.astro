@@ -7,13 +7,15 @@ import { getPathWithoutLocale, type Locale } from '@/i18n';
 
 interface Props {
   locale: Locale;
+  title?: string;
+  description?: string;
 }
 
-const { locale } = Astro.props;
+const { locale, title, description } = Astro.props;
 const currentPath = getPathWithoutLocale(Astro.url.pathname);
 ---
 
-<BaseLayout locale={locale}>
+<BaseLayout locale={locale} title={title} description={description}>
   <Header locale={locale} currentPath={currentPath} />
   <MobileMenu locale={locale} />
   <main class="pt-[56px]">

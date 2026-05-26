@@ -15,10 +15,10 @@ const {
   class: className = '',
 } = Astro.props;
 
-const baseClasses = 'font-mono text-body-md font-medium transition-colors duration-150 cursor-pointer';
+const baseClasses = 'font-mono text-body-md font-medium transition-colors duration-300 cursor-pointer';
 
 const variantClasses = {
-  primary: 'bg-primary text-on-primary rounded-sm px-xs h-[36px] hover:bg-ink-deep',
+  primary: 'bg-primary text-on-primary border border-hairline-strong rounded-sm px-xs h-[36px] hover:bg-canvas hover:text-ink hover:border-ink',
   secondary: 'bg-canvas text-ink border border-hairline-strong rounded-sm px-xs h-[36px] hover:bg-surface-soft',
   tab: active
     ? 'bg-transparent text-ink border-b-2 border-ash px-md py-xs'

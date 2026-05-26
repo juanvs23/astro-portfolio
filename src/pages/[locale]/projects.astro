@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/SectionLayout.astro';
 import ProjectsSection from '../../components/sections/ProjectsSection.astro';
-import { locales, type Locale } from '@/i18n';
+import { getTranslations, locales, type Locale } from '@/i18n';
 
 export function getStaticPaths() {
   return locales.map((locale) => ({
@@ -10,8 +10,11 @@ export function getStaticPaths() {
 }
 
 const locale = Astro.params.locale as Locale;
+const t = await getTranslations(locale);
+const seoPages = t('seo.pages') as Record<string, string>;
+const seoDescriptions = t('seo.descriptions') as Record<string, string>;
 ---
 
-<Layout locale={locale}>
+<Layout locale={locale} title={seoPages.projects} description={seoDescriptions.projects}>
   <ProjectsSection locale={locale} />
 </Layout>

@@ -11,28 +11,30 @@ interface Props {
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
-const skillCategories = t('skills.categories') as { title: string; skills: string[] }[];
+const skillCategories = t('skills.categories') as { title: string; skills: { name: string; description: string }[] }[];
 ---
 
 <Section id="skills">
-  <Badge variant="section-label" class="mb-sm">
-    {t('skills.title')}
-  </Badge>
+  <h1 data-typewriter data-aos="fade-down" class="text-[30px] md:text-[35px] lg:text-[38px] font-bold mb-sm">
+    {t('seo.h1.skills')}
+  </h1>
 
-  <div class="border-b border-hairline mb-xl"></div>
+  <div class="border-b border-hairline mb-xl" data-aos="fade-up" data-aos-delay="100"></div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-xl">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-xl" data-aos="fade-up" data-aos-delay="150">
     {skillCategories.map((category) => (
       <div class="bg-canvas">
-        <h3 class="text-heading-md font-bold text-ink mb-md">
+        <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
           <AsciiMarker state="add" class="mr-xs inline" />
           {category.title}
-        </h3>
+        </h2>
 
         <ul class="space-y-xs">
           {category.skills.map((skill) => (
-            <li class="text-body-md text-body py-xs border-b border-hairline">
-              {skill}
+            <li class="skill-item text-body-md text-body py-xs border-b border-hairline cursor-pointer select-none" data-skill={skill.name}>
+              <span class="skill-marker text-ink font-bold mr-xs">[+]</span>
+              <span class="skill-name">{skill.name}</span>
+              <div class="skill-content text-caption-md text-mute mt-xs pl-[1.5em]">{skill.description}</div>
             </li>
           ))}
         </ul>
@@ -40,3 +42,57 @@ const skillCategories = t('skills.categories') as { title: string; skills: strin
     ))}
   </div>
 </Section>
+
+<script>
+  document.querySelectorAll('.skill-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var marker = this.querySelector('.skill-marker');
+      var content = this.querySelector('.skill-content');
+
+      if (content.classList.contains('open')) {
+        content.classList.remove('open');
+        marker.textContent = '[+]';
+      } else {
+        content.classList.add('open');
+        marker.textContent = '[-]';
+      }
+    });
+  });
+</script>
+
+<style>
+  .skill-content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: max-height 300ms ease, opacity 300ms ease, margin 300ms ease, padding 300ms ease;
+  }
+  .skill-content.open {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 0.25rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  [data-underline] {
+    position: relative;
+    padding-bottom: 4px;
+  }
+  [data-underline]::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.5s ease;
+  }
+  [data-underline].in-view::after {
+    width: 100%;
+  }
+</style>
