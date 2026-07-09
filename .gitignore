@@ -25,3 +25,9 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# playwright MCP artifacts
+.playwright-mcp/
+
+# strategy/atl artifacts
+estrategia/
