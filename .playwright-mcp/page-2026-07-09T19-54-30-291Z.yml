@@ -1,0 +1,188 @@
+- generic [active] [ref=f6e1]:
+  - link "Saltar al contenido" [ref=f6e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=f6e3]:
+    - banner [ref=f6e4]:
+      - navigation "Navegación principal" [ref=f6e5]:
+        - generic [ref=f6e6]:
+          - button "Cambiar modo oscuro" [ref=f6e7] [cursor=pointer]:
+            - img [ref=f6e8]
+          - link "Ingles" [ref=f6e10] [cursor=pointer]:
+            - /url: /en/skills
+            - text: EN
+          - button "Abrir Menú" [ref=f6e11] [cursor=pointer]:
+            - img [ref=f6e12]
+    - dialog "Menú de navegación" [ref=f6e13]:
+      - generic [ref=f6e14]:
+        - button "Cerrar Menú" [ref=f6e16] [cursor=pointer]:
+          - img [ref=f6e17]
+        - navigation "Navegación móvil" [ref=f6e20]:
+          - link "Inicio" [ref=f6e21] [cursor=pointer]:
+            - /url: /es/
+          - link "Acerca de mí" [ref=f6e22] [cursor=pointer]:
+            - /url: /es/about
+          - link "Mis Habilidades" [ref=f6e23] [cursor=pointer]:
+            - /url: /es/skills
+          - link "Experiencia Laboral" [ref=f6e24] [cursor=pointer]:
+            - /url: /es/experience
+          - link "Proyectos" [ref=f6e25] [cursor=pointer]:
+            - /url: /es/projects
+          - link "Contacto" [ref=f6e26] [cursor=pointer]:
+            - /url: /es/contact
+    - main [ref=f6e27]:
+      - generic [ref=f6e29]:
+        - heading [level=1] [ref=f6e30]
+        - generic [ref=f6e32]:
+          - generic [ref=f6e33]:
+            - heading "[+] Frontend" [level=2] [ref=f6e34]
+            - list [ref=f6e35]:
+              - listitem [ref=f6e36] [cursor=pointer]:
+                - text: "[+] React"
+                - generic: Librería para construir interfaces con componentes reutilizables
+              - listitem [ref=f6e37] [cursor=pointer]:
+                - text: "[+] Next.js"
+                - generic: Framework de React con SSR, SSG y App Router
+              - listitem [ref=f6e38] [cursor=pointer]:
+                - text: "[+] JavaScript ES6+"
+                - generic: JavaScript moderno con características ES6+
+              - listitem [ref=f6e39] [cursor=pointer]:
+                - text: "[+] HTML5"
+                - generic: Marcado semántico y estándares de accesibilidad
+              - listitem [ref=f6e40] [cursor=pointer]:
+                - text: "[+] CSS3"
+                - generic: CSS moderno con Flexbox, Grid y animaciones
+              - listitem [ref=f6e41] [cursor=pointer]:
+                - text: "[+] Tailwind CSS"
+                - generic: Framework CSS utility-first para desarrollo rápido
+              - listitem [ref=f6e42] [cursor=pointer]:
+                - text: "[+] Swiper"
+                - generic: Librería de sliders y carruseles táctiles
+          - generic [ref=f6e43]:
+            - heading "[+] Backend" [level=2] [ref=f6e44]
+            - list [ref=f6e45]:
+              - listitem [ref=f6e46] [cursor=pointer]:
+                - text: "[+] Node.js"
+                - generic: Entorno JS para aplicaciones escalables del lado del servidor
+              - listitem [ref=f6e47] [cursor=pointer]:
+                - text: "[+] PHP"
+                - generic: Scripting del lado del servidor para apps web dinámicas
+              - listitem [ref=f6e48] [cursor=pointer]:
+                - text: "[+] Python"
+                - generic: Lenguaje versátil para desarrollo web y automatización
+              - listitem [ref=f6e49] [cursor=pointer]:
+                - text: "[+] REST APIs"
+                - generic: Diseño de APIs siguiendo principios REST
+              - listitem [ref=f6e50] [cursor=pointer]:
+                - text: "[+] Express"
+                - generic: Framework web minimalista para APIs en Node.js
+          - generic [ref=f6e51]:
+            - heading "[+] CMS" [level=2] [ref=f6e52]
+            - list [ref=f6e53]:
+              - listitem [ref=f6e54] [cursor=pointer]:
+                - text: "[+] WordPress"
+                - generic: Sistema de gestión de contenidos con temas y plugins
+              - listitem [ref=f6e55] [cursor=pointer]:
+                - text: "[+] Temas nativos"
+                - generic: Temas de WordPress personalizados desde cero
+              - listitem [ref=f6e56] [cursor=pointer]:
+                - text: "[+] Plugins nativos"
+                - generic: Desarrollo de plugins personalizados para WordPress
+              - listitem [ref=f6e57] [cursor=pointer]:
+                - text: "[+] CPT"
+                - generic: Custom Post Types para contenido estructurado
+              - listitem [ref=f6e58] [cursor=pointer]:
+                - text: "[+] Taxonomías"
+                - generic: Taxonomías personalizadas para organización de contenido
+              - listitem [ref=f6e59] [cursor=pointer]:
+                - text: "[+] WooCommerce"
+                - generic: Plugin de comercio electrónico para WordPress
+          - generic [ref=f6e60]:
+            - heading "[+] DevOps & Tools" [level=2] [ref=f6e61]
+            - list [ref=f6e62]:
+              - listitem [ref=f6e63] [cursor=pointer]:
+                - text: "[+] Docker"
+                - generic: Contenedores para desarrollo y despliegue consistentes
+              - listitem [ref=f6e64] [cursor=pointer]:
+                - text: "[+] Git"
+                - generic: Sistema de control de versiones distribuido
+              - listitem [ref=f6e65] [cursor=pointer]:
+                - text: "[+] Linux"
+                - generic: Administración de servidores y operaciones en línea de comandos
+              - listitem [ref=f6e66] [cursor=pointer]:
+                - text: "[+] SSH"
+                - generic: Acceso remoto seguro y gestión de servidores
+              - listitem [ref=f6e67] [cursor=pointer]:
+                - text: "[+] CI/CD"
+                - generic: Pipelines automatizados de prueba y despliegue
+              - listitem [ref=f6e68] [cursor=pointer]:
+                - text: "[+] Vercel"
+                - generic: Plataforma cloud para despliegue de frontend
+          - generic [ref=f6e69]:
+            - heading "[+] APIs e Integraciones" [level=2] [ref=f6e70]
+            - list [ref=f6e71]:
+              - listitem [ref=f6e72] [cursor=pointer]:
+                - text: "[+] PayPal"
+                - generic: Integración de procesamiento de pagos
+              - listitem [ref=f6e73] [cursor=pointer]:
+                - text: "[+] Stripe"
+                - generic: Integración de pasarela de pagos moderna
+              - listitem [ref=f6e74] [cursor=pointer]:
+                - text: "[+] Google Maps"
+                - generic: Servicios de geolocalización y mapas
+              - listitem [ref=f6e75] [cursor=pointer]:
+                - text: "[+] Google APIs"
+                - generic: Integración de varios servicios de Google
+          - generic [ref=f6e76]:
+            - heading "[+] Bases de Datos" [level=2] [ref=f6e77]
+            - list [ref=f6e78]:
+              - listitem [ref=f6e79] [cursor=pointer]:
+                - text: "[+] MySQL"
+                - generic: Gestión de bases de datos relacionales
+              - listitem [ref=f6e80] [cursor=pointer]:
+                - text: "[+] PostgreSQL"
+                - generic: BD relacional avanzada con soporte JSON
+              - listitem [ref=f6e81] [cursor=pointer]:
+                - text: "[+] MongoDB"
+                - generic: Base de datos NoSQL documental
+          - generic [ref=f6e82]:
+            - heading "[+] Inteligencia Artificial & Automatización" [level=2] [ref=f6e83]
+            - list [ref=f6e84]:
+              - listitem [ref=f6e85] [cursor=pointer]:
+                - text: "[+] Chatbots Inteligentes"
+                - generic: Asistentes 24/7 con IA que entienden consultas, procesan pedidos y escalan casos complejos. Reducción comprobada de hasta 45% en tickets de soporte.
+              - listitem [ref=f6e86] [cursor=pointer]:
+                - text: "[+] Sistemas RAG"
+                - generic: Asistentes que responden preguntas usando tu propia base de conocimiento (documentos, FAQs, manuals). Sin alucinaciones, con fuentes verificables.
+              - listitem [ref=f6e87] [cursor=pointer]:
+                - text: "[+] Agentes Autónomos"
+                - generic: "Automatización de flujos de trabajo completos: clasificación de documentos, generación de reportes, respuestas automáticas y procesamiento de datos."
+              - listitem [ref=f6e88] [cursor=pointer]:
+                - text: "[+] Integración LLMs"
+                - generic: Conexión de modelos OpenAI, Claude y locales con tus plataformas web existentes (WordPress, React, APIs propias).
+    - contentinfo [ref=f6e89]:
+      - generic [ref=f6e90]:
+        - generic [ref=f6e91]:
+          - link "GitHub" [ref=f6e92] [cursor=pointer]:
+            - /url: https://github.com/juanvs23
+          - link "LinkedIn" [ref=f6e93] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/juanvs23/
+          - link "X" [ref=f6e94] [cursor=pointer]:
+            - /url: https://twitter.com/juanvs23
+          - link "Facebook" [ref=f6e95] [cursor=pointer]:
+            - /url: https://www.facebook.com/juancarlos.avila.1420/
+        - generic [ref=f6e96]:
+          - generic [ref=f6e97]: Copyright © 2026 Desarrollado por Juan Carlos Ávila
+          - generic [ref=f6e99]: Español
+  - generic [ref=f6e102]:
+    - button "Menu" [ref=f6e103]:
+      - img [ref=f6e105]
+      - generic: Menu
+    - button "Inspect" [ref=f6e109]:
+      - img [ref=f6e111]
+      - generic: Inspect
+    - button "Audit" [ref=f6e113]:
+      - img [ref=f6e115]
+      - generic: Audit
+    - button "Settings" [ref=f6e118]:
+      - img [ref=f6e120]
+      - generic: Settings

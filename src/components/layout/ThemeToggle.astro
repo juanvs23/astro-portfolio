@@ -68,7 +68,9 @@ const btnClass = isHero
     }
   }
 
-  updateIcons(getCurrentTheme());
+  var currentTheme = getCurrentTheme();
+  applyTheme(currentTheme);
+  updateIcons(currentTheme);
 
   btn?.addEventListener('click', function() {
     updateIcons(toggleTheme());

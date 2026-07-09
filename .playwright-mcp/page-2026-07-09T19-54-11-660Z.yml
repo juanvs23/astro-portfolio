@@ -1,0 +1,79 @@
+- generic [active] [ref=f4e1]:
+  - link "Saltar al contenido" [ref=f4e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=f4e3]:
+    - banner [ref=f4e4]:
+      - navigation "Navegación principal" [ref=f4e5]:
+        - generic [ref=f4e6]:
+          - button "Cambiar modo oscuro" [ref=f4e7] [cursor=pointer]:
+            - img [ref=f4e8]
+          - link "Ingles" [ref=f4e10] [cursor=pointer]:
+            - /url: /en/about
+            - text: EN
+          - button "Abrir Menú" [ref=f4e11] [cursor=pointer]:
+            - img [ref=f4e12]
+    - dialog "Menú de navegación" [ref=f4e13]:
+      - generic [ref=f4e14]:
+        - button "Cerrar Menú" [ref=f4e16] [cursor=pointer]:
+          - img [ref=f4e17]
+        - navigation "Navegación móvil" [ref=f4e20]:
+          - link "Inicio" [ref=f4e21] [cursor=pointer]:
+            - /url: /es/
+          - link "Acerca de mí" [ref=f4e22] [cursor=pointer]:
+            - /url: /es/about
+          - link "Mis Habilidades" [ref=f4e23] [cursor=pointer]:
+            - /url: /es/skills
+          - link "Experiencia Laboral" [ref=f4e24] [cursor=pointer]:
+            - /url: /es/experience
+          - link "Proyectos" [ref=f4e25] [cursor=pointer]:
+            - /url: /es/projects
+          - link "Contacto" [ref=f4e26] [cursor=pointer]:
+            - /url: /es/contact
+    - main [ref=f4e27]:
+      - generic [ref=f4e30]:
+        - img "CONÓCEME" [ref=f4e32]
+        - generic [ref=f4e33]:
+          - heading [level=1] [ref=f4e34]
+          - generic [ref=f4e36]:
+            - text: "¡Hola! Soy Juan Carlos Ávila. Durante 8+ años construí plataformas web — desde tiendas WooCommerce hasta dashboards inmobiliarios con React. Pero en los últimos 2 años encontré mi verdadero foco:"
+            - strong [ref=f4e37]: automatizar procesos empresariales con IA
+            - text: .
+            - text: Hoy ayudo a PyMEs a combinar desarrollo web tradicional con agentes de IA, chatbots inteligentes y sistemas RAG para reducir costos operativos. Imaginate un restaurante donde el chatbot no solo recibe pedidos, sino que los envía directo a la cocina. O una empresa de logística donde los documentos se clasifican solos. Eso hago.
+            - text: "Trabajo con WordPress, React, Python y modelos de IA (OpenAI, locales, RAG) para crear soluciones que realmente funcionan. Mi enfoque:"
+            - strong [ref=f4e38]: código limpio, resultados medibles, cero magic
+            - text: .
+          - heading "[+] Mis Habilidades" [level=3] [ref=f4e39]
+          - list [ref=f4e40]:
+            - listitem [ref=f4e41]: "[+] WordPress, React, Next.js — plataformas web escalables"
+            - listitem [ref=f4e42]: "[+] Python, PHP, Node.js — backend y automatización"
+            - listitem [ref=f4e43]: "[+] Chatbots IA + RAG — asistentes inteligentes 24/7"
+            - listitem [ref=f4e44]: "[+] Agentes de IA autónomos — flujos de trabajo automatizados"
+            - listitem [ref=f4e45]: "[+] APIs (OpenAI, Stripe, PayPal, Google) — integraciones"
+            - listitem [ref=f4e46]: "[+] Linux, Docker, Cloud — infraestructura y despliegue"
+    - contentinfo [ref=f4e47]:
+      - generic [ref=f4e48]:
+        - generic [ref=f4e49]:
+          - link "GitHub" [ref=f4e50] [cursor=pointer]:
+            - /url: https://github.com/juanvs23
+          - link "LinkedIn" [ref=f4e51] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/juanvs23/
+          - link "X" [ref=f4e52] [cursor=pointer]:
+            - /url: https://twitter.com/juanvs23
+          - link "Facebook" [ref=f4e53] [cursor=pointer]:
+            - /url: https://www.facebook.com/juancarlos.avila.1420/
+        - generic [ref=f4e54]:
+          - generic [ref=f4e55]: Copyright © 2026 Desarrollado por Juan Carlos Ávila
+          - generic [ref=f4e57]: Español
+  - generic [ref=f4e60]:
+    - button "Menu" [ref=f4e61]:
+      - img [ref=f4e63]
+      - generic: Menu
+    - button "Inspect" [ref=f4e67]:
+      - img [ref=f4e69]
+      - generic: Inspect
+    - button "Audit" [ref=f4e71]:
+      - img [ref=f4e73]
+      - generic: Audit
+    - button "Settings" [ref=f4e76]:
+      - img [ref=f4e78]
+      - generic: Settings

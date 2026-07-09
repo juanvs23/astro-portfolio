@@ -30,6 +30,8 @@ const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
 const projects = [
+  { id: 101, name: 'AI Chatbot — RAG Soporte', url: 'https://coltmandev.dev/es/contact', img: dogtor, desc: 'Asistente IA con arquitectura RAG para base de conocimiento empresarial. Reducción del 45% en tickets de soporte.' },
+  { id: 102, name: 'Real Estate Dashboard', url: 'https://luxlifemiamiblog.com/market-statistics/', img: luxlife, desc: 'Dashboard React con 50K+ registros inmobiliarios en Miami. Filtros por precio, ROI, tipo de propiedad. Google Maps API.' },
   { id: 1, name: 'Gericht', url: 'https://restaurant.coltmandev.dev/', img: gericht },
   { id: 2, name: 'Cesde', url: 'https://www.cesde.edu.co/', img: cesde },
   { id: 3, name: 'Thinkus', url: 'https://thinkus.io/', img: thinkous },
@@ -87,6 +89,10 @@ const projects = [
             <AsciiMarker state="add" class="mr-xs inline" />
             {project.name}
           </h3>
+
+          {project.desc && (
+            <p class="text-caption-md text-mute mb-sm">{project.desc}</p>
+          )}
 
           <span class="text-caption-md text-mute group-hover:text-ink transition-colors">
             {t('projects.button')} →

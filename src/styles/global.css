@@ -103,7 +103,7 @@
 .typewriter {
   display: inline;
   overflow: hidden;
-  white-space: nowrap;
   border-right: 2px solid var(--color-ink);
   animation: typewriter-cursor 0.8s step-end infinite;
+  word-break: break-word;
 }

@@ -9,8 +9,9 @@ Portafolio profesional de Juan Carlos Ávila, construido con **Astro 5** (migrad
 - Tailwind CSS v3
 - Three.js (carga diferida, bundle separado)
 - Resend (API de emails transaccionales)
-- Nodemailer ha sido reemplazado por Resend
 - Despliegue: **Vercel** (anteriormente Next.js en Vercel, migrado a Astro)
+
+**Posicionamiento:** Web Developer + AI Automation Specialist. El portafolio promociona a Juan Carlos como desarrollador web con especialización en automatización con IA (chatbots RAG, agentes autónomos, integración LLM), apuntando a PyMEs que necesitan combinar desarrollo web tradicional con automatización inteligente.
 
 ## 2. Estilizado con Tailwind CSS
 
@@ -122,7 +123,8 @@ La frontpage tiene una escena 3D interactiva:
 
 ### a. Quién Soy
 - Imagen: `src/assets/img/aboutme.jpg` (optimizada con Astro `<Image />`)
-- Descripción bilingüe, skills list con ASCII markers `[+]`
+- Descripción bilingüe enfocada en Web Dev + AI Automation (8+ años exp, chatbots IA, RAG, agentes autónomos)
+- Skills list con ASCII markers `[+]`: WordPress/React, Python/PHP, Chatbots IA+RAG, Agentes autónomos, APIs, Linux/Docker
 
 ### b. Skills
 - 7 categorías: Frontend, Backend, CMS, DevOps & Tools, APIs & Integraciones, Bases de Datos, Inteligencia Artificial
@@ -130,7 +132,7 @@ La frontpage tiene una escena 3D interactiva:
 - Categorías con efecto underline vía IntersectionObserver
 
 ### c. Empresas (8 trabajos)
-1. New Movement Agency (2024-actual)
+1. New Movement Agency (2025-2026) — Full Stack Developer, AI Integration. Reducción 60% procesamiento manual, 99.9% uptime, +40% SEO rankings.
 2. Addiction Marketing Agency (2024-2025)
 3. Ciancoders (2024)
 4. TREMGROUP LLC (2022-2024)
@@ -140,7 +142,8 @@ La frontpage tiene una escena 3D interactiva:
 8. Hispano Soluciones CA (2018-2020)
 
 ### d. Proyectos
-- 18 proyectos con imágenes optimizadas desde `src/assets/img/`
+- 19 proyectos con imágenes optimizadas desde `src/assets/img/`
+- Incluye: AI Chatbot RAG (reducción 45% tickets), Real Estate Dashboard (50K+ registros), y 17 proyectos web adicionales
 - Grid responsive 1-2-3 columnas
 
 ### e. Contacto

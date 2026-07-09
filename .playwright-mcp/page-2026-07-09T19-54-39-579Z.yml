@@ -1,0 +1,75 @@
+- generic [active] [ref=f7e1]:
+  - link "Saltar al contenido" [ref=f7e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=f7e3]:
+    - banner [ref=f7e4]:
+      - navigation "Navegación principal" [ref=f7e5]:
+        - generic [ref=f7e6]:
+          - link "Inicio" [ref=f7e7] [cursor=pointer]:
+            - /url: /es/
+          - link "Acerca de mí" [ref=f7e8] [cursor=pointer]:
+            - /url: /es/about
+          - link "Mis Habilidades" [ref=f7e9] [cursor=pointer]:
+            - /url: /es/skills
+          - link "Experiencia Laboral" [ref=f7e10] [cursor=pointer]:
+            - /url: /es/experience
+          - link "Proyectos" [ref=f7e11] [cursor=pointer]:
+            - /url: /es/projects
+          - link "Contacto" [ref=f7e12] [cursor=pointer]:
+            - /url: /es/contact
+        - generic [ref=f7e13]:
+          - button "Cambiar modo oscuro" [ref=f7e14] [cursor=pointer]:
+            - img [ref=f7e15]
+          - link "Ingles" [ref=f7e17] [cursor=pointer]:
+            - /url: /en/about
+            - text: EN
+    - main [ref=f7e18]:
+      - generic [ref=f7e21]:
+        - img "CONÓCEME" [ref=f7e23]
+        - generic [ref=f7e24]:
+          - heading [level=1] [ref=f7e25]
+          - generic [ref=f7e27]:
+            - text: "¡Hola! Soy Juan Carlos Ávila. Durante 8+ años construí plataformas web — desde tiendas WooCommerce hasta dashboards inmobiliarios con React. Pero en los últimos 2 años encontré mi verdadero foco:"
+            - strong [ref=f7e28]: automatizar procesos empresariales con IA
+            - text: .
+            - text: Hoy ayudo a PyMEs a combinar desarrollo web tradicional con agentes de IA, chatbots inteligentes y sistemas RAG para reducir costos operativos. Imaginate un restaurante donde el chatbot no solo recibe pedidos, sino que los envía directo a la cocina. O una empresa de logística donde los documentos se clasifican solos. Eso hago.
+            - text: "Trabajo con WordPress, React, Python y modelos de IA (OpenAI, locales, RAG) para crear soluciones que realmente funcionan. Mi enfoque:"
+            - strong [ref=f7e29]: código limpio, resultados medibles, cero magic
+            - text: .
+          - heading "[+] Mis Habilidades" [level=3] [ref=f7e30]
+          - list [ref=f7e31]:
+            - listitem [ref=f7e32]: "[+] WordPress, React, Next.js — plataformas web escalables"
+            - listitem [ref=f7e33]: "[+] Python, PHP, Node.js — backend y automatización"
+            - listitem [ref=f7e34]: "[+] Chatbots IA + RAG — asistentes inteligentes 24/7"
+            - listitem [ref=f7e35]: "[+] Agentes de IA autónomos — flujos de trabajo automatizados"
+            - listitem [ref=f7e36]: "[+] APIs (OpenAI, Stripe, PayPal, Google) — integraciones"
+            - listitem [ref=f7e37]: "[+] Linux, Docker, Cloud — infraestructura y despliegue"
+    - contentinfo [ref=f7e38]:
+      - generic [ref=f7e39]:
+        - generic [ref=f7e40]:
+          - link "GitHub" [ref=f7e41] [cursor=pointer]:
+            - /url: https://github.com/juanvs23
+          - link "LinkedIn" [ref=f7e42] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/juanvs23/
+          - link "X" [ref=f7e43] [cursor=pointer]:
+            - /url: https://twitter.com/juanvs23
+          - link "Facebook" [ref=f7e44] [cursor=pointer]:
+            - /url: https://www.facebook.com/juancarlos.avila.1420/
+        - generic [ref=f7e45]:
+          - generic [ref=f7e46]: Copyright © 2026 Desarrollado por Juan Carlos Ávila
+          - generic [ref=f7e48]: Español
+  - generic [ref=f7e51]:
+    - button "Menu" [ref=f7e52]:
+      - img [ref=f7e54]
+      - generic: Menu
+    - button "Inspect" [ref=f7e58]:
+      - img [ref=f7e60]
+      - generic: Inspect
+    - button "Audit" [ref=f7e62]:
+      - generic [ref=f7e63]:
+        - img [ref=f7e64]
+        - img [ref=f7e67]
+      - generic: Audit
+    - button "Settings" [ref=f7e70]:
+      - img [ref=f7e72]
+      - generic: Settings

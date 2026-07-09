@@ -68,11 +68,11 @@
     },
     "newmovement": {
         "id": 8,
-        "title": "Desarrollador Fullstack con IA",
+        "title": "Full Stack Developer — AI Integration",
         "start": "2025-6",
         "end": "2026-5",
         "company": "New Movement Agency",
-        "description": "Desarrollo de proyectos complejos utilizando agentes de IA. Selección de arquitectura, lenguaje de programación y medidas de seguridad para guiar a la inteligencia artificial con parámetros claros. Implementación de técnicas de prueba y code review para evitar código con problemas de seguridad."
+        "description": "Diseñé e implementé soluciones potenciadas con IA integrando APIs de LLM (OpenAI, modelos locales) en plataformas web existentes, reduciendo el procesamiento manual de datos en un 60%. Arquitecté aplicaciones web de alto rendimiento con optimización de servidor, estrategias de caché y ajuste de bases de datos logrando tiempos de carga menores a 2s. Administré infraestructura Linux en la nube (LAMP) asegurando 99.9% de uptime. Implementé arquitectura SEO optimizada mejorando rankings orgánicos en un 40%. Lideré sesiones de discovery con clientes, traduciendo requerimientos de negocio en especificaciones técnicas."
     },
     "menu":{
         "home": "Inicio",
@@ -134,47 +134,47 @@
         "es": "Español"
     },
     "seo":{
-        "title": "Juan Carlos Avila – Desarrollador Full Stack con 6+ Años de Experiencia | Buscando Nuevos Retos",
-        "description": "Desarrollador Web Full Stack con 6+ años de experiencia | PHP, Python, JavaScript (React, Next.js), WordPress, Laravel & Django | Apasionado por soluciones escalables y código limpio.",
+        "title": "Juan Carlos Avila – Desarrollo Web + Automatización con IA | 8+ Años de Experiencia",
+        "description": "Desarrollador Web especializado en automatización con IA | 8+ años en WordPress, React, Python, PHP | Chatbots inteligentes, RAG, agentes de IA y plataformas web escalables.",
         "pages": {
-            "about": "Sobre Mí – Juan Carlos Avila | Desarrollador Full Stack",
-            "skills": "Habilidades – Juan Carlos Avila | Desarrollador Full Stack",
-            "experience": "Experiencia – Juan Carlos Avila | Desarrollador Full Stack",
-            "projects": "Proyectos – Juan Carlos Avila | Desarrollador Full Stack",
-            "contact": "Contacto – Juan Carlos Avila | Desarrollador Full Stack"
+            "about": "Sobre Mí – Juan Carlos Avila | Web Dev + Automatización IA",
+            "skills": "Habilidades – Juan Carlos Avila | Desarrollo Web y Automatización",
+            "experience": "Experiencia – Juan Carlos Avila | Web Dev & AI Automation",
+            "projects": "Proyectos – Juan Carlos Avila | Desarrollo Web y Automatización",
+            "contact": "Contacto – Juan Carlos Avila | Web Dev + AI Automation"
         },
         "descriptions": {
-            "about": "Conoce a Juan Carlos Avila, Desarrollador Full Stack con 6+ años de experiencia en PHP, Python, JavaScript y WordPress.",
-            "skills": "Habilidades técnicas de Juan Carlos Avila: Frontend, Backend, CMS, DevOps, APIs y Bases de Datos.",
-            "experience": "Experiencia profesional de Juan Carlos Avila: 8+ años trabajando en agencias y empresas de desarrollo web.",
-            "projects": "Proyectos de Juan Carlos Avila: aplicaciones web, e-commerce, APIs y más.",
-            "contact": "Contacta a Juan Carlos Avila para proyectos de desarrollo web, colaboraciones u oportunidades laborales."
+            "about": "Conoce a Juan Carlos Avila: Desarrollador Web con 8+ años de experiencia y especialización en automatización con IA. WordPress, React, Python y agentes inteligentes.",
+            "skills": "Habilidades de Juan Carlos Avila: Frontend, Backend, CMS, DevOps, e Integración de IA para automatización de procesos empresariales.",
+            "experience": "Trayectoria de Juan Carlos Avila: 8+ años desarrollando plataformas web e integrando soluciones de IA que reducen costos operativos.",
+            "projects": "Proyectos de Juan Carlos Avila: plataformas web, chatbots IA, asistentes RAG, dashboards y e-commerce.",
+            "contact": "Contacta a Juan Carlos Avila para desarrollo web, automatizaciones con IA, chatbots inteligentes o consultoría técnica."
         },
         "h1": {
-            "about": "Sobre Mí – Desarrollador Web Full Stack",
-            "skills": "Habilidades y Tecnologías – Desarrollo Full Stack",
-            "experience": "Experiencia Profesional – Desarrollador Web",
-            "projects": "Portafolio – Proyectos de Desarrollo Web",
-            "contact": "Contáctame – Ponte en Contacto"
+            "about": "Sobre Mí – Desarrollo Web y Automatización con IA",
+            "skills": "Habilidades – Web Development & AI Automation",
+            "experience": "Trayectoria Profesional – Web Developer & AI Specialist",
+            "projects": "Portafolio – Proyectos Web y Automatizaciones",
+            "contact": "Contáctame – Hablemos de tu Proyecto"
         }
     },
     "hero": {
-        "badge": "Desarrollador Full Stack",
-        "title": "Construyo experiencias web escalables",
-        "description": "6+ años de experiencia en PHP, Python, JavaScript (React, Next.js), WordPress y más.",
+        "badge": "Web Dev + Automatización IA",
+        "title": "Desarrollo web que trabaja para vos — incluso cuando dormís",
+        "description": "8+ años creando plataformas web y automatizando procesos con IA. WordPress, React, Python y agentes inteligentes.",
         "canvasLabel": "Animación 3D interactiva del portafolio"
     },
     "about": {
         "title": "CONÓCEME",
-        "description": "¡Hola! Soy Juan Carlos Ávila, Desarrollador Full Stack con 5+ años de experiencia en tecnologías como JavaScript (React, Node.js), PHP y WordPress, complementados con conocimientos en Python, administración de servidores Linux y desarrollo con Node.js. Fuera del trabajo, mi pasión por la tecnología se extiende a mis hobbies, donde disfruto experimentando con nuevas herramientas y desarrollando proyectos personales. <br/><br/> Especializado en crear aplicaciones web escalables, integraciones con APIs (PayPal, Stripe, Google) y soluciones personalizadas para e-commerce y sitios institucionales.  Apasionado por el código limpio, la optimización de rendimiento y el aprendizaje continuo. Experiencia trabajando en equipo y en proyectos autónomos, entregando productos robustos y eficientes.",
+        "description": "¡Hola! Soy Juan Carlos Ávila. Durante 8+ años construí plataformas web — desde tiendas WooCommerce hasta dashboards inmobiliarios con React. Pero en los últimos 2 años encontré mi verdadero foco: <strong>automatizar procesos empresariales con IA</strong>.<br/><br/>Hoy ayudo a PyMEs a combinar desarrollo web tradicional con agentes de IA, chatbots inteligentes y sistemas RAG para reducir costos operativos. Imaginate un restaurante donde el chatbot no solo recibe pedidos, sino que los envía directo a la cocina. O una empresa de logística donde los documentos se clasifican solos. Eso hago.<br/><br/>Trabajo con WordPress, React, Python y modelos de IA (OpenAI, locales, RAG) para crear soluciones que realmente funcionan. Mi enfoque: <strong>código limpio, resultados medibles, cero magic</strong>.",
         "skills": "Mis Habilidades",
         "skillsList": [
-            "JavaScript (React, Next.js, Node.js)",
-            "PHP, WordPress (temas y plugins nativos)",
-            "Python, Linux, administración de servidores",
-            "APIs: PayPal, Stripe, Google Maps",
-            "Docker, Git, despliegue en servidores Linux",
-            "CSS moderno (Grid, Flexbox, Tailwind)"
+            "WordPress, React, Next.js — plataformas web escalables",
+            "Python, PHP, Node.js — backend y automatización",
+            "Chatbots IA + RAG — asistentes inteligentes 24/7",
+            "Agentes de IA autónomos — flujos de trabajo automatizados",
+            "APIs (OpenAI, Stripe, PayPal, Google) — integraciones",
+            "Linux, Docker, Cloud — infraestructura y despliegue"
         ]
     },
     "skills": {
@@ -242,12 +242,12 @@
                 ]
             },
             {
-                "title": "Inteligencia Artificial",
+                "title": "Inteligencia Artificial & Automatización",
                 "skills": [
-                    { "name": "Manejo de Modelos", "description": "Integración y gestión de modelos de IA/LLM vía APIs y despliegue local" },
-                    { "name": "Spec-driven Development", "description": "Redacción de especificaciones como requisitos comprobables antes de implementar" },
-                    { "name": "Desarrollo de Agentes", "description": "Creación de agentes autónomos de IA para automatización de tareas y flujos de trabajo" },
-                    { "name": "Claude Code", "description": "Experiencia con Claude Code para desarrollo de software asistido por IA" }
+                    { "name": "Chatbots Inteligentes", "description": "Asistentes 24/7 con IA que entienden consultas, procesan pedidos y escalan casos complejos. Reducción comprobada de hasta 45% en tickets de soporte." },
+                    { "name": "Sistemas RAG", "description": "Asistentes que responden preguntas usando tu propia base de conocimiento (documentos, FAQs, manuals). Sin alucinaciones, con fuentes verificables." },
+                    { "name": "Agentes Autónomos", "description": "Automatización de flujos de trabajo completos: clasificación de documentos, generación de reportes, respuestas automáticas y procesamiento de datos." },
+                    { "name": "Integración LLMs", "description": "Conexión de modelos OpenAI, Claude y locales con tus plataformas web existentes (WordPress, React, APIs propias)." }
                 ]
             }
         ]
