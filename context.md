@@ -124,7 +124,8 @@ La frontpage tiene una escena 3D interactiva:
 ### a. Quién Soy
 - Imagen: `src/assets/img/aboutme.jpg` (optimizada con Astro `<Image />`)
 - Descripción bilingüe enfocada en Web Dev + AI Automation (8+ años exp, chatbots IA, RAG, agentes autónomos)
-- Skills list con ASCII markers `[+]`: WordPress/React, Python/PHP, Chatbots IA+RAG, Agentes autónomos, APIs, Linux/Docker
+- Botón estilo SectionButtons del home que apunta a `/skills` (mismo estilo: `bg-surface-dark/80`, hover scale, icono code `</>`)
+- Grid 40-60 (imagen-texto) en desktop
 
 ### b. Skills
 - 7 categorías: Frontend, Backend, CMS, DevOps & Tools, APIs & Integraciones, Bases de Datos, Inteligencia Artificial
@@ -218,11 +219,21 @@ La frontpage tiene una escena 3D interactiva:
 - Favicon: actualizado a `</>`
 - Adapter migrado: `@astrojs/node` → `@astrojs/vercel` (serverless)
 - Lighthouse fixes: ARIA i18n, skip link, robots meta, canvas role, numbers.mp4 eliminado
+- SDD init completado (openspec mode, Strict TDD)
+- Fase 1 AI Automation: contenido AI en jobs, skills, descripciones (EN+ES)
+- Layout: max-w general 1200px, Hero 960px centrado
+- About: grid 40-60, botón skills estilo SectionButtons, sin título redundante
 
 ### ⬜ Pendientes
 - Deploy en Vercel (pendiente de push al repo y conexión con Vercel)
 - Verificar funcionalidad completa en entorno de producción
 - Monitorear emails vía Resend en producción
+- **Fase 2 (SDD): AI Automation Showcase**
+  - Data model de proyectos (`src/constants/projects.ts`)
+  - Refactor ProjectsSection.astro con categorías
+  - StatsGrid component
+  - Página `/automation` + AutomationSection
+  - i18n completo + navegación
 
 ### ✅ Performance Optimizations (26 May 2026)
 - **Three.js deferido**: Ahora se carga 800ms después de `window.load` — no bloquea FCP/LCP

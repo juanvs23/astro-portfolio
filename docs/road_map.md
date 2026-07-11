@@ -47,6 +47,7 @@ Migración desde Next.js → Astro + TypeScript + Tailwind CSS + Three.js.
 
 ### ❌ Pendiente
 - Testing automatizado y despliegue (Fase 4)
+- Fase 5: AI Automation Showcase (Phase 2 del pipeline SDD)
 
 ---
 
@@ -304,6 +305,54 @@ src/
 | tablet | 850px | Footer 2-up, layouts apilados |
 | tablet-narrow | 768px | Nav hamburger drawer |
 | mobile | 640px | Single-column, display 38px → 28px |
+
+---
+
+## 🤖 Fase 5: AI Automation Showcase
+
+**Objetivo:** Agregar página de automatización con IA, refactorizar data de proyectos, y preparar el portfolio para mostrar demos de automatización (sin backend externo aún).
+
+**Contexto:** No hay automatizaciones reales de clientes (NDA/privacy). Los demos se construirán como proyectos open source separados. Esta fase prepara el portfolio para mostrarlos cuando existan.
+
+### Tareas
+
+- [ ] **5.1 Data model de proyectos (`src/constants/projects.ts`)**
+  - Crear interface `Project` (`id`, `name` key, `description` key, `url`, `image`, `category: 'ai' | 'web' | 'fullstack'`, `tags`, `featured?`, `stats?`)
+  - Factory `getProjects(t)` siguiendo el patrón de `getJobs(t)` en `jobs.ts`
+  - Migrar los 17 proyectos existentes desde ProjectsSection.astro
+  - Agregar 5 entries placeholder para AI demos (con `comingSoon: true` o similar)
+
+- [ ] **5.2 Refactor ProjectsSection.astro**
+  - Consumir `getProjects(t)` en vez de datos hardcodeados
+  - Agregar tabs/categorías para filtrar (AI, Web, Fullstack)
+  - Mostrar placeholder visual para demos AI "coming soon"
+
+- [ ] **5.3 StatsGrid component (`src/components/ui/StatsGrid.astro`)**
+  - Componente reutilizable que recibe `stats: { value: string; labelKey: string }[]`
+  - Labels desde i18n
+  - Stats placeholder: "10+ AI Agents", "5+ Automations", "45% Avg. Reduction", "8+ Years"
+
+- [ ] **5.4 Automation page (`src/pages/[locale]/automation.astro`)**
+  - Nueva página siguiendo el patrón exacto de `projects.astro`
+  - `getStaticPaths()` con ambos locales
+  - `export const prerender = true`
+
+- [ ] **5.5 AutomationSection component (`src/components/sections/AutomationSection.astro`)**
+  - Hero/callout: "AI Automation that delivers"
+  - StatsGrid con métricas placeholder
+  - AI demos showcase (grid de proyectos con category='ai', con indicador "coming soon")
+  - Services section: Smart Chatbots, RAG Systems, AI Agents, LLM Integration
+  - CTA a contacto
+
+- [ ] **5.6 i18n — `messages/en.json` + `messages/es.json`**
+  - Agregar traducciones para proyectos AI (name + description)
+  - Agregar sección `automation` completa: hero, stats, services, CTA
+  - Agregar SEO keys: `seo.pages.automation`, `seo.descriptions.automation`, `seo.h1.automation`
+
+- [ ] **5.7 Navegación + Layout**
+  - Agregar `{ key: 'menu.automation', path: '/automation' }` a `nav-links.ts`
+  - Verificar que Header.astro y MobileMenu.astro lo rendericen automáticamente
+  - Agregar `menu.automation` a ambos archivos de traducción
 
 ---
 
