@@ -17,7 +17,7 @@
         "start": "2024-8",
         "end": "2025-4",
         "company": "Addiction Marketing Agency",
-        "description": "Implemented a LAMP server in the cloud to host multiple WordPress projects. Developed a high-performance directory with custom post types, advanced taxonomies, and SEO-optimized meta content, using native PHP and JavaScript. Built various sites with extensive content, prioritizing speed and organic ranking."
+        "description": "Implemented a LAMP server in the cloud to host multiple WordPress projects. Developed a high-performance directory with custom post types, advanced taxonomies, and SEO-optimized meta content, using native PHP and JavaScript. Built various sites with extensive content, prioritizing speed and organic ranking. Designed high-performance data architectures with advanced taxonomies and meta-information that anticipate how structured knowledge bases feed today's RAG systems."
     },
     "ciancoder":{
         "id": 2,
@@ -25,7 +25,7 @@
         "start": "2024-5",
         "end": "2024-8",
         "company": "Ciancoders",
-        "description": "Developed two WordPress platforms from scratch: an informational page and a ticket sales system. Implemented CPTs, custom fields, and taxonomies with native PHP (no plugins). For the frontend, used vanilla JavaScript (ES6+) and modern CSS (Grid/Flexbox), creating dynamic components optimized for performance and user experience. These projects were Dockerized and deployed to a Linux server via GIT over SSH."
+        "description": "Developed two WordPress platforms from scratch: an informational page and a ticket sales system. Implemented CPTs, custom fields, and taxonomies with native PHP (no plugins). For the frontend, used vanilla JavaScript (ES6+) and modern CSS (Grid/Flexbox), creating dynamic components optimized for performance and user experience. These projects were Dockerized and deployed to a Linux server via GIT over SSH. The containerized infrastructure and Git→SSH workflow I established are the same patterns I now use to deploy AI services — models, embeddings, and API endpoints — with the same consistency and reproducibility."
     },
     "tremgroup": {
         "id": 3,
@@ -33,7 +33,7 @@
         "start": "2022-8",
         "end": "2024-4",
         "company": "TREMGROUP LLC",
-        "description": "Developed interactive React.js components for visualizing real estate statistics in Miami. Maintained and optimized legacy websites (8+ years old), modernizing their code and adding features. Created custom solutions with WordPress, Next.js, and React, including Google Maps API integrations for filtering properties by price and profitability."
+        "description": "Developed interactive React.js components for visualizing real estate statistics in Miami. Maintained and optimized legacy websites (8+ years old), modernizing their code and adding features. Created custom solutions with WordPress, Next.js, and React, including Google Maps API integrations for filtering properties by price and profitability. Those dashboards integrated multiple data sources (APIs, MLS, CSV) establishing ETL and normalization patterns that I later applied to AI-driven automation pipelines."
     },
     "conocimiento": {
         "id": 4,
@@ -41,7 +41,7 @@
         "start": "2021-12",
         "end": "2022-6",
         "company": "Conocimiento Corporativo S.A.S",
-        "description": "Developed custom WordPress solutions from scratch, creating native themes and plugins with PHP. Implemented advanced content systems using custom post types, tailored taxonomies, and custom fields (without plugins like ACF), optimized for sectors like education and security. Each project was built with clean, scalable code to ensure high performance and easy maintenance."
+        "description": "Developed custom WordPress solutions from scratch, creating native themes and plugins with PHP. Implemented advanced content systems using custom post types, tailored taxonomies, and custom fields (without plugins like ACF), optimized for sectors like education and security. Each project was built with clean, scalable code to ensure high performance and easy maintenance. The structured content architecture I built — custom post types, taxonomies, meta-fields — mirrors the same patterns I now use to feed structured knowledge into AI assistants and RAG systems."
     },
     "nivelics": {
         "id": 5,
@@ -49,7 +49,7 @@
         "start": "2021-6",
         "end": "2021-11",
         "company": "Nivelics SAS",
-        "description": "Developed and maintained WordPress sites, including client-facing interfaces and dashboards. Created custom plugins and themes for advertising or e-commerce sites for clients. Built APIs with Node.js."
+        "description": "Developed and maintained WordPress sites, including client-facing interfaces and dashboards. Created custom plugins and themes for advertising or e-commerce sites for clients. Built APIs with Node.js. Developed REST APIs with Node.js that established the integration patterns I now apply to connect language models with web platforms."
     },
     "ztgroup":{
         "id": 6,
@@ -57,7 +57,7 @@
         "start": "2020-3",
         "end": "2021-6",
         "company": "ZtGroup LLC",
-        "description": "Developed and maintained WordPress sites, including client-facing interfaces and dashboards. Created custom plugins and themes for advertising or e-commerce sites for clients."
+        "description": "Developed and maintained WordPress sites, including client-facing interfaces and dashboards. Created custom plugins and themes for advertising or e-commerce sites for clients. Built modular WordPress ecosystems with custom plugins that laid the groundwork for AI-integrated content architectures."
     },
     "hispano": {
         "id": 7,
@@ -65,7 +65,7 @@
         "start": "2018-3",
         "end": "2020-1",
         "company": "Hispano Soluciones CA",
-        "description": "Developed interfaces for client projects in Drupal, WordPress, and static site layouts."
+        "description": "Developed interfaces for client projects in Drupal, WordPress, and static site layouts. My early projects in Drupal and WordPress gave me the solid web architecture foundation on which I now build AI automation solutions."
     },
     "newmovement": {
         "id": 8,
@@ -169,14 +169,7 @@
         "title": "ABOUT ME",
         "description": "Hi! I'm Juan Carlos Ávila. For 8+ years I built web platforms — from WooCommerce stores to React real-estate dashboards. But in the last 2 years I found my real focus: <strong>automating business processes with AI</strong>.<br/><br/>Today I help SMEs combine traditional web development with AI agents, smart chatbots, and RAG systems to cut operational costs. Imagine a restaurant where the chatbot not only takes orders but sends them straight to the kitchen. Or a logistics company where documents classify themselves. That's what I do.<br/><br/>I work with WordPress, React, Python, and AI models (OpenAI, local, RAG) to build solutions that actually deliver. My approach: <strong>clean code, measurable results, zero magic</strong>.",
         "skills": "My Skills",
-        "skillsList": [
-            "WordPress, React, Next.js — scalable web platforms",
-            "Python, PHP, Node.js — backend & automation",
-            "AI Chatbots + RAG — 24/7 intelligent assistants",
-            "Autonomous AI agents — automated workflows",
-            "APIs (OpenAI, Stripe, PayPal, Google) — integrations",
-            "Linux, Docker, Cloud — infrastructure & deployment"
-        ]
+        "skillsLink": "View all my skills"
     },
     "skills": {
         "title": "SKILLS",
@@ -184,62 +177,66 @@
             {
                 "title": "Frontend",
                 "skills": [
-                    { "name": "React", "description": "Library for building user interfaces with reusable components" },
-                    { "name": "Next.js", "description": "React framework with SSR, SSG, and App Router" },
-                    { "name": "JavaScript ES6+", "description": "Modern JavaScript with ES6+ features" },
-                    { "name": "HTML5", "description": "Semantic markup and accessibility standards" },
-                    { "name": "CSS3", "description": "Modern CSS with Flexbox, Grid, and animations" },
-                    { "name": "Tailwind CSS", "description": "Utility-first CSS framework for rapid UI development" },
-                    { "name": "Swiper", "description": "Touch-enabled slider and carousel library" }
+                    { "name": "React", "description": "Library for building reactive UIs, real-time dashboards, and AI-powered interfaces" },
+                    { "name": "Next.js", "description": "React framework with SSR, SSG, and App Router for performant web applications" },
+                    { "name": "JavaScript ES6+", "description": "Modern JavaScript powering interactive web experiences across the stack" },
+                    { "name": "HTML5", "description": "Semantic markup and accessibility standards for inclusive web applications" },
+                    { "name": "CSS3", "description": "Modern CSS with Flexbox, Grid, and animations for responsive design" },
+                    { "name": "Tailwind CSS", "description": "Utility-first CSS framework for rapid UI development with consistent design systems" },
+                    { "name": "Swiper", "description": "Touch-enabled slider and carousel library for interactive content discovery" },
+                    { "name": "AI UI Components", "description": "Reusable chat widgets, streaming response renderers, and adaptive AI-powered interface patterns" }
                 ]
             },
             {
                 "title": "Backend",
                 "skills": [
-                    { "name": "Node.js", "description": "JavaScript runtime for building scalable server-side applications" },
-                    { "name": "PHP", "description": "Server-side scripting for dynamic web applications" },
-                    { "name": "Python", "description": "Versatile language for web development and automation" },
-                    { "name": "REST APIs", "description": "API design following REST principles" },
-                    { "name": "Express", "description": "Minimal Node.js web framework for APIs" }
+                    { "name": "Node.js", "description": "JavaScript runtime for building scalable server-side applications and AI service backends" },
+                    { "name": "PHP", "description": "Server-side scripting for dynamic web applications and CMS-driven platforms" },
+                    { "name": "Python", "description": "Versatile language for web development, data processing, and AI automation pipelines" },
+                    { "name": "REST APIs", "description": "API design following REST principles for seamless LLM integration and service orchestration" },
+                    { "name": "Express", "description": "Minimal Node.js web framework for building APIs and middleware layers" },
+                    { "name": "AI Service Orchestration", "description": "Middleware for LLM request routing, rate limiting, fallback chains, and model switching" }
                 ]
             },
             {
                 "title": "CMS",
                 "skills": [
-                    { "name": "WordPress", "description": "Content management system with themes and plugins" },
-                    { "name": "Native Themes", "description": "Custom WordPress themes from scratch" },
-                    { "name": "Native Plugins", "description": "Custom WordPress plugin development" },
-                    { "name": "CPT", "description": "Custom Post Types for structured content" },
-                    { "name": "Taxonomies", "description": "Custom taxonomies for content organization" },
-                    { "name": "WooCommerce", "description": "E-commerce plugin for WordPress" }
+                    { "name": "WordPress", "description": "Content management system with custom plugin architecture supporting AI integration layers" },
+                    { "name": "Native Themes", "description": "Custom WordPress themes built from scratch with clean, maintainable code" },
+                    { "name": "Native Plugins", "description": "Custom WordPress plugin development with extendable hooks and filters" },
+                    { "name": "CPT", "description": "Custom Post Types for structured, queryable content that feeds AI knowledge bases" },
+                    { "name": "Taxonomies", "description": "Custom taxonomies for content organization, classification, and semantic filtering" },
+                    { "name": "WooCommerce", "description": "E-commerce plugin for WordPress with extensible architecture and payment gateway integration" }
                 ]
             },
             {
                 "title": "DevOps & Tools",
                 "skills": [
-                    { "name": "Docker", "description": "Containerization for consistent development and deployment" },
-                    { "name": "Git", "description": "Distributed version control system" },
-                    { "name": "Linux", "description": "Server administration and command-line operations" },
-                    { "name": "SSH", "description": "Secure remote server access and management" },
-                    { "name": "CI/CD", "description": "Automated testing and deployment pipelines" },
-                    { "name": "Vercel", "description": "Cloud platform for frontend deployment" }
+                    { "name": "Docker", "description": "Containerization for consistent AI service development, testing, and production deployment" },
+                    { "name": "Git", "description": "Distributed version control for collaborative development and CI/CD workflows" },
+                    { "name": "Linux", "description": "Server administration, shell scripting, and AI service deployment environment" },
+                    { "name": "SSH", "description": "Secure remote server access, automation, and infrastructure management" },
+                    { "name": "CI/CD", "description": "Automated testing and deployment pipelines for web and ML inference services" },
+                    { "name": "Vercel", "description": "Cloud platform for frontend deployment with edge functions and serverless compute" },
+                    { "name": "ML Pipeline CI/CD", "description": "Automated testing, validation, and deployment for AI inference services and model updates" }
                 ]
             },
             {
                 "title": "APIs & Integrations",
                 "skills": [
-                    { "name": "PayPal", "description": "Payment processing integration" },
-                    { "name": "Stripe", "description": "Modern payment gateway integration" },
-                    { "name": "Google Maps", "description": "Geolocation and mapping services" },
-                    { "name": "Google APIs", "description": "Various Google services integration" }
+                    { "name": "PayPal", "description": "Payment processing integration with secure REST API patterns and webhook handling" },
+                    { "name": "Stripe", "description": "Modern payment gateway integration with subscription models and event-driven architecture" },
+                    { "name": "Google Maps", "description": "Geolocation and mapping services for interactive data visualization and location intelligence" },
+                    { "name": "Google APIs", "description": "Integration with Google services ecosystem for extended platform functionality" }
                 ]
             },
             {
                 "title": "Databases",
                 "skills": [
-                    { "name": "MySQL", "description": "Relational database management" },
-                    { "name": "PostgreSQL", "description": "Advanced relational database with JSON support" },
-                    { "name": "MongoDB", "description": "NoSQL document database" }
+                    { "name": "MySQL", "description": "Relational database for structured application data with proven scalability" },
+                    { "name": "PostgreSQL", "description": "Advanced relational database with JSON support and pgvector extension for semantic search" },
+                    { "name": "MongoDB", "description": "NoSQL document database for flexible schemas and AI application data models" },
+                    { "name": "Vector Stores", "description": "pgvector and MongoDB Atlas Vector Search for embedding storage, similarity search, and semantic retrieval" }
                 ]
             },
             {

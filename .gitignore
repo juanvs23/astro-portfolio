@@ -31,3 +31,6 @@ pnpm-debug.log*
 
 # strategy/atl artifacts
 estrategia/
+
+# SDD temporary artifacts (openspec/changes are work-in-progress, not committed)
+openspec/changes/

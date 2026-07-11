@@ -1,0 +1,54 @@
+# openspec/config.yaml
+schema: spec-driven
+
+context: |
+  Project: astro-portfolio — multilingual portfolio site (Web Dev + AI Automation)
+  Tech stack: Astro 5.18, TypeScript 6 (strict), Tailwind CSS 3, Three.js
+  Architecture: Astro pages + Vercel serverless (output: server, @astrojs/vercel adapter)
+  Multi-locale: es (default), en — i18n routing with prefixDefaultLocale
+  Styling: 100% monospaced (Berkeley Mono), cream canvas (#fdfcfc), hairline sections
+  Contact: Resend API (POST /api/contact)
+  Design tokens: DESIGN.md (component YAML, colors, typography, spacing)
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    - Follow existing code patterns
+    - Respect DESIGN.md component tokens (colors, typography, spacing)
+    tdd: true
+    test_command: "npx vitest run"
+  verify:
+    test_command: "npx vitest run"
+    build_command: "npm run build"
+    coverage_threshold: 80
+  archive:
+    - Warn before merging destructive deltas
+
+testing:
+  strict_tdd: true
+  runner:
+    name: Vitest
+    command: npx vitest run
+    version: 4.1.6
+  layers:
+    unit: { available: true, tool: Vitest }
+    integration: { available: false, tool: "--" }
+    e2e: { available: false, tool: "--" }
+  coverage:
+    available: true
+    provider: v8
+    command: npx vitest run --coverage
+  quality:
+    linter: { available: false, command: "--" }
+    type_checker: { available: true, command: npx tsc --noEmit }
+    formatter: { available: false, command: "--" }

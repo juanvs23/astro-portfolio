@@ -1,8 +1,6 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
-import Badge from '../ui/Badge.astro';
-import AsciiMarker from '../ui/AsciiMarker.astro';
 import { Image } from 'astro:assets';
 import aboutMeImg from '@/assets/img/aboutme.jpg';
 
@@ -13,11 +11,11 @@ interface Props {
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
-const skillsList = t('about.skillsList') as string[];
+const skillsLink = t('about.skillsLink');
 ---
 
 <Section id="about">
-  <div class="grid grid-cols-1 md:grid-cols-[320px_1fr] gap-xl items-start">
+  <div class="grid grid-cols-1 md:grid-cols-[4fr_6fr] gap-xl items-start">
     <div class="w-full">
       <Image
         src={aboutMeImg}
@@ -44,19 +42,15 @@ const skillsList = t('about.skillsList') as string[];
         set:html={t('about.description')}
       ></div>
 
-      <h3 class="text-heading-md font-bold text-ink mb-md" data-aos="fade-up" data-aos-delay="200">
-        <AsciiMarker state="add" class="mr-xs inline" />
-        {t('about.skills')}
-      </h3>
-
-      <ul class="space-y-sm" data-aos="fade-up" data-aos-delay="250">
-        {skillsList.map((skill) => (
-          <li class="text-body-md text-body py-sm border-b border-hairline">
-            <AsciiMarker state="add" class="mr-xs inline" />
-            {skill}
-          </li>
-        ))}
-      </ul>
+      <div data-aos="fade-up" data-aos-delay="250">
+        <a
+          href={`/${locale}/skills`}
+          class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-surface-dark/80 border border-on-dark-mute/30 text-on-dark text-sm font-medium hover:scale-110 hover:bg-surface-dark transition-all duration-200"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span>{skillsLink}</span>
+        </a>
+      </div>
     </div>
   </div>
 </Section>
