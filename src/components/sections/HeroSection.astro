@@ -1,8 +1,8 @@
 ---
-import { getTranslations, type Locale } from '@/i18n';
-import Badge from '../ui/Badge.astro';
-import LanguageSwitcher from '../layout/LanguageSwitcher.astro';
-import ThemeToggle from '../layout/ThemeToggle.astro';
+import { getTranslations, type Locale } from "@/i18n";
+import Badge from "../ui/Badge.astro";
+import LanguageSwitcher from "../layout/LanguageSwitcher.astro";
+import ThemeToggle from "../layout/ThemeToggle.astro";
 
 interface Props {
   locale: Locale;
@@ -12,27 +12,43 @@ const { locale } = Astro.props;
 const t = await getTranslations(locale);
 ---
 
-<section id="hero" class="bg-surface-dark text-on-dark min-h-[100dvh] max-h-[100dvh] relative overflow-hidden">
-  <div class="fixed top-4 right-4 z-50 flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-dark/80 backdrop-blur-sm border border-on-dark-mute/20 text-on-dark">
+<section
+  id="hero"
+  class="bg-surface-dark text-on-dark min-h-[100dvh] max-h-[100dvh] relative overflow-hidden"
+>
+  <div
+    class="fixed top-4 right-4 z-50 flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-dark/80 backdrop-blur-sm border border-on-dark-mute/20 text-on-dark"
+  >
     <LanguageSwitcher locale={locale} currentPath="/" variant="hero" />
     <ThemeToggle locale={locale} variant="hero" />
   </div>
 
-  <div id="three-selector" class="absolute top-[50%] left-0 right-0 h-[50dvh] md:top-0 md:h-full w-full z-0">
-    <canvas id="three-canvas" class="w-full h-full" role="img" aria-label={t('hero.canvasLabel')}></canvas>
+  <div
+    id="three-selector"
+    class="absolute top-[50%] left-0 right-0 h-[50dvh] md:top-0 md:h-full w-full z-0"
+  >
+    <canvas
+      id="three-canvas"
+      class="w-full h-full"
+      role="img"
+      aria-label={t("hero.canvasLabel")}></canvas>
   </div>
 
-  <div class="relative z-10 flex flex-col justify-center items-center h-full max-w-[960px] mx-auto px-lg py-xl w-full text-center">
+  <div
+    class="relative z-10 flex flex-col justify-center items-center h-full max-w-[960px] mx-auto px-lg py-xl w-full text-center"
+  >
     <Badge variant="news" class="mb-lg">
-      {t('hero.badge')}
+      {t("hero.badge")}
     </Badge>
 
-    <h1 class="text-[38px] font-bold leading-[1.5] mb-xl">
-      {t('hero.title')}
+    <h1 class="text-[20px] md:text-[38px] font-bold leading-[1.5] mb-xl">
+      {t("hero.title")}
     </h1>
 
-    <p class="text-body-md text-on-dark-mute mb-xxl max-w-[640px]">
-      {t('hero.description')}
+    <p
+      class="text-body-sm md:text-text-body-md text-on-dark-mute mb-xxl max-w-[640px]"
+    >
+      {t("hero.description")}
     </p>
   </div>
 </section>
@@ -42,10 +58,10 @@ const t = await getTranslations(locale);
 
   function setupThree() {
     if (cleanup) return;
-    const container = document.getElementById('three-selector');
-    const canvas = document.getElementById('three-canvas');
+    const container = document.getElementById("three-selector");
+    const canvas = document.getElementById("three-canvas");
     if (container && canvas) {
-      import('../../lib/three-scene').then(({ initThreeScene }) => {
+      import("../../lib/three-scene").then(({ initThreeScene }) => {
         cleanup = initThreeScene(container, canvas);
       });
     }
@@ -59,16 +75,16 @@ const t = await getTranslations(locale);
   }
 
   function deferredThree() {
-    if (document.readyState === 'complete') {
+    if (document.readyState === "complete") {
       setTimeout(setupThree, 800);
     } else {
-      window.addEventListener('load', function() {
+      window.addEventListener("load", function () {
         setTimeout(setupThree, 800);
       });
     }
   }
 
   deferredThree();
-  document.addEventListener('astro:before-swap', teardownThree);
-  document.addEventListener('astro:page-load', deferredThree);
+  document.addEventListener("astro:before-swap", teardownThree);
+  document.addEventListener("astro:page-load", deferredThree);
 </script>

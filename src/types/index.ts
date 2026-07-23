@@ -1,3 +1,5 @@
+import type { ImageMetadata } from "astro";
+
 export interface ItemView {
   title: string;
   class: string;
@@ -69,8 +71,8 @@ export interface ProjectItem {
   id: number;
   name: string;
   url: string;
-  description: string;
-  img: string;
+  desc?: string;
+  img: ImageMetadata;
 }
 export interface ProjectSectionType {
   title: string;

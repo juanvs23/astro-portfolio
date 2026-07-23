@@ -1,26 +1,25 @@
 ---
-import { getTranslations, type Locale } from '@/i18n';
-import Section from '../ui/Section.astro';
-import Badge from '../ui/Badge.astro';
-import AsciiMarker from '../ui/AsciiMarker.astro';
-import { Image } from 'astro:assets';
-import gericht from '@/assets/img/gericht.jpg';
-import cesde from '@/assets/img/cesde.jpg';
-import thinkous from '@/assets/img/thinkous.jpg';
-import cesdeProyectos from '@/assets/img/cesde-proyectos.jpg';
-import colegios from '@/assets/img/colegios.jpg';
-import empleo from '@/assets/img/empleo.jpg';
-import dogtor from '@/assets/img/dogtor.jpg';
-import hisomo from '@/assets/img/hisomo.jpg';
-import bookTest from '@/assets/img/book-test.jpg';
-import luxlife from '@/assets/img/luxlife.jpg';
-import boreal from '@/assets/img/boreal.jpg';
-import emprende from '@/assets/img/emprende.jpg';
-import incredibleRoom from '@/assets/img/incredible-room.jpg';
-import pockemon from '@/assets/img/pockemon.webp';
-import newsApp from '@/assets/img/news-app.webp';
-import bajalenx from '@/assets/img/bajalenx.webp';
-import climaApp from '@/assets/img/clima-app.webp';
+import { getTranslations, type Locale } from "@/i18n";
+import Section from "../ui/Section.astro";
+import gericht from "@/assets/img/gericht.jpg";
+import cesde from "@/assets/img/cesde.jpg";
+import thinkous from "@/assets/img/thinkous.jpg";
+import dogtor from "@/assets/img/dogtor.jpg";
+import hisomo from "@/assets/img/hisomo.jpg";
+import bookTest from "@/assets/img/book-test.jpg";
+import luxlife from "@/assets/img/luxlife.jpg";
+import boreal from "@/assets/img/boreal.jpg";
+import incredibleRoom from "@/assets/img/incredible-room.jpg";
+import pockemon from "@/assets/img/pockemon.webp";
+import newsApp from "@/assets/img/news-app.webp";
+import bajalenx from "@/assets/img/bajalenx.webp";
+import climaApp from "@/assets/img/clima-app.webp";
+import stepstogether from "@/assets/img/stepstogether.jpg";
+import whiteriver from "@/assets/img/whiteriver.jpg";
+import orchidrecovery from "@/assets/img/orchidrecovery.jpg";
+import institutomia from "@/assets/img/institutomia.jpg";
+import thehillsrehab from "@/assets/img/thehillsrehab.jpg";
+import ProjectItem from "../ui/ProjectItem.astro";
 
 interface Props {
   locale: Locale;
@@ -30,75 +29,156 @@ const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
 const projects = [
-  { id: 101, name: 'AI Chatbot — RAG Soporte', url: 'https://coltmandev.dev/es/contact', img: dogtor, desc: 'Asistente IA con arquitectura RAG para base de conocimiento empresarial. Reducción del 45% en tickets de soporte.' },
-  { id: 102, name: 'Real Estate Dashboard', url: 'https://luxlifemiamiblog.com/market-statistics/', img: luxlife, desc: 'Dashboard React con 50K+ registros inmobiliarios en Miami. Filtros por precio, ROI, tipo de propiedad. Google Maps API.' },
-  { id: 1, name: 'Gericht', url: 'https://restaurant.coltmandev.dev/', img: gericht },
-  { id: 2, name: 'Cesde', url: 'https://www.cesde.edu.co/', img: cesde },
-  { id: 3, name: 'Thinkus', url: 'https://thinkus.io/', img: thinkous },
-  { id: 4, name: 'Proyectos Cesde', url: 'https://proyectos.cesde.edu.co/', img: cesdeProyectos },
-  { id: 5, name: 'Cesde Colegios', url: 'https://colegios.cesde.edu.co/', img: colegios },
-  { id: 6, name: 'Centro de empleo Cesde', url: 'https://centrodeempleo.cesde.edu.co/', img: empleo },
-  { id: 7, name: 'Dogtorscat', url: 'https://www.dogtorscat.com/', img: dogtor },
-  { id: 8, name: 'Hisomos', url: 'https://hisomos.com/', img: hisomo },
-  { id: 9, name: 'Book project', url: 'https://projects.coltmandev.dev/product-book/', img: bookTest },
-  { id: 10, name: 'LuxlifemiamiBlog', url: 'https://luxlifemiamiblog.com/market-statistics/', img: luxlife },
-  { id: 11, name: 'Boreal Expedition', url: 'https://borealexpedition.com/', img: boreal },
-  { id: 12, name: 'Emprende', url: 'https://emprende.cesde.edu.co/', img: emprende },
-  { id: 13, name: 'Incredible Table', url: 'https://incredible-table.vercel.app/', img: incredibleRoom },
-  { id: 14, name: 'Pokemon API', url: 'https://next-pokemon-coral.vercel.app/', img: pockemon },
-  { id: 15, name: 'News App', url: 'https://news-app-sage-theta.vercel.app/', img: newsApp },
-  { id: 16, name: 'Bajalenx', url: 'https://projects.coltmandev.dev/bajalenx/', img: bajalenx },
-  { id: 17, name: 'Clima App', url: 'https://clima-gray-nine.vercel.app/', img: climaApp },
+  {
+    id: 102,
+    name: "Real Estate Dashboard",
+    url: "https://luxlifemiamiblog.com/market-statistics/",
+    img: luxlife,
+    desc: "Dashboard React con 50K+ registros inmobiliarios en Miami. Filtros por precio, ROI, tipo de propiedad. Google Maps API.",
+  },
+  {
+    id: 1,
+    name: "Gericht",
+    url: "https://restaurant.coltmandev.dev/",
+    img: gericht,
+    desc: "Landing page de restaurante con menú, galería y reservas. Diseño responsivo.",
+  },
+  {
+    id: 2,
+    name: "Cesde",
+    url: "https://www.cesde.edu.co/",
+    img: cesde,
+    desc: "Institución de educación técnica y tecnológica en Colombia. Programas laborales en tecnología, gastronomía, salud y más.",
+  },
+  {
+    id: 3,
+    name: "Thinkus",
+    url: "https://thinkus.io/",
+    img: thinkous,
+    desc: "IT Staff Augmentation. Aliado tecnológico para empresas que necesitan talento especializado en desarrollo de software.",
+  },
+  {
+    id: 7,
+    name: "Dogtorscat",
+    url: "https://www.dogtorscat.com/",
+    img: dogtor,
+    desc: "Hospital veterinario felino con certificación Cat Friendly Practice Gold. Urgencias 24h, cirugía y especialidades.",
+  },
+  { id: 8, name: "Hisomos", url: "https://hisomos.com/", img: hisomo, desc: "E-commerce de brazaletes y charms con propósito social. Cada compra apoya causas benéficas." },
+  {
+    id: 9,
+    name: "Book project",
+    url: "https://projects.coltmandev.dev/product-book/",
+    img: bookTest,
+  },
+  {
+    id: 11,
+    name: "Boreal Expedition",
+    url: "https://borealexpedition.com/",
+    img: boreal,
+    desc: "Plataforma de tours en Islandia. Paquetes de auroras boreales y excursiones con guías expertos.",
+  },
+  {
+    id: 13,
+    name: "Incredible Table",
+    url: "https://incredible-table.vercel.app/",
+    img: incredibleRoom,
+    desc: "Dashboard de gestión hotelera. Administración de habitaciones, tarifas, amenities y estado de ocupación.",
+  },
+  {
+    id: 14,
+    name: "Pokemon API",
+    url: "https://next-pokemon-coral.vercel.app/",
+    img: pockemon,
+    desc: "Pokedex interactiva con datos de la PokéAPI. Buscador, favoritos y explorador visual de Pokémon.",
+  },
+  {
+    id: 15,
+    name: "News App",
+    url: "https://news-app-sage-theta.vercel.app/",
+    img: newsApp,
+    desc: "Agregador de noticias con artículos de múltiples fuentes. Navegación por categorías y lectura integrada.",
+  },
+  {
+    id: 16,
+    name: "Bajalenx",
+    url: "https://projects.coltmandev.dev/bajalenx/",
+    img: bajalenx,
+  },
+  {
+    id: 17,
+    name: "Clima App",
+    url: "https://clima-gray-nine.vercel.app/",
+    img: climaApp,
+    desc: "App del clima con pronóstico por ciudad, temperatura y viento por hora, y mapas meteorológicos.",
+  },
+  {
+    id: 18,
+    name: "Steps Together",
+    url: "https://stepstogether.co.uk/",
+    img: stepstogether,
+    desc: "Clínica privada de rehabilitación de adicciones en Reino Unido. Desintoxicación médica y tratamiento residencial.",
+  },
+  {
+    id: 19,
+    name: "White River Recovery",
+    url: "https://www.whiteriverrecovery.nl/",
+    img: whiteriver,
+    desc: "Clínica de rehabilitación de clase mundial en Sudáfrica. Tratamiento para drogas, alcohol y abuso de sustancias.",
+  },
+  {
+    id: 20,
+    name: "Orchid Recovery",
+    url: "https://orchidrecoverythailand.com/",
+    img: orchidrecovery,
+    desc: "Rehab de lujo asequible en Chiang Mai, Tailandia. Tratamiento de adicciones y salud mental.",
+  },
+  {
+    id: 21,
+    name: "Instituto MIA",
+    url: "https://institutomia.es/",
+    img: institutomia,
+    desc: "Centro de rehabilitación para mujeres en España. Tratamiento de adicciones, drogas y salud mental.",
+  },
+  {
+    id: 22,
+    name: "The Hills Rehab",
+    url: "https://thehillsrehabchiangmai.com/",
+    img: thehillsrehab,
+    desc: "Clínica de rehabilitación de lujo en Chiang Mai, Tailandia. Acreditación AACI, tratamiento hospitalario y salud mental.",
+  },
 ];
 ---
 
 <Section id="projects">
-  <h1 data-typewriter data-aos="fade-down" class="text-[30px] md:text-[35px] lg:text-[38px] font-bold mb-sm">
-    {t('seo.h1.projects')}
+  <h1
+    data-typewriter
+    data-aos="fade-down"
+    class="text-[30px] md:text-[35px] lg:text-[38px] font-bold mb-sm"
+  >
+    {t("seo.h1.projects")}
   </h1>
 
-  <div class="border-b border-hairline mb-xl" data-aos="fade-up" data-aos-delay="100"></div>
+  <div
+    class="border-b border-hairline mb-xl"
+    data-aos="fade-up"
+    data-aos-delay="100"
+  >
+  </div>
 
-  <p class="text-body-md text-body mb-xl" data-aos="fade-up" data-aos-delay="150">
-    {t('projects.subtitle')}
+  <p
+    class="text-body-md text-body mb-xl"
+    data-aos="fade-up"
+    data-aos-delay="150"
+  >
+    {t("projects.subtitle")}
   </p>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-xl">
-    {projects.map((project) => (
-      <a
-        href={project.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="group bg-canvas border border-hairline no-underline hover:border-ink transition-colors duration-200"
-        data-aos="fade-in"
-        data-aos-delay="300"
-      >
-        <div class="aspect-video overflow-hidden bg-surface-card">
-          <Image
-            src={project.img}
-            alt={project.name}
-            class="w-full h-full object-cover group-hover:opacity-80 transition-opacity duration-200"
-            loading="lazy"
-            widths={[400, 800]}
-            formats={['webp', 'jpeg']}
-          />
-        </div>
-
-        <div class="p-lg">
-          <h3 class="text-body-strong text-ink mb-xs">
-            <AsciiMarker state="add" class="mr-xs inline" />
-            {project.name}
-          </h3>
-
-          {project.desc && (
-            <p class="text-caption-md text-mute mb-sm">{project.desc}</p>
-          )}
-
-          <span class="text-caption-md text-mute group-hover:text-ink transition-colors">
-            {t('projects.button')} →
-          </span>
-        </div>
-      </a>
-    ))}
+    {
+      projects.map((project) => (
+        <ProjectItem textButton={t("projects.button")} project={project} />
+      ))
+    }
   </div>
 </Section>

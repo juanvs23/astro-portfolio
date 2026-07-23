@@ -1,0 +1,52 @@
+---
+import type { ProjectItem } from "@/types";
+import AsciiMarker from "./AsciiMarker.astro";
+import { Image } from "astro:assets";
+
+interface Props {
+  project: ProjectItem;
+  textButton: string;
+}
+
+const { project, textButton } = Astro.props;
+---
+
+<a
+  href={project.url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="group bg-canvas border border-hairline no-underline hover:border-ink transition-colors duration-200"
+  data-aos="fade-in"
+  data-aos-delay="300"
+>
+  <div class="aspect-video overflow-hidden relative bg-surface-card">
+    <Image
+      src={project.img}
+      alt={project.name}
+      class="w-full h-auto object-cover block transition-transform duration-[2000ms] ease-out will-change-transform group-hover:translate-y-[-60%]"
+      style="aspect-ratio: 2/3;"
+      loading="lazy"
+      widths={[1000, 800]}
+      formats={["webp", "jpeg"]}
+    />
+  </div>
+
+  <div class="p-lg">
+    <h3 class="text-body-strong text-ink mb-xs">
+      <AsciiMarker state="add" class="mr-xs inline" />
+      {project.name}
+    </h3>
+
+    {
+      project.desc && (
+        <p class="text-caption-md text-mute mb-sm">{project.desc}</p>
+      )
+    }
+
+    <span
+      class="text-caption-md text-mute group-hover:text-ink transition-colors"
+    >
+      {textButton} →
+    </span>
+  </div>
+</a>

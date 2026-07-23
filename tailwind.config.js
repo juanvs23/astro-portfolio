@@ -4,6 +4,9 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
+       aspectRatio:{
+        '3/2':'3/2'
+       },
       colors: {
         canvas: 'var(--color-canvas)',
         ink: 'var(--color-ink)',
