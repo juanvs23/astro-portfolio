@@ -66,4 +66,23 @@ describe('getSectionButtonDefs', () => {
     expect(projectsDef!.path).toBe('projects');
     expect(projectsDef!.icon).toContain('width="7" height="9"');
   });
+
+  it('should have valid position keys for all 6 buttons (star shape + center)', () => {
+    const defs = getSectionButtonDefs();
+    const validPositions = ['top', 'top-left', 'top-right', 'bottom-left', 'bottom-right', 'center'];
+    for (const def of defs) {
+      expect(def.position).toBeTruthy();
+      expect(validPositions).toContain(def.position);
+    }
+  });
+
+  it('should have Servicios at center, 5 star points around it', () => {
+    const defs = getSectionButtonDefs();
+    const servicesDef = defs.find((d) => d.key === 'menu.services');
+    expect(servicesDef!.position).toBe('center');
+    const starPoints = defs.filter((d) => d.key !== 'menu.services');
+    expect(starPoints).toHaveLength(5);
+    const starPositions = starPoints.map((d) => d.position);
+    expect(starPositions).not.toContain('center');
+  });
 });

@@ -5,7 +5,7 @@
     "about": {
         "title": "ABOUT ME",
         "description": "Hello! I'm Juan Carlos Ávila, a Full Stack Developer with 5+ years of experience in technologies like JavaScript (React, Node.js), PHP, and WordPress, plus knowledge of Python, Linux server administration and Node.js development.  Beyond my professional work, I'm deeply passionate about technology as a hobby, constantly exploring new tools and working on personal projects. <br/><br/> Specialized in building scalable web applications, API integrations (PayPal, Stripe, Google) and custom solutions for e-commerce and institutional websites. Passionate about clean code, performance optimization and continuous learning. Experienced in both team collaboration and autonomous projects, delivering robust and efficient products.",
-        "skills": "My Skills"
+        "skills": "Skills"
     },
     "jobs":{
         "title": "Work Experience"
@@ -78,7 +78,7 @@
     "menu":{
         "home": "Home",
         "about": "About",
-        "works": "Work Experience",
+        "works": "Experience",
         "skills": "Skills",
         "projects": "Projects",
         "contact": "Contact",
@@ -169,7 +169,7 @@
     "about": {
         "title": "ABOUT ME",
         "description": "Hi! I'm Juan Carlos Ávila. For 8+ years I built web platforms — from WooCommerce stores to React real-estate dashboards. But in the last 2 years I found my real focus: <strong>automating business processes with AI</strong>.<br/><br/>Today I help SMEs combine traditional web development with AI agents, smart chatbots, and RAG systems to cut operational costs. Imagine a restaurant where the chatbot not only takes orders but sends them straight to the kitchen. Or a logistics company where documents classify themselves. That's what I do.<br/><br/>I work with WordPress, React, Python, and AI models (OpenAI, local, RAG) to build solutions that actually deliver. My approach: <strong>clean code, measurable results, zero magic</strong>.",
-        "skills": "My Skills",
+        "skills": "Skills",
         "skillsLink": "View all my skills"
     },
     "skills": {
@@ -281,6 +281,36 @@
         "label":"The current language is ",
         "en": "English",
         "es": "Spanish"
+    },
+    "services": {
+        "calculator": {
+            "heading": "AI Quote Calculator",
+            "subheading": "Select your project type and urgency for an estimate",
+            "steps": {
+                "scale": "Step 1: Project Type",
+                "urgency": "Step 2: Urgency",
+                "result": "Result"
+            },
+            "scaleOptions": [
+                { "value": "chatbot-rag", "label": "RAG Chatbot", "description": "Smart assistant that answers using your own knowledge base" },
+                { "value": "autonomous-agents", "label": "Autonomous Agents", "description": "Complete AI workflow automation" },
+                { "value": "full-automation", "label": "Full Automation", "description": "Comprehensive AI solution for your business" }
+            ],
+            "urgencyOptions": [
+                { "value": "relaxed", "label": "Relaxed", "description": "No rush, standard development pace" },
+                { "value": "normal", "label": "Normal", "description": "Standard delivery time" },
+                { "value": "urgent", "label": "Urgent", "description": "Priority accelerated delivery" }
+            ],
+            "result": {
+                "estimated": "Estimated",
+                "range": "USD {min} – {max}",
+                "disclaimer": "This is a preliminary estimate. Final pricing depends on specific requirements."
+            },
+            "cta": {
+                "whatsapp": "Ask via WhatsApp",
+                "recalculate": "Recalculate"
+            }
+        }
     },
     "theme": {
         "toggle": "Toggle dark mode"

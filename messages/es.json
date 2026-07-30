@@ -5,10 +5,10 @@
     "about": {
         "title": "CONÓCEME",
         "description": "¡Hola! Soy Juan Carlos Ávila, Desarrollador Full Stack con 5+ años de experiencia en tecnologías como JavaScript (React, Node.js), PHP y WordPress, complementados con conocimientos en Python, administración de servidores Linux y desarrollo con Node.js. Fuera del trabajo, mi pasión por la tecnología se extiende a mis hobbies, donde disfruto experimentando con nuevas herramientas y desarrollando proyectos personales. <br/><br/> Especializado en crear aplicaciones web escalables, integraciones con APIs (PayPal, Stripe, Google) y soluciones personalizadas para e-commerce y sitios institucionales.  Apasionado por el código limpio, la optimización de rendimiento y el aprendizaje continuo. Experiencia trabajando en equipo y en proyectos autónomos, entregando productos robustos y eficientes.",
-        "skills": "Mis Habilidades"
+        "skills": "Habilidades"
     },
     "jobs":{
-        "title": "Experiencia Laboral"
+        "title": "Experiencia"
     },
     "ama": {
         "id": 1,
@@ -77,8 +77,8 @@
     "menu":{
         "home": "Inicio",
         "about": "Acerca de mí",
-        "skills": "Mis Habilidades",
-        "works": "Experiencia Laboral",
+        "skills": "Habilidades",
+        "works": "Experiencia",
         "projects": "Proyectos",
         "contact": "Contacto",
         "services": "Servicios",
@@ -168,7 +168,7 @@
     "about": {
         "title": "CONÓCEME",
         "description": "¡Hola! Soy Juan Carlos Ávila. Durante 8+ años construí plataformas web — desde tiendas WooCommerce hasta dashboards inmobiliarios con React. Pero en los últimos 2 años encontré mi verdadero foco: <strong>automatizar procesos empresariales con IA</strong>.<br/><br/>Hoy ayudo a PyMEs a combinar desarrollo web tradicional con agentes de IA, chatbots inteligentes y sistemas RAG para reducir costos operativos. Imaginate un restaurante donde el chatbot no solo recibe pedidos, sino que los envía directo a la cocina. O una empresa de logística donde los documentos se clasifican solos. Eso hago.<br/><br/>Trabajo con WordPress, React, Python y modelos de IA (OpenAI, locales, RAG) para crear soluciones que realmente funcionan. Mi enfoque: <strong>código limpio, resultados medibles, cero magic</strong>.",
-        "skills": "Mis Habilidades",
+        "skills": "Habilidades",
         "skillsLink": "Ver todas mis habilidades"
     },
     "skills": {
@@ -280,6 +280,36 @@
         "label":"El idioma actual es ",
         "en": "Ingles",
         "es": "Español"
+    },
+    "services": {
+        "calculator": {
+            "heading": "Cotizador de IA",
+            "subheading": "Selecciona el tipo de proyecto y urgencia para obtener un estimado",
+            "steps": {
+                "scale": "Paso 1: Tipo de Proyecto",
+                "urgency": "Paso 2: Urgencia",
+                "result": "Resultado"
+            },
+            "scaleOptions": [
+                { "value": "chatbot-rag", "label": "Chatbot con RAG", "description": "Asistente inteligente que responde usando tu propia base de conocimiento" },
+                { "value": "autonomous-agents", "label": "Agentes Autónomos", "description": "Automatización de flujos de trabajo completos con IA" },
+                { "value": "full-automation", "label": "Automatización Completa", "description": "Solución integral de IA para tu empresa" }
+            ],
+            "urgencyOptions": [
+                { "value": "relaxed", "label": "Tranquilo", "description": "Sin apuro, desarrollo a ritmo normal" },
+                { "value": "normal", "label": "Normal", "description": "Tiempo estándar de entrega" },
+                { "value": "urgent", "label": "Urgente", "description": "Entrega prioritaria acelerada" }
+            ],
+            "result": {
+                "estimated": "Estimado",
+                "range": "USD {min} – {max}",
+                "disclaimer": "Este es un estimado preliminar. El precio final depende de los requisitos específicos."
+            },
+            "cta": {
+                "whatsapp": "Consultar por WhatsApp",
+                "recalculate": "Recalcular"
+            }
+        }
     },
     "theme": {
         "toggle": "Cambiar modo oscuro"

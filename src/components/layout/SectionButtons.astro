@@ -16,6 +16,15 @@ const buttons = defs.map((def) => ({
   label: t(def.key),
   href: `/${locale}/${def.path}`,
 }));
+
+const positionClasses: Record<string, string> = {
+  'top': 'top-[8%] left-1/2 -translate-x-1/2',
+  'top-left': 'top-[25%] left-[12%]',
+  'top-right': 'top-[25%] right-[12%]',
+  'bottom-left': 'bottom-[20%] left-[15%]',
+  'bottom-right': 'bottom-[20%] right-[15%]',
+  'center': 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
+};
 ---
 
 <div
@@ -24,15 +33,15 @@ const buttons = defs.map((def) => ({
   aria-label={t('navigation.sections')}
   class="fixed top-[50%] left-0 right-0 h-[50%] md:top-[26%] md:h-[75%] flex items-center justify-center pointer-events-none z-30"
 >
-  <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 px-4 w-full lg:max-w-[50vw]">
+  <div class="relative w-full lg:max-w-[50vw] h-full">
     {buttons.map((btn) => (
       <a
         href={btn.href}
         title={btn.label}
         aria-label={btn.label}
         data-section={btn.label}
-        class="pointer-events-auto flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-surface-dark/80 border border-on-dark-mute/30 text-on-dark text-sm font-medium hover:scale-110 hover:bg-surface-dark transition-all duration-200"
-        set:html={btn.icon + `<span class="hidden md:inline">${btn.label}</span>`}
+        class={`absolute pointer-events-auto ${positionClasses[btn.position]} px-3 py-2 rounded-lg bg-surface-dark/80 border border-on-dark-mute/30 text-on-dark text-sm font-medium hover:scale-110 hover:bg-surface-dark transition-all duration-200`}
+        set:html={`<div class="flex flex-col items-center gap-1">${btn.icon.replace(/width="20" height="20"/g, 'width="40" height="40"')}<span class="hidden md:inline text-xs">${btn.label}</span></div>`}
       />
     ))}
   </div>
