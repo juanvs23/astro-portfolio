@@ -1,0 +1,611 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import AsciiMarker from '../ui/AsciiMarker.astro';
+
+interface WebPlan {
+  name: string;
+  startingPrice: number;
+  delivery: string;
+  recommended: boolean;
+  features: string[];
+  cta: string;
+}
+
+interface ExpressService {
+  name: string;
+  description: string;
+}
+
+interface ProcessStep {
+  step: number;
+  title: string;
+  description: string;
+}
+
+interface Addon {
+  name: string;
+  price: number;
+  description: string;
+}
+
+interface CalcScaleOption {
+  value: string;
+  label: string;
+  description: string;
+}
+
+interface CalcUrgencyOption {
+  value: string;
+  label: string;
+  description: string;
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+
+const webPlans = t('services.webPlans') as WebPlan[];
+const express = t('services.express') as ExpressService[];
+const processSteps = t('services.process') as ProcessStep[];
+const addons = t('services.addons') as Addon[];
+const launchPricing = t('services.launchPricing') as { badge: string; note: string };
+const ia = t('services.ia') as { heading: string; description: string };
+const customWork = t('services.custom') as { heading: string; description: string; cta: string };
+const whatsappNumber = t('contact.whatsappNumber') as string;
+
+const calcScaleOptions = t('services.calculator.scaleOptions') as CalcScaleOption[];
+const calcUrgencyOptions = t('services.calculator.urgencyOptions') as CalcUrgencyOption[];
+
+const calcHeading = t('services.calculator.heading') as string;
+const calcSubheading = t('services.calculator.subheading') as string;
+const calcStepScale = t('services.calculator.steps.scale') as string;
+const calcStepUrgency = t('services.calculator.steps.urgency') as string;
+const calcStepResult = t('services.calculator.steps.result') as string;
+const calcResultEstimated = t('services.calculator.result.estimated') as string;
+const calcResultRange = t('services.calculator.result.range') as string;
+const calcResultDisclaimer = t('services.calculator.result.disclaimer') as string;
+const calcCtaWhatsapp = t('services.calculator.cta.whatsapp') as string;
+const calcCtaRecalculate = t('services.calculator.cta.recalculate') as string;
+
+const aiNoteRaw = t('services.aiNote');
+const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNote';
+---
+
+<Section id="services">
+  <!-- Page heading -->
+  <h1 data-typewriter data-aos="fade-down" class="text-[30px] md:text-[35px] lg:text-[38px] font-bold mb-sm">
+    {t('seo.h1.services')}
+  </h1>
+
+  <div class="border-b border-hairline mb-xl" data-aos="fade-up" data-aos-delay="100"></div>
+
+  <!-- ============================================================ -->
+  <!-- ZONE 1: Desarrollo Web Plans -->
+  <!-- ============================================================ -->
+  <section data-aos="fade-up" data-aos-delay="100">
+    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
+      <AsciiMarker state="add" class="mr-xs inline" />
+      Desarrollo Web
+    </h2>
+    <p class="text-body-md text-body mb-md">Planes claros, resultados concretos</p>
+
+    <!-- AI translation note (EN only) -->
+    {hasAiNote ? (
+      <div class="bg-surface-soft border border-hairline rounded-sm px-lg py-md mb-lg text-caption-md text-mute">
+        {aiNoteRaw}
+      </div>
+    ) : null}
+
+    <!-- Launch pricing badge -->
+    <div class="bg-surface-dark text-on-dark text-caption-md rounded-sm px-sm py-xs inline-block mb-lg">
+      <span class="text-warning font-bold mr-xs">&#9733;</span>
+      {launchPricing.badge}
+    </div>
+
+    <!-- Plan cards grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
+      {webPlans.map((plan) => (
+        <div class={`plan-card relative bg-surface-soft border ${plan.recommended ? 'border-accent ring-2 ring-accent' : 'border-hairline'} rounded-sm p-lg flex flex-col`}>
+          {plan.recommended ? (
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-on-primary text-caption-md font-bold rounded-sm px-sm py-[2px] whitespace-nowrap">
+              M&aacute;s vendido
+            </span>
+          ) : null}
+
+          <h3 class="text-heading-md font-bold text-ink mb-sm">{plan.name}</h3>
+
+          <div class="text-heading-md font-bold text-ink mt-sm">
+            desde <span class="text-accent plan-price" data-base={plan.startingPrice}>${plan.startingPrice}</span> USD
+          </div>
+          <div class="text-caption-md text-mute mt-xs">
+            <AsciiMarker state="done" class="mr-xs" />
+            Entrega: {plan.delivery}
+          </div>
+
+          <ul class="mt-lg space-y-xs flex-1">
+            {plan.features.map((feature) => (
+              <li class="text-body-md text-body">
+                <AsciiMarker state="done" class="mr-xs text-success" />
+                {feature}
+              </li>
+            ))}
+          </ul>
+
+          <!-- Add-ons -->
+          <div class="mt-lg pt-md border-t border-hairline">
+            <p class="text-caption-md text-mute mb-sm font-bold">Agregar extras:</p>
+            <div class="space-y-xs">
+              {addons.map((addon, ai) => (
+                <label class={`plan-addon flex items-start gap-xs cursor-pointer py-xs px-sm rounded-sm hover:bg-surface-soft/50 transition-colors ${addon.name === 'Entrega Express' || addon.name === 'Express Delivery' ? 'addon-express' : ''}`}>
+                  <input
+                    type="checkbox"
+                    class="plan-addon-checkbox sr-only"
+                    data-price={addon.price}
+                    data-name={addon.name}
+                  />
+                  <span class="plan-addon-indicator font-mono text-body-md font-bold text-mute mt-[1px] shrink-0">[ ]</span>
+                  <div class="flex-1 min-w-0">
+                    <span class="text-caption-md text-body">{addon.name}</span>
+                    <span class="text-caption-md text-mute ml-xs">
+                      +{addon.price > 0 ? `$${addon.price}` : '50%'} USD
+                    </span>
+                    <span class="block text-caption-sm text-mute">{addon.description}</span>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <a
+            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hola Juan! Me interesa el plan ${plan.name} de Desarrollo Web — desde $${plan.startingPrice} USD`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`plan-cta relative overflow-hidden z-10 block text-center py-sm px-lg rounded-sm font-bold mt-lg ${
+              plan.recommended
+                ? 'bg-accent text-on-primary'
+                : 'bg-surface-dark text-on-dark'
+            }`}
+          >
+            {plan.cta}
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <!-- Launch note -->
+    <p class="text-caption-md text-mute mt-lg">{launchPricing.note}</p>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ZONE 2: IA Quote Calculator -->
+  <!-- ============================================================ -->
+  <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
+    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
+      <AsciiMarker state="add" class="mr-xs inline" />
+      {ia.heading}
+    </h2>
+    <p class="text-body-md text-body mb-xl">{ia.description}</p>
+
+    <div id="ia-calculator" class="bg-surface-card border border-hairline rounded-sm p-lg md:p-xl">
+      <!-- Calculator heading -->
+      <h3 class="text-heading-md font-bold text-ink mb-sm">{calcHeading}</h3>
+      <p class="text-body-md text-body mb-lg">{calcSubheading}</p>
+
+      <!-- Step indicator -->
+      <div id="calc-step-indicator" class="flex gap-sm mb-xl" role="status" aria-live="polite">
+        <span id="calc-step-label" class="text-caption-md text-mute">{calcStepScale}</span>
+      </div>
+
+      <!-- Step 1: Scale selection -->
+      <div id="calc-step-scale" class="calc-step">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-md">
+          {calcScaleOptions.map((opt) => (
+            <button
+              type="button"
+              data-scale={opt.value}
+              class="calc-scale-btn bg-surface-soft border border-hairline rounded-sm p-md text-left transition-all hover:border-accent focus:outline-none focus:ring-2 focus:ring-accent"
+              style="min-height: 44px;"
+            >
+              <div class="text-body-md font-bold text-ink">{opt.label}</div>
+              <div class="text-caption-md text-mute mt-xs">{opt.description}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Step 2: Urgency selection (hidden initially) -->
+      <div id="calc-step-urgency" class="calc-step hidden">
+        <h4 class="text-body-md font-bold text-ink mb-md">{calcStepUrgency}</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-md">
+          {calcUrgencyOptions.map((opt) => (
+            <button
+              type="button"
+              data-urgency={opt.value}
+              class="calc-urgency-btn bg-surface-soft border border-hairline rounded-sm p-md text-left transition-all hover:border-accent focus:outline-none focus:ring-2 focus:ring-accent"
+              style="min-height: 44px;"
+            >
+              <div class="text-body-md font-bold text-ink">{opt.label}</div>
+              <div class="text-caption-md text-mute mt-xs">{opt.description}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Result (hidden initially) -->
+      <div id="calc-step-result" class="calc-step hidden">
+        <div id="calc-result-content" class="text-center py-xl">
+          <div class="text-caption-md text-mute mb-md">{calcResultEstimated}</div>
+          <div id="calc-result-range" class="text-[24px] font-bold text-accent mb-md">---</div>
+          <p id="calc-result-disclaimer" class="text-caption-md text-mute mb-lg">{calcResultDisclaimer}</p>
+          <div class="flex flex-col sm:flex-row gap-md justify-center">
+            <a
+              id="calc-whatsapp-btn"
+              href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola Juan! Me interesa un proyecto de IA.')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block py-sm px-lg bg-surface-dark text-on-dark rounded-sm font-bold"
+            >
+              {calcCtaWhatsapp}
+            </a>
+            <button
+              type="button"
+              id="calc-recalculate-btn"
+              class="inline-block py-sm px-lg bg-surface-soft border border-hairline text-ink rounded-sm font-bold"
+            >
+              {calcCtaRecalculate}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fallback when JS disabled -->
+      <noscript>
+        <div class="text-center py-lg">
+          <p class="text-body-md text-body mb-md">Hablanos por WhatsApp y te armamos un presupuesto personalizado sin compromiso.</p>
+          <a
+            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola Juan! Me interesa cotizar un proyecto de IA.')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block py-sm px-lg bg-surface-dark text-on-dark rounded-sm font-bold"
+          >
+            {calcCtaWhatsapp}
+          </a>
+        </div>
+      </noscript>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ZONE 2.5: Custom Work -->
+  <!-- ============================================================ -->
+  <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
+    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
+      <AsciiMarker state="add" class="mr-xs inline" />
+      {customWork.heading}
+    </h2>
+    <p class="text-body-md text-body mb-xl max-w-2xl">{customWork.description}</p>
+    <a
+      href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola Juan! Tengo un proyecto a medida y quisiera una cotización.')}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="plan-cta relative overflow-hidden z-10 inline-block py-sm px-lg rounded-sm font-bold bg-surface-dark text-on-dark"
+    >
+      {customWork.cta}
+    </a>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ZONE 3: Express Services -->
+  <!-- ============================================================ -->
+  <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
+    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
+      <AsciiMarker state="add" class="mr-xs inline" />
+      Servicios Express
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-lg">
+      {express.map((svc) => (
+        <div class="bg-surface-soft border border-hairline rounded-sm p-md flex flex-col">
+          <h3 class="text-body-md font-bold text-ink mb-xs">
+            <AsciiMarker state="done" class="mr-xs text-ink" />
+            {svc.name}
+          </h3>
+          <p class="text-caption-md text-mute flex-1 mb-md">{svc.description}</p>
+          <a
+            href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hola Juan! Me interesa el servicio: ${svc.name}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-caption-md text-accent font-bold hover:underline inline-flex items-center gap-xs"
+          >
+            Consultar precio
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- ZONE 4: Process Steps -->
+  <!-- ============================================================ -->
+  <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
+    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
+      <AsciiMarker state="add" class="mr-xs inline" />
+      C&oacute;mo Trabajo
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
+      {processSteps.map((step) => (
+        <div class="bg-surface-soft border border-hairline rounded-sm p-lg text-center">
+          <div class="text-[36px] font-bold text-accent mb-sm" aria-hidden="true">
+            {String(step.step).padStart(2, '0')}
+          </div>
+          <h3 class="text-heading-md font-bold text-ink mb-xs">{step.title}</h3>
+          <p class="text-caption-md text-mute">{step.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+</Section>
+
+<!-- ============================================================ -->
+<!-- Plan Add-ons Price Update Logic -->
+<!-- ============================================================ -->
+<script>
+  (function () {
+    var cards = document.querySelectorAll('.plan-card');
+    cards.forEach(function (card) {
+      var priceEl = card.querySelector('.plan-price');
+      var ctaLink = card.querySelector('.plan-cta');
+      var checkboxes = card.querySelectorAll('.plan-addon-checkbox');
+      if (!priceEl || !ctaLink) return;
+      var basePrice = parseInt(priceEl.dataset.base, 10);
+      var planName = ctaLink ? ctaLink.textContent.trim() : '';
+
+      function updatePrice() {
+        var extra = 0;
+        var selectedAddons = [];
+        checkboxes.forEach(function (cb) {
+          if (cb.checked) {
+            var addonPrice = parseInt(cb.dataset.price, 10);
+            var addonName = cb.dataset.name;
+            if (addonPrice === 0) {
+              // Express Delivery: 50% of base
+              addonPrice = Math.round(basePrice * 0.5);
+            }
+            extra += addonPrice;
+            selectedAddons.push(addonName + ' (+$' + addonPrice + ')');
+          }
+        });
+        var total = basePrice + extra;
+        priceEl.textContent = '$' + total.toLocaleString();
+
+        // Update WhatsApp CTA
+        if (ctaLink) {
+          var phone = '584248310009';
+          var msg = 'Hola Juan! Me interesa el plan ' + planName + ' de Desarrollo Web — desde $' + total + ' USD';
+          if (selectedAddons.length > 0) {
+            msg += '. Extras: ' + selectedAddons.join(', ');
+          }
+          ctaLink.href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
+        }
+      }
+
+      checkboxes.forEach(function (cb) {
+        var indicator = cb.parentElement.querySelector('.plan-addon-indicator');
+        cb.addEventListener('change', function () {
+          if (indicator) {
+            indicator.textContent = cb.checked ? '[x]' : '[ ]';
+            indicator.classList.toggle('text-success', cb.checked);
+            indicator.classList.toggle('text-mute', !cb.checked);
+          }
+          updatePrice();
+        });
+      });
+    });
+  })();
+</script>
+<script>
+  (function () {
+    // Pricing matrix (mirrors src/lib/quote-calculator.ts PRICING_MATRIX)
+    var PRICING = {
+      'chatbot-rag:relaxed': { min: 300, max: 400 },
+      'chatbot-rag:normal': { min: 400, max: 500 },
+      'chatbot-rag:urgent': { min: 500, max: 600 },
+      'autonomous-agents:relaxed': { min: 600, max: 800 },
+      'autonomous-agents:normal': { min: 800, max: 1000 },
+      'autonomous-agents:urgent': { min: 1000, max: 1200 },
+      'full-automation:relaxed': { min: 1200, max: 1600 },
+      'full-automation:normal': { min: 1600, max: 2000 },
+      'full-automation:urgent': { min: 2000, max: 2500 },
+    };
+
+    var SCALE_LABELS = {
+      'chatbot-rag': 'Chatbot con RAG',
+      'autonomous-agents': 'Agentes Autónomos',
+      'full-automation': 'Automatización Completa',
+    };
+
+    var URGENCY_LABELS = {
+      relaxed: 'Tranquilo',
+      normal: 'Normal',
+      urgent: 'Urgente',
+    };
+
+    var PHONE = '584248310009';
+    var selectedScale = null;
+    var selectedUrgency = null;
+
+    var stepIndicator = document.getElementById('calc-step-indicator');
+    var stepLabel = document.getElementById('calc-step-label');
+    var stepScale = document.getElementById('calc-step-scale');
+    var stepUrgency = document.getElementById('calc-step-urgency');
+    var stepResult = document.getElementById('calc-step-result');
+    var resultRange = document.getElementById('calc-result-range');
+    var whatsappBtn = document.getElementById('calc-whatsapp-btn');
+    var recalcBtn = document.getElementById('calc-recalculate-btn');
+
+    // Scale buttons
+    var scaleBtns = document.querySelectorAll('.calc-scale-btn');
+    scaleBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        selectedScale = this.dataset.scale;
+
+        // Visual feedback: highlight selected, dim others
+        scaleBtns.forEach(function (b) {
+          b.classList.remove('border-accent', 'ring-2', 'ring-accent');
+        });
+        this.classList.add('border-accent', 'ring-2', 'ring-accent');
+
+        // Advance to urgency step
+        stepLabel.textContent = document.querySelector('#calc-step-urgency h4')
+          ? document.querySelector('#calc-step-urgency h4').textContent
+          : 'Paso 2: Urgencia';
+
+        stepScale.classList.add('hidden');
+        stepUrgency.classList.remove('hidden');
+      });
+    });
+
+    // Urgency buttons
+    var urgencyBtns = document.querySelectorAll('.calc-urgency-btn');
+    urgencyBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        selectedUrgency = this.dataset.urgency;
+
+        // Visual feedback
+        urgencyBtns.forEach(function (b) {
+          b.classList.remove('border-accent', 'ring-2', 'ring-accent');
+        });
+        this.classList.add('border-accent', 'ring-2', 'ring-accent');
+
+        // Compute result
+        var key = selectedScale + ':' + selectedUrgency;
+        var quote = PRICING[key];
+        if (!quote) return;
+
+        var rangeText =
+          'USD ' +
+          quote.min.toLocaleString() +
+          ' \u2013 ' +
+          quote.max.toLocaleString();
+
+        resultRange.textContent = rangeText;
+
+        // Build WhatsApp message
+        var scaleLabel = SCALE_LABELS[selectedScale] || selectedScale;
+        var urgencyLabel = URGENCY_LABELS[selectedUrgency] || selectedUrgency;
+        var message =
+          'Hola Juan! Me interesa un proyecto de IA: ' +
+          scaleLabel +
+          '. Urgencia: ' +
+          urgencyLabel +
+          '. Mi estimado fue ' +
+          rangeText +
+          '. Contame m\u00e1s.';
+
+        whatsappBtn.href =
+          'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(message);
+
+        // Show result
+        stepLabel.textContent = document.querySelector('#calc-step-result #calc-result-content .text-caption-md')
+          ? document.querySelector('#calc-step-result #calc-result-content .text-caption-md').textContent
+          : 'Resultado';
+
+        stepUrgency.classList.add('hidden');
+        stepResult.classList.remove('hidden');
+      });
+    });
+
+    // Recalculate button
+    if (recalcBtn) {
+      recalcBtn.addEventListener('click', function () {
+        selectedScale = null;
+        selectedUrgency = null;
+
+        scaleBtns.forEach(function (b) {
+          b.classList.remove('border-accent', 'ring-2', 'ring-accent');
+        });
+        urgencyBtns.forEach(function (b) {
+          b.classList.remove('border-accent', 'ring-2', 'ring-accent');
+        });
+
+        stepLabel.textContent = document.querySelector('#calc-step-scale .calc-scale-btn')
+          ? 'Paso 1: Tipo de Proyecto'
+          : 'Paso 1';
+
+        stepResult.classList.add('hidden');
+        stepUrgency.classList.add('hidden');
+        stepScale.classList.remove('hidden');
+      });
+    }
+
+    // Hide interactive steps if JS is disabled (in case the hidden class default doesn't apply)
+    // Steps with .calc-step.hidden are hidden server-side; JS overrides: show scale
+    stepScale.classList.remove('hidden');
+  })();
+</script>
+
+<style>
+  /* Underline animation (mirrors SkillsSection) */
+  [data-underline] {
+    position: relative;
+    padding-bottom: 4px;
+  }
+  [data-underline]::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.5s ease;
+  }
+  [data-underline].in-view::after {
+    width: 100%;
+  }
+
+  /* Ensure hidden calc steps stay hidden until JS removes the class */
+  .calc-step.hidden {
+    display: none;
+  }
+
+  /* Focus visible for keyboard nav */
+  .calc-scale-btn:focus-visible,
+  .calc-urgency-btn:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  /* Plan CTA fill-from-left hover */
+  .plan-cta::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: inherit;
+    border-radius: inherit;
+    z-index: -2;
+  }
+
+  .plan-cta::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: var(--color-accent-hover, #0056b3);
+    transition: width 0.3s ease;
+    border-radius: inherit;
+    z-index: -1;
+  }
+
+  .plan-cta:hover::before {
+    width: 100%;
+  }
+</style>

@@ -143,21 +143,24 @@
             "skills": "Skills – Juan Carlos Avila | Web Development & Automation",
             "experience": "Experience – Juan Carlos Avila | Web Dev & AI Automation",
             "projects": "Projects – Juan Carlos Avila | Web Dev & AI Automation",
-            "contact": "Contact – Juan Carlos Avila | Web Dev + AI Automation"
+            "contact": "Contact – Juan Carlos Avila | Web Dev + AI Automation",
+            "services": "Services – Juan Carlos Avila | Web Development & AI Automation"
         },
         "descriptions": {
             "about": "Meet Juan Carlos Avila: Web Developer with 8+ years of experience specializing in AI automation. WordPress, React, Python, and intelligent agents.",
             "skills": "Skills of Juan Carlos Avila: Frontend, Backend, CMS, DevOps, and AI integration for business process automation.",
             "experience": "Juan Carlos Avila's career: 8+ years building web platforms and integrating AI solutions that reduce operational costs.",
             "projects": "Projects by Juan Carlos Avila: web platforms, AI chatbots, RAG assistants, dashboards, and e-commerce.",
-            "contact": "Contact Juan Carlos Avila for web development, AI automation, smart chatbots, or technical consulting."
+            "contact": "Contact Juan Carlos Avila for web development, AI automation, smart chatbots, or technical consulting.",
+            "services": "Web development and AI automation services: landing pages, WordPress sites, e-commerce, smart chatbots, and autonomous agents."
         },
         "h1": {
             "about": "About Me – Web Development & AI Automation",
             "skills": "Skills – Web Development & AI Automation",
             "experience": "Professional Journey – Web Developer & AI Specialist",
             "projects": "Portfolio – Web Projects & Automations",
-            "contact": "Get In Touch – Let's Talk About Your Project"
+            "contact": "Get In Touch – Let's Talk About Your Project",
+            "services": "Services – Web Development & Intelligent Automation"
         }
     },
     "hero": {
@@ -310,7 +313,86 @@
                 "whatsapp": "Ask via WhatsApp",
                 "recalculate": "Recalculate"
             }
-        }
+        },
+        "webPlans": [
+            {
+                "name": "Basic",
+                "startingPrice": 120,
+                "delivery": "3 days",
+                "recommended": false,
+                "features": [
+                    "3-page website",
+                    "100% responsive design",
+                    "Basic SEO",
+                    "Speed optimization",
+                    "1 hour of support"
+                ],
+                "cta": "Hire Basic"
+            },
+            {
+                "name": "Professional",
+                "startingPrice": 250,
+                "delivery": "7 days",
+                "recommended": true,
+                "features": [
+                    "Full WordPress site",
+                    "Up to 5 pages",
+                    "Blog + forms",
+                    "Advanced optimization",
+                    "Documentation included"
+                ],
+                "cta": "Hire Professional"
+            },
+            {
+                "name": "E-commerce",
+                "startingPrice": 500,
+                "delivery": "14 days",
+                "recommended": false,
+                "features": [
+                    "Full WooCommerce",
+                    "Payment gateways",
+                    "Product management",
+                    "Admin dashboard",
+                    "Priority support"
+                ],
+                "cta": "Hire E-commerce"
+            }
+        ],
+        "launchPricing": {
+            "badge": "15% OFF — Launch Price",
+            "note": "Take advantage of the launch discount: 15% off for a limited time (first 3–6 months)."
+        },
+        "aiNote": "Note: this section was translated using AI-assisted tools. We're working on a fully human translation — thank you for your patience!",
+        "ia": {
+            "heading": "Intelligent Automation",
+            "description": "Need a chatbot, an autonomous agent, or full automation? Use the interactive calculator below to get a no-obligation estimate."
+        },
+        "custom": {
+            "heading": "Custom Work",
+            "description": "Have a project that doesn't fit any plan? Custom software development, dashboards, APIs, complex integrations, or whatever you need. Tell me your idea and I'll send you a personalized quote.",
+            "cta": "Tell me about your project"
+        },
+        "express": [
+            { "name": "Landing Page", "description": "Conversion-optimized landing page with responsive design and basic SEO." },
+            { "name": "Corporate Site", "description": "Up to 5-page corporate website with contact form." },
+            { "name": "Speed Optimization", "description": "Performance audit and improvement for your existing site (Core Web Vitals)." },
+            { "name": "WordPress Maintenance", "description": "Updates, backups, and security monitoring for your WordPress site." },
+            { "name": "Technical Consulting", "description": "Advice on web architecture, tech stack, and digital strategy." },
+            { "name": "Site Migration", "description": "Safe migration of your site to new hosting or domain without SEO loss." }
+        ],
+        "process": [
+            { "step": 1, "title": "Initial Consultation", "description": "We discuss your project, needs, and goals. No cost or commitment." },
+            { "step": 2, "title": "Development & Feedback", "description": "I build your solution with iterative deliveries. You receive progress updates and we adjust on the fly." },
+            { "step": 3, "title": "Launch & Support", "description": "Final delivery, deploy, and support period to ensure everything works perfectly." }
+        ],
+        "addons": [
+            { "name": "Advanced SEO", "price": 60, "description": "Structured data, schema markup & technical optimization" },
+            { "name": "UI/UX Redesign", "price": 100, "description": "Full design from Figma/XD with prototyping" },
+            { "name": "Performance Audit", "price": 25, "description": "Speed audit, Core Web Vitals & optimization" },
+            { "name": "CRM Integration", "price": 50, "description": "HubSpot, Salesforce or ActiveCampaign integration" },
+            { "name": "Data Migration", "price": 75, "description": "Bulk content migration (10K+ records)" },
+            { "name": "Express Delivery", "price": 0, "description": "+50% of base price — cuts delivery time in half" }
+        ]
     },
     "theme": {
         "toggle": "Toggle dark mode"

@@ -142,21 +142,24 @@
             "skills": "Habilidades – Juan Carlos Avila | Desarrollo Web y Automatización",
             "experience": "Experiencia – Juan Carlos Avila | Web Dev & AI Automation",
             "projects": "Proyectos – Juan Carlos Avila | Desarrollo Web y Automatización",
-            "contact": "Contacto – Juan Carlos Avila | Web Dev + AI Automation"
+            "contact": "Contacto – Juan Carlos Avila | Web Dev + AI Automation",
+            "services": "Servicios – Juan Carlos Avila | Desarrollo Web y Automatización IA"
         },
         "descriptions": {
             "about": "Conoce a Juan Carlos Avila: Desarrollador Web con 8+ años de experiencia y especialización en automatización con IA. WordPress, React, Python y agentes inteligentes.",
             "skills": "Habilidades de Juan Carlos Avila: Frontend, Backend, CMS, DevOps, e Integración de IA para automatización de procesos empresariales.",
             "experience": "Trayectoria de Juan Carlos Avila: 8+ años desarrollando plataformas web e integrando soluciones de IA que reducen costos operativos.",
             "projects": "Proyectos de Juan Carlos Avila: plataformas web, chatbots IA, asistentes RAG, dashboards y e-commerce.",
-            "contact": "Contacta a Juan Carlos Avila para desarrollo web, automatizaciones con IA, chatbots inteligentes o consultoría técnica."
+            "contact": "Contacta a Juan Carlos Avila para desarrollo web, automatizaciones con IA, chatbots inteligentes o consultoría técnica.",
+            "services": "Servicios de desarrollo web y automatización IA: landing pages, sitios WordPress, e-commerce, chatbots inteligentes y agentes autónomos."
         },
         "h1": {
             "about": "Sobre Mí – Desarrollo Web y Automatización con IA",
             "skills": "Habilidades – Web Development & AI Automation",
             "experience": "Trayectoria Profesional – Web Developer & AI Specialist",
             "projects": "Portafolio – Proyectos Web y Automatizaciones",
-            "contact": "Contáctame – Hablemos de tu Proyecto"
+            "contact": "Contáctame – Hablemos de tu Proyecto",
+            "services": "Servicios – Desarrollo Web y Automatización Inteligente"
         }
     },
     "hero": {
@@ -309,7 +312,85 @@
                 "whatsapp": "Consultar por WhatsApp",
                 "recalculate": "Recalcular"
             }
-        }
+        },
+        "webPlans": [
+            {
+                "name": "Básico",
+                "startingPrice": 120,
+                "delivery": "3 días",
+                "recommended": false,
+                "features": [
+                    "Sitio web de 3 páginas",
+                    "Diseño 100% responsive",
+                    "SEO básico",
+                    "Optimización de velocidad",
+                    "1 hora de soporte"
+                ],
+                "cta": "Contratar Básico"
+            },
+            {
+                "name": "Profesional",
+                "startingPrice": 250,
+                "delivery": "7 días",
+                "recommended": true,
+                "features": [
+                    "Sitio WordPress completo",
+                    "Hasta 5 páginas",
+                    "Blog + formularios",
+                    "Optimización avanzada",
+                    "Documentación incluida"
+                ],
+                "cta": "Contratar Profesional"
+            },
+            {
+                "name": "E-commerce",
+                "startingPrice": 500,
+                "delivery": "14 días",
+                "recommended": false,
+                "features": [
+                    "WooCommerce completo",
+                    "Pasarelas de pago",
+                    "Gestión de productos",
+                    "Panel de administración",
+                    "Soporte prioritario"
+                ],
+                "cta": "Contratar E-commerce"
+            }
+        ],
+        "launchPricing": {
+            "badge": "15% OFF — Precio de lanzamiento",
+            "note": "Aprovechá el descuento de lanzamiento: 15% menos por tiempo limitado (primeros 3–6 meses)."
+        },
+        "ia": {
+            "heading": "Automatización Inteligente",
+            "description": "¿Necesitás un chatbot, un agente autónomo o una automatización completa? Usá el cotizador interactivo para obtener un estimado sin compromiso."
+        },
+        "custom": {
+            "heading": "Trabajos a Medida",
+            "description": "¿Tenés un proyecto que no encaja en ningún plan? Desarrollo de software a medida, dashboards, APIs, integraciones complejas o lo que necesites. Contame tu idea y te paso una cotización personalizada.",
+            "cta": "Contame tu proyecto"
+        },
+        "express": [
+            { "name": "Landing Page", "description": "Página de aterrizaje optimizada para conversión con diseño responsive y SEO básico." },
+            { "name": "Sitio Institucional", "description": "Sitio web corporativo de hasta 5 páginas con formulario de contacto." },
+            { "name": "Optimización de Velocidad", "description": "Auditoría y mejora de rendimiento para tu sitio existente (Core Web Vitals)." },
+            { "name": "Mantenimiento WordPress", "description": "Actualizaciones, backups, y monitoreo de seguridad para tu sitio WordPress." },
+            { "name": "Consultoría Técnica", "description": "Asesoría en arquitectura web, stack tecnológico y estrategia digital." },
+            { "name": "Migración de Sitio", "description": "Migración segura de tu sitio a nuevo hosting o dominio sin pérdida de SEO." }
+        ],
+        "process": [
+            { "step": 1, "title": "Consultoría Inicial", "description": "Hablamos de tu proyecto, necesidades y objetivos. Sin costo ni compromiso." },
+            { "step": 2, "title": "Desarrollo y Feedback", "description": "Construyo tu solución con entregas iterativas. Recibís avances y ajustamos sobre la marcha." },
+            { "step": 3, "title": "Lanzamiento y Soporte", "description": "Entrega final, deploy y periodo de soporte para asegurar que todo funcione perfecto." }
+        ],
+        "addons": [
+            { "name": "SEO Avanzado", "price": 60, "description": "Datos estructurados, schema markup y optimización técnica" },
+            { "name": "Rediseño UI/UX", "price": 100, "description": "Diseño completo desde Figma/XD con prototipado" },
+            { "name": "Performance Audit", "price": 25, "description": "Auditoría de velocidad, Core Web Vitals y optimización" },
+            { "name": "CRM Integration", "price": 50, "description": "Integración con HubSpot, Salesforce o ActiveCampaign" },
+            { "name": "Migración de Datos", "price": 75, "description": "Migración masiva de contenido (+10K registros)" },
+            { "name": "Entrega Express", "price": 0, "description": "+50% del precio base — reducís el tiempo a la mitad" }
+        ]
     },
     "theme": {
         "toggle": "Cambiar modo oscuro"
