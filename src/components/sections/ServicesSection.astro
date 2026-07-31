@@ -287,15 +287,17 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
       <AsciiMarker state="add" class="mr-xs inline" />
       {customWork.heading}
     </h2>
-    <p class="text-body-md text-body mb-xl max-w-2xl">{customWork.description}</p>
-    <a
-      href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola Juan! Tengo un proyecto a medida y quisiera una cotización.')}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="plan-cta relative overflow-hidden z-10 inline-block py-sm px-lg rounded-sm font-bold bg-surface-dark text-on-dark"
-    >
-      {customWork.cta}
-    </a>
+    <div class="bg-surface-soft border border-hairline rounded-sm p-lg md:p-xl">
+      <p class="text-body-md text-body mb-lg max-w-2xl">{customWork.description}</p>
+      <a
+        href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola Juan! Tengo un proyecto a medida y quisiera una cotización.')}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="plan-cta relative overflow-hidden z-10 inline-block py-sm px-lg rounded-sm font-bold bg-surface-dark text-on-dark"
+      >
+        {customWork.cta}
+      </a>
+    </div>
   </section>
 
   <!-- ============================================================ -->
