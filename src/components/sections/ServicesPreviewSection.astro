@@ -1,0 +1,51 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import AsciiMarker from '../ui/AsciiMarker.astro';
+
+interface ExpressService {
+  name: string;
+  description: string;
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+const services = t('services.express') as ExpressService[];
+---
+
+<Section id="services-preview">
+  <div data-aos="fade-up">
+    <h2 class="text-heading-md font-bold text-ink mb-sm">
+      <AsciiMarker state="add" class="mr-xs inline" />
+      {t('funnel.services.heading')}
+    </h2>
+    <div class="border-b border-hairline mb-md" data-aos="fade-up" data-aos-delay="100"></div>
+    <p class="text-body-md text-body mb-xl">{t('funnel.services.description')}</p>
+  </div>
+
+  <ul class="grid grid-cols-1 sm:grid-cols-2 gap-md mb-xl" data-aos="fade-up" data-aos-delay="150">
+    {services.map((service) => (
+      <li class="bg-surface-soft border border-hairline rounded-sm p-md">
+        <h3 class="text-body-md font-bold text-ink mb-xs">
+          <AsciiMarker state="done" class="mr-xs text-ink" />
+          {service.name}
+        </h3>
+        <p class="text-caption-md text-mute">{service.description}</p>
+      </li>
+    ))}
+  </ul>
+
+  <div data-aos="fade-up" data-aos-delay="200">
+    <a
+      href={`/${locale}/services`}
+      class="inline-flex items-center justify-center gap-2 px-lg py-sm rounded-sm font-mono text-body-md font-medium bg-surface-dark text-on-dark hover:bg-surface-dark-elevated hover:text-on-dark transition-colors duration-300"
+    >
+      {t('funnel.services.linkout')}
+      <span aria-hidden="true">&rarr;</span>
+    </a>
+  </div>
+</Section>
