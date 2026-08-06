@@ -1,0 +1,35 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import AsciiMarker from '../ui/AsciiMarker.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+---
+
+<Section id="about-preview">
+  <div class="max-w-[760px]">
+    <div data-aos="fade-up">
+      <h2 class="text-heading-md font-bold text-ink mb-sm">
+        <AsciiMarker state="add" class="mr-xs inline" />
+        {t('funnel.about.heading')}
+      </h2>
+      <div class="border-b border-hairline mb-md" data-aos="fade-up" data-aos-delay="100"></div>
+      <p class="text-body-md text-body mb-xl">{t('funnel.about.description')}</p>
+    </div>
+
+    <div data-aos="fade-up" data-aos-delay="150">
+      <a
+        href={`/${locale}/about`}
+        class="inline-flex items-center justify-center gap-2 px-lg py-sm rounded-sm font-mono text-body-md font-medium bg-surface-dark text-on-dark hover:bg-surface-dark-elevated hover:text-on-dark transition-colors duration-300"
+      >
+        {t('funnel.about.linkout')}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</Section>
