@@ -164,9 +164,99 @@
     },
     "hero": {
         "badge": "Web Dev + Automatización IA",
-        "title": "Desarrollo web que trabaja para ti — incluso mientras duermes",
-        "description": "8+ años creando plataformas web y automatizando procesos con IA. WordPress, React, Python y agentes inteligentes.",
+        "title": "Convierta visitas en clientes con una web que trabaja para usted",
+        "description": "Desarrollo web orientado a conversión y automatización con IA. Solicite una auditoría gratuita y descubra qué optimizar en su negocio.",
         "canvasLabel": "Animación 3D interactiva del portafolio"
+    },
+    "funnel": {
+        "hero": {
+            "cta": "Solicitar auditoría gratuita"
+        },
+        "pain": {
+            "heading": "Su sitio web no convierte visitantes en clientes",
+            "description": "Un sitio lento, desactualizado o sin una llamada a la acción clara pierde ventas todos los días. Cada visita que no convierte es ingreso que se escapa."
+        },
+        "promise": {
+            "heading": "Una web que trabaja por usted, las 24 horas",
+            "description": "Desarrollo web orientado a conversión más automatización con IA: chatbots, agentes y flujos que responden, califican y dan seguimiento sin intervención manual."
+        },
+        "process": {
+            "heading": "Un proceso claro en tres pasos",
+            "intro": "Así llevo su proyecto de la idea al lanzamiento, con entregas iterativas y comunicación constante."
+        },
+        "services": {
+            "heading": "Servicios orientados a resultados",
+            "description": "Landing pages, sitios WordPress, e-commerce, chatbots y agentes autónomos. Todo integrado para capturar y calificar leads.",
+            "linkout": "Ver todos los servicios"
+        },
+        "proof": {
+            "heading": "Resultados verificables",
+            "benefits": "Métricas reales de proyectos con automatización y desarrollo web de alto rendimiento.",
+            "metrics": [
+                "-60% de procesamiento manual de datos",
+                "+40% de posicionamiento orgánico",
+                "99.9% de disponibilidad de la infraestructura",
+                "hasta 45% menos de tickets de soporte"
+            ],
+            "results": [
+                "Plataformas web con tiempos de carga menores a 2 segundos",
+                "Chatbots y agentes que reducen la carga operativa del equipo"
+            ]
+        },
+        "about": {
+            "heading": "Detrás del código",
+            "description": "Más de 8 años combinando desarrollo web e integración de IA para empresas de LatAm y Estados Unidos.",
+            "linkout": "Sobre mí"
+        },
+        "projects": {
+            "heading": "Proyectos que generan resultados",
+            "description": "Plataformas, dashboards, chatbots y automatizaciones entregadas en producción.",
+            "linkout": "Ver proyectos"
+        },
+        "audit": {
+            "heading": "Auditoría gratuita",
+            "description": "Reciba un análisis de su sitio y sus procesos para detectar oportunidades de conversión y automatización. Sin costo y sin compromiso.",
+            "cta": "Quiero mi auditoría gratuita",
+            "subject": "Auditoría gratuita",
+            "message": "Quiero una auditoría gratuita para mi negocio."
+        },
+        "pricing": {
+            "heading": "Precios promocionales de lanzamiento",
+            "description": "Planes claros y compactos con descuento de lanzamiento por tiempo limitado. Sin sorpresas ni costos ocultos.",
+            "cta": "Consultar por WhatsApp",
+            "linkout": "Ver planes completos"
+        },
+        "faq": [
+            {
+                "question": "¿Cuánto cuesta un proyecto?",
+                "answer": "Depende del alcance: desde una landing page hasta una automatización completa. Cada proyecto tiene un presupuesto claro antes de empezar, sin costos ocultos."
+            },
+            {
+                "question": "¿En cuánto tiempo entregan?",
+                "answer": "Una landing page en 3 días, un sitio completo en 7 y un e-commerce en 14. Los plazos se fijan por escrito al inicio del proyecto."
+            },
+            {
+                "question": "¿Qué pasa después del lanzamiento?",
+                "answer": "Cada entrega incluye soporte y documentación. Puede contratar mantenimiento continuo si lo necesita."
+            },
+            {
+                "question": "¿La auditoría tiene algún costo?",
+                "answer": "No. La auditoría es gratuita y sin compromiso: recibe un análisis y decide si quiere avanzar."
+            },
+            {
+                "question": "¿La automatización con IA funciona para mi negocio?",
+                "answer": "Si su empresa repite tareas manuales o responde muchas consultas, la IA puede reducir costos. Lo verificamos juntos en la auditoría."
+            }
+        ],
+        "contact": {
+            "heading": "Hablemos de su proyecto",
+            "description": "Cuénteme sobre su proyecto y reciba una propuesta sin compromiso en menos de 24 horas.",
+            "cta": "Escribir por WhatsApp"
+        },
+        "footer": {
+            "heading": "¿Listo para convertir más visitas en clientes?",
+            "tagline": "Web + Automatización con IA"
+        }
     },
     "about": {
         "title": "CONÓCEME",

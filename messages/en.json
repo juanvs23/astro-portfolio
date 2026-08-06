@@ -165,9 +165,100 @@
     },
     "hero": {
         "badge": "Web Dev + AI Automation",
-        "title": "Web development that works for you — even while you sleep",
-        "description": "8+ years building web platforms and automating processes with AI. WordPress, React, Python, and intelligent agents.",
+        "title": "Turn visitors into customers with a website that works for you",
+        "description": "Conversion-focused web development and AI-powered automation. Request a free audit and discover what to optimize in your business.",
         "canvasLabel": "Interactive 3D portfolio animation"
+    },
+    "funnel": {
+        "hero": {
+            "cta": "Request a free audit"
+        },
+        "pain": {
+            "heading": "Your website is not converting visitors into customers",
+            "description": "A slow, outdated website without a clear call to action loses sales every day. Every visit that does not convert is revenue slipping away."
+        },
+        "promise": {
+            "heading": "A website that works for you, 24/7",
+            "description": "Conversion-focused web development plus AI automation: chatbots, agents and flows that respond, qualify and follow up without manual work."
+        },
+        "process": {
+            "heading": "A clear process in three steps",
+            "intro": "I take your project from idea to launch with iterative deliveries and constant communication."
+        },
+        "services": {
+            "heading": "Services focused on results",
+            "description": "Landing pages, WordPress sites, e-commerce, chatbots and autonomous agents. All integrated to capture and qualify leads.",
+            "linkout": "View all services"
+        },
+        "proof": {
+            "heading": "Verifiable results",
+            "benefits": "Real metrics from automation projects and high-performance web development.",
+            "metrics": [
+                "-60% manual data processing",
+                "+40% organic search ranking",
+                "99.9% infrastructure uptime",
+                "up to 45% fewer support tickets"
+            ],
+            "results": [
+                "Web platforms with load times under 2 seconds",
+                "Chatbots and agents that reduce your team's operational load"
+            ]
+        },
+        "about": {
+            "heading": "Behind the code",
+            "description": "Over 8 years combining web development and AI integration for companies in LatAm and the United States.",
+            "linkout": "About me"
+        },
+        "projects": {
+            "heading": "Projects that deliver results",
+            "description": "Platforms, dashboards, chatbots and automations shipped to production.",
+            "linkout": "View projects"
+        },
+        "audit": {
+            "heading": "Free audit",
+            "description": "Get an analysis of your website and processes to uncover conversion and automation opportunities. No cost and no commitment.",
+            "cta": "Get my free audit",
+            "subject": "Free audit",
+            "message": "I would like a free audit for my business."
+        },
+        "pricing": {
+            "heading": "Launch promotional pricing",
+            "description": "Clear and compact plans with a limited-time launch discount. No surprises and no hidden costs.",
+            "cta": "Ask via WhatsApp",
+            "linkout": "See full plans"
+        },
+        "faq": [
+            {
+                "question": "How much does a project cost?",
+                "answer": "It depends on the scope: from a landing page to a complete automation. Every project has a clear quote before we start, with no hidden costs."
+            },
+            {
+                "question": "How long does delivery take?",
+                "answer": "A landing page in 3 days, a complete site in 7 and an e-commerce in 14. Timelines are agreed in writing at the start."
+            },
+            {
+                "question": "What happens after launch?",
+                "answer": "Every delivery includes support and documentation. You can hire ongoing maintenance if you need it."
+            },
+            {
+                "question": "Does the audit cost anything?",
+                "answer": "No. The audit is free and no-commitment: you get an analysis and decide if you want to move forward."
+            },
+            {
+                "question": "Does AI automation work for my business?",
+                "answer": "If your company repeats manual tasks or handles many inquiries, AI can reduce costs. We verify this together in the audit."
+            }
+        ],
+        "contact": {
+            "heading": "Let's talk about your project",
+            "description": "Tell me about your project and get a no-obligation proposal within 24 hours.",
+            "cta": "Message on WhatsApp"
+        },
+        "footer": {
+            "heading": "Ready to turn more visits into customers?",
+            "tagline": "Web + AI Automation"
+        },
+        "aiNote": "Note: this section was translated using AI-assisted tools. We are working on a fully human translation — thank you for your patience!"
     },
     "about": {
         "title": "ABOUT ME",
