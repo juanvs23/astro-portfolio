@@ -58,6 +58,13 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
     </script>
   </head>
   <body class="font-mono bg-canvas text-ink antialiased">
+    <!-- D7: no-JS fallback. AOS CSS zeroes [data-aos] opacity before init; without scripting,
+         content must stay visible/reachable. Style inside noscript is body-valid HTML5. -->
+    <noscript>
+      <style>
+        [data-aos] { opacity: 1 !important; transform: none !important; }
+      </style>
+    </noscript>
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-lg focus:py-md focus:bg-surface-dark focus:text-on-dark focus:rounded-sm">
       {t('navigation.skipToContent')}
     </a>

@@ -25,17 +25,6 @@ export function getStaticPaths() {
 const locale = Astro.params.locale as Locale;
 ---
 
-<!-- D7: no-JS fallback. AOS's CSS zeroes [data-aos] opacity before init; without
-     scripting or with scripting disabled, content must stay visible/reachable. -->
-<noscript>
-  <style>
-    [data-aos] {
-      opacity: 1 !important;
-      transform: none !important;
-    }
-  </style>
-</noscript>
-
 <BaseLayout locale={locale}>
   <!-- 12-section AIDA conversion funnel (home-funnel-landing spec §Requirement: 12-section funnel composition).
        Order: 1 Hero → 2 Pain → 3 Process → 4 Services → 5 SocialProof → 6 About → 6 Skills → 7 Projects
