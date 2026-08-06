@@ -107,3 +107,14 @@
   animation: typewriter-cursor 0.8s step-end infinite;
   word-break: break-word;
 }
+
+/* D7: force-visible guard — AOS reveal must never leave content hidden for
+   users with reduced motion. Content renders static and fully visible.
+   The no-JS equivalent lives in a <noscript> block on the funnel page. */
+@media (prefers-reduced-motion: reduce) {
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
