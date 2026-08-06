@@ -35,10 +35,9 @@ const benefits = t('funnel.proof.benefits') as string;
       ))}
     </div>
 
-    <ul class="border-t border-hairline text-left" data-aos="fade-up" data-aos-delay="200">
+    <ul class="border-t border-hairline text-center" data-aos="fade-up" data-aos-delay="200">
       {results.map((result) => (
-        <li class="border-b border-hairline py-md flex items-start gap-sm">
-          <AsciiMarker state="done" class="mt-xs inline" />
+        <li class="border-b border-hairline py-md">
           <span class="text-body-md text-body">{result}</span>
         </li>
       ))}
