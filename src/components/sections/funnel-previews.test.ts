@@ -112,3 +112,174 @@ describe('preview linkouts differ between locales', () => {
     expect(tEs('about.skillsLink')).not.toBe(tEn('about.skillsLink'));
   });
 });
+
+// ---------------------------------------------------------------------------
+// PR₄ (home-funnel-landing): data contracts consumed by the interaction / BOFU
+// / FAQ / social / footer sections. Components are presentational Astro
+// templates; the TDD unit is the i18n payload they render.
+// ---------------------------------------------------------------------------
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface WebPlan {
+  name: string;
+  startingPrice: number;
+  delivery: string;
+  recommended: boolean;
+  features: string[];
+  cta: string;
+}
+
+const PR4_STRING_KEYS = [
+  // PricingBofuSection (section 9)
+  'funnel.pricing.delivery',
+  // FaqSection (section 10)
+  'funnel.faq_heading',
+  // FunnelFooter (section 12) — D9
+  'funnel.footer.heading',
+  'funnel.footer.tagline',
+  // CaptureSection (section 8) — label reused in LeadForm
+  'funnel.audit.cta',
+  // PricingBofuSection CTA
+  'funnel.pricing.cta',
+  // ContactCtaSection (section 11)
+  'funnel.contact.cta',
+];
+
+for (const key of PR4_STRING_KEYS) {
+  it(`PR4 section key ${key} resolves non-empty (es)`, async () => {
+    const t = await getTranslations('es');
+    const value = t(key);
+    expect(typeof value).toBe('string');
+    expect((value as string).length).toBeGreaterThan(0);
+    expect(value).not.toBe(key);
+  });
+
+  it(`PR4 section key ${key} resolves non-empty (en)`, async () => {
+    const t = await getTranslations('en');
+    const value = t(key);
+    expect(typeof value).toBe('string');
+    expect((value as string).length).toBeGreaterThan(0);
+    expect(value).not.toBe(key);
+  });
+}
+
+describe('social proof section data shape', () => {
+  it('funnel.proof.metrics provides at least 4 measurable claims (es)', async () => {
+    const t = await getTranslations('es');
+    const metrics = t('funnel.proof.metrics') as string[];
+    expect(Array.isArray(metrics)).toBe(true);
+    expect(metrics.length).toBeGreaterThanOrEqual(4);
+    for (const metric of metrics) {
+      expect(typeof metric).toBe('string');
+      expect(metric.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('funnel.proof.metrics contains the four key claims (en)', async () => {
+    const t = await getTranslations('en');
+    const metrics = t('funnel.proof.metrics') as string[];
+    expect(metrics.some((m) => m.includes('60%'))).toBe(true);
+    expect(metrics.some((m) => m.includes('40%'))).toBe(true);
+    expect(metrics.some((m) => m.includes('99.9%'))).toBe(true);
+    expect(metrics.some((m) => m.includes('45%'))).toBe(true);
+  });
+
+  it('funnel.proof.results provides at least 2 result bullets (both locales)', async () => {
+    for (const locale of ['es', 'en']) {
+      const t = await getTranslations(locale as 'es' | 'en');
+      const results = t('funnel.proof.results') as string[];
+      expect(Array.isArray(results)).toBe(true);
+      expect(results.length).toBeGreaterThanOrEqual(2);
+      for (const result of results) {
+        expect(typeof result).toBe('string');
+        expect(result.length).toBeGreaterThan(0);
+      }
+    }
+  });
+});
+
+describe('faq section data shape', () => {
+  it('funnel.faq provides 4-6 items each with non-empty question and answer (es)', async () => {
+    const t = await getTranslations('es');
+    const faq = t('funnel.faq') as FaqItem[];
+    expect(Array.isArray(faq)).toBe(true);
+    expect(faq.length).toBeGreaterThanOrEqual(4);
+    expect(faq.length).toBeLessThanOrEqual(6);
+    for (const item of faq) {
+      expect(item.question.length).toBeGreaterThan(0);
+      expect(item.answer.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('funnel.faq answers are visible without JS (es static check)', async () => {
+    const t = await getTranslations('es');
+    const faq = t('funnel.faq') as FaqItem[];
+    // Static Q&A content: answers must be present in the data so they render
+    // in the no-JS HTML. The accordion component applies hiding via JS only.
+    for (const item of faq) {
+      expect(item.answer).toBeTruthy();
+      // Answers should be substantive, not a single token
+      expect(item.answer.split(/\s+/).length).toBeGreaterThanOrEqual(3);
+    }
+  });
+
+  it('funnel.faq covers key objection themes (es)', async () => {
+    const t = await getTranslations('es');
+    const faq = t('funnel.faq') as FaqItem[];
+    const allText = faq.map((i) => i.question + ' ' + i.answer).join(' ');
+    expect(allText).toMatch(/cuesta|precio|presupuesto/i);
+    expect(allText).toMatch(/tiempo|día|seman/i);
+    expect(allText).toMatch(/lanzamiento|soporte|documentación/i);
+    expect(allText).toMatch(/compromiso|costo|gratuita/i);
+  });
+});
+
+describe('pricing bofu section data shape', () => {
+  it('funnel.pricing.delivery differs between locales', async () => {
+    const tEs = await getTranslations('es');
+    const tEn = await getTranslations('en');
+    expect(tEs('funnel.pricing.delivery')).not.toBe(tEn('funnel.pricing.delivery'));
+  });
+
+  it('services.webPlans provides 3 plans for BOFU display (both locales)', async () => {
+    for (const locale of ['es', 'en']) {
+      const t = await getTranslations(locale as 'es' | 'en');
+      const plans = t('services.webPlans') as WebPlan[];
+      expect(Array.isArray(plans)).toBe(true);
+      expect(plans).toHaveLength(3);
+      expect(plans[0].startingPrice).toBe(120);
+      expect(plans[1].startingPrice).toBe(250);
+      expect(plans[2].startingPrice).toBe(500);
+      for (const plan of plans) {
+        expect(plan.name.length).toBeGreaterThan(0);
+        expect(plan.delivery.length).toBeGreaterThan(0);
+        expect(Array.isArray(plan.features)).toBe(true);
+        expect(plan.features.length).toBeGreaterThanOrEqual(4);
+        expect(plan.cta.length).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('services.launchPricing provides badge and note (both locales)', async () => {
+    for (const locale of ['es', 'en']) {
+      const t = await getTranslations(locale as 'es' | 'en');
+      const launch = t('services.launchPricing') as { badge: string; note: string };
+      expect(launch.badge.length).toBeGreaterThan(0);
+      expect(launch.badge).toMatch(/15%/);
+      expect(launch.note.length).toBeGreaterThan(0);
+    }
+  });
+});
+
+describe('footer section data contract', () => {
+  it('funnel.footer keys differ between locales', async () => {
+    const tEs = await getTranslations('es');
+    const tEn = await getTranslations('en');
+    expect(tEs('funnel.footer.heading')).not.toBe(tEn('funnel.footer.heading'));
+    expect(tEs('funnel.footer.tagline')).not.toBe(tEn('funnel.footer.tagline'));
+  });
+});

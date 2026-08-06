@@ -1,6 +1,18 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroSection from '../../components/sections/HeroSection.astro';
+import PainSection from '../../components/sections/PainSection.astro';
+import ProcessPreviewSection from '../../components/sections/ProcessPreviewSection.astro';
+import ServicesPreviewSection from '../../components/sections/ServicesPreviewSection.astro';
+import SocialProofSection from '../../components/sections/SocialProofSection.astro';
+import AboutPreviewSection from '../../components/sections/AboutPreviewSection.astro';
+import SkillsPreviewSection from '../../components/sections/SkillsPreviewSection.astro';
+import ProjectsPreviewSection from '../../components/sections/ProjectsPreviewSection.astro';
+import CaptureSection from '../../components/sections/CaptureSection.astro';
+import PricingBofuSection from '../../components/sections/PricingBofuSection.astro';
+import FaqSection from '../../components/sections/FaqSection.astro';
+import ContactCtaSection from '../../components/sections/ContactCtaSection.astro';
+import FunnelFooter from '../../components/layout/FunnelFooter.astro';
 import SectionButtons from '../../components/layout/SectionButtons.astro';
 import { locales, type Locale } from '@/i18n';
 export const prerender = true;
@@ -26,13 +38,22 @@ const locale = Astro.params.locale as Locale;
 </noscript>
 
 <BaseLayout locale={locale}>
-  <!-- AIDA funnel (single page). Section 1 = Hero (Attention):
-       Badge + value prop + above-the-fold funnel.hero.cta.
-       Funnel sections arriving in later PRs, in order:
-       2 Pain -> Promise | 3 Process (3 steps) | 4 Services preview
-       5 Social proof | 6 About/Skills preview | 7 Projects preview
-       8 Auditora (Capture) | 9 Precios (BOFU) | 10 FAQ
-       11 Contacto / CTA final | 12 FunnelFooter -->
+  <!-- 12-section AIDA conversion funnel (home-funnel-landing spec §Requirement: 12-section funnel composition).
+       Order: 1 Hero → 2 Pain → 3 Process → 4 Services → 5 SocialProof → 6 About → 6 Skills → 7 Projects
+       → 8 Capture → 9 PricingBofu → 10 Faq → 11 ContactCta → 12 FunnelFooter.
+       SectionButtons retained until PR₆ removal. -->
   <HeroSection locale={locale} />
+  <PainSection locale={locale} />
+  <ProcessPreviewSection locale={locale} />
+  <ServicesPreviewSection locale={locale} />
+  <SocialProofSection locale={locale} />
+  <AboutPreviewSection locale={locale} />
+  <SkillsPreviewSection locale={locale} />
+  <ProjectsPreviewSection locale={locale} />
+  <CaptureSection locale={locale} />
+  <PricingBofuSection locale={locale} />
+  <FaqSection locale={locale} />
+  <ContactCtaSection locale={locale} />
+  <FunnelFooter locale={locale} />
   <SectionButtons locale={locale} />
 </BaseLayout>
