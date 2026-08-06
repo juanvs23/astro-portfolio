@@ -453,6 +453,20 @@ describe('hero.* tuned copy i18n (PR₁)', () => {
     expect(tEs('hero.description')).not.toBe(tEn('hero.description'));
   });
 
+  it('should NOT contain hero.canvasLabel in es (removed with Three.js stack)', async () => {
+    const t = await getTranslations('es');
+    const canvasLabel = t('hero.canvasLabel');
+    // key was removed — t() must fall back to returning the key itself
+    expect(canvasLabel).toBe('hero.canvasLabel');
+  });
+
+  it('should NOT contain hero.canvasLabel in en (removed with Three.js stack)', async () => {
+    const t = await getTranslations('en');
+    const canvasLabel = t('hero.canvasLabel');
+    // key was removed — t() must fall back to returning the key itself
+    expect(canvasLabel).toBe('hero.canvasLabel');
+  });
+
   it('es funnel.* + hero.* values must not contain voseo tokens', async () => {
     const VOSEO_TOKENS = [
       'Usá', 'Aprovechá', 'Contame', 'necesitás', 'recibís',

@@ -1,491 +1,687 @@
 {
-    "social":{
-        "title": "Follow me"
+  "social": {
+    "title": "Follow me"
+  },
+  "about": {
+    "title": "ABOUT ME",
+    "description": "Hi! I'm Juan Carlos Ávila. For 8+ years I built web platforms — from WooCommerce stores to React real-estate dashboards. But in the last 2 years I found my real focus: <strong>automating business processes with AI</strong>.<br/><br/>Today I help SMEs combine traditional web development with AI agents, smart chatbots, and RAG systems to cut operational costs. Imagine a restaurant where the chatbot not only takes orders but sends them straight to the kitchen. Or a logistics company where documents classify themselves. That's what I do.<br/><br/>I work with WordPress, React, Python, and AI models (OpenAI, local, RAG) to build solutions that actually deliver. My approach: <strong>clean code, measurable results, zero magic</strong>.",
+    "skills": "Skills",
+    "skillsLink": "View all my skills"
+  },
+  "jobs": {
+    "title": "Work Experience"
+  },
+  "ama": {
+    "id": 1,
+    "title": "WordPress Developer - Fullstack",
+    "start": "2024-8",
+    "end": "2025-4",
+    "company": "Addiction Marketing Agency",
+    "description": "Implemented a LAMP server in the cloud to host multiple WordPress projects. Developed a high-performance directory with custom post types, advanced taxonomies, and SEO-optimized meta content, using native PHP and JavaScript. Built various sites with extensive content, prioritizing speed and organic ranking. Designed high-performance data architectures with advanced taxonomies and meta-information that anticipate how structured knowledge bases feed today's RAG systems."
+  },
+  "ciancoder": {
+    "id": 2,
+    "title": "Freelance Developer - WordPress",
+    "start": "2024-5",
+    "end": "2024-8",
+    "company": "Ciancoders",
+    "description": "Developed two WordPress platforms from scratch: an informational page and a ticket sales system. Implemented CPTs, custom fields, and taxonomies with native PHP (no plugins). For the frontend, used vanilla JavaScript (ES6+) and modern CSS (Grid/Flexbox), creating dynamic components optimized for performance and user experience. These projects were Dockerized and deployed to a Linux server via GIT over SSH. The containerized infrastructure and Git→SSH workflow I established are the same patterns I now use to deploy AI services — models, embeddings, and API endpoints — with the same consistency and reproducibility."
+  },
+  "tremgroup": {
+    "id": 3,
+    "title": "Fullstack/PHP Developer - JavaScript",
+    "start": "2022-8",
+    "end": "2024-4",
+    "company": "TREMGROUP LLC",
+    "description": "Developed interactive React.js components for visualizing real estate statistics in Miami. Maintained and optimized legacy websites (8+ years old), modernizing their code and adding features. Created custom solutions with WordPress, Next.js, and React, including Google Maps API integrations for filtering properties by price and profitability. Those dashboards integrated multiple data sources (APIs, MLS, CSV) establishing ETL and normalization patterns that I later applied to AI-driven automation pipelines."
+  },
+  "conocimiento": {
+    "id": 4,
+    "title": "Front-end/WordPress Developer",
+    "start": "2021-12",
+    "end": "2022-6",
+    "company": "Conocimiento Corporativo S.A.S",
+    "description": "Developed custom WordPress solutions from scratch, creating native themes and plugins with PHP. Implemented advanced content systems using custom post types, tailored taxonomies, and custom fields (without plugins like ACF), optimized for sectors like education and security. Each project was built with clean, scalable code to ensure high performance and easy maintenance. The structured content architecture I built — custom post types, taxonomies, meta-fields — mirrors the same patterns I now use to feed structured knowledge into AI assistants and RAG systems."
+  },
+  "nivelics": {
+    "id": 5,
+    "title": "WordPress Developer",
+    "start": "2021-6",
+    "end": "2021-11",
+    "company": "Nivelics SAS",
+    "description": "Developed and maintained WordPress sites, including client-facing interfaces and dashboards. Created custom plugins and themes for advertising or e-commerce sites for clients. Built APIs with Node.js. Developed REST APIs with Node.js that established the integration patterns I now apply to connect language models with web platforms."
+  },
+  "ztgroup": {
+    "id": 6,
+    "title": "Front-end/WordPress Developer",
+    "start": "2020-3",
+    "end": "2021-6",
+    "company": "ZtGroup LLC",
+    "description": "Developed and maintained WordPress sites, including client-facing interfaces and dashboards. Created custom plugins and themes for advertising or e-commerce sites for clients. Built modular WordPress ecosystems with custom plugins that laid the groundwork for AI-integrated content architectures."
+  },
+  "hispano": {
+    "id": 7,
+    "title": "Front-End Developer",
+    "start": "2018-3",
+    "end": "2020-1",
+    "company": "Hispano Soluciones CA",
+    "description": "Developed interfaces for client projects in Drupal, WordPress, and static site layouts. My early projects in Drupal and WordPress gave me the solid web architecture foundation on which I now build AI automation solutions."
+  },
+  "newmovement": {
+    "id": 8,
+    "title": "Full Stack Developer — AI Integration",
+    "start": "2025-6",
+    "end": "2026-5",
+    "company": "New Movement Agency",
+    "description": "Designed and deployed AI-powered solutions integrating LLM APIs (OpenAI, local models) into existing web platforms, reducing manual data processing by 60%. Architected high-performance web applications with server-side optimization, caching strategies, and database tuning achieving sub-2s load times. Managed Linux cloud infrastructure (LAMP stack) ensuring 99.9% uptime. Implemented SEO-optimized architecture improving organic search rankings by 40%. Led technical discovery sessions with clients, translating business requirements into technical specifications."
+  },
+  "menu": {
+    "home": "Home",
+    "about": "About",
+    "works": "Experience",
+    "skills": "Skills",
+    "projects": "Projects",
+    "contact": "Contact",
+    "services": "Services",
+    "open": "Open Menu",
+    "close": "Close Menu"
+  },
+  "navigation": {
+    "menu": "Navigation menu",
+    "mobile": "Mobile navigation",
+    "main": "Main navigation",
+    "sections": "Portfolio sections",
+    "skipToContent": "Skip to content"
+  },
+  "contactUs": {
+    "title": "Contact me",
+    "subtitle": "Send me a message",
+    "formTitle": "Please fill in the form below"
+  },
+  "emailData": {
+    "title": "Send me an email",
+    "hoverTitle": "Click me to send",
+    "clickedTitle": "Thank you for contacting me"
+  },
+  "formMessage": {
+    "success": "Message sent successfully",
+    "error": "Please try again... Later, Sorry. Contact me by email on my footer",
+    "sending": "Sending message"
+  },
+  "formMessageErrors": {
+    "field": "This field is required",
+    "phone": "Please enter a valid phone number",
+    "email": "Please enter a valid email"
+  },
+  "footer": {
+    "develop": "Develop by ",
+    "copy": "Copyright © ",
+    "brand": "Brand",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "language": "English"
+  },
+  "inputField": {
+    "fullName": "Full Name",
+    "phone": "Phone",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send"
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Some projects I have worked on",
+    "button": "Page view"
+  },
+  "LocaleSwitcher": {
+    "label": "The current language is ",
+    "en": "English",
+    "es": "Spanish"
+  },
+  "seo": {
+    "title": "Juan Carlos Avila – Web Development + AI Automation | 8+ Years Experience",
+    "description": "Web Developer specialized in AI-powered automation | 8+ years in WordPress, React, Python, PHP | Smart chatbots, RAG systems, AI agents & scalable web platforms.",
+    "pages": {
+      "about": "About Me – Juan Carlos Avila | Web Dev + AI Automation",
+      "skills": "Skills – Juan Carlos Avila | Web Development & Automation",
+      "experience": "Experience – Juan Carlos Avila | Web Dev & AI Automation",
+      "projects": "Projects – Juan Carlos Avila | Web Dev & AI Automation",
+      "contact": "Contact – Juan Carlos Avila | Web Dev + AI Automation",
+      "services": "Services – Juan Carlos Avila | Web Development & AI Automation"
     },
-    "about": {
-        "title": "ABOUT ME",
-        "description": "Hello! I'm Juan Carlos Ávila, a Full Stack Developer with 8+ years of experience in technologies like JavaScript (React, Node.js), PHP, and WordPress, plus knowledge of Python, Linux server administration and Node.js development.  Beyond my professional work, I'm deeply passionate about technology as a hobby, constantly exploring new tools and working on personal projects. <br/><br/> Specialized in building scalable web applications, API integrations (PayPal, Stripe, Google) and custom solutions for e-commerce and institutional websites. Passionate about clean code, performance optimization and continuous learning. Experienced in both team collaboration and autonomous projects, delivering robust and efficient products.",
-        "skills": "Skills"
+    "descriptions": {
+      "about": "Meet Juan Carlos Avila: Web Developer with 8+ years of experience specializing in AI automation. WordPress, React, Python, and intelligent agents.",
+      "skills": "Skills of Juan Carlos Avila: Frontend, Backend, CMS, DevOps, and AI integration for business process automation.",
+      "experience": "Juan Carlos Avila's career: 8+ years building web platforms and integrating AI solutions that reduce operational costs.",
+      "projects": "Projects by Juan Carlos Avila: web platforms, AI chatbots, RAG assistants, dashboards, and e-commerce.",
+      "contact": "Contact Juan Carlos Avila for web development, AI automation, smart chatbots, or technical consulting.",
+      "services": "Web development and AI automation services: landing pages, WordPress sites, e-commerce, smart chatbots, and autonomous agents."
     },
-    "jobs":{
-        "title": "Work Experience"
-       
-    },
-    "ama": {
-        "id": 1,
-        "title": "WordPress Developer - Fullstack",
-        "start": "2024-8",
-        "end": "2025-4",
-        "company": "Addiction Marketing Agency",
-        "description": "Implemented a LAMP server in the cloud to host multiple WordPress projects. Developed a high-performance directory with custom post types, advanced taxonomies, and SEO-optimized meta content, using native PHP and JavaScript. Built various sites with extensive content, prioritizing speed and organic ranking. Designed high-performance data architectures with advanced taxonomies and meta-information that anticipate how structured knowledge bases feed today's RAG systems."
-    },
-    "ciancoder":{
-        "id": 2,
-        "title": "Freelance Developer - WordPress",
-        "start": "2024-5",
-        "end": "2024-8",
-        "company": "Ciancoders",
-        "description": "Developed two WordPress platforms from scratch: an informational page and a ticket sales system. Implemented CPTs, custom fields, and taxonomies with native PHP (no plugins). For the frontend, used vanilla JavaScript (ES6+) and modern CSS (Grid/Flexbox), creating dynamic components optimized for performance and user experience. These projects were Dockerized and deployed to a Linux server via GIT over SSH. The containerized infrastructure and Git→SSH workflow I established are the same patterns I now use to deploy AI services — models, embeddings, and API endpoints — with the same consistency and reproducibility."
-    },
-    "tremgroup": {
-        "id": 3,
-        "title": "Fullstack/PHP Developer - JavaScript",
-        "start": "2022-8",
-        "end": "2024-4",
-        "company": "TREMGROUP LLC",
-        "description": "Developed interactive React.js components for visualizing real estate statistics in Miami. Maintained and optimized legacy websites (8+ years old), modernizing their code and adding features. Created custom solutions with WordPress, Next.js, and React, including Google Maps API integrations for filtering properties by price and profitability. Those dashboards integrated multiple data sources (APIs, MLS, CSV) establishing ETL and normalization patterns that I later applied to AI-driven automation pipelines."
-    },
-    "conocimiento": {
-        "id": 4,
-        "title": "Front-end/WordPress Developer",
-        "start": "2021-12",
-        "end": "2022-6",
-        "company": "Conocimiento Corporativo S.A.S",
-        "description": "Developed custom WordPress solutions from scratch, creating native themes and plugins with PHP. Implemented advanced content systems using custom post types, tailored taxonomies, and custom fields (without plugins like ACF), optimized for sectors like education and security. Each project was built with clean, scalable code to ensure high performance and easy maintenance. The structured content architecture I built — custom post types, taxonomies, meta-fields — mirrors the same patterns I now use to feed structured knowledge into AI assistants and RAG systems."
-    },
-    "nivelics": {
-        "id": 5,
-        "title": "WordPress Developer",
-        "start": "2021-6",
-        "end": "2021-11",
-        "company": "Nivelics SAS",
-        "description": "Developed and maintained WordPress sites, including client-facing interfaces and dashboards. Created custom plugins and themes for advertising or e-commerce sites for clients. Built APIs with Node.js. Developed REST APIs with Node.js that established the integration patterns I now apply to connect language models with web platforms."
-    },
-    "ztgroup":{
-        "id": 6,
-        "title": "Front-end/WordPress Developer",
-        "start": "2020-3",
-        "end": "2021-6",
-        "company": "ZtGroup LLC",
-        "description": "Developed and maintained WordPress sites, including client-facing interfaces and dashboards. Created custom plugins and themes for advertising or e-commerce sites for clients. Built modular WordPress ecosystems with custom plugins that laid the groundwork for AI-integrated content architectures."
-    },
-    "hispano": {
-        "id": 7,
-        "title": "Front-End Developer",
-        "start": "2018-3",
-        "end": "2020-1",
-        "company": "Hispano Soluciones CA",
-        "description": "Developed interfaces for client projects in Drupal, WordPress, and static site layouts. My early projects in Drupal and WordPress gave me the solid web architecture foundation on which I now build AI automation solutions."
-    },
-    "newmovement": {
-        "id": 8,
-        "title": "Full Stack Developer — AI Integration",
-        "start": "2025-6",
-        "end": "2026-5",
-        "company": "New Movement Agency",
-        "description": "Designed and deployed AI-powered solutions integrating LLM APIs (OpenAI, local models) into existing web platforms, reducing manual data processing by 60%. Architected high-performance web applications with server-side optimization, caching strategies, and database tuning achieving sub-2s load times. Managed Linux cloud infrastructure (LAMP stack) ensuring 99.9% uptime. Implemented SEO-optimized architecture improving organic search rankings by 40%. Led technical discovery sessions with clients, translating business requirements into technical specifications."
-    },
-    "menu":{
-        "home": "Home",
-        "about": "About",
-        "works": "Experience",
-        "skills": "Skills",
-        "projects": "Projects",
-        "contact": "Contact",
-        "services": "Services",
-        "open": "Open Menu",
-        "close": "Close Menu"
-    },
-    "navigation":{
-        "menu": "Navigation menu",
-        "mobile": "Mobile navigation",
-        "main": "Main navigation",
-        "sections": "Portfolio sections",
-        "skipToContent": "Skip to content"
-    },
-    "contactUs":{
-        "title": "Contact me",
-        "subtitle": "Send me a message",
-        "formTitle": "Please fill in the form below"
-    },
-    "emailData":{
-        "title": "Send me an email",
-        "hoverTitle": "Click me to send",
-        "clickedTitle": "Thank you for contacting me"
-    },
-    "formMessage":{
-        "success": "Message sent successfully",
-        "error": "Please try again... Later, Sorry. Contact me by email on my footer",
-        "sending": "Sending message"
-    },
-    "formMessageErrors":{
-        "field": "This field is required",
-        "phone": "Please enter a valid phone number",
-        "email": "Please enter a valid email"
-    },
-    "footer":{
-        "develop": "Develop by ",
-        "copy": "Copyright © "
-    },
-    "inputField":{
-        "fullName": "Full Name",
-        "phone": "Phone",
-        "email": "Email",
-        "subject": "Subject",
-        "message": "Message",
-        "send": "Send"
-    },
-    "projects":{
-        "title": "Projects",
-        "subtitle": "Some projects I have worked on",
-        "button": "Page view"
-    },
-    "LocaleSwitcher":{
-        "label":"The current language is ",
-        "en": "English",
-        "es": "Spanish"
-    },
-    "seo":{
-        "title": "Juan Carlos Avila – Web Development + AI Automation | 8+ Years Experience",
-        "description": "Web Developer specialized in AI-powered automation | 8+ years in WordPress, React, Python, PHP | Smart chatbots, RAG systems, AI agents & scalable web platforms.",
-        "pages": {
-            "about": "About Me – Juan Carlos Avila | Web Dev + AI Automation",
-            "skills": "Skills – Juan Carlos Avila | Web Development & Automation",
-            "experience": "Experience – Juan Carlos Avila | Web Dev & AI Automation",
-            "projects": "Projects – Juan Carlos Avila | Web Dev & AI Automation",
-            "contact": "Contact – Juan Carlos Avila | Web Dev + AI Automation",
-            "services": "Services – Juan Carlos Avila | Web Development & AI Automation"
-        },
-        "descriptions": {
-            "about": "Meet Juan Carlos Avila: Web Developer with 8+ years of experience specializing in AI automation. WordPress, React, Python, and intelligent agents.",
-            "skills": "Skills of Juan Carlos Avila: Frontend, Backend, CMS, DevOps, and AI integration for business process automation.",
-            "experience": "Juan Carlos Avila's career: 8+ years building web platforms and integrating AI solutions that reduce operational costs.",
-            "projects": "Projects by Juan Carlos Avila: web platforms, AI chatbots, RAG assistants, dashboards, and e-commerce.",
-            "contact": "Contact Juan Carlos Avila for web development, AI automation, smart chatbots, or technical consulting.",
-            "services": "Web development and AI automation services: landing pages, WordPress sites, e-commerce, smart chatbots, and autonomous agents."
-        },
-        "h1": {
-            "about": "About Me – Web Development & AI Automation",
-            "skills": "Skills – Web Development & AI Automation",
-            "experience": "Professional Journey – Web Developer & AI Specialist",
-            "projects": "Portfolio – Web Projects & Automations",
-            "contact": "Get In Touch – Let's Talk About Your Project",
-            "services": "Services – Web Development & Intelligent Automation"
-        }
-    },
+    "h1": {
+      "about": "About Me – Web Development & AI Automation",
+      "skills": "Skills – Web Development & AI Automation",
+      "experience": "Professional Journey – Web Developer & AI Specialist",
+      "projects": "Portfolio – Web Projects & Automations",
+      "contact": "Get In Touch – Let's Talk About Your Project",
+      "services": "Services – Web Development & Intelligent Automation"
+    }
+  },
+  "hero": {
+    "badge": "Web Dev + AI Automation",
+    "title": "Turn visitors into customers with a website that works for you",
+    "description": "Conversion-focused web development and AI-powered automation. Request a free audit and discover what to optimize in your business."
+  },
+  "funnel": {
     "hero": {
-        "badge": "Web Dev + AI Automation",
-        "title": "Turn visitors into customers with a website that works for you",
-        "description": "Conversion-focused web development and AI-powered automation. Request a free audit and discover what to optimize in your business.",
-        "canvasLabel": "Interactive 3D portfolio animation"
+      "cta": "Request a free audit"
     },
-    "funnel": {
-        "hero": {
-            "cta": "Request a free audit"
-        },
-        "pain": {
-            "heading": "Your website is not converting visitors into customers",
-            "description": "A slow, outdated website without a clear call to action loses sales every day. Every visit that does not convert is revenue slipping away."
-        },
-        "promise": {
-            "heading": "A website that works for you, 24/7",
-            "description": "Conversion-focused web development plus AI automation: chatbots, agents and flows that respond, qualify and follow up without manual work."
-        },
-        "process": {
-            "heading": "A clear process in three steps",
-            "intro": "I take your project from idea to launch with iterative deliveries and constant communication."
-        },
-        "services": {
-            "heading": "Services focused on results",
-            "description": "Landing pages, WordPress sites, e-commerce, chatbots and autonomous agents. All integrated to capture and qualify leads.",
-            "linkout": "View all services"
-        },
-        "proof": {
-            "heading": "Verifiable results",
-            "benefits": "Real metrics from automation projects and high-performance web development.",
-            "metrics": [
-                "-60% manual data processing",
-                "+40% organic search ranking",
-                "99.9% infrastructure uptime",
-                "up to 45% fewer support tickets"
-            ],
-            "results": [
-                "Web platforms with load times under 2 seconds",
-                "Chatbots and agents that reduce your team's operational load"
-            ]
-        },
-        "about": {
-            "heading": "Behind the code",
-            "description": "Over 8 years combining web development and AI integration for companies in LatAm and the United States.",
-            "linkout": "About me"
-        },
-        "projects": {
-            "heading": "Projects that deliver results",
-            "description": "Platforms, dashboards, chatbots and automations shipped to production.",
-            "linkout": "View projects"
-        },
-        "audit": {
-            "heading": "Free audit",
-            "description": "Get an analysis of your website and processes to uncover conversion and automation opportunities. No cost and no commitment.",
-            "cta": "Get my free audit",
-            "subject": "Free audit",
-            "message": "I would like a free audit for my business."
-        },
-        "pricing": {
-            "heading": "Launch promotional pricing",
-            "description": "Clear and compact plans with a limited-time launch discount. No surprises and no hidden costs.",
-            "cta": "Ask via WhatsApp",
-            "linkout": "See full plans"
-        },
-        "faq": [
-            {
-                "question": "How much does a project cost?",
-                "answer": "It depends on the scope: from a landing page to a complete automation. Every project has a clear quote before we start, with no hidden costs."
-            },
-            {
-                "question": "How long does delivery take?",
-                "answer": "A landing page in 3 days, a complete site in 7 and an e-commerce in 14. Timelines are agreed in writing at the start."
-            },
-            {
-                "question": "What happens after launch?",
-                "answer": "Every delivery includes support and documentation. You can hire ongoing maintenance if you need it."
-            },
-            {
-                "question": "Does the audit cost anything?",
-                "answer": "No. The audit is free and no-commitment: you get an analysis and decide if you want to move forward."
-            },
-            {
-                "question": "Does AI automation work for my business?",
-                "answer": "If your company repeats manual tasks or handles many inquiries, AI can reduce costs. We verify this together in the audit."
-            }
-        ],
-        "contact": {
-            "heading": "Let's talk about your project",
-            "description": "Tell me about your project and get a no-obligation proposal within 24 hours.",
-            "cta": "Message on WhatsApp"
-        },
-        "footer": {
-            "heading": "Ready to turn more visits into customers?",
-            "tagline": "Web + AI Automation"
-        },
-        "aiNote": "Note: this section was translated using AI-assisted tools. We are working on a fully human translation — thank you for your patience!"
+    "pain": {
+      "heading": "Your website is not converting visitors into customers",
+      "description": "A slow, outdated website without a clear call to action loses sales every day. Every visit that does not convert is revenue slipping away."
     },
-    "about": {
-        "title": "ABOUT ME",
-        "description": "Hi! I'm Juan Carlos Ávila. For 8+ years I built web platforms — from WooCommerce stores to React real-estate dashboards. But in the last 2 years I found my real focus: <strong>automating business processes with AI</strong>.<br/><br/>Today I help SMEs combine traditional web development with AI agents, smart chatbots, and RAG systems to cut operational costs. Imagine a restaurant where the chatbot not only takes orders but sends them straight to the kitchen. Or a logistics company where documents classify themselves. That's what I do.<br/><br/>I work with WordPress, React, Python, and AI models (OpenAI, local, RAG) to build solutions that actually deliver. My approach: <strong>clean code, measurable results, zero magic</strong>.",
-        "skills": "Skills",
-        "skillsLink": "View all my skills"
+    "promise": {
+      "heading": "A website that works for you, 24/7",
+      "description": "Conversion-focused web development plus AI automation: chatbots, agents and flows that respond, qualify and follow up without manual work."
     },
-    "skills": {
-        "title": "SKILLS",
-        "categories": [
-            {
-                "title": "Frontend",
-                "skills": [
-                    { "name": "React", "description": "Library for building reactive UIs, real-time dashboards, and AI-powered interfaces" },
-                    { "name": "Next.js", "description": "React framework with SSR, SSG, and App Router for performant web applications" },
-                    { "name": "JavaScript ES6+", "description": "Modern JavaScript powering interactive web experiences across the stack" },
-                    { "name": "HTML5", "description": "Semantic markup and accessibility standards for inclusive web applications" },
-                    { "name": "CSS3", "description": "Modern CSS with Flexbox, Grid, and animations for responsive design" },
-                    { "name": "Tailwind CSS", "description": "Utility-first CSS framework for rapid UI development with consistent design systems" },
-                    { "name": "Swiper", "description": "Touch-enabled slider and carousel library for interactive content discovery" },
-                    { "name": "AI UI Components", "description": "Reusable chat widgets, streaming response renderers, and adaptive AI-powered interface patterns" }
-                ]
-            },
-            {
-                "title": "Backend",
-                "skills": [
-                    { "name": "Node.js", "description": "JavaScript runtime for building scalable server-side applications and AI service backends" },
-                    { "name": "PHP", "description": "Server-side scripting for dynamic web applications and CMS-driven platforms" },
-                    { "name": "Python", "description": "Versatile language for web development, data processing, and AI automation pipelines" },
-                    { "name": "REST APIs", "description": "API design following REST principles for seamless LLM integration and service orchestration" },
-                    { "name": "Express", "description": "Minimal Node.js web framework for building APIs and middleware layers" },
-                    { "name": "AI Service Orchestration", "description": "Middleware for LLM request routing, rate limiting, fallback chains, and model switching" }
-                ]
-            },
-            {
-                "title": "CMS",
-                "skills": [
-                    { "name": "WordPress", "description": "Content management system with custom plugin architecture supporting AI integration layers" },
-                    { "name": "Native Themes", "description": "Custom WordPress themes built from scratch with clean, maintainable code" },
-                    { "name": "Native Plugins", "description": "Custom WordPress plugin development with extendable hooks and filters" },
-                    { "name": "CPT", "description": "Custom Post Types for structured, queryable content that feeds AI knowledge bases" },
-                    { "name": "Taxonomies", "description": "Custom taxonomies for content organization, classification, and semantic filtering" },
-                    { "name": "WooCommerce", "description": "E-commerce plugin for WordPress with extensible architecture and payment gateway integration" }
-                ]
-            },
-            {
-                "title": "DevOps & Tools",
-                "skills": [
-                    { "name": "Docker", "description": "Containerization for consistent AI service development, testing, and production deployment" },
-                    { "name": "Git", "description": "Distributed version control for collaborative development and CI/CD workflows" },
-                    { "name": "Linux", "description": "Server administration, shell scripting, and AI service deployment environment" },
-                    { "name": "SSH", "description": "Secure remote server access, automation, and infrastructure management" },
-                    { "name": "CI/CD", "description": "Automated testing and deployment pipelines for web and ML inference services" },
-                    { "name": "Vercel", "description": "Cloud platform for frontend deployment with edge functions and serverless compute" },
-                    { "name": "ML Pipeline CI/CD", "description": "Automated testing, validation, and deployment for AI inference services and model updates" }
-                ]
-            },
-            {
-                "title": "APIs & Integrations",
-                "skills": [
-                    { "name": "PayPal", "description": "Payment processing integration with secure REST API patterns and webhook handling" },
-                    { "name": "Stripe", "description": "Modern payment gateway integration with subscription models and event-driven architecture" },
-                    { "name": "Google Maps", "description": "Geolocation and mapping services for interactive data visualization and location intelligence" },
-                    { "name": "Google APIs", "description": "Integration with Google services ecosystem for extended platform functionality" }
-                ]
-            },
-            {
-                "title": "Databases",
-                "skills": [
-                    { "name": "MySQL", "description": "Relational database for structured application data with proven scalability" },
-                    { "name": "PostgreSQL", "description": "Advanced relational database with JSON support and pgvector extension for semantic search" },
-                    { "name": "MongoDB", "description": "NoSQL document database for flexible schemas and AI application data models" },
-                    { "name": "Vector Stores", "description": "pgvector and MongoDB Atlas Vector Search for embedding storage, similarity search, and semantic retrieval" }
-                ]
-            },
-            {
-                "title": "Artificial Intelligence & Automation",
-                "skills": [
-                    { "name": "Smart Chatbots", "description": "24/7 AI assistants that understand queries, process orders, and escalate complex cases. Proven 45% reduction in support tickets." },
-                    { "name": "RAG Systems", "description": "AI assistants that answer questions using your own knowledge base (documents, FAQs, manuals). No hallucinations, verifiable sources." },
-                    { "name": "Autonomous Agents", "description": "Full workflow automation: document classification, report generation, auto-responses, and data processing pipelines." },
-                    { "name": "LLM Integration", "description": "Connecting OpenAI, Claude, and local models to your existing web platforms (WordPress, React, custom APIs)." }
-                ]
-            }
-        ]
-    },
-    "common": {
-        "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        "present": "Present",
-        "langEs": "ES",
-        "langEn": "EN",
-        "separator": "|"
-    },
-    "contact": {
-        "emailTitle": "WhatsApp",
-        "emailAddress": "Text me on WhatsApp",
-        "whatsappNumber": "584248310009",
-        "form": {
-            "sending": "Sending...",
-            "success": "Message sent successfully!",
-            "error": "Error sending message. Please try again.",
-            "networkError": "Network error. Please try again later."
-        }
-    },
-    "footer": {
-        "develop": "Develop by ",
-        "copy": "Copyright © ",
-        "brand": "Brand",
-        "privacy": "Privacy",
-        "terms": "Terms",
-        "language": "English"
-    },
-    "LocaleSwitcher":{
-        "label":"The current language is ",
-        "en": "English",
-        "es": "Spanish"
+    "process": {
+      "heading": "A clear process in three steps",
+      "intro": "I take your project from idea to launch with iterative deliveries and constant communication."
     },
     "services": {
-        "calculator": {
-            "heading": "AI Quote Calculator",
-            "subheading": "Select your project type and urgency for an estimate",
-            "steps": {
-                "scale": "Step 1: Project Type",
-                "urgency": "Step 2: Urgency",
-                "result": "Result"
-            },
-            "scaleOptions": [
-                { "value": "chatbot-rag", "label": "RAG Chatbot", "description": "Smart assistant that answers using your own knowledge base" },
-                { "value": "autonomous-agents", "label": "Autonomous Agents", "description": "Complete AI workflow automation" },
-                { "value": "full-automation", "label": "Full Automation", "description": "Comprehensive AI solution for your business" }
-            ],
-            "urgencyOptions": [
-                { "value": "relaxed", "label": "Relaxed", "description": "No rush, standard development pace" },
-                { "value": "normal", "label": "Normal", "description": "Standard delivery time" },
-                { "value": "urgent", "label": "Urgent", "description": "Priority accelerated delivery" }
-            ],
-            "result": {
-                "estimated": "Estimated",
-                "range": "USD {min} – {max}",
-                "disclaimer": "This is a preliminary estimate. Final pricing depends on specific requirements."
-            },
-            "cta": {
-                "whatsapp": "Ask via WhatsApp",
-                "recalculate": "Recalculate"
-            }
-        },
-        "webPlans": [
-            {
-                "name": "Basic",
-                "startingPrice": 120,
-                "delivery": "3 days",
-                "recommended": false,
-                "features": [
-                    "3-page website",
-                    "100% responsive design",
-                    "Basic SEO",
-                    "Speed optimization",
-                    "1 hour of support"
-                ],
-                "cta": "Hire Basic"
-            },
-            {
-                "name": "Professional",
-                "startingPrice": 250,
-                "delivery": "7 days",
-                "recommended": true,
-                "features": [
-                    "Full WordPress site",
-                    "Up to 5 pages",
-                    "Blog + forms",
-                    "Advanced optimization",
-                    "Documentation included"
-                ],
-                "cta": "Hire Professional"
-            },
-            {
-                "name": "E-commerce",
-                "startingPrice": 500,
-                "delivery": "14 days",
-                "recommended": false,
-                "features": [
-                    "Full WooCommerce",
-                    "Payment gateways",
-                    "Product management",
-                    "Admin dashboard",
-                    "Priority support"
-                ],
-                "cta": "Hire E-commerce"
-            }
-        ],
-        "launchPricing": {
-            "badge": "15% OFF — Launch Price",
-            "note": "Take advantage of the launch discount: 15% off for a limited time (first 3–6 months)."
-        },
-        "aiNote": "Note: this section was translated using AI-assisted tools. We're working on a fully human translation — thank you for your patience!",
-        "ia": {
-            "heading": "Intelligent Automation",
-            "description": "Need a chatbot, an autonomous agent, or full automation? Use the interactive calculator below to get a no-obligation estimate."
-        },
-        "custom": {
-            "heading": "Custom Work",
-            "description": "Have a project that doesn't fit any plan? Custom software development, dashboards, APIs, complex integrations, or whatever you need. Tell me your idea and I'll send you a personalized quote.",
-            "cta": "Tell me about your project"
-        },
-        "express": [
-            { "name": "Landing Page", "description": "Conversion-optimized landing page with responsive design and basic SEO." },
-            { "name": "Corporate Site", "description": "Up to 5-page corporate website with contact form." },
-            { "name": "Speed Optimization", "description": "Performance audit and improvement for your existing site (Core Web Vitals)." },
-            { "name": "WordPress Maintenance", "description": "Updates, backups, and security monitoring for your WordPress site." },
-            { "name": "Technical Consulting", "description": "Advice on web architecture, tech stack, and digital strategy." },
-            { "name": "Site Migration", "description": "Safe migration of your site to new hosting or domain without SEO loss." }
-        ],
-        "process": [
-            { "step": 1, "title": "Initial Consultation", "description": "We discuss your project, needs, and goals. No cost or commitment." },
-            { "step": 2, "title": "Development & Feedback", "description": "I build your solution with iterative deliveries. You receive progress updates and we adjust on the fly." },
-            { "step": 3, "title": "Launch & Support", "description": "Final delivery, deploy, and support period to ensure everything works perfectly." }
-        ],
-        "addons": [
-            { "name": "Advanced SEO", "price": 60, "description": "Structured data, schema markup & technical optimization" },
-            { "name": "UI/UX Redesign", "price": 100, "description": "Full design from Figma/XD with prototyping" },
-            { "name": "Performance Audit", "price": 25, "description": "Speed audit, Core Web Vitals & optimization" },
-            { "name": "CRM Integration", "price": 50, "description": "HubSpot, Salesforce or ActiveCampaign integration" },
-            { "name": "Data Migration", "price": 75, "description": "Bulk content migration (10K+ records)" },
-            { "name": "Express Delivery", "price": 0, "description": "+50% of base price — cuts delivery time in half" }
-        ]
+      "heading": "Services focused on results",
+      "description": "Landing pages, WordPress sites, e-commerce, chatbots and autonomous agents. All integrated to capture and qualify leads.",
+      "linkout": "View all services"
     },
-    "theme": {
-        "toggle": "Toggle dark mode"
+    "proof": {
+      "heading": "Verifiable results",
+      "benefits": "Real metrics from automation projects and high-performance web development.",
+      "metrics": [
+        "-60% manual data processing",
+        "+40% organic search ranking",
+        "99.9% infrastructure uptime",
+        "up to 45% fewer support tickets"
+      ],
+      "results": [
+        "Web platforms with load times under 2 seconds",
+        "Chatbots and agents that reduce your team's operational load"
+      ]
+    },
+    "about": {
+      "heading": "Behind the code",
+      "description": "Over 8 years combining web development and AI integration for companies in LatAm and the United States.",
+      "linkout": "About me"
+    },
+    "projects": {
+      "heading": "Projects that deliver results",
+      "description": "Platforms, dashboards, chatbots and automations shipped to production.",
+      "linkout": "View projects"
+    },
+    "audit": {
+      "heading": "Free audit",
+      "description": "Get an analysis of your website and processes to uncover conversion and automation opportunities. No cost and no commitment.",
+      "cta": "Get my free audit",
+      "subject": "Free audit",
+      "message": "I would like a free audit for my business."
+    },
+    "pricing": {
+      "heading": "Launch promotional pricing",
+      "description": "Clear and compact plans with a limited-time launch discount. No surprises and no hidden costs.",
+      "cta": "Ask via WhatsApp",
+      "linkout": "See full plans",
+      "delivery": "Delivery"
+    },
+    "faq": [
+      {
+        "question": "How much does a project cost?",
+        "answer": "It depends on the scope: from a landing page to a complete automation. Every project has a clear quote before we start, with no hidden costs."
+      },
+      {
+        "question": "How long does delivery take?",
+        "answer": "A landing page in 3 days, a complete site in 7 and an e-commerce in 14. Timelines are agreed in writing at the start."
+      },
+      {
+        "question": "What happens after launch?",
+        "answer": "Every delivery includes support and documentation. You can hire ongoing maintenance if you need it."
+      },
+      {
+        "question": "Does the audit cost anything?",
+        "answer": "No. The audit is free and no-commitment: you get an analysis and decide if you want to move forward."
+      },
+      {
+        "question": "Does AI automation work for my business?",
+        "answer": "If your company repeats manual tasks or handles many inquiries, AI can reduce costs. We verify this together in the audit."
+      }
+    ],
+    "contact": {
+      "heading": "Let's talk about your project",
+      "description": "Tell me about your project and get a no-obligation proposal within 24 hours.",
+      "cta": "Message on WhatsApp",
+      "subject": "New contact",
+      "message": "I would like a no-obligation proposal for my project."
+    },
+    "footer": {
+      "heading": "Ready to turn more visits into customers?",
+      "tagline": "Web + AI Automation"
+    },
+    "aiNote": "Note: this section was translated using AI-assisted tools. We are working on a fully human translation — thank you for your patience!",
+    "faq_heading": "FAQ"
+  },
+  "skills": {
+    "title": "SKILLS",
+    "categories": [
+      {
+        "title": "Frontend",
+        "skills": [
+          {
+            "name": "React",
+            "description": "Library for building reactive UIs, real-time dashboards, and AI-powered interfaces"
+          },
+          {
+            "name": "Next.js",
+            "description": "React framework with SSR, SSG, and App Router for performant web applications"
+          },
+          {
+            "name": "JavaScript ES6+",
+            "description": "Modern JavaScript powering interactive web experiences across the stack"
+          },
+          {
+            "name": "HTML5",
+            "description": "Semantic markup and accessibility standards for inclusive web applications"
+          },
+          {
+            "name": "CSS3",
+            "description": "Modern CSS with Flexbox, Grid, and animations for responsive design"
+          },
+          {
+            "name": "Tailwind CSS",
+            "description": "Utility-first CSS framework for rapid UI development with consistent design systems"
+          },
+          {
+            "name": "Swiper",
+            "description": "Touch-enabled slider and carousel library for interactive content discovery"
+          },
+          {
+            "name": "AI UI Components",
+            "description": "Reusable chat widgets, streaming response renderers, and adaptive AI-powered interface patterns"
+          }
+        ]
+      },
+      {
+        "title": "Backend",
+        "skills": [
+          {
+            "name": "Node.js",
+            "description": "JavaScript runtime for building scalable server-side applications and AI service backends"
+          },
+          {
+            "name": "PHP",
+            "description": "Server-side scripting for dynamic web applications and CMS-driven platforms"
+          },
+          {
+            "name": "Python",
+            "description": "Versatile language for web development, data processing, and AI automation pipelines"
+          },
+          {
+            "name": "REST APIs",
+            "description": "API design following REST principles for seamless LLM integration and service orchestration"
+          },
+          {
+            "name": "Express",
+            "description": "Minimal Node.js web framework for building APIs and middleware layers"
+          },
+          {
+            "name": "AI Service Orchestration",
+            "description": "Middleware for LLM request routing, rate limiting, fallback chains, and model switching"
+          }
+        ]
+      },
+      {
+        "title": "CMS",
+        "skills": [
+          {
+            "name": "WordPress",
+            "description": "Content management system with custom plugin architecture supporting AI integration layers"
+          },
+          {
+            "name": "Native Themes",
+            "description": "Custom WordPress themes built from scratch with clean, maintainable code"
+          },
+          {
+            "name": "Native Plugins",
+            "description": "Custom WordPress plugin development with extendable hooks and filters"
+          },
+          {
+            "name": "CPT",
+            "description": "Custom Post Types for structured, queryable content that feeds AI knowledge bases"
+          },
+          {
+            "name": "Taxonomies",
+            "description": "Custom taxonomies for content organization, classification, and semantic filtering"
+          },
+          {
+            "name": "WooCommerce",
+            "description": "E-commerce plugin for WordPress with extensible architecture and payment gateway integration"
+          }
+        ]
+      },
+      {
+        "title": "DevOps & Tools",
+        "skills": [
+          {
+            "name": "Docker",
+            "description": "Containerization for consistent AI service development, testing, and production deployment"
+          },
+          {
+            "name": "Git",
+            "description": "Distributed version control for collaborative development and CI/CD workflows"
+          },
+          {
+            "name": "Linux",
+            "description": "Server administration, shell scripting, and AI service deployment environment"
+          },
+          {
+            "name": "SSH",
+            "description": "Secure remote server access, automation, and infrastructure management"
+          },
+          {
+            "name": "CI/CD",
+            "description": "Automated testing and deployment pipelines for web and ML inference services"
+          },
+          {
+            "name": "Vercel",
+            "description": "Cloud platform for frontend deployment with edge functions and serverless compute"
+          },
+          {
+            "name": "ML Pipeline CI/CD",
+            "description": "Automated testing, validation, and deployment for AI inference services and model updates"
+          }
+        ]
+      },
+      {
+        "title": "APIs & Integrations",
+        "skills": [
+          {
+            "name": "PayPal",
+            "description": "Payment processing integration with secure REST API patterns and webhook handling"
+          },
+          {
+            "name": "Stripe",
+            "description": "Modern payment gateway integration with subscription models and event-driven architecture"
+          },
+          {
+            "name": "Google Maps",
+            "description": "Geolocation and mapping services for interactive data visualization and location intelligence"
+          },
+          {
+            "name": "Google APIs",
+            "description": "Integration with Google services ecosystem for extended platform functionality"
+          }
+        ]
+      },
+      {
+        "title": "Databases",
+        "skills": [
+          {
+            "name": "MySQL",
+            "description": "Relational database for structured application data with proven scalability"
+          },
+          {
+            "name": "PostgreSQL",
+            "description": "Advanced relational database with JSON support and pgvector extension for semantic search"
+          },
+          {
+            "name": "MongoDB",
+            "description": "NoSQL document database for flexible schemas and AI application data models"
+          },
+          {
+            "name": "Vector Stores",
+            "description": "pgvector and MongoDB Atlas Vector Search for embedding storage, similarity search, and semantic retrieval"
+          }
+        ]
+      },
+      {
+        "title": "Artificial Intelligence & Automation",
+        "skills": [
+          {
+            "name": "Smart Chatbots",
+            "description": "24/7 AI assistants that understand queries, process orders, and escalate complex cases. Proven 45% reduction in support tickets."
+          },
+          {
+            "name": "RAG Systems",
+            "description": "AI assistants that answer questions using your own knowledge base (documents, FAQs, manuals). No hallucinations, verifiable sources."
+          },
+          {
+            "name": "Autonomous Agents",
+            "description": "Full workflow automation: document classification, report generation, auto-responses, and data processing pipelines."
+          },
+          {
+            "name": "LLM Integration",
+            "description": "Connecting OpenAI, Claude, and local models to your existing web platforms (WordPress, React, custom APIs)."
+          }
+        ]
+      }
+    ]
+  },
+  "common": {
+    "months": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
+    "present": "Present",
+    "langEs": "ES",
+    "langEn": "EN",
+    "separator": "|"
+  },
+  "contact": {
+    "emailTitle": "WhatsApp",
+    "emailAddress": "Text me on WhatsApp",
+    "whatsappNumber": "584248310009",
+    "form": {
+      "sending": "Sending...",
+      "success": "Message sent successfully!",
+      "error": "Error sending message. Please try again.",
+      "networkError": "Network error. Please try again later."
     }
+  },
+  "services": {
+    "calculator": {
+      "heading": "AI Quote Calculator",
+      "subheading": "Select your project type and urgency for an estimate",
+      "steps": {
+        "scale": "Step 1: Project Type",
+        "urgency": "Step 2: Urgency",
+        "result": "Result"
+      },
+      "scaleOptions": [
+        {
+          "value": "chatbot-rag",
+          "label": "RAG Chatbot",
+          "description": "Smart assistant that answers using your own knowledge base"
+        },
+        {
+          "value": "autonomous-agents",
+          "label": "Autonomous Agents",
+          "description": "Complete AI workflow automation"
+        },
+        {
+          "value": "full-automation",
+          "label": "Full Automation",
+          "description": "Comprehensive AI solution for your business"
+        }
+      ],
+      "urgencyOptions": [
+        {
+          "value": "relaxed",
+          "label": "Relaxed",
+          "description": "No rush, standard development pace"
+        },
+        {
+          "value": "normal",
+          "label": "Normal",
+          "description": "Standard delivery time"
+        },
+        {
+          "value": "urgent",
+          "label": "Urgent",
+          "description": "Priority accelerated delivery"
+        }
+      ],
+      "result": {
+        "estimated": "Estimated",
+        "range": "USD {min} – {max}",
+        "disclaimer": "This is a preliminary estimate. Final pricing depends on specific requirements."
+      },
+      "cta": {
+        "whatsapp": "Ask via WhatsApp",
+        "recalculate": "Recalculate"
+      }
+    },
+    "webPlans": [
+      {
+        "name": "Basic",
+        "startingPrice": 120,
+        "delivery": "3 days",
+        "recommended": false,
+        "features": [
+          "3-page website",
+          "100% responsive design",
+          "Basic SEO",
+          "Speed optimization",
+          "1 hour of support"
+        ],
+        "cta": "Hire Basic"
+      },
+      {
+        "name": "Professional",
+        "startingPrice": 250,
+        "delivery": "7 days",
+        "recommended": true,
+        "features": [
+          "Full WordPress site",
+          "Up to 5 pages",
+          "Blog + forms",
+          "Advanced optimization",
+          "Documentation included"
+        ],
+        "cta": "Hire Professional"
+      },
+      {
+        "name": "E-commerce",
+        "startingPrice": 500,
+        "delivery": "14 days",
+        "recommended": false,
+        "features": [
+          "Full WooCommerce",
+          "Payment gateways",
+          "Product management",
+          "Admin dashboard",
+          "Priority support"
+        ],
+        "cta": "Hire E-commerce"
+      }
+    ],
+    "launchPricing": {
+      "badge": "15% OFF — Launch Price",
+      "note": "Take advantage of the launch discount: 15% off for a limited time (first 3–6 months)."
+    },
+    "aiNote": "Note: this section was translated using AI-assisted tools. We're working on a fully human translation — thank you for your patience!",
+    "ia": {
+      "heading": "Intelligent Automation",
+      "description": "Need a chatbot, an autonomous agent, or full automation? Use the interactive calculator below to get a no-obligation estimate."
+    },
+    "custom": {
+      "heading": "Custom Work",
+      "description": "Have a project that doesn't fit any plan? Custom software development, dashboards, APIs, complex integrations, or whatever you need. Tell me your idea and I'll send you a personalized quote.",
+      "cta": "Tell me about your project"
+    },
+    "express": [
+      {
+        "name": "Landing Page",
+        "description": "Conversion-optimized landing page with responsive design and basic SEO."
+      },
+      {
+        "name": "Corporate Site",
+        "description": "Up to 5-page corporate website with contact form."
+      },
+      {
+        "name": "Speed Optimization",
+        "description": "Performance audit and improvement for your existing site (Core Web Vitals)."
+      },
+      {
+        "name": "WordPress Maintenance",
+        "description": "Updates, backups, and security monitoring for your WordPress site."
+      },
+      {
+        "name": "Technical Consulting",
+        "description": "Advice on web architecture, tech stack, and digital strategy."
+      },
+      {
+        "name": "Site Migration",
+        "description": "Safe migration of your site to new hosting or domain without SEO loss."
+      }
+    ],
+    "process": [
+      {
+        "step": 1,
+        "title": "Initial Consultation",
+        "description": "We discuss your project, needs, and goals. No cost or commitment."
+      },
+      {
+        "step": 2,
+        "title": "Development & Feedback",
+        "description": "I build your solution with iterative deliveries. You receive progress updates and we adjust on the fly."
+      },
+      {
+        "step": 3,
+        "title": "Launch & Support",
+        "description": "Final delivery, deploy, and support period to ensure everything works perfectly."
+      }
+    ],
+    "addons": [
+      {
+        "name": "Advanced SEO",
+        "price": 60,
+        "description": "Structured data, schema markup & technical optimization"
+      },
+      {
+        "name": "UI/UX Redesign",
+        "price": 100,
+        "description": "Full design from Figma/XD with prototyping"
+      },
+      {
+        "name": "Performance Audit",
+        "price": 25,
+        "description": "Speed audit, Core Web Vitals & optimization"
+      },
+      {
+        "name": "CRM Integration",
+        "price": 50,
+        "description": "HubSpot, Salesforce or ActiveCampaign integration"
+      },
+      {
+        "name": "Data Migration",
+        "price": 75,
+        "description": "Bulk content migration (10K+ records)"
+      },
+      {
+        "name": "Express Delivery",
+        "price": 0,
+        "description": "+50% of base price — cuts delivery time in half"
+      }
+    ]
+  },
+  "theme": {
+    "toggle": "Toggle dark mode"
+  }
 }

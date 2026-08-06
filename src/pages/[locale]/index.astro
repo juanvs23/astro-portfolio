@@ -13,7 +13,6 @@ import PricingBofuSection from '../../components/sections/PricingBofuSection.ast
 import FaqSection from '../../components/sections/FaqSection.astro';
 import ContactCtaSection from '../../components/sections/ContactCtaSection.astro';
 import FunnelFooter from '../../components/layout/FunnelFooter.astro';
-import SectionButtons from '../../components/layout/SectionButtons.astro';
 import { locales, type Locale } from '@/i18n';
 export const prerender = true;
 
@@ -41,7 +40,7 @@ const locale = Astro.params.locale as Locale;
   <!-- 12-section AIDA conversion funnel (home-funnel-landing spec §Requirement: 12-section funnel composition).
        Order: 1 Hero → 2 Pain → 3 Process → 4 Services → 5 SocialProof → 6 About → 6 Skills → 7 Projects
        → 8 Capture → 9 PricingBofu → 10 Faq → 11 ContactCta → 12 FunnelFooter.
-       SectionButtons retained until PR₆ removal. -->
+        SectionButtons removed in PR₆. -->
   <HeroSection locale={locale} />
   <PainSection locale={locale} />
   <ProcessPreviewSection locale={locale} />
@@ -55,5 +54,4 @@ const locale = Astro.params.locale as Locale;
   <FaqSection locale={locale} />
   <ContactCtaSection locale={locale} />
   <FunnelFooter locale={locale} />
-  <SectionButtons locale={locale} />
 </BaseLayout>
