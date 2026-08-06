@@ -34,3 +34,4 @@ estrategia/
 
 # SDD temporary artifacts (openspec/changes are work-in-progress, not committed)
 openspec/changes/
+coverage/
