@@ -1,0 +1,110 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import AsciiMarker from '../ui/AsciiMarker.astro';
+import { buildWhatsAppLink } from '../../lib/funnel-lead';
+
+interface WebPlan {
+  name: string;
+  startingPrice: number;
+  delivery: string;
+  recommended: boolean;
+  features: string[];
+  cta: string;
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+
+const webPlans = t('services.webPlans') as WebPlan[];
+const launchPricing = t('services.launchPricing') as { badge: string; note: string };
+const whatsappNumber = t('contact.whatsappNumber') as string;
+
+// BOFU standalone display variant (D6): reuse `services.webPlans` + `launchPricing`
+// data, not the ServicesSection markup. No add-ons, no calculator, no email gate —
+// prices are visible to a first-time visitor, per the funnel-pricing-bofu spec.
+const planLink = (plan: WebPlan): string =>
+  buildWhatsAppLink(
+    whatsappNumber,
+    `${t('funnel.pricing.cta')}: ${plan.name} (desde $${plan.startingPrice} USD)`,
+  );
+---
+
+<Section id="bofu">
+  <div class="max-w-[1200px]">
+    <div class="max-w-[760px]">
+      <div data-aos="fade-up">
+        <h2 class="text-heading-md font-bold text-ink mb-sm">
+          <AsciiMarker state="add" class="mr-xs inline" />
+          {t('funnel.pricing.heading')}
+        </h2>
+        <div class="border-b border-hairline mb-md" data-aos="fade-up" data-aos-delay="100"></div>
+        <p class="text-body-md text-body mb-xl">{t('funnel.pricing.description')}</p>
+      </div>
+    </div>
+
+    <div class="bg-surface-dark text-on-dark text-caption-md rounded-sm px-sm py-xs inline-block mb-xl" data-aos="fade-up" data-aos-delay="150">
+      <span aria-hidden="true">&#9733;</span>
+      {launchPricing.badge}
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-xl mb-xl" data-aos="fade-up" data-aos-delay="200">
+      {webPlans.map((plan) => (
+        <div
+          class={`relative bg-surface-soft border rounded-sm p-lg flex flex-col ${
+            plan.recommended ? 'border-ink ring-2 ring-ink' : 'border-hairline'
+          }`}
+        >
+          <h3 class="text-heading-md font-bold text-ink mb-sm">{plan.name}</h3>
+          <div class="text-heading-md font-bold text-ink mb-sm">
+            desde <span class="text-accent">${plan.startingPrice}</span> USD
+          </div>
+          <p class="text-caption-md text-mute mb-lg">
+            <AsciiMarker state="done" class="mr-xs inline" />
+            {t('funnel.pricing.delivery')}: {plan.delivery}
+          </p>
+
+          <ul class="space-y-xs flex-1 mb-lg">
+            {plan.features.map((feature) => (
+              <li class="text-body-md text-body">
+                <AsciiMarker state="done" class="mr-xs text-success" />
+                {feature}
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href={planLink(plan)}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`inline-flex items-center justify-center h-[44px] px-lg rounded-sm font-mono text-body-md font-medium transition-colors duration-300 ${
+              plan.recommended
+                ? 'bg-accent text-on-primary border border-hairline-strong'
+                : 'bg-surface-dark text-on-dark hover:bg-surface-dark-elevated'
+            }`}
+          >
+            {plan.cta}
+          </a>
+        </div>
+      ))}
+    </div>
+
+    <p class="text-caption-md text-mute mb-lg" data-aos="fade-up" data-aos-delay="250">
+      {launchPricing.note}
+    </p>
+
+    <div data-aos="fade-up" data-aos-delay="300">
+      <a
+        href={`/${locale}/services`}
+        class="inline-flex items-center justify-center gap-2 px-lg py-sm rounded-sm font-mono text-body-md font-medium bg-surface-dark text-on-dark hover:bg-surface-dark-elevated transition-colors duration-300"
+      >
+        {t('funnel.pricing.linkout')}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</Section>

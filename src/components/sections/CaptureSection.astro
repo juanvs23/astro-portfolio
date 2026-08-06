@@ -1,0 +1,30 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import AsciiMarker from '../ui/AsciiMarker.astro';
+import LeadForm from './LeadForm.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+---
+
+<Section id="audit">
+  <div class="max-w-[760px]">
+    <div data-aos="fade-up">
+      <h2 class="text-heading-md font-bold text-ink mb-sm">
+        <AsciiMarker state="add" class="mr-xs inline" />
+        {t('funnel.audit.heading')}
+      </h2>
+      <div class="border-b border-hairline mb-md" data-aos="fade-up" data-aos-delay="100"></div>
+      <p class="text-body-md text-body mb-xl">{t('funnel.audit.description')}</p>
+    </div>
+
+    <div class="bg-surface-soft border border-hairline rounded-sm p-lg" data-aos="fade-up" data-aos-delay="200">
+      <LeadForm locale={locale} formId="audit-form" context="audit" />
+    </div>
+  </div>
+</Section>

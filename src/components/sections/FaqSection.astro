@@ -1,0 +1,101 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import AsciiMarker from '../ui/AsciiMarker.astro';
+import { buildWhatsAppLink } from '../../lib/funnel-lead';
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+
+const faq = t('funnel.faq') as FaqItem[];
+const waHref = buildWhatsAppLink(
+  t('contact.whatsappNumber') as string,
+  (t('funnel.audit.message') as string),
+);
+---
+
+<Section id="faq">
+  <div class="max-w-[760px]">
+    <div data-aos="fade-up">
+      <h2 class="text-heading-md font-bold text-ink mb-sm">
+        <AsciiMarker state="add" class="mr-xs inline" />
+        {t('funnel.faq_heading')}
+      </h2>
+      <div class="border-b border-hairline mb-md" data-aos="fade-up" data-aos-delay="100"></div>
+    </div>
+
+    <dl class="border-t border-hairline" data-aos="fade-up" data-aos-delay="150">
+      {faq.map((item, index) => {
+        const controlId = `faq-q-${index}`;
+        const panelId = `faq-a-${index}`;
+        return (
+          <div class="faq-row border-b border-hairline py-md">
+            <dt>
+              <button
+                id={controlId}
+                type="button"
+                aria-expanded="true"
+                aria-controls={panelId}
+                class="faq-toggle w-full flex items-start gap-sm text-left focus:outline-none focus-visible:outline-2 focus-visible:outline-ink rounded-sm py-xs"
+                style="min-height:44px"
+              >
+                <AsciiMarker state="remove" class="faq-marker mt-[2px] inline shrink-0" />
+                <span class="text-body-strong text-ink">{item.question}</span>
+              </button>
+            </dt>
+            <dd id={panelId} class="faq-answer pl-lg">
+              <p class="text-body-md text-body mb-4">{item.answer}</p>
+            </dd>
+          </div>
+        );
+      })}
+    </dl>
+
+    <div class="mt-xl" data-aos="fade-up" data-aos-delay="200">
+      <a
+        href={waHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center gap-2 px-lg h-[44px] rounded-sm font-mono text-body-md font-medium bg-primary text-on-primary border border-hairline-strong hover:bg-canvas hover:text-ink hover:border-ink transition-colors duration-300"
+      >
+        <AsciiMarker state="add" class="mr-xs inline" />
+        {t('funnel.contact.cta')}
+      </a>
+    </div>
+  </div>
+</Section>
+
+<script>
+  // Accessible FAQ accordion (progressive enhancement). Answers are visible in
+  // the static HTML (no-JS safe); JS adds toggle behavior so each row can be
+  // collapsed/expanded and stays keyboard operable (aria-expanded + <button>).
+  (function () {
+    var toggles = document.querySelectorAll('.faq-toggle');
+    toggles.forEach(function (toggle) {
+      var panel = document.getElementById(toggle.getAttribute('aria-controls'));
+      var marker = toggle.querySelector('.faq-marker');
+      function update() {
+        var open = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (panel) panel.hidden = !open;
+        if (marker) marker.textContent = open ? '[-]' : '[+]';
+      }
+      // Answers render expanded (no-JS visible). `hidden` is only applied by JS.
+      update();
+      toggle.addEventListener('click', function () {
+        var open = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+        update();
+      });
+    });
+  })();
+</script>
