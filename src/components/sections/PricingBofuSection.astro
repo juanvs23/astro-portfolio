@@ -81,7 +81,7 @@ const planLink = (plan: WebPlan): string =>
             href={planLink(plan)}
             target="_blank"
             rel="noopener noreferrer"
-            class={`inline-flex items-center justify-center h-[44px] px-lg rounded-sm font-mono text-body-md font-medium transition-all duration-300 ${
+            class={`inline-flex items-center justify-center h-[44px] px-lg rounded-sm font-mono text-body-md font-medium transition-all ${
               plan.recommended
                 ? 'bg-accent text-on-primary border border-hairline-strong'
                 : 'bg-surface-dark text-on-dark hover:bg-surface-dark-elevated'
@@ -100,7 +100,7 @@ const planLink = (plan: WebPlan): string =>
     <div data-aos="fade-up" data-aos-delay="300">
       <a
         href={`/${locale}/services`}
-        class="inline-flex items-center justify-center gap-2 px-lg py-sm rounded-sm font-mono text-body-md font-medium bg-surface-dark text-on-dark hover:bg-surface-dark-elevated transition-all duration-300"
+        class="inline-flex items-center justify-center gap-2 px-lg py-sm rounded-sm font-mono text-body-md font-medium bg-surface-dark text-on-dark hover:bg-surface-dark-elevated transition-all"
       >
         {t('funnel.pricing.linkout')}
         <span aria-hidden="true">&rarr;</span>
