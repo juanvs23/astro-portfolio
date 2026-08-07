@@ -2,8 +2,6 @@
 import { getTranslations, type Locale } from "@/i18n";
 import Badge from "../ui/Badge.astro";
 import AsciiMarker from "../ui/AsciiMarker.astro";
-import LanguageSwitcher from "../layout/LanguageSwitcher.astro";
-import ThemeToggle from "../layout/ThemeToggle.astro";
 import { buildWhatsAppLink } from "@/lib/funnel-lead";
 
 interface Props {
@@ -32,14 +30,6 @@ const ctaHref = buildWhatsAppLink(
       class="absolute inset-0 opacity-50"
       style="background: radial-gradient(1200px 640px at 50% 18%, rgba(253,252,252,0.08), transparent 62%);"
     ></div>
-  </div>
-
-  <!-- Language / theme switchers float (unchanged behavior). -->
-  <div
-    class="fixed bottom-4 right-4 md:bottom-auto md:top-4 z-50 flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-dark/80 backdrop-blur-sm border border-on-dark-mute/20 text-on-dark"
-  >
-    <LanguageSwitcher locale={locale} currentPath="/" variant="hero" />
-    <ThemeToggle locale={locale} variant="hero" />
   </div>
 
   <div
