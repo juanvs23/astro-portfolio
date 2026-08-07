@@ -35,8 +35,10 @@ const locale = Astro.params.locale as Locale;
   <ProcessPreviewSection locale={locale} />
   <ServicesPreviewSection locale={locale} />
   <SocialProofSection locale={locale} />
-  <AboutPreviewSection locale={locale} />
-  <SkillsPreviewSection locale={locale} />
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-xl">
+    <AboutPreviewSection locale={locale} />
+    <SkillsPreviewSection locale={locale} />
+  </div>
   <ProjectsPreviewSection locale={locale} />
   <CaptureSection locale={locale} />
   <PricingBofuSection locale={locale} />
