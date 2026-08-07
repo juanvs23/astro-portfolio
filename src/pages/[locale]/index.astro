@@ -13,7 +13,9 @@ import PricingBofuSection from '../../components/sections/PricingBofuSection.ast
 import FaqSection from '../../components/sections/FaqSection.astro';
 import ContactCtaSection from '../../components/sections/ContactCtaSection.astro';
 import FunnelFooter from '../../components/layout/FunnelFooter.astro';
-import { locales, type Locale } from '@/i18n';
+import Header from '../../components/layout/Header.astro';
+import MobileMenu from '../../components/layout/MobileMenu.astro';
+import { locales, type Locale, getPathWithoutLocale } from '@/i18n';
 export const prerender = true;
 
 export function getStaticPaths() {
@@ -23,9 +25,13 @@ export function getStaticPaths() {
 }
 
 const locale = Astro.params.locale as Locale;
+const currentPath = getPathWithoutLocale(Astro.url.pathname);
 ---
 
 <BaseLayout locale={locale}>
+  <Header locale={locale} currentPath={currentPath} />
+  <MobileMenu locale={locale} />
+  <div class="pt-[56px]">
   <!-- 12-section AIDA conversion funnel (home-funnel-landing spec §Requirement: 12-section funnel composition).
        Order: 1 Hero → 2 Pain → 3 Process → 4 Services → 5 SocialProof → 6 About → 6 Skills → 7 Projects
        → 8 Capture → 9 PricingBofu → 10 Faq → 11 ContactCta → 12 FunnelFooter.
@@ -43,4 +49,5 @@ const locale = Astro.params.locale as Locale;
   <FaqSection locale={locale} />
   <ContactCtaSection locale={locale} />
   <FunnelFooter locale={locale} />
+  </div>
 </BaseLayout>
