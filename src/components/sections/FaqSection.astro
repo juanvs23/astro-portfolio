@@ -24,16 +24,16 @@ const waHref = buildWhatsAppLink(
 ---
 
 <Section id="faq">
-  <div class="max-w-[760px]">
+  <div class="max-w-[760px] mx-auto text-center">
     <div data-aos="fade-up">
       <h2 class="text-xl md:text-3xl font-bold text-ink mb-sm">
         <AsciiMarker state="add" class="mr-xs inline" />
         {t('funnel.faq_heading')}
       </h2>
-      <div class="border-b border-hairline mb-md" data-aos="fade-up" data-aos-delay="100"></div>
+      <div class="border-b border-hairline mb-md mx-auto max-w-[200px]" data-aos="fade-up" data-aos-delay="100"></div>
     </div>
 
-    <dl class="border-t border-hairline" data-aos="fade-up" data-aos-delay="150">
+    <dl class="border-t border-hairline text-left" data-aos="fade-up" data-aos-delay="150">
       {faq.map((item, index) => {
         const controlId = `faq-q-${index}`;
         const panelId = `faq-a-${index}`;
