@@ -12,20 +12,24 @@ const t = await getTranslations(locale);
 ---
 
 <Section id="skills-preview">
-  <div class="bg-surface-soft border border-hairline rounded-sm p-lg" data-aos="fade-up">
-    <h2 class="text-xl md:text-3xl font-bold text-ink mb-sm">
-      <AsciiMarker state="add" class="mr-xs inline" />
-      {t('about.skills')}
-    </h2>
-    <div class="border-b border-hairline mb-md" data-aos="fade-up" data-aos-delay="100"></div>
-    <p class="text-body-md text-body mb-xl">{t('funnel.proof.benefits')}</p>
+  <div class="max-w-[760px]">
+    <div data-aos="fade-up">
+      <h2 class="text-xl md:text-3xl font-bold text-ink mb-sm">
+        <AsciiMarker state="add" class="mr-xs inline" />
+        {t('about.skills')}
+      </h2>
+      <div class="border-b border-hairline mb-md" data-aos="fade-up" data-aos-delay="100"></div>
+      <p class="text-body-md text-body mb-xl">{t('funnel.proof.benefits')}</p>
+    </div>
 
-    <a
-      href={`/${locale}/skills`}
-      class="inline-flex items-center justify-center gap-2 px-lg py-sm rounded-sm font-mono text-body-md font-medium bg-surface-dark text-on-dark hover:bg-surface-dark-elevated hover:text-on-dark transition-colors duration-300"
-    >
-      {t('about.skillsLink')}
-      <span aria-hidden="true">&rarr;</span>
-    </a>
+    <div data-aos="fade-up" data-aos-delay="150">
+      <a
+        href={`/${locale}/skills`}
+        class="inline-flex items-center justify-center gap-2 px-lg py-sm rounded-sm font-mono text-body-md font-medium bg-surface-dark text-on-dark hover:bg-surface-dark-elevated hover:text-on-dark transition-colors duration-300"
+      >
+        {t('about.skillsLink')}
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
   </div>
 </Section>
