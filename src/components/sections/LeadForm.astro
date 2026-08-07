@@ -55,8 +55,9 @@ const waHref = buildWhatsAppLink(
     ? t('funnel.audit.message')
     : t('funnel.contact.message')) as string,
 );
----
 
+const leadVarsJson = JSON.stringify(leadVars);
+---
 <form id={formId} class="space-y-lg" novalidate>
   <Input
     name={`${formId}-name`}
@@ -98,9 +99,15 @@ const waHref = buildWhatsAppLink(
   ></p>
 </form>
 
-<script define:vars={{ leadVars }}>
+<script is:inline define:vars={{ leadVarsJson }}>
+  window.__leadVars = JSON.parse(leadVarsJson);
+</script>
+<script>
   import { validateLead, buildFunnelContactPayload } from '../../lib/funnel-lead';
   import { submitContactForm } from '../../lib/contact-form';
+
+  /* @ts-ignore */
+  const leadVars = window.__leadVars;
 
   const form = document.getElementById(leadVars.formId) as HTMLFormElement;
   const statusEl = document.getElementById(
