@@ -222,6 +222,12 @@ La frontpage tiene una escena 3D interactiva:
 - SDD init completado (openspec mode, Strict TDD)
 - Fase 1 AI Automation: contenido AI en jobs, skills, descripciones (EN+ES)
 - Layout: max-w general 1200px, Hero 960px centrado
+- Three.js removido del hero como parte de home-funnel-landing (PR₆)
+- home-funnel-landing completado: home convertido en funnel AIDA de 12 secciones
+- LeadForm.astro con integración n8n webhook + SweetAlert2 + confeti
+- API proxy `/api/lead` para bypass de CORS
+- Workflow n8n: Webhook → Code node → MongoDB (leads.leads)
+- Dependencias nuevas: `sweetalert2`, `canvas-confetti`
 - About: grid 40-60, botón skills estilo SectionButtons, sin título redundante
 
 ### ⬜ Pendientes
@@ -257,7 +263,56 @@ Mobile score (61) fue antes de las optimizaciones. Pendiente re-evaluar en produ
 ### ✅ Fixes aplicados del audit manual
 - ARIA labels: 4 hardcoded en español migrados a claves `navigation.*` con traducción EN/ES
 - Skip link: añadido como primer elemento focusable en `<body>` con traducción `navigation.skipToContent`
-- Three.js canvas: `role="img"` + `aria-label` vía `hero.canvasLabel`
-- `<meta name="robots" content="index, follow">` explícito en BaseLayout
-- `numbers.mp4` eliminado (archivo no utilizado, ~6.9 MB)
+- Three.js removido del hero como parte de home-funnel-landing (PR₆)
 - Heading hierarchy: verificado que cada sección ya renderiza `<h1>` desde `seo.h1.*` — no requiere cambios
+
+## 12. Lead Capture Funnel (n8n + SweetAlert2)
+
+### Arquitectura del Funnel
+La página principal (`/es/` y `/en/`) es un funnel AIDA de 12 secciones con dos formularios de captura:
+- **CaptureSection** (`audit-form`): auditoría gratuita, `source=audit`
+- **ContactCtaSection** (`contact-cta-form`): propuesta sin compromiso, `source=contact`
+
+### LeadForm.astro
+Componente reutilizable que renderiza nombre + email + botón WhatsApp. Props: `locale`, `formId`, `context`.
+
+**Flujo de captura:**
+1. Usuario completa nombre + email → clickea botón
+2. Botón cambia a "Enviando...", se deshabilita
+3. `POST /api/lead` con `{name, email, source}`
+4. API proxy forward a n8n webhook (fire-and-forget)
+5. API devuelve `{success: true}` al frontend
+6. 🎉 Confeti (3 bursts: izquierda, derecha, centro)
+7. Modal SweetAlert2 monocromático (surface-soft, ink, hairline, Berkeley Mono)
+8. Botón "Hablar por WhatsApp" → `window.open(waUrl, '_blank')`
+9. Si fetch falla → abre WhatsApp directamente (fallback sin fricción)
+
+### SweetAlert2 + Canvas Confetti
+- Dependencias: `sweetalert2`, `canvas-confetti` (cargados vía CDN desde script `is:inline`)
+- Modal: fondo `#f8f7f7`, texto `#201d1d`, borde hairline, 4px radius, tipografía Berkeley Mono
+- El `is:inline` inyecta dinámicamente los CDN scripts al `<head>` para evitar que Astro/Vite los procese como módulos
+
+### API Proxy (`/api/lead`)
+- Endpoint: `src/pages/api/lead.ts`
+- Recibe `{name, email, source}`, forward a `PUBLIC_N8N_LEAD_WEBHOOK` con Basic Auth
+- Siempre devuelve `{success: true}` (fire-and-forget, no bloquea UX)
+- Variables requeridas: `PUBLIC_N8N_LEAD_WEBHOOK`, `N8N_AUTH_USER`, `N8N_AUTH_PASS`
+
+### Workflow n8n
+- **Webhook**: POST, Basic Auth, path: `<n8n-webhook-path>`
+- **Code node**: JavaScript con `mongodb` — inserta `{name, email, source, createdAt}` en MongoDB
+- **MongoDB**: `<host>:27017`, DB `leads`, colección `leads`, auth configurada vía variables de entorno
+- URL producción: `https://n8n.coltmandev.dev/webhook/<webhook-path>`
+
+### Variables de Entorno (`.env`)
+```env
+PUBLIC_N8N_LEAD_WEBHOOK=https://n8n.coltmandev.dev/webhook/<webhook-path>
+N8N_AUTH_USER=<your-auth-user>
+N8N_AUTH_PASS=<your-auth-pass>
+```
+
+### ⚠️ Notas técnicas
+- El webhook de producción (`/webhook/`) funciona 24/7 con workflow activo; `/webhook-test/` solo con UI abierta
+- SweetAlert2 se carga dinámicamente vía `document.createElement('script')` para evitar que Vite se coma el `<script src>` del CDN
+- `data-source` por formulario (no global `window.__source`) porque hay 2 forms en la misma página
+- Si el fetch a `/api/lead` falla por cualquier razón, se abre WhatsApp directamente (no se pierde el lead)
