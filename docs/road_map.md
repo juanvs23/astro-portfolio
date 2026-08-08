@@ -46,8 +46,9 @@ Migración desde Next.js → Astro + TypeScript + Tailwind CSS + Three.js.
   - **Imágenes optimizadas**: Astro `<Image />` con WebP, reducción promedio 70-90%
 
 ### ❌ Pendiente
-- Testing automatizado y despliegue (Fase 4)
+- Fase 4: Pulido Visual del Home (imágenes reales, GSAP, mejora del Hero)
 - Fase 5: AI Automation Showcase (Phase 2 del pipeline SDD)
+- Fase 6: Testing, validación i18n y despliegue a producción
 
 ---
 
@@ -212,7 +213,7 @@ Migración desde Next.js → Astro + TypeScript + Tailwind CSS + Three.js.
 
 ---
 
-## 🚀 Fase 4: Testing y Lanzamiento
+## 🚀 Fase 6: Testing y Lanzamiento
 
 **Objetivo:** Validar, optimizar y desplegar en producción.
 
@@ -353,23 +354,23 @@ src/
 
 ---
 
-## 🎨 Fase 6: Pulido Visual del Home
+## 🎨 Fase 4: Pulido Visual del Home
 
 ### Tareas
 
-- [ ] **6.1 Imágenes reales en el home**
+- [ ] **4.1 Imágenes reales en el home**
   - Reemplazar placeholders (`aspect-video` con "img") en AboutPreview, SkillsPreview, ProjectsPreview, CaptureSection
   - Imágenes optimizadas con `<Image />` de Astro (WebP, múltiples widths)
   - Assets desde `src/assets/img/`
 
-- [ ] **6.2 Animaciones con GSAP**
+- [ ] **4.2 Animaciones con GSAP**
   - Instalar `gsap` como dependencia
   - Animaciones de entrada suaves en secciones del funnel (no solo AOS)
   - ScrollTrigger para revelado progresivo de contenido
   - Animación en el botón CTA del hero
   - Respetar `prefers-reduced-motion`
 
-- [ ] **6.3 Mejora del Hero**
+- [ ] **4.3 Mejora del Hero**
   - Rediseño visual del hero banner (actualmente solo texto + gradiente radial)
   - Posible animación tipográfica o efecto ASCII interactivo
   - Mejorar el CTA principal (visibilidad, micro-interacciones)
