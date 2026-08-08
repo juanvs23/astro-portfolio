@@ -1,8 +1,7 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
 import Input from '../ui/Input.astro';
-import AsciiMarker from '../ui/AsciiMarker.astro';
-import { buildWhatsAppLink } from '../../lib/funnel-lead';
+import CtaButton from '../ui/CtaButton.astro';
 
 interface Props {
   locale: Locale;
@@ -13,154 +12,197 @@ interface Props {
 const { locale, formId, context } = Astro.props;
 const t = await getTranslations(locale);
 
-// Lead-form copy. Subject/message are passed through to the pure payload
-// builder so the module stays localized (D4). The hybrid WhatsApp link is
-// built server-side and stays visible beside the form at all times (D5) as a
-// no-JS / backend-failure conversion path.
-const leadVars = {
-  context,
-  formId,
-  nameId: `${formId}-name`,
-  emailId: `${formId}-email`,
-  nameRequired: t('formMessageErrors.field') as string,
-  emailInvalid: t('formMessageErrors.email') as string,
-  formMessages: {
-    sending: t('contact.form.sending'),
-    success: t('contact.form.success'),
-    error: t('contact.form.error'),
-    networkError: t('contact.form.networkError'),
-  },
-  payload: {
-    subject:
-      context === 'audit'
-        ? (t('funnel.audit.subject') as string)
-        : (t('funnel.contact.subject') as string),
-    message:
-      context === 'audit'
-        ? (t('funnel.audit.message') as string)
-        : (t('funnel.contact.message') as string),
-  },
-};
+const isAudit = context === 'audit';
+const waNumber = t('contact.whatsappNumber') as string;
+const waMessage = isAudit
+  ? (t('funnel.audit.message') as string)
+  : (t('funnel.contact.message') as string);
 
-const submitLabel =
-  context === 'audit'
-    ? (t('funnel.audit.cta') as string)
-    : (t('funnel.contact.cta') as string);
-
-// Hybrid WhatsApp fallback. Visible regardless of form state so the visitor is
-// never left without a conversion path (lead-capture spec).
-const waHref = buildWhatsAppLink(
-  t('contact.whatsappNumber') as string,
-  (context === 'audit'
-    ? t('funnel.audit.message')
-    : t('funnel.contact.message')) as string,
-);
-
-const leadVarsJson = JSON.stringify(leadVars);
+const source = isAudit ? 'audit' : 'contact';
+const staticHref = `https://wa.me/${waNumber}?text=${encodeURIComponent(waMessage)}`;
+const ctaLabel = t('funnel.contact.cta') as string;
+const nameLabel = t('inputField.fullName') as string;
+const emailLabel = t('inputField.email') as string;
+const waNumberAttr = waNumber;
 ---
-<form id={formId} class="space-y-lg" novalidate>
+
+<div id={formId} class="space-y-lg" data-wa-number={waNumberAttr} data-wa-message={waMessage} data-source={source}>
   <Input
     name={`${formId}-name`}
-    label={t('inputField.fullName')}
+    label={nameLabel}
     required
   />
   <Input
     name={`${formId}-email`}
-    label={t('inputField.email')}
+    label={emailLabel}
     type="email"
     required
   />
 
-  <div class="flex flex-col sm:flex-row items-stretch gap-md">
-    <button
-      type="submit"
-      class="inline-flex items-center justify-center gap-2 px-lg h-[44px] rounded-sm font-mono text-body-md font-medium bg-primary text-on-primary border border-hairline-strong hover:bg-canvas hover:text-ink hover:border-accent transition-all"
-    >
-      <AsciiMarker state="add" class="mr-xs inline" />
-      {submitLabel}
-    </button>
+  <CtaButton
+    href={staticHref}
+    variant="primary"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="inline-flex items-center justify-center gap-2 px-lg h-[44px] text-sm"
+  >
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" class="shrink-0">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 1.4.37 2.77 1.07 3.97L0 16l4.2-1.03A7.96 7.96 0 0 0 8 16c4.42 0 8-3.58 8-8s-3.58-8-8-8zm3.87 11.3c-.15.42-.75.8-1.23.9-.37.08-.84.15-2.44-.52-2.05-.85-3.37-2.94-3.47-3.07-.1-.14-.83-1.1-.83-2.1s.52-1.49.7-1.7c.18-.2.4-.25.53-.25h.38c.12 0 .28.01.4.3.15.37.52 1.27.57 1.36.05.1.08.2.02.33-.06.12-.1.2-.2.3-.1.1-.2.22-.28.3-.1.1-.2.2-.08.38.12.2.52.85 1.12 1.38.77.68 1.42.9 1.62 1 .2.1.32.08.44-.05.12-.12.5-.58.63-.78.13-.2.26-.17.44-.1.18.07 1.13.53 1.32.63.2.1.33.15.38.23.05.1.05.5-.1.92z"/>
+    </svg>
+    {ctaLabel}
+  </CtaButton>
+</div>
 
-    <a
-      href={waHref}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="inline-flex items-center justify-center gap-2 px-lg h-[44px] rounded-sm font-mono text-body-md font-medium border border-hairline bg-surface-dark text-on-dark hover:bg-surface-dark-elevated hover:border-accent transition-all"
-    >
-      <AsciiMarker state="remove" class="mr-xs inline" />
-      {t('funnel.contact.cta')}
-    </a>
-  </div>
+<script is:inline>
+  (function () {
+    // Load Swal + Confetti from CDN before wiring forms
+    var swalReady = false;
+    var confettiReady = false;
+    var onReadyCallbacks = [];
 
-  <p
-    id={`${formId}-status`}
-    class="min-h-[24px] text-body-md"
-    role="status"
-    aria-live="polite"
-  ></p>
-</form>
-
-<script is:inline define:vars={{ leadVarsJson }}>
-  window.__leadVars = JSON.parse(leadVarsJson);
-</script>
-<script>
-  import { validateLead, buildFunnelContactPayload } from '../../lib/funnel-lead';
-  import { submitContactForm } from '../../lib/contact-form';
-
-  /* @ts-ignore */
-  const leadVars = window.__leadVars;
-
-  const form = document.getElementById(leadVars.formId) as HTMLFormElement;
-  const statusEl = document.getElementById(
-    leadVars.formId + '-status',
-  ) as HTMLElement;
-  const nameInput = document.getElementById(leadVars.nameId) as HTMLInputElement;
-  const emailInput = document.getElementById(
-    leadVars.emailId,
-  ) as HTMLInputElement;
-
-  function setStatus(message: string, tone: string): void {
-    if (!statusEl) return;
-    statusEl.textContent = message;
-    statusEl.classList.remove('text-success', 'text-danger', 'text-mute');
-    statusEl.classList.add(tone);
-  }
-
-  form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const validation = validateLead(
-      { name: nameInput?.value || '', email: emailInput?.value || '' },
-      {
-        nameRequired: leadVars.nameRequired,
-        emailInvalid: leadVars.emailInvalid,
-      },
-    );
-    if (!validation.valid) {
-      const message = validation.errors?.name || validation.errors?.email || '';
-      setStatus(message, 'text-danger');
-      return;
+    function tryReady() {
+      if (typeof Swal !== 'undefined') swalReady = true;
+      if (typeof confetti !== 'undefined') confettiReady = true;
+      if (swalReady && confettiReady) {
+        onReadyCallbacks.forEach(function (fn) { fn(); });
+        onReadyCallbacks = [];
+      }
     }
 
-    await submitContactForm(
-      buildFunnelContactPayload(
-        { name: nameInput.value, email: emailInput.value },
-        leadVars.context as 'audit' | 'contact',
-        leadVars.payload,
-      ),
-      leadVars.formMessages,
-      (status) => {
-        if (status.state === 'sending') {
-          setStatus(status.message, 'text-mute');
-          return;
+    function onLibsReady(fn) {
+      if (swalReady && confettiReady) { fn(); return; }
+      onReadyCallbacks.push(fn);
+    }
+
+    // Inject SweetAlert2 CSS
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css';
+    document.head.appendChild(link);
+
+    // Inject SweetAlert2 JS
+    var swalScript = document.createElement('script');
+    swalScript.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+    swalScript.onload = function () { swalReady = true; tryReady(); };
+    document.head.appendChild(swalScript);
+
+    // Inject Confetti JS
+    var confScript = document.createElement('script');
+    confScript.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1';
+    confScript.onload = function () { confettiReady = true; tryReady(); };
+    document.head.appendChild(confScript);
+
+    function buildWaUrl(baseMsg, number, name, email) {
+      var msg = baseMsg;
+      if (name) msg += '%0A%0A*Nombre:*%20' + encodeURIComponent(name);
+      if (email) msg += '%0A*Email:*%20' + encodeURIComponent(email);
+      return 'https://wa.me/' + number + '?text=' + msg;
+    }
+
+    function fireConfetti() {
+      if (typeof confetti === 'undefined') return;
+      confetti({ particleCount: 80, spread: 70, origin: { x: 0, y: 0.6 } });
+      confetti({ particleCount: 80, spread: 70, origin: { x: 1, y: 0.6 } });
+      setTimeout(function () {
+        confetti({ particleCount: 100, spread: 100, origin: { x: 0.5, y: 0.5 } });
+      }, 200);
+    }
+
+    function showModal(waUrl) {
+      fireConfetti();
+      Swal.fire({
+        icon: 'success',
+        title: '¡Listo!',
+        text: 'Gracias. En breve te contacto.',
+        confirmButtonText: 'Hablar por WhatsApp',
+        background: '#f8f7f7',
+        color: '#201d1d',
+        iconColor: '#201d1d',
+        confirmButtonColor: '#201d1d',
+        allowOutsideClick: true,
+        showCloseButton: true,
+        customClass: {
+          popup: 'rounded-sm border border-hairline',
+          title: 'font-mono text-lg font-bold',
+          htmlContainer: 'font-mono text-sm text-body',
+          confirmButton: 'font-mono text-sm rounded-sm px-lg h-10',
+          closeButton: 'text-mute',
+        },
+      }).then(function (result) {
+        if (result.isConfirmed || result.isDismissed) {
+          window.open(waUrl, '_blank');
         }
-        if (status.state === 'success') {
-          form.reset();
-          setStatus(status.message, 'text-success');
-          return;
+      });
+    }
+
+    function setupForms() {
+      var containers = document.querySelectorAll('[data-wa-number]');
+      containers.forEach(function (container) {
+        if (container.dataset.wired === '1') return;
+        container.dataset.wired = '1';
+
+        var number = container.getAttribute('data-wa-number');
+        var baseMsg = container.getAttribute('data-wa-message');
+        var source = container.getAttribute('data-source');
+        if (!number || !baseMsg) return;
+
+        var nameInput = container.querySelector('input[id$="-name"]');
+        var emailInput = container.querySelector('input[id$="-email"]');
+        var btn = container.querySelector('a[href*="wa.me"]');
+        if (!btn) return;
+
+        function updateHref() {
+          var n = (nameInput && nameInput.value || '').trim();
+          var e = (emailInput && emailInput.value || '').trim();
+          btn.setAttribute('href', buildWaUrl(baseMsg, number, n, e));
         }
-        // error / networkError: keep the WhatsApp fallback visible below so the
-        // visitor always has a conversion path. The link is never removed.
-        setStatus(status.message, 'text-danger');
-      },
-    );
-  });
+
+        if (nameInput) nameInput.addEventListener('input', updateHref);
+        if (emailInput) emailInput.addEventListener('input', updateHref);
+
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var name = (nameInput && nameInput.value || '').trim();
+          if (!name) { nameInput.focus(); return; }
+          var email = (emailInput && emailInput.value || '').trim();
+          var waUrl = buildWaUrl(baseMsg, number, name, email);
+
+          var originalText = btn.innerHTML;
+          btn.textContent = 'Enviando...';
+          btn.style.pointerEvents = 'none';
+
+          fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name, email: email, source: source }),
+          })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (!data.success) throw new Error('not ok');
+            // Clean form
+            if (nameInput) nameInput.value = '';
+            if (emailInput) emailInput.value = '';
+            updateHref();
+            // Show modal once libs are loaded
+            onLibsReady(function () { showModal(waUrl); });
+          })
+          .catch(function () {
+            window.open(waUrl, '_blank');
+          })
+          .finally(function () {
+            btn.innerHTML = originalText;
+            btn.style.pointerEvents = '';
+          });
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupForms);
+    } else {
+      setupForms();
+    }
+    document.addEventListener('astro:page-load', setupForms);
+  })();
 </script>

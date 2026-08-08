@@ -242,11 +242,56 @@ Migración desde Next.js → Astro + TypeScript + Tailwind CSS + Three.js.
   - URLs con prefijo de locale (`/es/about`, `/en/about`)
   - Fallback a ES si falta traducción EN
 
-- [ ] **4.5 Despliegue**
-  - Configurar adapter de Astro (`@astrojs/node` ya instalado)
-  - Variables de entorno en plataforma de despliegue
-  - Dominio custom configurado
-  - CI/CD con GitHub Actions (opcional)
+- [x] **4.5 Despliegue (parcial)**
+  - ✅ Adapter `@astrojs/vercel` configurado
+  - ✅ Variables de entorno documentadas en `.env.example`
+  - ✅ Build exitoso en Vercel
+  - [ ] Despliegue final en producción
+  - [ ] CI/CD con GitHub Actions (opcional)
+
+---
+
+## 🎯 Fase 4.5: Lead Capture Funnel + n8n + SweetAlert2
+
+**Objetivo:** Integrar captura de leads con webhook n8n, modal de confirmación con SweetAlert2 y confeti, y almacenamiento en MongoDB.
+
+### Tareas
+
+- [x] **4.5.1 LeadForm.astro — Captura de leads**
+  - Formulario con nombre + email + source (`audit` | `contact`)
+  - Validación de nombre requerido
+  - Botón WhatsApp con `e.preventDefault()` y fetch asíncrono
+  - `data-wa-number`, `data-wa-message`, `data-source` por formulario
+
+- [x] **4.5.2 API proxy `/api/lead`**
+  - Endpoint POST en `src/pages/api/lead.ts`
+  - Recibe `{name, email, source}`, forward a n8n webhook con Basic Auth
+  - Fire-and-forget: siempre devuelve `{success: true}` al frontend
+  - Variables de entorno: `PUBLIC_N8N_LEAD_WEBHOOK`, `N8N_AUTH_USER`, `N8N_AUTH_PASS`
+
+- [x] **4.5.3 SweetAlert2 + Canvas Confetti**
+  - Dependencias: `sweetalert2`, `canvas-confetti`
+  - Modal monocromático (surface-soft, ink, hairline, 4px radius, Berkeley Mono)
+  - Confeti en 3 bursts (izquierda, derecha, centro)
+  - Botón "Hablar por WhatsApp" → `window.open(waUrl, '_blank')`
+  - Carga dinámica de CDN desde `is:inline` para evitar conflictos con Vite/Astro
+
+- [x] **4.5.4 Workflow n8n: Webhook → MongoDB**
+  - Webhook POST con Basic Auth (`coltman:Sinal14.`)
+  - Code node con `mongodb` directo: inserta `{name, email, source, createdAt}` en `leads.leads`
+  - Workflow activo en producción (`/webhook/`, no `/webhook-test/`)
+  - MongoDB: `62.171.164.5:27017`, auth `admin:Coltm4nM0ng0_2026`
+
+- [x] **4.5.5 Documentación**
+  - `.env.example` actualizado con `N8N_AUTH_USER`, `N8N_AUTH_PASS`, `PUBLIC_N8N_LEAD_WEBHOOK`
+  - `context.md` actualizado con sección Lead Capture
+
+### Variables de Entorno Nuevas
+```env
+PUBLIC_N8N_LEAD_WEBHOOK=https://n8n.coltmandev.dev/webhook/ccf837a7-ff2e-415c-b766-9b8abd72d008
+N8N_AUTH_USER=coltman
+N8N_AUTH_PASS=Sinal14.
+```
 
 ---
 
@@ -305,6 +350,30 @@ src/
 | tablet | 850px | Footer 2-up, layouts apilados |
 | tablet-narrow | 768px | Nav hamburger drawer |
 | mobile | 640px | Single-column, display 38px → 28px |
+
+---
+
+## 🎨 Fase 6: Pulido Visual del Home
+
+### Tareas
+
+- [ ] **6.1 Imágenes reales en el home**
+  - Reemplazar placeholders (`aspect-video` con "img") en AboutPreview, SkillsPreview, ProjectsPreview, CaptureSection
+  - Imágenes optimizadas con `<Image />` de Astro (WebP, múltiples widths)
+  - Assets desde `src/assets/img/`
+
+- [ ] **6.2 Animaciones con GSAP**
+  - Instalar `gsap` como dependencia
+  - Animaciones de entrada suaves en secciones del funnel (no solo AOS)
+  - ScrollTrigger para revelado progresivo de contenido
+  - Animación en el botón CTA del hero
+  - Respetar `prefers-reduced-motion`
+
+- [ ] **6.3 Mejora del Hero**
+  - Rediseño visual del hero banner (actualmente solo texto + gradiente radial)
+  - Posible animación tipográfica o efecto ASCII interactivo
+  - Mejorar el CTA principal (visibilidad, micro-interacciones)
+  - Evaluar si agregar un elemento visual distintivo sin Three.js
 
 ---
 

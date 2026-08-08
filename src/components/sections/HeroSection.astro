@@ -1,7 +1,7 @@
 ---
 import { getTranslations, type Locale } from "@/i18n";
 import Badge from "../ui/Badge.astro";
-import AsciiMarker from "../ui/AsciiMarker.astro";
+import CtaButton from "../ui/CtaButton.astro";
 import { buildWhatsAppLink } from "@/lib/funnel-lead";
 
 interface Props {
@@ -50,14 +50,17 @@ const ctaHref = buildWhatsAppLink(
       {t("hero.description")}
     </p>
 
-    <a
+    <CtaButton
       href={ctaHref}
-      rel="noopener"
+      variant="light"
       target="_blank"
-      class="inline-flex items-center justify-center rounded-sm font-mono text-body-md font-medium bg-on-dark text-ink px-lg h-[44px] border border-hairline transition-all hover:border-accent hover:bg-surface-soft hover:text-ink"
+      rel="noopener"
+      class="inline-flex items-center justify-center gap-2 px-lg h-[44px]"
     >
-      <AsciiMarker state="done" class="text-ink mr-md" />
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" class="shrink-0">
+        <path d="M8 0C3.58 0 0 3.58 0 8c0 1.4.37 2.77 1.07 3.97L0 16l4.2-1.03A7.96 7.96 0 0 0 8 16c4.42 0 8-3.58 8-8s-3.58-8-8-8zm3.87 11.3c-.15.42-.75.8-1.23.9-.37.08-.84.15-2.44-.52-2.05-.85-3.37-2.94-3.47-3.07-.1-.14-.83-1.1-.83-2.1s.52-1.49.7-1.7c.18-.2.4-.25.53-.25h.38c.12 0 .28.01.4.3.15.37.52 1.27.57 1.36.05.1.08.2.02.33-.06.12-.1.2-.2.3-.1.1-.2.22-.28.3-.1.1-.2.2-.08.38.12.2.52.85 1.12 1.38.77.68 1.42.9 1.62 1 .2.1.32.08.44-.05.12-.12.5-.58.63-.78.13-.2.26-.17.44-.1.18.07 1.13.53 1.32.63.2.1.33.15.38.23.05.1.05.5-.1.92z"/>
+      </svg>
       <span>{t("funnel.hero.cta")}</span>
-    </a>
+    </CtaButton>
   </div>
 </section>

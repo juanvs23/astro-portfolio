@@ -1,0 +1,40 @@
+---
+interface Props {
+  href: string;
+  variant?: 'dark' | 'light' | 'primary' | 'accent';
+  direction?: 'left' | 'bottom';
+  target?: string;
+  rel?: string;
+  class?: string;
+}
+
+const {
+  href,
+  variant = 'dark',
+  direction = 'left',
+  target,
+  rel,
+  class: extraClass = '',
+} = Astro.props;
+
+const directionClass = direction === 'bottom' ? 'plan-cta-bottom' : 'plan-cta';
+
+const baseClasses =
+  `${directionClass} relative overflow-hidden z-10 rounded-sm font-mono text-body-md font-medium border border-hairline`;
+
+const variantClasses: Record<string, string> = {
+  dark: 'bg-surface-dark text-on-dark',
+  light: 'bg-on-dark text-[#201d1d]',
+  primary: 'bg-primary text-on-primary border-hairline-strong',
+  accent: 'bg-accent text-on-primary border-hairline-strong',
+};
+---
+
+<a
+  href={href}
+  target={target}
+  rel={rel}
+  class={`${baseClasses} ${variantClasses[variant]} ${extraClass}`}
+>
+  <slot />
+</a>

@@ -1,5 +1,5 @@
 ---
-import { getTranslations, type Locale } from '@/i18n';
+import { getTranslations, type Locale } from "@/i18n";
 
 interface Props {
   locale: Locale;
@@ -9,10 +9,13 @@ const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
 const footerLinks = [
-  { label: 'GitHub', href: 'https://github.com/juanvs23' },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/juanvs23/' },
-  { label: 'X', href: 'https://x.com/juanvs23' },
-  { label: 'Facebook', href: 'https://www.facebook.com/juancarlos.avila.1420/' },
+  { label: "GitHub", href: "https://github.com/juanvs23" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/juanvs23/" },
+  { label: "X", href: "https://x.com/juanvs23" },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/juancarlos.avila.1420/",
+  },
 ];
 
 const currentYear = new Date().getFullYear();
@@ -21,26 +24,31 @@ const currentYear = new Date().getFullYear();
 <footer class="bg-canvas border-t border-hairline py-[32px]">
   <div class="max-w-[1200px] mx-auto px-lg">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-lg mb-xl">
-      {footerLinks.map((link) => (
-        <a
-          href={link.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-caption-md text-body no-underline hover:text-ink transition-colors text-center md:text-left"
-        >
-          {link.label}
-        </a>
-      ))}
+      {
+        footerLinks.map((link) => (
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-caption-md text-body no-underline hover:text-ink transition-colors text-center "
+          >
+            {link.label}
+          </a>
+        ))
+      }
     </div>
 
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-sm border-t border-hairline pt-lg">
+    <div
+      class="flex flex-col md:flex-row justify-between items-start md:items-center gap-sm border-t border-hairline pt-lg"
+    >
       <span class="text-caption-md text-mute">
-        {t('footer.copy')}{currentYear} {t('footer.develop')}Juan Carlos Ávila
+        {t("footer.copy")}{currentYear}
+        {t("footer.develop")}Juan Carlos Ávila
       </span>
 
       <div class="flex items-center gap-lg">
         <span class="text-caption-md text-mute">
-          {t('footer.language')}
+          {t("footer.language")}
         </span>
       </div>
     </div>

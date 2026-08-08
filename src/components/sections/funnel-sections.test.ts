@@ -5,7 +5,7 @@ import { buildFunnelContactPayload, buildWhatsAppLink } from '../../lib/funnel-l
 // ---------------------------------------------------------------------------
 // PR₄ (home-funnel-landing): data contracts consumed by the final funnel
 // sections — SocialProofSection, CaptureSection (audit form), PricingBofuSection,
-// FaqSection, ContactCtaSection (final form) and FunnelFooter. These components
+// FaqSection, ContactCtaSection (final form). These components
 // are presentational Astro templates, so the TDD unit is the i18n payload they
 // render plus the pure payload/WhatsApp synthesis the lead-form script wires.
 // ---------------------------------------------------------------------------
@@ -47,7 +47,7 @@ const FINAL_SECTION_STRING_KEYS = [
   'funnel.contact.cta',
   'funnel.contact.subject',
   'funnel.contact.message',
-  // FunnelFooter (section 12)
+  // Footer (section 12)
   'funnel.footer.heading',
   'funnel.footer.tagline',
   // Contact backend / status copy

@@ -2,6 +2,7 @@
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
+import CtaButton from '../ui/CtaButton.astro';
 
 interface WebPlan {
   name: string;
@@ -160,18 +161,15 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
             </div>
           </div>
 
-          <a
+          <CtaButton
             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hola Juan! Me interesa el plan ${plan.name} de Desarrollo Web — desde $${plan.startingPrice} USD`)}`}
+            variant={plan.recommended ? 'accent' : 'dark'}
             target="_blank"
             rel="noopener noreferrer"
-            class={`plan-cta relative overflow-hidden z-10 block text-center py-sm px-lg rounded-sm font-bold mt-lg ${
-              plan.recommended
-                ? 'bg-accent text-on-primary'
-                : 'bg-surface-dark text-on-dark'
-            }`}
+            class="block text-center py-sm px-lg font-bold mt-lg"
           >
             {plan.cta}
-          </a>
+          </CtaButton>
         </div>
       ))}
     </div>
@@ -289,14 +287,15 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
     </h2>
     <div class="bg-surface-soft border border-hairline rounded-sm p-lg md:p-xl">
       <p class="text-body-md text-body mb-lg max-w-2xl">{customWork.description}</p>
-      <a
+      <CtaButton
         href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola Juan! Tengo un proyecto a medida y quisiera una cotización.')}`}
+        variant="dark"
         target="_blank"
         rel="noopener noreferrer"
-        class="plan-cta relative overflow-hidden z-10 inline-block py-sm px-lg rounded-sm font-bold bg-surface-dark text-on-dark"
+        class="inline-block py-sm px-lg font-bold"
       >
         {customWork.cta}
-      </a>
+      </CtaButton>
     </div>
   </section>
 
@@ -584,30 +583,4 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
     outline-offset: 2px;
   }
 
-  /* Plan CTA fill-from-left hover */
-  .plan-cta::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-color: inherit;
-    border-radius: inherit;
-    z-index: -2;
-  }
-
-  .plan-cta::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0%;
-    height: 100%;
-    background-color: var(--color-accent-hover, #0056b3);
-    transition: width 0.3s ease;
-    border-radius: inherit;
-    z-index: -1;
-  }
-
-  .plan-cta:hover::before {
-    width: 100%;
-  }
 </style>

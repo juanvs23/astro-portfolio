@@ -138,7 +138,7 @@ const PR4_STRING_KEYS = [
   'funnel.pricing.delivery',
   // FaqSection (section 10)
   'funnel.faq_heading',
-  // FunnelFooter (section 12) — D9
+  // Footer (section 12)
   'funnel.footer.heading',
   'funnel.footer.tagline',
   // CaptureSection (section 8) — label reused in LeadForm

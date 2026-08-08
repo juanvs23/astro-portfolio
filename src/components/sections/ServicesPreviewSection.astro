@@ -2,6 +2,7 @@
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
+import CtaButton from '../ui/CtaButton.astro';
 
 interface ExpressService {
   name: string;
@@ -40,12 +41,13 @@ const services = t('services.express') as ExpressService[];
   </ul>
 
   <div data-aos="fade-up" data-aos-delay="200">
-    <a
+    <CtaButton
       href={`/${locale}/services`}
-      class="inline-flex items-center justify-center gap-2 px-lg py-sm rounded-sm font-mono text-body-md font-medium border border-hairline bg-surface-dark text-on-dark hover:bg-surface-dark-elevated hover:text-on-dark hover:border-accent transition-all"
+      variant="dark"
+      class="inline-flex items-center justify-center gap-2 px-lg py-sm"
     >
       {t('funnel.services.linkout')}
       <span aria-hidden="true">&rarr;</span>
-    </a>
+    </CtaButton>
   </div>
 </Section>

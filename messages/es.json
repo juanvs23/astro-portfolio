@@ -119,7 +119,18 @@
     "brand": "Marca",
     "privacy": "Privacidad",
     "terms": "Términos",
-    "language": "Español"
+    "language": "Español",
+    "contact": {
+      "heading": "¿Hablamos?",
+      "placeholder": "tu@email.com",
+      "send": "Enviar",
+      "subject": "Contacto desde el footer",
+      "message": "Hola, quiero más información.",
+      "sending": "Enviando…",
+      "success": "✅ Recibido. Te escribo pronto.",
+      "error": "Error al enviar. Intentá de nuevo.",
+      "networkError": "Error de conexión. Reintentá."
+    }
   },
   "inputField": {
     "fullName": "Nombre Completo",
@@ -220,7 +231,7 @@
     "audit": {
       "heading": "Auditoría gratuita",
       "description": "Reciba un análisis de su sitio y sus procesos para detectar oportunidades de conversión y automatización. Sin costo y sin compromiso.",
-      "cta": "Quiero mi auditoría gratuita",
+      "cta": "Auditoría gratuita",
       "subject": "Auditoría gratuita",
       "message": "Quiero una auditoría gratuita para mi negocio."
     },
@@ -256,7 +267,7 @@
     "contact": {
       "heading": "Hablemos de su proyecto",
       "description": "Cuénteme sobre su proyecto y reciba una propuesta sin compromiso en menos de 24 horas.",
-      "cta": "Escribir por WhatsApp",
+      "cta": "WhatsApp",
       "subject": "Nuevo contacto",
       "message": "Quiero una propuesta sin compromiso para mi proyecto."
     },

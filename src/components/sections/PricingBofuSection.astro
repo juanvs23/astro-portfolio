@@ -2,6 +2,7 @@
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
+import CtaButton from '../ui/CtaButton.astro';
 import { buildWhatsAppLink } from '../../lib/funnel-lead';
 
 interface WebPlan {
@@ -77,18 +78,15 @@ const planLink = (plan: WebPlan): string =>
             ))}
           </ul>
 
-          <a
+          <CtaButton
             href={planLink(plan)}
+            variant={plan.recommended ? 'accent' : 'dark'}
             target="_blank"
             rel="noopener noreferrer"
-            class={`plan-cta inline-flex items-center justify-center h-[44px] px-lg rounded-sm font-mono text-body-md font-medium border border-hairline transition-all hover:border-accent ${
-              plan.recommended
-                ? 'bg-accent text-on-primary border-hairline-strong'
-                : 'bg-surface-dark text-on-dark hover:bg-surface-dark-elevated'
-            }`}
+            class="inline-flex items-center justify-center h-[44px] px-lg"
           >
             {plan.cta}
-          </a>
+          </CtaButton>
         </div>
       ))}
     </div>
@@ -98,13 +96,14 @@ const planLink = (plan: WebPlan): string =>
     </p>
 
     <div data-aos="fade-up" data-aos-delay="300">
-      <a
+      <CtaButton
         href={`/${locale}/services`}
-        class="inline-flex items-center justify-center gap-2 px-lg py-sm rounded-sm font-mono text-body-md font-medium border border-hairline bg-surface-dark text-on-dark hover:bg-surface-dark-elevated hover:border-accent transition-all"
+        variant="dark"
+        class="inline-flex items-center justify-center gap-2 px-lg py-sm"
       >
         {t('funnel.pricing.linkout')}
         <span aria-hidden="true">&rarr;</span>
-      </a>
+      </CtaButton>
     </div>
   </div>
 </Section>

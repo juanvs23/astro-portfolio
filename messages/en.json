@@ -119,7 +119,18 @@
     "brand": "Brand",
     "privacy": "Privacy",
     "terms": "Terms",
-    "language": "English"
+    "language": "English",
+    "contact": {
+      "heading": "Let's talk?",
+      "placeholder": "your@email.com",
+      "send": "Send",
+      "subject": "Footer contact",
+      "message": "Hi, I'd like more information.",
+      "sending": "Sending…",
+      "success": "✅ Got it. I'll write you soon.",
+      "error": "Error sending. Try again.",
+      "networkError": "Connection error. Retry."
+    }
   },
   "inputField": {
     "fullName": "Full Name",
@@ -220,7 +231,7 @@
     "audit": {
       "heading": "Free audit",
       "description": "Get an analysis of your website and processes to uncover conversion and automation opportunities. No cost and no commitment.",
-      "cta": "Get my free audit",
+      "cta": "Free audit",
       "subject": "Free audit",
       "message": "I would like a free audit for my business."
     },
@@ -256,7 +267,7 @@
     "contact": {
       "heading": "Let's talk about your project",
       "description": "Tell me about your project and get a no-obligation proposal within 24 hours.",
-      "cta": "Message on WhatsApp",
+      "cta": "WhatsApp",
       "subject": "New contact",
       "message": "I would like a no-obligation proposal for my project."
     },
