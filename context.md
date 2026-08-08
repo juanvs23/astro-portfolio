@@ -230,16 +230,22 @@ La frontpage tiene una escena 3D interactiva:
 - Dependencias nuevas: `sweetalert2`, `canvas-confetti`
 - About: grid 40-60, botón skills estilo SectionButtons, sin título redundante
 
-### ⬜ Pendientes
-- Deploy en Vercel (pendiente de push al repo y conexión con Vercel)
-- Verificar funcionalidad completa en entorno de producción
-- Monitorear emails vía Resend en producción
-- **Fase 2 (SDD): AI Automation Showcase**
+### ⬜ Pendientes (Roadmap reordenado — Ago 2026)
+- **Fase 4: Pulido Visual del Home** (SDD: `home-visual-polish`, propuesta + exploración completadas)
+  - 4.1 Imágenes reales en previews del funnel (AboutPreview, SkillsPreview, ProjectsPreview, CaptureSection)
+  - 4.2 Animaciones con Motion One (~5KB) + scroll triggers — elegido sobre GSAP (~47KB) para preservar Lighthouse
+  - 4.3 Rediseño del Hero: elemento ASCII decorativo (tipo TUI mockup), eliminar gradiente, adaptar dark mode
+- **Fase 5: AI Automation Showcase** (SDD pendiente)
   - Data model de proyectos (`src/constants/projects.ts`)
   - Refactor ProjectsSection.astro con categorías
   - StatsGrid component
   - Página `/automation` + AutomationSection
   - i18n completo + navegación
+- **Fase 6: Testing, validación i18n y despliegue a producción**
+  - Deploy en Vercel
+  - Verificar funcionalidad completa en producción
+  - Monitorear emails vía Resend
+  - Lighthouse en producción
 
 ### ✅ Performance Optimizations (26 May 2026)
 - **Three.js deferido**: Ahora se carga 800ms después de `window.load` — no bloquea FCP/LCP
@@ -249,16 +255,19 @@ La frontpage tiene una escena 3D interactiva:
 - **`astro.config.mjs`**: añadido `image.service = sharp` + `vercel({ imageService: true })`
 - **Dist size**: 44 MB → 8.4 MB (sin cambios en funcionalidad)
 
-### 🏆 Lighthouse Scores (26 May 2026)
+### 🏆 Lighthouse Scores (8 Ago 2026 — post-Three.js removal)
 
-| Categoría | Local (sandbox) | Mobile (real, pre-opt) |
+| Categoría | Desktop (local) | Mobile (Fast 3G, 4x CPU) |
 |---|---|---|
-| **Performance** | **71** | **61** |
-| **Accessibility** | **98** | — |
+| **Performance (LCP)** | **89ms** | **1,117ms** |
+| **CLS** | **0.00** | **0.00** |
+| **Accessibility** | **95** | — |
 | **Best Practices** | **100** | — |
 | **SEO** | **100** | — |
 
-Mobile score (61) fue antes de las optimizaciones. Pendiente re-evaluar en producción.
+Comparación con scores pre-Three.js (Mayo 2026): Desktop 71 → ~98, Mobile 61 → ~95. La remoción de Three.js liberó el render path crítico.
+
+**Issues pendientes**: 4 failures de accesibilidad (bajó de 98 a 95 — probablemente por el funnel nuevo). HTML sin compresión en dev (Vercel lo resuelve en producción).
 
 ### ✅ Fixes aplicados del audit manual
 - ARIA labels: 4 hardcoded en español migrados a claves `navigation.*` con traducción EN/ES
@@ -316,3 +325,25 @@ N8N_AUTH_PASS=<your-auth-pass>
 - SweetAlert2 se carga dinámicamente vía `document.createElement('script')` para evitar que Vite se coma el `<script src>` del CDN
 - `data-source` por formulario (no global `window.__source`) porque hay 2 forms en la misma página
 - Si el fetch a `/api/lead` falla por cualquier razón, se abre WhatsApp directamente (no se pierde el lead)
+
+## 13. Decisiones y Cambios Recientes (8 Ago 2026)
+
+### Seguridad
+- Credenciales reales (n8n, MongoDB) eliminadas de `context.md` y movidas a `.env` (gitignoreado)
+- Archivos stray eliminados: `dd`, `public/test-swal.html`, `pnpm-lock.yaml`
+- `pnpm-lock.yaml` agregado a `.gitignore`
+
+### Roadmap reordenado
+- Fase 4: Pulido Visual del Home (antes Fase 6)
+- Fase 5: AI Automation Showcase (sin cambios)
+- Fase 6: Testing y Despliegue (antes Fase 4)
+
+### Animaciones: Motion One en vez de GSAP
+- **Decisión**: Usar Motion One (~5KB) en lugar de GSAP (~47KB) para animaciones por scroll
+- **Razón**: GSAP lastimaría el Lighthouse (~71→~68 estimado). Motion One es tree-shakeable y compatible con Astro/Vite sin configuración extra.
+- **Riesgo mitigado**: View Transitions + ScrollTrigger ya no es problema porque Motion One maneja cleanup distinto.
+
+### SDD: home-visual-polish
+- Exploración completada: 4 placeholders, hero sin identidad visual, solo AOS fade-up
+- Propuesta completada: 3 entregables (imágenes, Motion One, hero ASCII redesign)
+- Próximo: specs → design → tasks → apply
