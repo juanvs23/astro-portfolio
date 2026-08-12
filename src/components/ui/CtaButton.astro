@@ -6,6 +6,7 @@ interface Props {
   target?: string;
   rel?: string;
   class?: string;
+  pulse?: boolean;
 }
 
 const {
@@ -15,6 +16,8 @@ const {
   target,
   rel,
   class: extraClass = '',
+  pulse = false,
+  ...attrs
 } = Astro.props;
 
 const directionClass = direction === 'bottom' ? 'plan-cta-bottom' : 'plan-cta';
@@ -34,7 +37,9 @@ const variantClasses: Record<string, string> = {
   href={href}
   target={target}
   rel={rel}
+  data-cta-pulse={pulse ? true : undefined}
   class={`${baseClasses} ${variantClasses[variant]} ${extraClass}`}
+  {...attrs}
 >
   <slot />
 </a>

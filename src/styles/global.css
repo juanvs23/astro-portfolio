@@ -108,6 +108,16 @@
   word-break: break-word;
 }
 
+/* Motion One staggered reveal (home-visual-polish). Same D7 philosophy as AOS:
+   children of a [data-reveal] grid start hidden and Motion One animates them to
+   visible when the grid enters the viewport. The CSS initial state is the
+   single source of truth; the reduced-motion and <noscript> overrides below
+   keep content fully visible without JS. */
+[data-reveal-item] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
 /* D7: force-visible guard — AOS reveal must never leave content hidden for
    users with reduced motion. Content renders static and fully visible.
    The no-JS equivalent lives in a <noscript> block on the funnel page. */
@@ -116,6 +126,16 @@
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+
+  [data-reveal-item] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .typewriter {
+    animation: none;
+    border-right-color: transparent;
   }
 }
 

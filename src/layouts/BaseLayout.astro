@@ -63,6 +63,7 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
     <noscript>
       <style>
         [data-aos] { opacity: 1 !important; transform: none !important; }
+        [data-reveal-item] { opacity: 1 !important; transform: none !important; }
       </style>
     </noscript>
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-lg focus:py-md focus:bg-surface-dark focus:text-on-dark focus:rounded-sm">
@@ -102,6 +103,61 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
     <script>
       import AOS from 'aos';
       window.__AOS = AOS;
+    </script>
+    <script>
+      import { shouldEnableMotion } from '@/lib/motion-guard';
+      import { onInView, staggerDelay } from '@/lib/viewport';
+
+      // Home Motion One lifecycle (home-visual-polish): staggered [data-reveal]
+      // reveals and the one-time CTA pulse. Dynamic import('motion/mini')
+      // code-splits the ~5KB gzip runtime into a lazy chunk fetched only when
+      // the reduced-motion guard passes; the reveal trigger is the tiny
+      // IntersectionObserver helper in viewport.ts. Mirrors the AOS init
+      // pattern in this file: init on astro:page-load, dispose on
+      // astro:before-swap so View Transitions never leak running animations.
+      function initHomeMotion() {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (!shouldEnableMotion(reduce.matches)) return; // CSS shows static states
+
+        import('motion/mini').then(function (m) {
+          var stops = [];
+          var anims = [];
+          var revealGrids = document.querySelectorAll('[data-reveal]');
+          revealGrids.forEach(function (grid) {
+            var items = grid.querySelectorAll('[data-reveal-item]');
+            if (!items.length) return;
+            var stop = onInView(grid, function () {
+              items.forEach(function (item, i) {
+                anims.push(m.animate(item, { opacity: 1, y: 0 }, { delay: staggerDelay(i), duration: 0.5 }));
+              });
+            }, { amount: 0.2 });
+            stops.push(stop);
+          });
+
+          var pulseEl = document.querySelector('[data-cta-pulse]');
+          if (pulseEl) {
+            anims.push(m.animate(pulseEl, { scale: [1, 1.04, 1] }, { duration: 1, delay: 0.4 }));
+          }
+
+          window.__homeMotion = { stops: stops, anims: anims };
+        });
+      }
+
+      function disposeHomeMotion() {
+        if (window.__homeMotion) {
+          window.__homeMotion.stops.forEach(function (s) { s(); });
+          window.__homeMotion.anims.forEach(function (a) { a.stop(); });
+          window.__homeMotion = null;
+        }
+      }
+
+      document.addEventListener('astro:page-load', function () {
+        initHomeMotion();
+      });
+
+      document.addEventListener('astro:before-swap', function () {
+        disposeHomeMotion();
+      });
     </script>
     <script is:inline>
       function initTypewriter() {

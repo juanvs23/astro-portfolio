@@ -20,11 +20,12 @@ const alt = String(t(spec.altKey));
 <Section id="about-preview">
   <div
     class="grid grid-cols-1 md:grid-cols-2 gap-xl items-center"
-    data-aos="fade-up"
+    data-reveal
   >
     <!-- Imagen -->
     <div
       class="order-1 bg-surface-soft border border-hairline rounded-sm aspect-video overflow-hidden"
+      data-reveal-item
     >
       <Image
         src={aboutme}
@@ -38,7 +39,7 @@ const alt = String(t(spec.altKey));
     </div>
 
     <!-- Texto -->
-    <div class="order-2">
+    <div class="order-2" data-reveal-item>
       <h2 class="text-xl md:text-3xl font-bold text-ink mb-sm">
         <AsciiMarker state="add" class="mr-xs inline" />
         {t("funnel.about.heading")}

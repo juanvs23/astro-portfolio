@@ -18,9 +18,9 @@ const alt = String(t(spec.altKey));
 ---
 
 <Section id="projects-preview">
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-xl items-center" data-aos="fade-up">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-xl items-center" data-reveal>
     <!-- Imagen (izquierda desktop, arriba mobile) -->
-    <div class="order-1 bg-surface-soft border border-hairline rounded-sm aspect-video overflow-hidden">
+    <div class="order-1 bg-surface-soft border border-hairline rounded-sm aspect-video overflow-hidden" data-reveal-item>
       <Image
         src={hisomo}
         alt={alt}
@@ -33,7 +33,7 @@ const alt = String(t(spec.altKey));
     </div>
 
     <!-- Texto (derecha desktop, abajo mobile) -->
-    <div class="order-2">
+    <div class="order-2" data-reveal-item>
       <h2 class="text-xl md:text-3xl font-bold text-ink mb-sm">
         <AsciiMarker state="add" class="mr-xs inline" />
         {t('funnel.projects.heading')}
