@@ -292,8 +292,10 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
               el.classList.remove('typewriter');
               // home-hero-redesign: signal completion so the hero fade-in
               // chain can start. No behavior change for existing pages.
+              // bubbles:true is REQUIRED — the listener lives on document
+              // and the event fires on the h1 span deep in the tree.
               window.__typewriterDone = true;
-              el.dispatchEvent(new CustomEvent('typewriter:done', { detail: { el: el } }));
+              el.dispatchEvent(new CustomEvent('typewriter:done', { bubbles: true, detail: { el: el } }));
             }
           }
           type();
