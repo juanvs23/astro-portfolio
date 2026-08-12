@@ -139,6 +139,45 @@
   }
 }
 
+/* Hero invert cursor follower (home-hero-redesign). Blend lives on the fixed
+   wrapper positioned with left/top — a transform on the blended element would
+   isolate the blending group. The dot is centered via negative margins and
+   scales ~3.3x over interactive elements. Disabled for reduced motion and
+   non-hover (touch) devices; the JS guard adds the active class only when the
+   pointer is inside the hero. */
+.hero-cursor {
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  mix-blend-mode: difference;
+  will-change: left, top;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.hero-cursor-active {
+  opacity: 1;
+}
+
+.hero-cursor-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background-color: var(--color-on-dark);
+  transform: scale(1);
+  transition: transform 0.15s ease;
+}
+
+.hero-cursor-grow .hero-cursor-dot {
+  transform: scale(3.3);
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none) {
+  .hero-cursor {
+    display: none;
+  }
+}
+
 /* Hero lateral matrix stream (home-hero-redesign): decorative canvas depth
    layer. Low opacity + radial mask keep it behind the headline; the mask
    fades the grid toward the edges so it does not compete with the copy. */

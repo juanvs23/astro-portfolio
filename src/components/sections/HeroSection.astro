@@ -2,6 +2,7 @@
 import { getTranslations, type Locale } from "@/i18n";
 import Badge from "../ui/Badge.astro";
 import CtaButton from "../ui/CtaButton.astro";
+import HeroCursor from "../ui/HeroCursor.astro";
 import { buildWhatsAppLink } from "@/lib/funnel-lead";
 
 interface Props {
@@ -32,6 +33,9 @@ const ctaHref = buildWhatsAppLink(
     class="hero-matrix pointer-events-none absolute inset-0 z-0"
     aria-hidden="true"
   ></canvas>
+
+  <!-- Hero-scoped white invert cursor follower (decoration, aria-hidden). -->
+  <HeroCursor />
 
   <!-- Hero content: badge/p/CTA start hidden (JS-driven) and fade in
        staggered after the h1 typewriter dispatches typewriter:done. -->

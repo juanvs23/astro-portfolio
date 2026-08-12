@@ -178,6 +178,49 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
         window.__heroMatrix = stream;
       }
 
+      // Hero-scoped white invert cursor follower. Blend on the wrapper,
+      // positioned with left/top; active only while the pointer is inside
+      // the hero. Disabled for reduced motion and non-hover (touch) devices.
+      function initHeroCursor() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (!window.matchMedia('(hover: hover)').matches) return;
+        var hero = document.getElementById('hero');
+        var cursor = document.querySelector('.hero-cursor');
+        if (!hero || !cursor) return;
+        var active = false;
+        function onEnter() {
+          active = true;
+          cursor.classList.add('hero-cursor-active');
+        }
+        function onLeave() {
+          active = false;
+          cursor.classList.remove('hero-cursor-active');
+        }
+        function onMove(e) {
+          if (!active) return;
+          cursor.style.left = e.clientX + 'px';
+          cursor.style.top = e.clientY + 'px';
+        }
+        function onOver(e) {
+          var target = e.target;
+          var interactive = target && target.closest ? target.closest('a, button') : null;
+          cursor.classList.toggle('hero-cursor-grow', !!interactive);
+        }
+        hero.addEventListener('mouseenter', onEnter);
+        hero.addEventListener('mouseleave', onLeave);
+        window.addEventListener('pointermove', onMove);
+        hero.addEventListener('mouseover', onOver);
+        window.__heroCursorDispose = function () {
+          hero.removeEventListener('mouseenter', onEnter);
+          hero.removeEventListener('mouseleave', onLeave);
+          window.removeEventListener('pointermove', onMove);
+          hero.removeEventListener('mouseover', onOver);
+          cursor.classList.remove('hero-cursor-active');
+          cursor.style.left = '';
+          cursor.style.top = '';
+        };
+      }
+
       function disposeHomeMotion() {
         if (window.__homeMotion) {
           window.__homeMotion.stops.forEach(function (s) { s(); });
@@ -188,6 +231,10 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
           window.__heroMatrix.stop();
           window.__heroMatrix = null;
         }
+        if (window.__heroCursorDispose) {
+          window.__heroCursorDispose();
+          window.__heroCursorDispose = null;
+        }
         if (window.__heroFadeHandler) {
           document.removeEventListener('typewriter:done', window.__heroFadeHandler);
           window.__heroFadeHandler = null;
@@ -197,6 +244,7 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
       document.addEventListener('astro:page-load', function () {
         initHomeMotion();
         initHeroMatrix();
+        initHeroCursor();
       });
 
       document.addEventListener('astro:before-swap', function () {
