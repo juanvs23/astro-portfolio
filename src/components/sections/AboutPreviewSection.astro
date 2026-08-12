@@ -1,11 +1,9 @@
 ---
-import { Image } from 'astro:assets';
 import { getTranslations, type Locale } from "@/i18n";
-import { getPreviewImageSpec } from "@/lib/preview-images";
-import aboutme from "../../assets/img/aboutme.jpg";
 import Section from "../ui/Section.astro";
 import AsciiMarker from "../ui/AsciiMarker.astro";
 import CtaButton from "../ui/CtaButton.astro";
+import TerminalWindow from "../ui/TerminalWindow.astro";
 
 interface Props {
   locale: Locale;
@@ -13,8 +11,8 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
-const spec = getPreviewImageSpec('about');
-const alt = String(t(spec.altKey));
+const terminalTitle = String(t("funnel.about.terminal.title"));
+const terminalLines = t("funnel.about.terminal.lines") as string[];
 ---
 
 <Section id="about-preview">
@@ -22,21 +20,16 @@ const alt = String(t(spec.altKey));
     class="grid grid-cols-1 md:grid-cols-2 gap-xl items-center"
     data-reveal
   >
-    <!-- Imagen -->
-    <div
-      class="order-1 bg-surface-soft border border-hairline rounded-sm aspect-video overflow-hidden"
+    <!-- Terminal window (replaces the personal photo) — keeps grid order and
+         the image block's container contract; data-reveal-item enters with
+         the section reveal. -->
+    <TerminalWindow
+      title={terminalTitle}
+      lines={terminalLines}
+      locale={locale}
+      class="order-1"
       data-reveal-item
-    >
-      <Image
-        src={aboutme}
-        alt={alt}
-        width={spec.width}
-        densities={spec.densities}
-        formats={spec.formats}
-        loading="lazy"
-        class="w-full h-full object-cover rounded-sm"
-      />
-    </div>
+    />
 
     <!-- Texto -->
     <div class="order-2" data-reveal-item>

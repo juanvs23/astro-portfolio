@@ -222,10 +222,28 @@
       "heading": "Behind the code",
       "description": "Over 8 years combining web development and AI integration for companies in LatAm and the United States.",
       "linkout": "About me",
-      "imageAlt": "Portrait of Juan Carlos Ávila, web developer and AI automation specialist"
+      "terminal": {
+        "title": "~/about",
+        "lines": [
+          "➜ cat about.txt",
+          "→ Web Developer · AI Automation",
+          "→ Conversion-focused landing pages",
+          "→ Spanish + English (bilingual)"
+        ]
+      }
     },
     "skills": {
-      "imageAlt": "Dashboard of web and AI automation projects"
+      "terminal": {
+        "title": "~/skills",
+        "lines": [
+          "➜ cat stack.txt",
+          "→ frontend: astro, typescript, tailwind, react",
+          "→ backend: node, python, vercel, sqlite",
+          "→ automation: n8n, openai, whatsapp api",
+          "➜ ls tools/",
+          "→ vite/ git/ docker/ vercel-cli/"
+        ]
+      }
     },
     "projects": {
       "heading": "Projects that deliver results",

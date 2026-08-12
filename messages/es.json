@@ -222,10 +222,28 @@
       "heading": "Detrás del código",
       "description": "Más de 8 años combinando desarrollo web e integración de IA para empresas de LatAm y Estados Unidos.",
       "linkout": "Sobre mí",
-      "imageAlt": "Retrato de Juan Carlos Ávila, desarrollador web y especialista en automatización con IA"
+      "terminal": {
+        "title": "~/about",
+        "lines": [
+          "➜ cat about.txt",
+          "→ Desarrollador Web · Automatización con IA",
+          "→ Landing pages orientadas a conversión",
+          "→ Español + English (bilingüe)"
+        ]
+      }
     },
     "skills": {
-      "imageAlt": "Panel de proyectos web y automatización con IA"
+      "terminal": {
+        "title": "~/skills",
+        "lines": [
+          "➜ cat stack.txt",
+          "→ frontend: astro, typescript, tailwind, react",
+          "→ backend: node, python, vercel, sqlite",
+          "→ automatización: n8n, openai, whatsapp api",
+          "➜ ls tools/",
+          "→ vite/ git/ docker/ vercel-cli/"
+        ]
+      }
     },
     "projects": {
       "heading": "Proyectos que generan resultados",

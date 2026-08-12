@@ -65,15 +65,14 @@ for (const key of PREVIEW_STRING_KEYS) {
 }
 
 // ---------------------------------------------------------------------------
-// home-visual-polish (PR 1 — images): alt text keys consumed by the four
-// preview <Image /> components (About, Skills, Projects, Capture). Each key
-// must resolve non-empty in both locales, never be the key literal, and the
-// translated values must differ between locales.
+// home-visual-polish (task 1.9 + phase 3 — terminals): the About and Skills
+// preview sections render terminal windows, so their imageAlt keys are gone.
+// The two remaining preview images (Projects, Capture) keep their alt keys,
+// and the terminal windows get a bilingual title + lines contract
+// (funnel.about.terminal / funnel.skills.terminal).
 // ---------------------------------------------------------------------------
 
 const PREVIEW_IMAGE_ALT_KEYS = [
-  'funnel.about.imageAlt',
-  'funnel.skills.imageAlt',
   'funnel.projects.imageAlt',
   'funnel.capture.imageAlt',
 ];
@@ -97,11 +96,84 @@ for (const key of PREVIEW_IMAGE_ALT_KEYS) {
 }
 
 describe('preview image alt keys differ between locales', () => {
-  it('the four funnel.*.imageAlt values are translated (es ≠ en)', async () => {
+  it('the two remaining funnel.*.imageAlt values are translated (es ≠ en)', async () => {
     const tEs = await getTranslations('es');
     const tEn = await getTranslations('en');
     for (const key of PREVIEW_IMAGE_ALT_KEYS) {
       expect(tEs(key)).not.toBe(tEn(key));
+    }
+  });
+});
+
+interface TerminalContract {
+  title: string;
+  lines: string[];
+}
+
+const PREVIEW_TERMINAL_KEYS = ['funnel.about.terminal', 'funnel.skills.terminal'];
+
+for (const key of PREVIEW_TERMINAL_KEYS) {
+  it(`terminal ${key} has a non-empty title that is not the key literal (es)`, async () => {
+    const t = await getTranslations('es');
+    const terminal = t(key) as TerminalContract;
+    expect(typeof terminal).toBe('object');
+    expect(terminal.title.length).toBeGreaterThan(0);
+    expect(terminal.title).not.toBe(key);
+    expect(terminal.title).not.toBe('img');
+  });
+
+  it(`terminal ${key} has a non-empty title that is not the key literal (en)`, async () => {
+    const t = await getTranslations('en');
+    const terminal = t(key) as TerminalContract;
+    expect(typeof terminal).toBe('object');
+    expect(terminal.title.length).toBeGreaterThan(0);
+    expect(terminal.title).not.toBe(key);
+  });
+
+  it(`terminal ${key} lines are non-empty, not the key literal (es)`, async () => {
+    const t = await getTranslations('es');
+    const terminal = t(key) as TerminalContract;
+    expect(Array.isArray(terminal.lines)).toBe(true);
+    expect(terminal.lines.length).toBeGreaterThanOrEqual(2);
+    for (const line of terminal.lines) {
+      expect(typeof line).toBe('string');
+      expect(line.length).toBeGreaterThan(0);
+      expect(line).not.toBe(key);
+      expect(line).not.toBe('img');
+    }
+  });
+
+  it(`terminal ${key} lines are non-empty, not the key literal (en)`, async () => {
+    const t = await getTranslations('en');
+    const terminal = t(key) as TerminalContract;
+    expect(Array.isArray(terminal.lines)).toBe(true);
+    expect(terminal.lines.length).toBeGreaterThanOrEqual(2);
+    for (const line of terminal.lines) {
+      expect(typeof line).toBe('string');
+      expect(line.length).toBeGreaterThan(0);
+      expect(line).not.toBe(key);
+    }
+  });
+}
+
+describe('preview terminal line sets differ between locales', () => {
+  it('about and skills terminal lines are translated (es ≠ en)', async () => {
+    const tEs = await getTranslations('es');
+    const tEn = await getTranslations('en');
+    for (const key of PREVIEW_TERMINAL_KEYS) {
+      const esLines = (tEs(key) as TerminalContract).lines;
+      const enLines = (tEn(key) as TerminalContract).lines;
+      expect(esLines.join('|')).not.toBe(enLines.join('|'));
+    }
+  });
+});
+
+describe('removed preview image alt keys', () => {
+  it('funnel.about.imageAlt and funnel.skills.imageAlt no longer resolve in es or en', async () => {
+    for (const locale of ['es', 'en'] as const) {
+      const t = await getTranslations(locale);
+      expect(t('funnel.about.imageAlt')).toBe('funnel.about.imageAlt');
+      expect(t('funnel.skills.imageAlt')).toBe('funnel.skills.imageAlt');
     }
   });
 });

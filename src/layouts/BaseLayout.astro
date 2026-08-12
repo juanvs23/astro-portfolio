@@ -142,7 +142,28 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
           }
 
           initHeroFadeIn(m, anims);
+          initTerminalLines(m, anims, stops);
           window.__homeMotion = { stops: stops, anims: anims };
+        });
+      }
+
+      // Terminal window line reveal (home-skills-terminal): lines type out one
+      // by one (~220ms apart, 160–380ms cadence) once the terminal enters the
+      // viewport, sharing the same Motion One inView lifecycle as the section
+      // reveals. Lines are hidden via Motion only, so reduced-motion and no-JS
+      // render everything visible immediately.
+      function initTerminalLines(m, anims, stops) {
+        var terminals = document.querySelectorAll('[data-terminal]');
+        terminals.forEach(function (term) {
+          var lines = term.querySelectorAll('[data-terminal-line]');
+          if (!lines.length) return;
+          m.animate(lines, { opacity: 0 }, { duration: 0 });
+          var stop = onInView(term, function () {
+            lines.forEach(function (line, i) {
+              anims.push(m.animate(line, { opacity: 1 }, { delay: staggerDelay(i, 0.22, 0.05), duration: 0.3 }));
+            });
+          }, { amount: 0.3 });
+          stops.push(stop);
         });
       }
 

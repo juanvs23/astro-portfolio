@@ -1,11 +1,9 @@
 ---
-import { Image } from 'astro:assets';
 import { getTranslations, type Locale } from '@/i18n';
-import { getPreviewImageSpec } from '@/lib/preview-images';
-import cesdeProyectos from '../../assets/img/cesde-proyectos.jpg';
 import Section from '../ui/Section.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
 import CtaButton from '../ui/CtaButton.astro';
+import TerminalWindow from '../ui/TerminalWindow.astro';
 
 interface Props {
   locale: Locale;
@@ -13,8 +11,8 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
-const spec = getPreviewImageSpec('skills');
-const alt = String(t(spec.altKey));
+const terminalTitle = String(t('funnel.skills.terminal.title'));
+const terminalLines = t('funnel.skills.terminal.lines') as string[];
 ---
 
 <Section id="skills-preview">
@@ -38,17 +36,15 @@ const alt = String(t(spec.altKey));
       </CtaButton>
     </div>
 
-    <!-- Imagen (derecha en desktop, arriba en mobile) -->
-    <div class="order-1 md:order-2 bg-surface-soft border border-hairline rounded-sm aspect-video overflow-hidden" data-reveal-item>
-      <Image
-        src={cesdeProyectos}
-        alt={alt}
-        width={spec.width}
-        densities={spec.densities}
-        formats={spec.formats}
-        loading="lazy"
-        class="w-full h-full object-cover rounded-sm"
-      />
-    </div>
+    <!-- Terminal window (replaces the project screenshot) — keeps grid order
+         and the image block's container contract; data-reveal-item enters
+         with the section reveal. -->
+    <TerminalWindow
+      title={terminalTitle}
+      lines={terminalLines}
+      locale={locale}
+      class="order-1 md:order-2"
+      data-reveal-item
+    />
   </div>
 </Section>

@@ -1,4 +1,4 @@
-export type PreviewSectionId = 'about' | 'skills' | 'projects' | 'capture';
+export type PreviewSectionId = 'projects' | 'capture';
 
 export interface PreviewImageSpec {
   section: PreviewSectionId;
@@ -9,25 +9,13 @@ export interface PreviewImageSpec {
 }
 
 /**
- * Metadata driving the four funnel preview `<Image />` components.
- * Asset imports live in each `.astro` section; this module keeps the
- * pure, testable configuration (alt i18n key, width, density set, formats).
+ * Metadata driving the two funnel preview `<Image />` components (Projects,
+ * Capture). About and Skills were replaced by terminal windows
+ * (home-skills-terminal), so they no longer carry image specs. Asset imports
+ * live in each `.astro` section; this module keeps the pure, testable
+ * configuration (alt i18n key, width, density set, formats).
  */
 export const PREVIEW_IMAGE_SPECS: PreviewImageSpec[] = [
-  {
-    section: 'about',
-    altKey: 'funnel.about.imageAlt',
-    width: 480,
-    densities: [1, 2],
-    formats: ['webp'],
-  },
-  {
-    section: 'skills',
-    altKey: 'funnel.skills.imageAlt',
-    width: 560,
-    densities: [1, 2],
-    formats: ['webp'],
-  },
   {
     section: 'projects',
     altKey: 'funnel.projects.imageAlt',

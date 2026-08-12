@@ -1,0 +1,54 @@
+---
+import type { Locale } from '@/i18n';
+
+interface Props {
+  /** Working directory shown in the title bar, e.g. `~/about`. */
+  title: string;
+  /** Command/output lines rendered in order, one per row. */
+  lines: string[];
+  locale?: Locale;
+  class?: string;
+}
+
+const {
+  title,
+  lines,
+  locale = 'es',
+  class: extraClass = '',
+  ...attrs
+} = Astro.props;
+---
+
+<!-- Reusable terminal window (home-skills-terminal): title bar with the
+     working-directory prompt (no macOS traffic-light dots), command/output
+     lines revealed one by one via the Motion One lifecycle wired in
+     BaseLayout, and a blinking block cursor on the final prompt. Purely
+     decorative (aria-hidden): the visible section content carries the real
+     information. Keeps the replaced block's container contract: aspect-video,
+     hairline border, rounded-sm, surface-dark, overflow-hidden. -->
+<div
+  class={`terminal-window bg-surface-dark text-on-dark border border-hairline rounded-sm aspect-video overflow-hidden w-full h-full ${extraClass}`}
+  data-terminal
+  aria-hidden="true"
+  lang={locale}
+  {...attrs}
+>
+  <div class="flex items-center gap-md px-lg py-sm border-b border-hairline bg-surface-dark-elevated">
+    <span class="text-body-sm text-on-dark-mute whitespace-nowrap overflow-hidden text-ellipsis">
+      ➜ juan@dev: {title}
+    </span>
+  </div>
+  <div class="px-lg py-md font-mono text-body-sm">
+    <div class="terminal-lines">
+      {lines.map((line, i) => (
+        <div class="terminal-line whitespace-pre-wrap break-words" data-terminal-line={i}>
+          {line}
+        </div>
+      ))}
+    </div>
+    <div class="terminal-prompt-row mt-md flex items-center gap-xs">
+      <span class="terminal-prompt">➜</span>
+      <span class="terminal-cursor" aria-hidden="true"></span>
+    </div>
+  </div>
+</div>
