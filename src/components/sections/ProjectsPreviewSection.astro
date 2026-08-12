@@ -1,5 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import { getTranslations, type Locale } from '@/i18n';
+import { getPreviewImageSpec } from '@/lib/preview-images';
+import hisomo from '../../assets/img/hisomo.jpg';
 import Section from '../ui/Section.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
 import CtaButton from '../ui/CtaButton.astro';
@@ -10,13 +13,23 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
+const spec = getPreviewImageSpec('projects');
+const alt = String(t(spec.altKey));
 ---
 
 <Section id="projects-preview">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-xl items-center" data-aos="fade-up">
     <!-- Imagen (izquierda desktop, arriba mobile) -->
-    <div class="order-1 bg-surface-soft border border-hairline rounded-sm aspect-video flex items-center justify-center">
-      <span class="text-mute text-body-md">img</span>
+    <div class="order-1 bg-surface-soft border border-hairline rounded-sm aspect-video overflow-hidden">
+      <Image
+        src={hisomo}
+        alt={alt}
+        width={spec.width}
+        densities={spec.densities}
+        formats={spec.formats}
+        loading="lazy"
+        class="w-full h-full object-cover rounded-sm"
+      />
     </div>
 
     <!-- Texto (derecha desktop, abajo mobile) -->

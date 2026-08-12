@@ -1,5 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import { getTranslations, type Locale } from '@/i18n';
+import { getPreviewImageSpec } from '@/lib/preview-images';
+import thinkous from '../../assets/img/thinkous.jpg';
 import Section from '../ui/Section.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
 import LeadForm from './LeadForm.astro';
@@ -10,6 +13,8 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
+const spec = getPreviewImageSpec('capture');
+const alt = String(t(spec.altKey));
 ---
 
 <Section id="audit">
@@ -29,8 +34,16 @@ const t = await getTranslations(locale);
     </div>
 
     <!-- Imagen (derecha desktop, arriba mobile) -->
-    <div class="order-1 md:order-2 bg-surface-soft border border-hairline rounded-sm aspect-video flex items-center justify-center">
-      <span class="text-mute text-body-md">img</span>
+    <div class="order-1 md:order-2 bg-surface-soft border border-hairline rounded-sm aspect-video overflow-hidden">
+      <Image
+        src={thinkous}
+        alt={alt}
+        width={spec.width}
+        densities={spec.densities}
+        formats={spec.formats}
+        loading="lazy"
+        class="w-full h-full object-cover rounded-sm"
+      />
     </div>
   </div>
 </Section>
