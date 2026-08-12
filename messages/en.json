@@ -221,12 +221,17 @@
     "about": {
       "heading": "Behind the code",
       "description": "Over 8 years combining web development and AI integration for companies in LatAm and the United States.",
-      "linkout": "About me"
+      "linkout": "About me",
+      "imageAlt": "Portrait of Juan Carlos Ávila, web developer and AI automation specialist"
+    },
+    "skills": {
+      "imageAlt": "Dashboard of web and AI automation projects"
     },
     "projects": {
       "heading": "Projects that deliver results",
       "description": "Platforms, dashboards, chatbots and automations shipped to production.",
-      "linkout": "View projects"
+      "linkout": "View projects",
+      "imageAlt": "Real-estate platform with data dashboard"
     },
     "audit": {
       "heading": "Free audit",
@@ -234,6 +239,9 @@
       "cta": "Free audit",
       "subject": "Free audit",
       "message": "I would like a free audit for my business."
+    },
+    "capture": {
+      "imageAlt": "Conversion-focused corporate website"
     },
     "pricing": {
       "heading": "Launch promotional pricing",

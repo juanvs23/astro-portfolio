@@ -64,6 +64,48 @@ for (const key of PREVIEW_STRING_KEYS) {
   });
 }
 
+// ---------------------------------------------------------------------------
+// home-visual-polish (PR 1 — images): alt text keys consumed by the four
+// preview <Image /> components (About, Skills, Projects, Capture). Each key
+// must resolve non-empty in both locales, never be the key literal, and the
+// translated values must differ between locales.
+// ---------------------------------------------------------------------------
+
+const PREVIEW_IMAGE_ALT_KEYS = [
+  'funnel.about.imageAlt',
+  'funnel.skills.imageAlt',
+  'funnel.projects.imageAlt',
+  'funnel.capture.imageAlt',
+];
+
+for (const key of PREVIEW_IMAGE_ALT_KEYS) {
+  it(`preview image alt key ${key} resolves non-empty, not the key literal (es)`, async () => {
+    const t = await getTranslations('es');
+    const value = t(key);
+    expect(typeof value).toBe('string');
+    expect((value as string).length).toBeGreaterThan(0);
+    expect(value).not.toBe(key);
+  });
+
+  it(`preview image alt key ${key} resolves non-empty, not the key literal (en)`, async () => {
+    const t = await getTranslations('en');
+    const value = t(key);
+    expect(typeof value).toBe('string');
+    expect((value as string).length).toBeGreaterThan(0);
+    expect(value).not.toBe(key);
+  });
+}
+
+describe('preview image alt keys differ between locales', () => {
+  it('the four funnel.*.imageAlt values are translated (es ≠ en)', async () => {
+    const tEs = await getTranslations('es');
+    const tEn = await getTranslations('en');
+    for (const key of PREVIEW_IMAGE_ALT_KEYS) {
+      expect(tEs(key)).not.toBe(tEn(key));
+    }
+  });
+});
+
 describe('process preview data shape', () => {
   it('services.process is a 3-step sequential array (es)', async () => {
     const t = await getTranslations('es');

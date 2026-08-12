@@ -221,12 +221,17 @@
     "about": {
       "heading": "Detrás del código",
       "description": "Más de 8 años combinando desarrollo web e integración de IA para empresas de LatAm y Estados Unidos.",
-      "linkout": "Sobre mí"
+      "linkout": "Sobre mí",
+      "imageAlt": "Retrato de Juan Carlos Ávila, desarrollador web y especialista en automatización con IA"
+    },
+    "skills": {
+      "imageAlt": "Panel de proyectos web y automatización con IA"
     },
     "projects": {
       "heading": "Proyectos que generan resultados",
       "description": "Plataformas, dashboards, chatbots y automatizaciones entregadas en producción.",
-      "linkout": "Ver proyectos"
+      "linkout": "Ver proyectos",
+      "imageAlt": "Plataforma inmobiliaria con panel de datos"
     },
     "audit": {
       "heading": "Auditoría gratuita",
@@ -234,6 +239,9 @@
       "cta": "Auditoría gratuita",
       "subject": "Auditoría gratuita",
       "message": "Quiero una auditoría gratuita para mi negocio."
+    },
+    "capture": {
+      "imageAlt": "Sitio web corporativo orientado a conversión"
     },
     "pricing": {
       "heading": "Precios promocionales de lanzamiento",
