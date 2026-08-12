@@ -24,29 +24,34 @@ const ctaHref = buildWhatsAppLink(
   id="hero"
   class="bg-surface-dark text-on-dark relative overflow-hidden min-h-[60dvh] flex items-center justify-center"
 >
-  <!-- Subtle decorative glow replacing the 3D hook; no canvas, no webgl. -->
-  <div class="pointer-events-none absolute inset-0 z-0" aria-hidden="true">
-    <div
-      class="absolute inset-0 opacity-50"
-      style="background: radial-gradient(1200px 640px at 50% 18%, rgba(253,252,252,0.08), transparent 62%);"
-    ></div>
-  </div>
+  <!-- Lateral matrix stream depth layer (home-hero-redesign): decorative
+       canvas, aria-hidden, no interaction. Driven by createMatrixStream
+       from the BaseLayout module script (reduced-motion → static grid). -->
+  <canvas
+    id="hero-matrix"
+    class="hero-matrix pointer-events-none absolute inset-0 z-0"
+    aria-hidden="true"
+  ></canvas>
 
+  <!-- Hero content: badge/p/CTA start hidden (JS-driven) and fade in
+       staggered after the h1 typewriter dispatches typewriter:done. -->
   <div
     class="relative z-10 flex w-full max-w-[1200px] mx-auto flex-col items-center px-lg py-xxl text-center"
-    data-aos="fade-up"
   >
-    <Badge variant="news" class="mb-lg">
+    <Badge variant="news" class="mb-lg" data-fade-after-type>
       {t("hero.badge")}
     </Badge>
 
     <h1
-      class="max-w-[900px] text-[20px] md:text-[38px] font-bold leading-[1.5] mb-xl"
+      class="block max-w-[900px] text-[28px] md:text-display-xl font-bold leading-[1.5] mb-xl min-h-[84px] md:min-h-[57px]"
     >
-      {t("hero.title")}
+      <span class="inline-block" data-typewriter>{t("hero.title")}</span>
     </h1>
 
-    <p class="max-w-[640px] text-body-md text-on-dark-mute mb-xxl">
+    <p
+      class="max-w-[640px] text-body-md text-on-dark-mute mb-xxl"
+      data-fade-after-type
+    >
       {t("hero.description")}
     </p>
 
@@ -55,10 +60,12 @@ const ctaHref = buildWhatsAppLink(
       variant="light"
       target="_blank"
       rel="noopener"
+      pulse
+      data-fade-after-type
       class="inline-flex items-center justify-center gap-2 px-lg h-[44px]"
     >
       <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" class="shrink-0">
-        <path d="M8 0C3.58 0 0 3.58 0 8c0 1.4.37 2.77 1.07 3.97L0 16l4.2-1.03A7.96 7.96 0 0 0 8 16c4.42 0 8-3.58 8-8s-3.58-8-8-8zm3.87 11.3c-.15.42-.75.8-1.23.9-.37.08-.84.15-2.44-.52-2.05-.85-3.37-2.94-3.47-3.07-.1-.14-.83-1.1-.83-2.1s.52-1.49.7-1.7c.18-.2.4-.25.53-.25h.38c.12 0 .28.01.4.3.15.37.52 1.27.57 1.36.05.1.08.2.02.33-.06.12-.1.2-.2.3-.1.1-.2.22-.28.3-.1.1-.2.2-.08.38.12.2.52.85 1.12 1.38.77.68 1.42.9 1.62 1 .2.1.32.08.44-.05.12-.12.5-.58.63-.78.13-.2.26-.17.44-.1.18.07 1.13.53 1.32.63.2.1.33.15.38.23.05.1.05.5-.1.92z"/>
+        <path d="M8 0C3.58 0 0 3.58 0 8c0 1.4.37 2.77 1.07 3.97L0 16l4.2-1.03A7.96 7.96 0 0 0 8 16c4.42 0 8-3.58 8-8s-3.58-8-8-8zm3.87 11.3c-.15.42-.75.8-1.23.9-.37.08-.84.15-2.44-.52-2.05-.85-3.37-2.94-3.47-3.07-.1-.14-.83-1.1-.83-2.1s.52-1.49.7-1.7c.18-.2.4-.25.53-.25h.38c.12 0 .28.01.4.3.15.37.52 1.27.57 1.36.05.1.08.2.02.33-.06.12-.1.2-.2.3-.1.1-.2.2-.22.28-.3.1-.1.2-.2.08-.38.12.2.52.85 1.12 1.38.77.68 1.42.9 1.62 1 .2.1.32.08.44-.05.12-.12.5-.58.63-.78.13-.2.26-.17.44-.1.18.07 1.13.53 1.32.63.2.1.33.15.38.23.05.1.05.5-.1.92z"/>
       </svg>
       <span>{t("funnel.hero.cta")}</span>
     </CtaButton>

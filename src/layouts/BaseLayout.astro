@@ -107,6 +107,7 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
     <script>
       import { shouldEnableMotion } from '@/lib/motion-guard';
       import { onInView, staggerDelay } from '@/lib/viewport';
+      import { createMatrixStream } from '@/lib/matrix-stream';
 
       // Home Motion One lifecycle (home-visual-polish): staggered [data-reveal]
       // reveals and the one-time CTA pulse. Dynamic import('motion/mini')
@@ -118,6 +119,7 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
       function initHomeMotion() {
         var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
         if (!shouldEnableMotion(reduce.matches)) return; // CSS shows static states
+        window.__typewriterDone = false; // fresh page state (window survives VT)
 
         import('motion/mini').then(function (m) {
           var stops = [];
@@ -139,8 +141,41 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
             anims.push(m.animate(pulseEl, { scale: [1, 1.04, 1] }, { duration: 1, delay: 0.4 }));
           }
 
+          initHeroFadeIn(m, anims);
           window.__homeMotion = { stops: stops, anims: anims };
         });
+      }
+
+      // Home hero fade-in chain: badge → p → CTAs, staggered ~150ms, only
+      // after the h1 typewriter dispatches 'typewriter:done'. Elements are
+      // hidden via Motion (JS-driven) so reduced-motion and no-JS keep them
+      // visible immediately.
+      function initHeroFadeIn(m, anims) {
+        var els = document.querySelectorAll('[data-fade-after-type]');
+        if (!els.length) return;
+        if (window.__typewriterDone) return; // typing already finished → keep visible
+        if (window.__heroFadeHandler) {
+          document.removeEventListener('typewriter:done', window.__heroFadeHandler);
+        }
+        m.animate(els, { opacity: 0, y: 8 }, { duration: 0 });
+        window.__heroFadeHandler = function () {
+          document.removeEventListener('typewriter:done', window.__heroFadeHandler);
+          window.__heroFadeHandler = null;
+          els.forEach(function (el, i) {
+            anims.push(m.animate(el, { opacity: 1, y: 0 }, { delay: 0.15 * i, duration: 0.45 }));
+          });
+        };
+        document.addEventListener('typewriter:done', window.__heroFadeHandler);
+      }
+
+      // Lateral matrix stream behind the hero headline. Decorative only;
+      // reduced-motion draws a single static faint grid (no RAF loop).
+      function initHeroMatrix() {
+        var canvas = document.getElementById('hero-matrix');
+        if (!canvas || !(canvas instanceof HTMLCanvasElement)) return;
+        var stream = createMatrixStream(canvas, {});
+        stream.start();
+        window.__heroMatrix = stream;
       }
 
       function disposeHomeMotion() {
@@ -149,10 +184,19 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
           window.__homeMotion.anims.forEach(function (a) { a.stop(); });
           window.__homeMotion = null;
         }
+        if (window.__heroMatrix) {
+          window.__heroMatrix.stop();
+          window.__heroMatrix = null;
+        }
+        if (window.__heroFadeHandler) {
+          document.removeEventListener('typewriter:done', window.__heroFadeHandler);
+          window.__heroFadeHandler = null;
+        }
       }
 
       document.addEventListener('astro:page-load', function () {
         initHomeMotion();
+        initHeroMatrix();
       });
 
       document.addEventListener('astro:before-swap', function () {
@@ -163,6 +207,8 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
       function initTypewriter() {
         var els = document.querySelectorAll('[data-typewriter]');
         if (!els.length) return;
+        // Reduced motion: headline stays fully visible, no typing.
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         els.forEach(function(el) {
           var text = el.textContent || '';
           el.textContent = '';
@@ -175,6 +221,10 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
               setTimeout(type, 30 + Math.random() * 40);
             } else {
               el.classList.remove('typewriter');
+              // home-hero-redesign: signal completion so the hero fade-in
+              // chain can start. No behavior change for existing pages.
+              window.__typewriterDone = true;
+              el.dispatchEvent(new CustomEvent('typewriter:done', { detail: { el: el } }));
             }
           }
           type();

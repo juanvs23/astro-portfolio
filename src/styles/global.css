@@ -103,7 +103,7 @@
 .typewriter {
   display: inline;
   overflow: hidden;
-  border-right: 2px solid var(--color-ink);
+  border-right: 2px solid currentColor;
   animation: typewriter-cursor 0.8s step-end infinite;
   word-break: break-word;
 }
@@ -137,6 +137,17 @@
     animation: none;
     border-right-color: transparent;
   }
+}
+
+/* Hero lateral matrix stream (home-hero-redesign): decorative canvas depth
+   layer. Low opacity + radial mask keep it behind the headline; the mask
+   fades the grid toward the edges so it does not compete with the copy. */
+.hero-matrix {
+  width: 100%;
+  height: 100%;
+  opacity: 0.35;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 30%, transparent 75%);
 }
 
 /* Plan CTA fill-from-left hover — see docs/context.md for usage rules */

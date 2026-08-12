@@ -55,6 +55,7 @@ export default {
       },
       fontSize: {
         'heading-md': ['16px', { lineHeight: '1.5', fontWeight: '700', letterSpacing: '0' }],
+        'display-xl': ['38px', { lineHeight: '1.5', fontWeight: '700', letterSpacing: '0' }],
       },
       spacing: {
         xxs: '1px',
