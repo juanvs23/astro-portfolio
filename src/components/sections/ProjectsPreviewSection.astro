@@ -1,11 +1,11 @@
 ---
-import { Image } from 'astro:assets';
-import { getTranslations, type Locale } from '@/i18n';
-import { getPreviewImageSpec } from '@/lib/preview-images';
-import hisomo from '../../assets/img/hisomo.jpg';
-import Section from '../ui/Section.astro';
-import AsciiMarker from '../ui/AsciiMarker.astro';
-import CtaButton from '../ui/CtaButton.astro';
+import { getTranslations, type Locale } from "@/i18n";
+import gericht from "../../assets/img/gericht.jpg";
+import stepstogether from "../../assets/img/stepstogether.jpg";
+import institutomia from "../../assets/img/institutomia.jpg";
+import Section from "../ui/Section.astro";
+import AsciiMarker from "../ui/AsciiMarker.astro";
+import ProjectItem from "../ui/ProjectItem.astro";
 
 interface Props {
   locale: Locale;
@@ -13,42 +13,138 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
-const spec = getPreviewImageSpec('projects');
-const alt = String(t(spec.altKey));
+
+// Tab entries — same projects as the full /projects page (ProjectsSection.astro),
+// with real names, URLs, and es/en descriptions. The active tab's card renders
+// the real ProjectItem component with its hover image-scroll animation.
+const tabs = [
+  {
+    id: "gericht",
+    name: "Gericht",
+    url: "https://restaurant.coltmandev.dev/",
+    img: gericht,
+    desc: "Landing page de restaurante con menú, galería y reservas. Diseño responsivo.",
+    enDesc: "Restaurant landing page with menu, gallery, and reservations. Responsive design.",
+  },
+  {
+    id: "stepstogether",
+    name: "Steps Together",
+    url: "https://stepstogether.co.uk/",
+    img: stepstogether,
+    desc: "Clínica privada de rehabilitación de adicciones en Reino Unido. Desintoxicación médica y tratamiento residencial.",
+    enDesc: "Private addiction rehabilitation clinic in the UK. Medical detox and residential treatment.",
+  },
+  {
+    id: "institutomia",
+    name: "Instituto MIA",
+    url: "https://institutomia.es/",
+    img: institutomia,
+    desc: "Centro de rehabilitación para mujeres en España. Tratamiento de adicciones, drogas y salud mental.",
+    enDesc: "Rehabilitation center for women in Spain. Addiction, drug, and mental health treatment.",
+  },
+];
 ---
 
 <Section id="projects-preview">
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-xl items-center" data-reveal>
-    <!-- Imagen (izquierda desktop, arriba mobile) -->
-    <div class="order-1 bg-surface-soft border border-hairline rounded-sm aspect-video overflow-hidden" data-reveal-item>
-      <Image
-        src={hisomo}
-        alt={alt}
-        width={spec.width}
-        densities={spec.densities}
-        formats={spec.formats}
-        loading="lazy"
-        class="w-full h-full object-cover rounded-sm"
-      />
-    </div>
-
-    <!-- Texto (derecha desktop, abajo mobile) -->
-    <div class="order-2" data-reveal-item>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-xl items-start" data-reveal>
+    <!-- Texto (izquierda en desktop) -->
+    <div class="order-2 md:order-1" data-reveal-item>
       <h2 class="text-xl md:text-3xl font-bold text-ink mb-sm">
         <AsciiMarker state="add" class="mr-xs inline" />
-        {t('funnel.projects.heading')}
+        {t("funnel.projects.heading")}
       </h2>
       <div class="border-b border-hairline mb-md"></div>
-      <p class="text-body-md text-body mb-xl">{t('funnel.projects.description')}</p>
+      <p class="text-body-md text-body mb-xl">{t("funnel.projects.description")}</p>
 
-      <CtaButton
-        href={`/${locale}/projects`}
-        variant="dark"
-        class="inline-flex items-center justify-center gap-2 px-lg py-sm"
-      >
-        {t('funnel.projects.linkout')}
-        <span aria-hidden="true">&rarr;</span>
-      </CtaButton>
+      <div class="space-y-sm" role="tablist" aria-label={t("funnel.projects.heading")}>
+        {tabs.map((tab, index) => (
+          <button
+            type="button"
+            role="tab"
+            id={`projects-tab-${tab.id}`}
+            aria-controls="projects-tabpanel"
+            aria-selected={index === 0 ? "true" : "false"}
+            class:list={[
+              "projects-tab w-full text-left border border-hairline rounded-sm px-md py-sm cursor-pointer transition-colors duration-150",
+              index === 0 ? "bg-ink text-on-dark border-ink" : "bg-canvas text-ink hover:border-ink",
+            ]}
+            data-projects-tab={tab.id}
+          >
+            <span class="block text-body-strong font-bold">{tab.name}</span>
+            <span
+              class:list={[
+                "block text-caption-md mt-[2px]",
+                index === 0 ? "text-on-dark-mute" : "text-mute",
+              ]}
+            >
+              {locale === "en" ? tab.enDesc.split(". ")[0] + "." : tab.desc.split(". ")[0] + "."}
+            </span>
+          </button>
+        ))}
+
+        <a
+          href={`/${locale}/projects`}
+          class="projects-tab-more flex items-center justify-between w-full text-left border border-hairline rounded-sm px-md py-sm no-underline text-ink hover:border-ink transition-colors duration-150"
+        >
+          <span class="text-body-strong font-bold">{t("funnel.projects.linkout")}</span>
+          <span aria-hidden="true" class="transition-transform duration-150 group-hover:translate-x-[2px]">&rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Tab view: real ProjectItem card (derecha en desktop, abajo en mobile) -->
+    <div class="order-1 md:order-2" data-reveal-item>
+      <div id="projects-tabpanel" role="tabpanel" aria-labelledby="projects-tab-gericht" class="projects-tabview">
+        {tabs.map((project, index) => (
+          <div class:list={["projects-tabpane", index === 0 ? "" : "hidden"]} data-projects-pane={project.id}>
+            <ProjectItem textButton={t("projects.button")} project={{ ...project, desc: locale === "en" ? project.enDesc : project.desc }} />
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </Section>
+
+<script>
+  // Interactive tabs for the Projects preview (home-projects-tabs): clicking a
+  // tab activates its pane (the real ProjectItem card) and updates aria-selected.
+  // All three cards render and toggle visibility so the hover image-scroll
+  // transition on ProjectItem keeps working. Progressive enhancement: without
+  // JS the first (gericht) pane stays visible.
+  function initProjectsTabs() {
+    const tabs = document.querySelectorAll("[data-projects-tab]");
+    const panes = document.querySelectorAll("[data-projects-pane]");
+    const panel = document.getElementById("projects-tabpanel");
+    if (!tabs.length || !panes.length) return;
+
+    function select(id) {
+      tabs.forEach((tab) => {
+        const active = tab.dataset.projectsTab === id;
+        tab.setAttribute("aria-selected", active ? "true" : "false");
+        tab.classList.toggle("bg-ink", active);
+        tab.classList.toggle("text-on-dark", active);
+        tab.classList.toggle("border-ink", active);
+        tab.classList.toggle("bg-canvas", !active);
+        tab.classList.toggle("text-ink", !active);
+        tab.classList.toggle("hover:border-ink", !active);
+        tab.querySelectorAll("span").forEach((s) => {
+          s.classList.toggle("text-on-dark-mute", active && s.classList.contains("text-mute"));
+          s.classList.toggle("text-mute", !active && s.classList.contains("text-mute"));
+        });
+      });
+      panes.forEach((pane) => {
+        pane.classList.toggle("hidden", pane.dataset.projectsPane !== id);
+      });
+      if (panel) {
+        const activeTab = document.querySelector(`[data-projects-tab="${id}"]`);
+        if (activeTab) panel.setAttribute("aria-labelledby", activeTab.id);
+      }
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => select(tab.dataset.projectsTab));
+    });
+  }
+
+  document.addEventListener("astro:page-load", initProjectsTabs);
+</script>

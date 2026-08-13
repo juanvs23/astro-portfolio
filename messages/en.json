@@ -248,8 +248,7 @@
     "projects": {
       "heading": "Projects that deliver results",
       "description": "Platforms, dashboards, chatbots and automations shipped to production.",
-      "linkout": "View projects",
-      "imageAlt": "Real-estate platform with data dashboard"
+      "linkout": "View projects"
     },
     "audit": {
       "heading": "Free audit",
@@ -261,10 +260,26 @@
         "title": "~/audit",
         "command": "npx audit --site yourweb.com",
         "rows": [
-          { "label": "lighthouse ✓", "value": "82", "bar": "82" },
-          { "label": "seo ✓", "value": "92", "bar": "92" },
-          { "label": "speed !", "value": "58 → 78", "bar": "78" },
-          { "label": "conversion !", "value": "41% leak on hero", "bar": "41" }
+          {
+            "label": "lighthouse ✓",
+            "value": "82",
+            "bar": "82"
+          },
+          {
+            "label": "seo ✓",
+            "value": "92",
+            "bar": "92"
+          },
+          {
+            "label": "speed !",
+            "value": "58 → 78",
+            "bar": "78"
+          },
+          {
+            "label": "conversion !",
+            "value": "41% leak on hero",
+            "bar": "41"
+          }
         ],
         "recommendation": "→ recommendation: 3 fixes · +22% estimated"
       }

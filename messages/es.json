@@ -248,8 +248,7 @@
     "projects": {
       "heading": "Proyectos que generan resultados",
       "description": "Plataformas, dashboards, chatbots y automatizaciones entregadas en producción.",
-      "linkout": "Ver proyectos",
-      "imageAlt": "Plataforma inmobiliaria con panel de datos"
+      "linkout": "Ver proyectos"
     },
     "audit": {
       "heading": "Auditoría gratuita",
@@ -261,10 +260,26 @@
         "title": "~/audit",
         "command": "npx audit --site tucweb.com",
         "rows": [
-          { "label": "lighthouse ✓", "value": "82", "bar": "82" },
-          { "label": "seo ✓", "value": "92", "bar": "92" },
-          { "label": "velocidad !", "value": "58 → 78", "bar": "78" },
-          { "label": "conversión !", "value": "41% fuga en hero", "bar": "41" }
+          {
+            "label": "lighthouse ✓",
+            "value": "82",
+            "bar": "82"
+          },
+          {
+            "label": "seo ✓",
+            "value": "92",
+            "bar": "92"
+          },
+          {
+            "label": "velocidad !",
+            "value": "58 → 78",
+            "bar": "78"
+          },
+          {
+            "label": "conversión !",
+            "value": "41% fuga en hero",
+            "bar": "41"
+          }
         ],
         "recommendation": "→ recomendación: 3 fixes · +22% estimado"
       }
