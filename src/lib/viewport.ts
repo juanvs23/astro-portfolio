@@ -59,3 +59,76 @@ export function onInView(
     },
   };
 }
+
+/**
+ * Fires `callback` once when `element` is visible at the given ratio AND the
+ * user has stopped scrolling (debounced ~140ms after the last scroll event).
+ *
+ * Unlike `onInView` (IntersectionObserver, fires the instant the element
+ * crosses the threshold while the user is mid-scroll), this delays the reveal
+ * until the scroll settles so the entrance animations never compete with an
+ * in-flight scroll — the approved home behavior for data-reveal/terminal
+ * animations. Falls back to the `scrollend` event when supported, otherwise a
+ * trailing debounce. Returns a watcher whose `stop()` removes listeners.
+ */
+export function onScrollEnd(
+  element: Element,
+  callback: () => void,
+  options: ViewportWatchOptions = {},
+): ViewportWatcher {
+  const amount = options.amount ?? 0.2;
+  let fired = false;
+  let timer: ReturnType<typeof setTimeout> | null = null;
+  let scrollEndHandler: (() => void) | null = null;
+
+  function isVisible(): boolean {
+    const rect = element.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    if (rect.height <= 0) return false;
+    const visible = Math.min(rect.bottom, vh) - Math.max(rect.top, 0);
+    return visible > 0 && visible / rect.height >= amount;
+  }
+
+  function fire() {
+    if (fired) return;
+    fired = true;
+    cleanup();
+    callback();
+  }
+
+  function checkAfterScroll() {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      if (isVisible()) fire();
+    }, 140);
+  }
+
+  function cleanup() {
+    window.removeEventListener('scroll', checkAfterScroll, { passive: true } as AddEventListenerOptions);
+    window.removeEventListener('resize', checkAfterScroll);
+    window.removeEventListener('scrollend', fire as EventListener);
+    if (timer) clearTimeout(timer);
+  }
+
+  if (typeof window === 'undefined') {
+    return { stop() {} };
+  }
+
+  // scrollend (supported in modern browsers) fires after the scroll finishes;
+  // the trailing debounce covers older engines. Both are removed after fire.
+  if ('onscrollend' in window) {
+    scrollEndHandler = () => {
+      if (isVisible()) fire();
+    };
+    window.addEventListener('scrollend', scrollEndHandler as EventListener);
+  }
+  window.addEventListener('scroll', checkAfterScroll, { passive: true } as AddEventListenerOptions);
+  window.addEventListener('resize', checkAfterScroll);
+
+  // Initial position: if already visible with no scroll in progress, reveal.
+  if (isVisible()) fire();
+
+  return {
+    stop: cleanup,
+  };
+}

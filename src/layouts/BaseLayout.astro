@@ -106,7 +106,7 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
     </script>
     <script>
       import { shouldEnableMotion } from '@/lib/motion-guard';
-      import { onInView, staggerDelay } from '@/lib/viewport';
+      import { onScrollEnd, staggerDelay } from '@/lib/viewport';
       import { createMatrixStream } from '@/lib/matrix-stream';
 
       // Home Motion One lifecycle (home-visual-polish): staggered [data-reveal]
@@ -128,7 +128,7 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
           revealGrids.forEach(function (grid) {
             var items = grid.querySelectorAll('[data-reveal-item]');
             if (!items.length) return;
-            var stop = onInView(grid, function () {
+            var stop = onScrollEnd(grid, function () {
               items.forEach(function (item, i) {
                 anims.push(m.animate(item, { opacity: 1, y: 0 }, { delay: staggerDelay(i), duration: 0.5 }));
               });
@@ -158,7 +158,7 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
           var lines = term.querySelectorAll('[data-terminal-line]');
           if (!lines.length) return;
           m.animate(lines, { opacity: 0 }, { duration: 0 });
-          var stop = onInView(term, function () {
+          var stop = onScrollEnd(term, function () {
             lines.forEach(function (line, i) {
               anims.push(m.animate(line, { opacity: 1 }, { delay: staggerDelay(i, 0.22, 0.05), duration: 0.3 }));
               // Audit progress bars (home-capture-audit): fill from 0 to the
