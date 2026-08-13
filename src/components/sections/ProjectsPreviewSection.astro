@@ -65,18 +65,13 @@ const tabs = [
             aria-controls="projects-tabpanel"
             aria-selected={index === 0 ? "true" : "false"}
             class:list={[
-              "projects-tab w-full text-left border border-hairline rounded-sm px-md py-sm cursor-pointer transition-colors duration-150",
-              index === 0 ? "bg-ink text-on-dark border-ink" : "bg-canvas text-ink hover:border-ink",
+              "projects-tab w-full text-left border rounded-sm px-md py-sm cursor-pointer transition-colors duration-150",
+              index === 0 ? "is-active" : "",
             ]}
             data-projects-tab={tab.id}
           >
-            <span class="block text-body-strong font-bold">{tab.name}</span>
-            <span
-              class:list={[
-                "block text-caption-md mt-[2px]",
-                index === 0 ? "text-on-dark-mute" : "text-mute",
-              ]}
-            >
+            <span class="block text-body-strong font-bold projects-tab-name">{tab.name}</span>
+            <span class="block text-caption-md mt-[2px] projects-tab-desc">
               {locale === "en" ? tab.enDesc.split(". ")[0] + "." : tab.desc.split(". ")[0] + "."}
             </span>
           </button>
@@ -84,10 +79,10 @@ const tabs = [
 
         <a
           href={`/${locale}/projects`}
-          class="projects-tab-more flex items-center justify-between w-full text-left border border-hairline rounded-sm px-md py-sm no-underline text-ink hover:border-ink transition-colors duration-150"
+          class="projects-tab-more flex items-center justify-between w-full text-left border border-hairline rounded-sm px-md py-sm no-underline transition-colors duration-150"
         >
           <span class="text-body-strong font-bold">{t("funnel.projects.linkout")}</span>
-          <span aria-hidden="true" class="transition-transform duration-150 group-hover:translate-x-[2px]">&rarr;</span>
+          <span aria-hidden="true" class="projects-tab-arrow transition-transform duration-150">&rarr;</span>
         </a>
       </div>
     </div>
@@ -121,16 +116,7 @@ const tabs = [
       tabs.forEach((tab) => {
         const active = tab.dataset.projectsTab === id;
         tab.setAttribute("aria-selected", active ? "true" : "false");
-        tab.classList.toggle("bg-ink", active);
-        tab.classList.toggle("text-on-dark", active);
-        tab.classList.toggle("border-ink", active);
-        tab.classList.toggle("bg-canvas", !active);
-        tab.classList.toggle("text-ink", !active);
-        tab.classList.toggle("hover:border-ink", !active);
-        tab.querySelectorAll("span").forEach((s) => {
-          s.classList.toggle("text-on-dark-mute", active && s.classList.contains("text-mute"));
-          s.classList.toggle("text-mute", !active && s.classList.contains("text-mute"));
-        });
+        tab.classList.toggle("is-active", active);
       });
       panes.forEach((pane) => {
         pane.classList.toggle("hidden", pane.dataset.projectsPane !== id);
@@ -148,3 +134,54 @@ const tabs = [
 
   document.addEventListener("astro:page-load", initProjectsTabs);
 </script>
+
+<style>
+  /* Projects preview tabs (home-projects-tabs): the inactive tab reads as a
+     quiet row (body-gray text on canvas, hairline border) so the hover state —
+     ink text, soft surface, ink border — is clearly distinguishable from the
+     resting state. The active tab inverts to the dark surface, matching the
+     site's terminal/ink language. */
+  .projects-tab {
+    background-color: var(--color-canvas);
+    color: var(--color-body);
+    border-color: var(--color-hairline);
+  }
+
+  .projects-tab .projects-tab-desc {
+    color: var(--color-mute);
+  }
+
+  .projects-tab:hover {
+    background-color: var(--color-surface-soft);
+    color: var(--color-ink);
+    border-color: var(--color-ink);
+  }
+
+  .projects-tab:hover .projects-tab-desc {
+    color: var(--color-body);
+  }
+
+  .projects-tab.is-active {
+    background-color: var(--color-ink);
+    color: var(--color-on-dark);
+    border-color: var(--color-ink);
+  }
+
+  .projects-tab.is-active .projects-tab-desc {
+    color: var(--color-on-dark-mute);
+  }
+
+  .projects-tab-more {
+    color: var(--color-ink);
+    border-color: var(--color-hairline);
+  }
+
+  .projects-tab-more:hover {
+    background-color: var(--color-surface-soft);
+    border-color: var(--color-ink);
+  }
+
+  .projects-tab-more:hover .projects-tab-arrow {
+    transform: translateX(4px);
+  }
+</style>
