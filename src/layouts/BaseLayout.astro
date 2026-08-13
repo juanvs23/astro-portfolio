@@ -161,6 +161,16 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
           var stop = onInView(term, function () {
             lines.forEach(function (line, i) {
               anims.push(m.animate(line, { opacity: 1 }, { delay: staggerDelay(i, 0.22, 0.05), duration: 0.3 }));
+              // Audit progress bars (home-capture-audit): fill from 0 to the
+              // target width declared in data-bar-fill when the row appears.
+              // Animate transform: scaleX (motion/mini handles transforms
+              // reliably) with transform-origin left; the CSS variable --bar-w
+              // holds the target for reduced-motion and no-JS.
+              line.querySelectorAll('[data-bar-fill]').forEach(function (bar) {
+                var target = bar.getAttribute('data-bar-fill');
+                if (target == null) return;
+                anims.push(m.animate(bar, { transform: 'scaleX(' + target / 100 + ')' }, { delay: staggerDelay(i, 0.22, 0.05) + 0.1, duration: 0.7, easing: 'ease-out' }));
+              });
             });
           }, { amount: 0.3 });
           stops.push(stop);

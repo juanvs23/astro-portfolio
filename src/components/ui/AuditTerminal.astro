@@ -72,7 +72,8 @@ const recommendation = String(terminal.recommendation);
           >
             <div
               class={`audit-row-bar-fill h-full rounded-full ${row.label.includes('!') ? 'bg-warning' : 'bg-success'}`}
-              style={`width: ${row.bar}%`}
+              data-bar-fill={row.bar}
+              style={`--bar-w: ${row.bar}%`}
             ></div>
           </div>
         </div>

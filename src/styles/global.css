@@ -207,6 +207,25 @@
   }
 }
 
+/* Audit terminal progress bars (home-capture-audit). Each bar starts at
+   scaleX(0) (origin left) and fills to its target width when its row is
+   revealed by Motion One animating transform: scaleX(target/100); reduced
+   motion renders the bar at the full target width immediately so the metric
+   value always matches the bar. */
+.audit-row-bar-fill {
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audit-row-bar-fill {
+    transform: none;
+    width: var(--bar-w, 0%);
+  }
+}
+
 /* Hero lateral matrix stream (home-hero-redesign): decorative canvas depth
    layer. Low opacity + radial mask keep it behind the headline; the mask
    fades the grid toward the edges so it does not compete with the copy. */
