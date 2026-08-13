@@ -41,3 +41,5 @@ La home es una landing AIDA de 12 secciones orientada a conversión (auditoría 
 **Pendiente (varado, no implementado):** sección de Blog / Guías evergreen para tráfico orgánico (SEO topo del embudo). Recomendación anotada: guías cortas evergreen ("Cómo mejorar conversión de tu landing", "Automatiza WhatsApp con n8n") en vez de blog personal; alimentar CTA de auditoría al final de cada guía. **NO implementar hasta definir la estrategia completa** (i18n es/en duplica costo; requiere constancia de publicación).
 
 **Pendiente:** reencuadrar H1s y copy de /experience, /projects, /about, /contact para alinearlos al embudo (hoy hablan de "trayectoria/portafolio").
+
+**Pendiente (SEO):** realizar una revisión SEO completa del sitio y mejorarlo — metas/títulos por página, schema.org (LocalBusiness/Person/Service), sitemap, Open Graph, rendimiento Core Web Vitals, contenido orientado a intención de búsqueda de servicios de conversión/IA.
