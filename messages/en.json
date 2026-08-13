@@ -256,7 +256,18 @@
       "description": "Get an analysis of your website and processes to uncover conversion and automation opportunities. No cost and no commitment.",
       "cta": "Free audit",
       "subject": "Free audit",
-      "message": "I would like a free audit for my business."
+      "message": "I would like a free audit for my business.",
+      "terminal": {
+        "title": "~/audit",
+        "command": "npx audit --site yourweb.com",
+        "rows": [
+          { "label": "lighthouse ✓", "value": "82", "bar": "82" },
+          { "label": "seo ✓", "value": "92", "bar": "92" },
+          { "label": "speed !", "value": "58 → 78", "bar": "78" },
+          { "label": "conversion !", "value": "41% leak on hero", "bar": "41" }
+        ],
+        "recommendation": "→ recommendation: 3 fixes · +22% estimated"
+      }
     },
     "capture": {
       "imageAlt": "Conversion-focused corporate website"

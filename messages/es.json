@@ -256,7 +256,18 @@
       "description": "Reciba un análisis de su sitio y sus procesos para detectar oportunidades de conversión y automatización. Sin costo y sin compromiso.",
       "cta": "Auditoría gratuita",
       "subject": "Auditoría gratuita",
-      "message": "Quiero una auditoría gratuita para mi negocio."
+      "message": "Quiero una auditoría gratuita para mi negocio.",
+      "terminal": {
+        "title": "~/audit",
+        "command": "npx audit --site tucweb.com",
+        "rows": [
+          { "label": "lighthouse ✓", "value": "82", "bar": "82" },
+          { "label": "seo ✓", "value": "92", "bar": "92" },
+          { "label": "velocidad !", "value": "58 → 78", "bar": "78" },
+          { "label": "conversión !", "value": "41% fuga en hero", "bar": "41" }
+        ],
+        "recommendation": "→ recomendación: 3 fixes · +22% estimado"
+      }
     },
     "capture": {
       "imageAlt": "Sitio web corporativo orientado a conversión"

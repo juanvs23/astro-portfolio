@@ -168,6 +168,138 @@ describe('preview terminal line sets differ between locales', () => {
   });
 });
 
+// ---------------------------------------------------------------------------
+// home-visual-polish (task 3.13 — audit terminal): the Capture preview section
+// renders an audit terminal with a command line, metric rows (label, value,
+// progress bar width) and a recommendation line, all driven by
+// funnel.audit.terminal.* (es + en).
+// ---------------------------------------------------------------------------
+
+interface AuditRow {
+  label: string;
+  value: string;
+  bar: string;
+}
+
+interface AuditTerminalContract {
+  title: string;
+  command: string;
+  rows: AuditRow[];
+  recommendation: string;
+}
+
+const AUDIT_TERMINAL_KEYS = ['funnel.audit.terminal'];
+
+for (const key of AUDIT_TERMINAL_KEYS) {
+  it(`audit terminal ${key} has a non-empty title that is not the key literal (es)`, async () => {
+    const t = await getTranslations('es');
+    const terminal = t(key) as AuditTerminalContract;
+    expect(typeof terminal).toBe('object');
+    expect(terminal.title.length).toBeGreaterThan(0);
+    expect(terminal.title).not.toBe(key);
+    expect(terminal.title).not.toBe('img');
+  });
+
+  it(`audit terminal ${key} has a non-empty title that is not the key literal (en)`, async () => {
+    const t = await getTranslations('en');
+    const terminal = t(key) as AuditTerminalContract;
+    expect(typeof terminal).toBe('object');
+    expect(terminal.title.length).toBeGreaterThan(0);
+    expect(terminal.title).not.toBe(key);
+  });
+
+  it(`audit terminal ${key} has a non-empty command that is not the key literal (es)`, async () => {
+    const t = await getTranslations('es');
+    const terminal = t(key) as AuditTerminalContract;
+    expect(terminal.command.length).toBeGreaterThan(0);
+    expect(terminal.command).not.toBe(key);
+    expect(terminal.command).toContain('npx audit');
+  });
+
+  it(`audit terminal ${key} has a non-empty command that is not the key literal (en)`, async () => {
+    const t = await getTranslations('en');
+    const terminal = t(key) as AuditTerminalContract;
+    expect(terminal.command.length).toBeGreaterThan(0);
+    expect(terminal.command).not.toBe(key);
+    expect(terminal.command).toContain('npx audit');
+  });
+
+  it(`audit terminal ${key} exposes at least 3 metric rows with label/value/bar (es)`, async () => {
+    const t = await getTranslations('es');
+    const terminal = t(key) as AuditTerminalContract;
+    expect(Array.isArray(terminal.rows)).toBe(true);
+    expect(terminal.rows.length).toBeGreaterThanOrEqual(3);
+    for (const row of terminal.rows) {
+      expect(typeof row.label).toBe('string');
+      expect(row.label.length).toBeGreaterThan(0);
+      expect(row.label).not.toBe(key);
+      expect(typeof row.value).toBe('string');
+      expect(row.value.length).toBeGreaterThan(0);
+      expect(typeof row.bar).toBe('string');
+      expect(row.bar.length).toBeGreaterThan(0);
+      expect(Number(row.bar)).toBeGreaterThan(0);
+      expect(Number(row.bar)).toBeLessThanOrEqual(100);
+    }
+  });
+
+  it(`audit terminal ${key} exposes at least 3 metric rows with label/value/bar (en)`, async () => {
+    const t = await getTranslations('en');
+    const terminal = t(key) as AuditTerminalContract;
+    expect(Array.isArray(terminal.rows)).toBe(true);
+    expect(terminal.rows.length).toBeGreaterThanOrEqual(3);
+    for (const row of terminal.rows) {
+      expect(typeof row.label).toBe('string');
+      expect(row.label.length).toBeGreaterThan(0);
+      expect(row.label).not.toBe(key);
+      expect(typeof row.value).toBe('string');
+      expect(row.value.length).toBeGreaterThan(0);
+      expect(typeof row.bar).toBe('string');
+      expect(row.bar.length).toBeGreaterThan(0);
+      expect(Number(row.bar)).toBeGreaterThan(0);
+      expect(Number(row.bar)).toBeLessThanOrEqual(100);
+    }
+  });
+
+  it(`audit terminal ${key} has a non-empty recommendation that is not the key literal (es)`, async () => {
+    const t = await getTranslations('es');
+    const terminal = t(key) as AuditTerminalContract;
+    expect(terminal.recommendation.length).toBeGreaterThan(0);
+    expect(terminal.recommendation).not.toBe(key);
+  });
+
+  it(`audit terminal ${key} has a non-empty recommendation that is not the key literal (en)`, async () => {
+    const t = await getTranslations('en');
+    const terminal = t(key) as AuditTerminalContract;
+    expect(terminal.recommendation.length).toBeGreaterThan(0);
+    expect(terminal.recommendation).not.toBe(key);
+  });
+}
+
+describe('audit terminal content differs between locales', () => {
+  it('audit command and recommendation are translated (es ≠ en)', async () => {
+    const tEs = await getTranslations('es');
+    const tEn = await getTranslations('en');
+    for (const key of AUDIT_TERMINAL_KEYS) {
+      const es = tEs(key) as AuditTerminalContract;
+      const en = tEn(key) as AuditTerminalContract;
+      expect(es.command).not.toBe(en.command);
+      expect(es.recommendation).not.toBe(en.recommendation);
+    }
+  });
+
+  it('audit metric rows differ between locales (es ≠ en)', async () => {
+    const tEs = await getTranslations('es');
+    const tEn = await getTranslations('en');
+    for (const key of AUDIT_TERMINAL_KEYS) {
+      const es = tEs(key) as AuditTerminalContract;
+      const en = tEn(key) as AuditTerminalContract;
+      const esRows = es.rows.map((r) => `${r.label}|${r.value}|${r.bar}`).join('||');
+      const enRows = en.rows.map((r) => `${r.label}|${r.value}|${r.bar}`).join('||');
+      expect(esRows).not.toBe(enRows);
+    }
+  });
+});
+
 describe('removed preview image alt keys', () => {
   it('funnel.about.imageAlt and funnel.skills.imageAlt no longer resolve in es or en', async () => {
     for (const locale of ['es', 'en'] as const) {
