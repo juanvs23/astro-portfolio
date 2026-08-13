@@ -7,27 +7,26 @@ import {
 import { getTranslations } from '../i18n';
 
 // ---------------------------------------------------------------------------
-// home-visual-polish (task 1.9 — image contract shrink): the About and Skills
-// preview sections were replaced by terminal windows, so the image pipeline
-// now covers exactly two sections (Projects, Capture). Each spec drives an
-// Astro <Image />: descriptive alt (i18n key resolving in es+en, differing
+// home-visual-polish (task 1.9 — image contract shrink): the About, Skills,
+// and Capture preview sections were replaced by terminal windows, so the
+// image pipeline now covers exactly one section (Projects). Each spec drives
+// an Astro <Image />: descriptive alt (i18n key resolving in es+en, differing
 // between locales), explicit positive width, a 2-density source set, WebP.
 // ---------------------------------------------------------------------------
 
-const EXPECTED_SECTIONS: PreviewSectionId[] = ['projects', 'capture'];
+const EXPECTED_SECTIONS: PreviewSectionId[] = ['projects'];
 
 describe('PREVIEW_IMAGE_SPECS', () => {
-  it('exposes exactly 2 specs with unique, expected section ids (no about/skills)', () => {
-    expect(PREVIEW_IMAGE_SPECS).toHaveLength(2);
+  it('exposes exactly 1 spec with the expected section id (projects only)', () => {
+    expect(PREVIEW_IMAGE_SPECS).toHaveLength(1);
     const ids = PREVIEW_IMAGE_SPECS.map((spec) => spec.section);
-    expect(new Set(ids).size).toBe(2);
+    expect(new Set(ids).size).toBe(1);
     expect(ids.sort()).toEqual([...EXPECTED_SECTIONS].sort());
   });
 
-  it('every spec declares a positive width (560 for both remaining sections)', () => {
+  it('every spec declares a positive width (560 for the remaining projects section)', () => {
     const bySection = new Map(PREVIEW_IMAGE_SPECS.map((s) => [s.section, s.width]));
     expect(bySection.get('projects')).toBe(560);
-    expect(bySection.get('capture')).toBe(560);
     for (const spec of PREVIEW_IMAGE_SPECS) {
       expect(spec.width).toBeGreaterThan(0);
     }
@@ -69,10 +68,11 @@ describe('PREVIEW_IMAGE_SPECS', () => {
     }
   });
 
-  it('does not duplicate alt copy across the two remaining sections (es)', async () => {
+  it('does not resolve to the key literal for the remaining section (es)', async () => {
     const tEs = await getTranslations('es');
-    const alts = PREVIEW_IMAGE_SPECS.map((spec) => tEs(spec.altKey) as string);
-    expect(new Set(alts).size).toBe(2);
+    for (const spec of PREVIEW_IMAGE_SPECS) {
+      expect(tEs(spec.altKey)).not.toBe(spec.altKey);
+    }
   });
 });
 
@@ -85,8 +85,8 @@ describe('getPreviewImageSpec', () => {
     }
   });
 
-  it('throws a descriptive error for removed section ids (about, skills) and unknowns', () => {
-    for (const id of ['about', 'skills', 'bogus']) {
+  it('throws a descriptive error for removed section ids (about, skills, capture) and unknowns', () => {
+    for (const id of ['about', 'skills', 'capture', 'bogus']) {
       expect(() => getPreviewImageSpec(id as PreviewSectionId)).toThrowError(
         new RegExp(`Unknown preview image section: ${id}`),
       );

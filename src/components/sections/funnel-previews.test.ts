@@ -65,17 +65,15 @@ for (const key of PREVIEW_STRING_KEYS) {
 }
 
 // ---------------------------------------------------------------------------
-// home-visual-polish (task 1.9 + phase 3 — terminals): the About and Skills
-// preview sections render terminal windows, so their imageAlt keys are gone.
-// The two remaining preview images (Projects, Capture) keep their alt keys,
-// and the terminal windows get a bilingual title + lines contract
-// (funnel.about.terminal / funnel.skills.terminal).
+// home-visual-polish (task 1.9 + phase 3 — terminals): the About, Skills, and
+// Capture preview sections render terminal windows, so their imageAlt keys are
+// gone. The single remaining preview image (Projects) keeps its alt key, and
+// the terminals get a bilingual title + lines contract (funnel.about.terminal
+// / funnel.skills.terminal) plus the audit terminal contract
+// (funnel.audit.terminal).
 // ---------------------------------------------------------------------------
 
-const PREVIEW_IMAGE_ALT_KEYS = [
-  'funnel.projects.imageAlt',
-  'funnel.capture.imageAlt',
-];
+const PREVIEW_IMAGE_ALT_KEYS = ['funnel.projects.imageAlt'];
 
 for (const key of PREVIEW_IMAGE_ALT_KEYS) {
   it(`preview image alt key ${key} resolves non-empty, not the key literal (es)`, async () => {
@@ -96,7 +94,7 @@ for (const key of PREVIEW_IMAGE_ALT_KEYS) {
 }
 
 describe('preview image alt keys differ between locales', () => {
-  it('the two remaining funnel.*.imageAlt values are translated (es ≠ en)', async () => {
+  it('the remaining funnel.projects.imageAlt value is translated (es ≠ en)', async () => {
     const tEs = await getTranslations('es');
     const tEn = await getTranslations('en');
     for (const key of PREVIEW_IMAGE_ALT_KEYS) {
@@ -301,11 +299,12 @@ describe('audit terminal content differs between locales', () => {
 });
 
 describe('removed preview image alt keys', () => {
-  it('funnel.about.imageAlt and funnel.skills.imageAlt no longer resolve in es or en', async () => {
+  it('funnel.about.imageAlt, funnel.skills.imageAlt and funnel.capture.imageAlt no longer resolve in es or en', async () => {
     for (const locale of ['es', 'en'] as const) {
       const t = await getTranslations(locale);
       expect(t('funnel.about.imageAlt')).toBe('funnel.about.imageAlt');
       expect(t('funnel.skills.imageAlt')).toBe('funnel.skills.imageAlt');
+      expect(t('funnel.capture.imageAlt')).toBe('funnel.capture.imageAlt');
     }
   });
 });
