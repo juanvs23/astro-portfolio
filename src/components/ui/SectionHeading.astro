@@ -1,0 +1,42 @@
+---
+import AsciiMarker from './AsciiMarker.astro';
+
+interface Props {
+  /** 'section' = large funnel section heading (h2, home style); 'category' = smaller in-page subheading (h3) */
+  variant?: 'section' | 'category';
+  /** Overrides the rendered heading tag independently of the visual variant.
+   *  Default: 'h2' for section, 'h3' for category. Use as="h2" on category
+   *  headings that are the FIRST heading level under a page h1 (e.g. /services,
+   *  /skills) to avoid skipping levels (WCAG 1.3.1). */
+  as?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  /** ASCII marker state rendered before the text: 'add' [+], 'done' [x], 'remove' [-], or undefined for none */
+  marker?: 'add' | 'done' | 'remove';
+  /** Adds the animated underline (category variant, mirrors SkillsSection/ServicesSection) */
+  underline?: boolean;
+  class?: string;
+  id?: string;
+}
+
+const {
+  variant = 'section',
+  as,
+  marker,
+  underline = false,
+  class: extraClass = '',
+  id,
+} = Astro.props;
+
+const Tag = as ?? (variant === 'section' ? 'h2' : 'h3');
+
+const sizeClasses =
+  Tag === 'h2'
+    ? 'text-h2 lg:text-h2-lg font-bold text-ink mb-sm'
+    : Tag === 'h3'
+      ? 'text-h3 lg:text-h3-lg font-bold text-ink mb-md'
+      : 'text-h4 lg:text-h4-lg font-bold text-ink mb-md';
+---
+
+<Tag id={id} data-underline={underline ? true : undefined} class={`${sizeClasses} ${extraClass}`}>
+  {marker ? <AsciiMarker state={marker} class="mr-xs inline" /> : null}
+  <slot />
+</Tag>

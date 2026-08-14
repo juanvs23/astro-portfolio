@@ -6,7 +6,18 @@
     "title": "ABOUT ME",
     "description": "Hi! I'm Juan Carlos Ávila. For 8+ years I built web platforms — from WooCommerce stores to React real-estate dashboards. But in the last 2 years I found my real focus: <strong>automating business processes with AI</strong>.<br/><br/>Today I help SMEs combine traditional web development with AI agents, smart chatbots, and RAG systems to cut operational costs. Imagine a restaurant where the chatbot not only takes orders but sends them straight to the kitchen. Or a logistics company where documents classify themselves. That's what I do.<br/><br/>I work with WordPress, React, Python, and AI models (OpenAI, local, RAG) to build solutions that actually deliver. My approach: <strong>clean code, measurable results, zero magic</strong>.",
     "skills": "Skills",
-    "skillsLink": "View all my skills"
+    "skillsLink": "View all my skills",
+    "experienceTitle": "Recent results",
+    "experienceLink": "View my full experience",
+    "skillsTitle": "Stack & capability",
+    "highlightSkills": [
+      "React",
+      "Next.js",
+      "WordPress",
+      "WooCommerce",
+      "Node.js",
+      "Python"
+    ]
   },
   "jobs": {
     "title": "Work Experience"
@@ -77,7 +88,7 @@
   },
   "menu": {
     "home": "Home",
-    "about": "About",
+    "about": "About me",
     "works": "Experience",
     "skills": "Skills",
     "projects": "Projects",

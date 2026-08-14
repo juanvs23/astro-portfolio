@@ -54,6 +54,21 @@ export default {
         ],
       },
       fontSize: {
+        // Unified type scale. Base = mobile (also tablet for h2/h3/h4),
+        // -md = tablet-only breakpoint, -lg = desktop.
+        // h1: 30 / 35 (tablet) / 38 (desktop)
+        'h1': ['30px', { lineHeight: '1.5', fontWeight: '700', letterSpacing: '0' }],
+        'h1-md': ['35px', { lineHeight: '1.5', fontWeight: '700', letterSpacing: '0' }],
+        'h1-lg': ['38px', { lineHeight: '1.5', fontWeight: '700', letterSpacing: '0' }],
+        // h2: 25 / 30 (desktop)
+        'h2': ['25px', { lineHeight: '1.5', fontWeight: '700', letterSpacing: '0' }],
+        'h2-lg': ['30px', { lineHeight: '1.5', fontWeight: '700', letterSpacing: '0' }],
+        // h3: 20 / 24 (desktop)
+        'h3': ['20px', { lineHeight: '1.5', fontWeight: '700', letterSpacing: '0' }],
+        'h3-lg': ['24px', { lineHeight: '1.5', fontWeight: '700', letterSpacing: '0' }],
+        // h4: 16 / 18 (desktop)
+        'h4': ['16px', { lineHeight: '1.5', fontWeight: '700', letterSpacing: '0' }],
+        'h4-lg': ['18px', { lineHeight: '1.5', fontWeight: '700', letterSpacing: '0' }],
         'heading-md': ['16px', { lineHeight: '1.5', fontWeight: '700', letterSpacing: '0' }],
         'display-xl': ['38px', { lineHeight: '1.5', fontWeight: '700', letterSpacing: '0' }],
       },

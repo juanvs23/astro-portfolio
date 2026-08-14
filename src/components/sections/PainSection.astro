@@ -1,7 +1,7 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
-import AsciiMarker from '../ui/AsciiMarker.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
 
 interface Props {
   locale: Locale;
@@ -15,20 +15,14 @@ const t = await getTranslations(locale);
   <div class="grid grid-cols-1 md:grid-cols-2 gap-xl" data-aos="fade-up">
     <!-- Card 1: Pain (left) -->
     <div class="bg-surface-soft border border-hairline rounded-sm p-lg" data-aos="fade-up" data-aos-delay="50">
-      <h2 class="text-xl md:text-3xl font-bold text-ink mb-sm">
-        <AsciiMarker state="remove" class="mr-xs inline" />
-        {t('funnel.pain.heading')}
-      </h2>
+      <SectionHeading marker="remove">{t('funnel.pain.heading')}</SectionHeading>
       <div class="border-b border-hairline mb-md"></div>
       <p class="text-body-md text-body">{t('funnel.pain.description')}</p>
     </div>
 
     <!-- Card 2: Promise (right) -->
     <div class="bg-surface-soft border border-hairline rounded-sm p-lg" data-aos="fade-up" data-aos-delay="150">
-      <h2 class="text-xl md:text-3xl font-bold text-ink mb-sm">
-        <AsciiMarker state="add" class="mr-xs inline" />
-        {t('funnel.promise.heading')}
-      </h2>
+      <SectionHeading marker="add">{t('funnel.promise.heading')}</SectionHeading>
       <div class="border-b border-hairline mb-md"></div>
       <p class="text-body-md text-body">{t('funnel.promise.description')}</p>
     </div>

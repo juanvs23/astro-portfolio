@@ -1,8 +1,8 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
 import Badge from '../ui/Badge.astro';
-import AsciiMarker from '../ui/AsciiMarker.astro';
 
 interface Props {
   locale: Locale;
@@ -15,7 +15,7 @@ const skillCategories = t('skills.categories') as { title: string; skills: { nam
 ---
 
 <Section id="skills">
-  <h1 data-typewriter data-aos="fade-down" class="text-[30px] md:text-[35px] lg:text-[38px] font-bold mb-sm">
+  <h1 data-typewriter data-aos="fade-down" class="text-h1 md:text-h1-md lg:text-h1-lg font-bold mb-sm">
     {t('seo.h1.skills')}
   </h1>
 
@@ -24,10 +24,7 @@ const skillCategories = t('skills.categories') as { title: string; skills: { nam
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-xl" data-aos="fade-up" data-aos-delay="150">
     {skillCategories.map((category) => (
       <div class="bg-canvas">
-        <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
-          <AsciiMarker state="add" class="mr-xs inline" />
-          {category.title}
-        </h2>
+        <SectionHeading variant="category" as="h2" marker="add" underline>{category.title}</SectionHeading>
 
         <ul class="space-y-xs">
           {category.skills.map((skill) => (

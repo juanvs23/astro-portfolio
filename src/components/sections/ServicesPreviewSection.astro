@@ -1,6 +1,7 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
 import CtaButton from '../ui/CtaButton.astro';
 
@@ -20,10 +21,7 @@ const services = t('services.express') as ExpressService[];
 
 <Section id="services-preview">
   <div data-aos="fade-up">
-    <h2 class="text-xl md:text-3xl font-bold text-ink mb-sm">
-      <AsciiMarker state="add" class="mr-xs inline" />
-      {t('funnel.services.heading')}
-    </h2>
+    <SectionHeading marker="add">{t('funnel.services.heading')}</SectionHeading>
     <div class="border-b border-hairline mb-md" data-aos="fade-up" data-aos-delay="100"></div>
     <p class="text-body-md text-body mb-xl">{t('funnel.services.description')}</p>
   </div>
@@ -31,7 +29,7 @@ const services = t('services.express') as ExpressService[];
   <ul class="grid grid-cols-1 sm:grid-cols-2 gap-md mb-xl" data-aos="fade-up" data-aos-delay="150">
     {services.map((service) => (
       <li class="bg-surface-soft border border-hairline rounded-sm p-md">
-        <h3 class="text-body-md font-bold text-ink mb-xs">
+        <h3 class="text-h3 lg:text-h3-lg font-bold text-ink mb-xs">
           <AsciiMarker state="done" class="mr-xs text-ink" />
           {service.name}
         </h3>

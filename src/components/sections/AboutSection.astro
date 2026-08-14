@@ -1,9 +1,12 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
 import CtaButton from '../ui/CtaButton.astro';
 import { Image } from 'astro:assets';
 import aboutMeImg from '@/assets/img/aboutme.jpg';
+import { getJobs } from '@/constants/jobs';
+import { formatDate } from '@/utils/format-date';
 
 interface Props {
   locale: Locale;
@@ -13,6 +16,20 @@ const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
 const skillsLink = t('about.skillsLink');
+
+const jobs = getJobs(t);
+const months = t('common.months') as string[];
+
+const highlightSkillNames = t('about.highlightSkills') as string[];
+const skillCategories = t('skills.categories') as { title: string; skills: { name: string; description: string }[] }[];
+const highlightSkills: { name: string; description: string }[] = [];
+for (const category of skillCategories) {
+  for (const skill of category.skills) {
+    if (highlightSkillNames.includes(skill.name)) {
+      highlightSkills.push({ name: skill.name, description: skill.description });
+    }
+  }
+}
 ---
 
 <Section id="about">
@@ -30,29 +47,114 @@ const skillsLink = t('about.skillsLink');
     </div>
 
     <div>
-      <h1 data-typewriter data-aos="fade-down" class="text-[30px] md:text-[35px] lg:text-[38px] font-bold mb-sm">
+      <h1 data-typewriter data-aos="fade-down" class="text-h1 md:text-h1-md lg:text-h1-lg font-bold mb-sm">
         {t('seo.h1.about')}
       </h1>
 
       <div class="border-b border-hairline mb-xl" data-aos="fade-up" data-aos-delay="100"></div>
 
       <div
-        class="text-body-md text-body leading-[1.5] mb-xl"
+        class="text-body-md text-body leading-[1.5]"
         data-aos="fade-up"
         data-aos-delay="150"
         set:html={t('about.description')}
       ></div>
-
-      <div data-aos="fade-up" data-aos-delay="250">
-        <CtaButton
-          href={`/${locale}/skills`}
-          variant="dark"
-          class="inline-flex items-center justify-center gap-2 px-lg py-sm"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          <span>{skillsLink}</span>
-        </CtaButton>
-      </div>
     </div>
   </div>
 </Section>
+
+<!-- Recent results — evidence block, full-width section separate from the
+     about intro grid. Links to the full /experience page (SEO internal link). -->
+<Section id="experience-preview" data-aos="fade-up" data-aos-delay="100">
+  <SectionHeading marker="add" class="mb-xl">{t('about.experienceTitle')}</SectionHeading>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+    {jobs.slice(0, 6).map((job) => (
+      <div class="bg-surface-soft border border-hairline rounded-sm p-md">
+        <h3 class="text-h3 lg:text-h3-lg font-bold text-ink">{job.title}</h3>
+        <p class="text-caption-md text-mute mt-xs">{job.company}</p>
+        <span class="text-caption-sm text-ash block mt-xs">
+          {formatDate(job.start, months)} — {job.end !== 'null' && job.end ? formatDate(job.end, months) : t('common.present')}
+        </span>
+        <p class="text-caption-md text-body mt-sm truncate max-w-[60ch]">
+          {job.description}
+        </p>
+      </div>
+    ))}
+  </div>
+
+  <div class="mt-xl flex justify-center">
+    <CtaButton
+      href={`/${locale}/experience`}
+      variant="dark"
+      class="inline-flex items-center justify-center gap-2 px-lg py-sm"
+    >
+      {t('about.experienceLink')}
+      <span aria-hidden="true">&rarr;</span>
+    </CtaButton>
+  </div>
+</Section>
+
+<!-- Stack & capability — evidence block, full-width section. Links to the
+     full /skills page (SEO internal link). Accordion items expand the skill
+     description on click, mirroring SkillsSection. -->
+<Section id="skills-preview" data-aos="fade-up" data-aos-delay="100">
+  <SectionHeading marker="add" class="mb-xl">{t('about.skillsTitle')}</SectionHeading>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-md">
+    {highlightSkills.map((skill) => (
+      <div class="skill-item text-body-md text-body py-xs border-b border-hairline cursor-pointer select-none" data-skill={skill.name}>
+        <span class="skill-marker text-ink font-bold mr-xs">[+]</span>
+        <span class="skill-name">{skill.name}</span>
+        <div class="skill-content text-caption-md text-mute mt-xs pl-[1.5em]">{skill.description}</div>
+      </div>
+    ))}
+  </div>
+
+  <div class="mt-xl flex justify-center">
+    <CtaButton
+      href={`/${locale}/skills`}
+      variant="dark"
+      class="inline-flex items-center justify-center gap-2 px-lg py-sm"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      <span>{skillsLink}</span>
+    </CtaButton>
+  </div>
+</Section>
+
+<script>
+  document.querySelectorAll('.skill-item').forEach(function (item) {
+    item.addEventListener('click', function () {
+      var marker = this.querySelector('.skill-marker');
+      var content = this.querySelector('.skill-content');
+
+      if (content.classList.contains('open')) {
+        content.classList.remove('open');
+        marker.textContent = '[+]';
+      } else {
+        content.classList.add('open');
+        marker.textContent = '[-]';
+      }
+    });
+  });
+</script>
+
+<style>
+  .skill-content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: max-height 300ms ease, opacity 300ms ease, margin 300ms ease, padding 300ms ease;
+  }
+  .skill-content.open {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 0.25rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+</style>

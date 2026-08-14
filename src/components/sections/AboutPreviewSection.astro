@@ -1,7 +1,7 @@
 ---
 import { getTranslations, type Locale } from "@/i18n";
 import Section from "../ui/Section.astro";
-import AsciiMarker from "../ui/AsciiMarker.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
 import CtaButton from "../ui/CtaButton.astro";
 import TerminalWindow from "../ui/TerminalWindow.astro";
 
@@ -33,10 +33,7 @@ const terminalLines = t("funnel.about.terminal.lines") as string[];
 
     <!-- Texto -->
     <div class="order-2" data-reveal-item>
-      <h2 class="text-xl md:text-3xl font-bold text-ink mb-sm">
-        <AsciiMarker state="add" class="mr-xs inline" />
-        {t("funnel.about.heading")}
-      </h2>
+      <SectionHeading marker="add">{t("funnel.about.heading")}</SectionHeading>
       <div class="border-b border-hairline mb-md"></div>
       <p class="text-body-md text-body mb-xl">
         {t("funnel.about.description")}

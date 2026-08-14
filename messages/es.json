@@ -6,7 +6,18 @@
     "title": "CONÓCEME",
     "description": "¡Hola! Soy Juan Carlos Ávila. Durante 8+ años construí plataformas web — desde tiendas WooCommerce hasta dashboards inmobiliarios con React. Pero en los últimos 2 años encontré mi verdadero foco: <strong>automatizar procesos empresariales con IA</strong>.<br/><br/>Hoy ayudo a PyMEs a combinar desarrollo web tradicional con agentes de IA, chatbots inteligentes y sistemas RAG para reducir costos operativos. Imaginate un restaurante donde el chatbot no solo recibe pedidos, sino que los envía directo a la cocina. O una empresa de logística donde los documentos se clasifican solos. Eso hago.<br/><br/>Trabajo con WordPress, React, Python y modelos de IA (OpenAI, locales, RAG) para crear soluciones que realmente funcionan. Mi enfoque: <strong>código limpio, resultados medibles, cero magic</strong>.",
     "skills": "Habilidades",
-    "skillsLink": "Ver todas mis habilidades"
+    "skillsLink": "Ver todas mis habilidades",
+    "experienceTitle": "Resultados recientes",
+    "experienceLink": "Ver toda mi experiencia",
+    "skillsTitle": "Stack y capacidad",
+    "highlightSkills": [
+      "React",
+      "Next.js",
+      "WordPress",
+      "WooCommerce",
+      "Node.js",
+      "Python"
+    ]
   },
   "jobs": {
     "title": "Experiencia"
@@ -77,7 +88,7 @@
   },
   "menu": {
     "home": "Inicio",
-    "about": "Acerca de mí",
+    "about": "Sobre mí",
     "skills": "Habilidades",
     "works": "Experiencia",
     "projects": "Proyectos",

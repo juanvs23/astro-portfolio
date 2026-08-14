@@ -4,7 +4,7 @@ import gericht from "../../assets/img/gericht.jpg";
 import stepstogether from "../../assets/img/stepstogether.jpg";
 import institutomia from "../../assets/img/institutomia.jpg";
 import Section from "../ui/Section.astro";
-import AsciiMarker from "../ui/AsciiMarker.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
 import ProjectItem from "../ui/ProjectItem.astro";
 
 interface Props {
@@ -49,10 +49,7 @@ const tabs = [
   <div class="grid grid-cols-1 md:grid-cols-2 gap-xl items-start" data-reveal>
     <!-- Texto (izquierda en desktop) -->
     <div class="order-2 md:order-1" data-reveal-item>
-      <h2 class="text-xl md:text-3xl font-bold text-ink mb-sm">
-        <AsciiMarker state="add" class="mr-xs inline" />
-        {t("funnel.projects.heading")}
-      </h2>
+      <SectionHeading marker="add">{t("funnel.projects.heading")}</SectionHeading>
       <div class="border-b border-hairline mb-md"></div>
       <p class="text-body-md text-body mb-xl">{t("funnel.projects.description")}</p>
 

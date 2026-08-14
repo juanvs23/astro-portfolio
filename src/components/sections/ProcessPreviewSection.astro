@@ -1,7 +1,7 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
-import AsciiMarker from '../ui/AsciiMarker.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
 
 interface ProcessStep {
   step: number;
@@ -20,10 +20,7 @@ const steps = t('services.process') as ProcessStep[];
 
 <Section id="process">
   <div data-aos="fade-up">
-    <h2 class="text-xl md:text-3xl font-bold text-ink mb-sm">
-      <AsciiMarker state="add" class="mr-xs inline" />
-      {t('funnel.process.heading')}
-    </h2>
+    <SectionHeading marker="add">{t('funnel.process.heading')}</SectionHeading>
     <div class="border-b border-hairline mb-md" data-aos="fade-up" data-aos-delay="100"></div>
     <p class="text-body-md text-body mb-xl">{t('funnel.process.intro')}</p>
   </div>
@@ -34,7 +31,7 @@ const steps = t('services.process') as ProcessStep[];
         <div class="text-[36px] font-bold text-accent mb-sm" aria-hidden="true">
           {String(step.step).padStart(2, '0')}
         </div>
-        <h3 class="text-heading-md font-bold text-ink mb-xs">{step.title}</h3>
+        <h3 class="text-h3 lg:text-h3-lg font-bold text-ink mb-xs">{step.title}</h3>
         <p class="text-caption-md text-mute">{step.description}</p>
       </div>
     ))}

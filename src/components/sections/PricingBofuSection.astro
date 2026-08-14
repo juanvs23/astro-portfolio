@@ -1,6 +1,7 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
 import CtaButton from '../ui/CtaButton.astro';
 import { buildWhatsAppLink } from '../../lib/funnel-lead';
@@ -39,10 +40,7 @@ const planLink = (plan: WebPlan): string =>
   <div class="max-w-[1200px]">
     <div class="max-w-[760px]">
       <div data-aos="fade-up">
-        <h2 class="text-xl md:text-3xl font-bold text-ink mb-sm">
-          <AsciiMarker state="add" class="mr-xs inline" />
-          {t('funnel.pricing.heading')}
-        </h2>
+        <SectionHeading marker="add">{t('funnel.pricing.heading')}</SectionHeading>
         <div class="border-b border-hairline mb-md" data-aos="fade-up" data-aos-delay="100"></div>
         <p class="text-body-md text-body mb-xl">{t('funnel.pricing.description')}</p>
       </div>
@@ -60,7 +58,7 @@ const planLink = (plan: WebPlan): string =>
             plan.recommended ? 'border-ink ring-2 ring-ink' : 'border-hairline'
           }`}
         >
-          <h3 class="text-heading-md font-bold text-ink mb-sm">{plan.name}</h3>
+          <h3 class="text-h3 lg:text-h3-lg font-bold text-ink mb-sm">{plan.name}</h3>
           <div class="text-heading-md font-bold text-ink mb-sm">
             desde <span class="text-accent">${plan.startingPrice}</span> USD
           </div>

@@ -1,6 +1,7 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
 import CtaButton from '../ui/CtaButton.astro';
 
@@ -78,7 +79,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
 
 <Section id="services">
   <!-- Page heading -->
-  <h1 data-typewriter data-aos="fade-down" class="text-[30px] md:text-[35px] lg:text-[38px] font-bold mb-sm">
+  <h1 data-typewriter data-aos="fade-down" class="text-h1 md:text-h1-md lg:text-h1-lg font-bold mb-sm">
     {t('seo.h1.services')}
   </h1>
 
@@ -88,10 +89,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
   <!-- ZONE 1: Desarrollo Web Plans -->
   <!-- ============================================================ -->
   <section data-aos="fade-up" data-aos-delay="100">
-    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
-      <AsciiMarker state="add" class="mr-xs inline" />
-      Desarrollo Web
-    </h2>
+    <SectionHeading variant="category" as="h2" marker="add" underline>Desarrollo Web</SectionHeading>
     <p class="text-body-md text-body mb-md">Planes claros, resultados concretos</p>
 
     <!-- AI translation note (EN only) -->
@@ -117,7 +115,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
             </span>
           ) : null}
 
-          <h3 class="text-heading-md font-bold text-ink mb-sm">{plan.name}</h3>
+          <h3 class="text-h3 lg:text-h3-lg font-bold text-ink mb-sm">{plan.name}</h3>
 
           <div class="text-heading-md font-bold text-ink mt-sm">
             desde <span class="text-accent plan-price" data-base={plan.startingPrice}>${plan.startingPrice}</span> USD
@@ -182,15 +180,12 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
   <!-- ZONE 2: IA Quote Calculator -->
   <!-- ============================================================ -->
   <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
-    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
-      <AsciiMarker state="add" class="mr-xs inline" />
-      {ia.heading}
-    </h2>
+    <SectionHeading variant="category" as="h2" marker="add" underline>{ia.heading}</SectionHeading>
     <p class="text-body-md text-body mb-xl">{ia.description}</p>
 
     <div id="ia-calculator" class="bg-surface-card border border-hairline rounded-sm p-lg md:p-xl">
       <!-- Calculator heading -->
-      <h3 class="text-heading-md font-bold text-ink mb-sm">{calcHeading}</h3>
+      <h3 class="text-h3 lg:text-h3-lg font-bold text-ink mb-sm">{calcHeading}</h3>
       <p class="text-body-md text-body mb-lg">{calcSubheading}</p>
 
       <!-- Step indicator -->
@@ -217,7 +212,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
 
       <!-- Step 2: Urgency selection (hidden initially) -->
       <div id="calc-step-urgency" class="calc-step hidden">
-        <h4 class="text-body-md font-bold text-ink mb-md">{calcStepUrgency}</h4>
+        <h4 class="text-h4 lg:text-h4-lg font-bold text-ink mb-md">{calcStepUrgency}</h4>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-md">
           {calcUrgencyOptions.map((opt) => (
             <button
@@ -283,10 +278,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
   <!-- ZONE 2.5: Custom Work -->
   <!-- ============================================================ -->
   <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
-    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
-      <AsciiMarker state="add" class="mr-xs inline" />
-      {customWork.heading}
-    </h2>
+    <SectionHeading variant="category" as="h2" marker="add" underline>{customWork.heading}</SectionHeading>
     <div class="bg-surface-soft border border-hairline rounded-sm p-lg md:p-xl">
       <p class="text-body-md text-body mb-lg max-w-2xl">{customWork.description}</p>
       <CtaButton
@@ -305,15 +297,12 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
   <!-- ZONE 3: Express Services -->
   <!-- ============================================================ -->
   <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
-    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
-      <AsciiMarker state="add" class="mr-xs inline" />
-      Servicios Express
-    </h2>
+    <SectionHeading variant="category" as="h2" marker="add" underline>Servicios Express</SectionHeading>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-lg">
       {express.map((svc) => (
         <div class="bg-surface-soft border border-hairline rounded-sm p-md flex flex-col">
-          <h3 class="text-body-md font-bold text-ink mb-xs">
+          <h3 class="text-h3 lg:text-h3-lg font-bold text-ink mb-xs">
             <AsciiMarker state="done" class="mr-xs text-ink" />
             {svc.name}
           </h3>
@@ -336,10 +325,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
   <!-- ZONE 4: Process Steps -->
   <!-- ============================================================ -->
   <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
-    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
-      <AsciiMarker state="add" class="mr-xs inline" />
-      C&oacute;mo Trabajo
-    </h2>
+    <SectionHeading variant="category" as="h2" marker="add" underline>C&oacute;mo Trabajo</SectionHeading>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
       {processSteps.map((step) => (
@@ -347,7 +333,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
           <div class="text-[36px] font-bold text-accent mb-sm" aria-hidden="true">
             {String(step.step).padStart(2, '0')}
           </div>
-          <h3 class="text-heading-md font-bold text-ink mb-xs">{step.title}</h3>
+          <h3 class="text-h3 lg:text-h3-lg font-bold text-ink mb-xs">{step.title}</h3>
           <p class="text-caption-md text-mute">{step.description}</p>
         </div>
       ))}

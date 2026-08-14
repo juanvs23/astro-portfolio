@@ -1,7 +1,7 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
-import AsciiMarker from '../ui/AsciiMarker.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
 import LeadForm from './LeadForm.astro';
 import AuditTerminal from '../ui/AuditTerminal.astro';
 
@@ -17,10 +17,7 @@ const t = await getTranslations(locale);
   <div class="grid grid-cols-1 md:grid-cols-2 gap-xl items-start" data-reveal>
     <!-- Texto + form (izquierda desktop, abajo mobile) -->
     <div class="order-2 md:order-1" data-reveal-item>
-      <h2 class="text-xl md:text-3xl font-bold text-ink mb-sm">
-        <AsciiMarker state="add" class="mr-xs inline" />
-        {t('funnel.audit.heading')}
-      </h2>
+      <SectionHeading marker="add">{t('funnel.audit.heading')}</SectionHeading>
       <div class="border-b border-hairline mb-md"></div>
       <p class="text-body-md text-body mb-xl">{t('funnel.audit.description')}</p>
 
