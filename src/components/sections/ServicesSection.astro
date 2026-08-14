@@ -240,15 +240,16 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
           <div id="calc-result-range" class="text-[24px] font-bold text-accent mb-md">---</div>
           <p id="calc-result-disclaimer" class="text-caption-md text-mute mb-lg">{calcResultDisclaimer}</p>
           <div class="flex flex-col sm:flex-row gap-md justify-center">
-            <a
+            <CtaButton
               id="calc-whatsapp-btn"
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola Juan! Me interesa un proyecto de IA.')}`}
+              variant="dark"
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-block py-sm px-lg bg-surface-dark text-on-dark rounded-sm font-bold"
+              class="inline-flex items-center justify-center py-sm px-lg font-bold"
             >
               {calcCtaWhatsapp}
-            </a>
+            </CtaButton>
             <button
               type="button"
               id="calc-recalculate-btn"
@@ -264,14 +265,15 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
       <noscript>
         <div class="text-center py-lg">
           <p class="text-body-md text-body mb-md">Hablanos por WhatsApp y te armamos un presupuesto personalizado sin compromiso.</p>
-          <a
+          <CtaButton
             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola Juan! Me interesa cotizar un proyecto de IA.')}`}
+            variant="dark"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-block py-sm px-lg bg-surface-dark text-on-dark rounded-sm font-bold"
+            class="inline-flex items-center justify-center py-sm px-lg font-bold"
           >
             {calcCtaWhatsapp}
-          </a>
+          </CtaButton>
         </div>
       </noscript>
     </div>

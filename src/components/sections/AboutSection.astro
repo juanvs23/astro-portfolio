@@ -1,6 +1,7 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
+import CtaButton from '../ui/CtaButton.astro';
 import { Image } from 'astro:assets';
 import aboutMeImg from '@/assets/img/aboutme.jpg';
 
@@ -43,13 +44,14 @@ const skillsLink = t('about.skillsLink');
       ></div>
 
       <div data-aos="fade-up" data-aos-delay="250">
-        <a
+        <CtaButton
           href={`/${locale}/skills`}
-          class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-surface-dark/80 border border-on-dark-mute/30 text-on-dark text-sm font-medium hover:scale-110 hover:bg-surface-dark transition-all duration-200"
+          variant="dark"
+          class="inline-flex items-center justify-center gap-2 px-lg py-sm"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           <span>{skillsLink}</span>
-        </a>
+        </CtaButton>
       </div>
     </div>
   </div>
