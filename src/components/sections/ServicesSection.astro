@@ -181,7 +181,18 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
   <!-- ============================================================ -->
   <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
     <SectionHeading variant="category" as="h2" marker="add" underline>{ia.heading}</SectionHeading>
-    <p class="text-body-md text-body mb-xl">{ia.description}</p>
+    <p class="text-body-md text-body mb-lg">{ia.description}</p>
+
+    <div class="mb-xl">
+      <CtaButton
+        href={`/${locale}/automation`}
+        variant="dark"
+        class="inline-flex items-center justify-center gap-2 px-lg py-sm"
+      >
+        {t('services.ia.demoLink')}
+        <span aria-hidden="true">&rarr;</span>
+      </CtaButton>
+    </div>
 
     <div id="ia-calculator" class="bg-surface-card border border-hairline rounded-sm p-lg md:p-xl">
       <!-- Calculator heading -->

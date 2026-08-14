@@ -170,7 +170,8 @@
       "experience": "Experiencia – Juan Carlos Avila | Web Dev & AI Automation",
       "projects": "Proyectos – Juan Carlos Avila | Desarrollo Web y Automatización",
       "contact": "Contacto – Juan Carlos Avila | Web Dev + AI Automation",
-      "services": "Servicios – Juan Carlos Avila | Desarrollo Web y Automatización IA"
+      "services": "Servicios – Juan Carlos Avila | Desarrollo Web y Automatización IA",
+      "automation": "Automatización IA – Chatbots y Agentes"
     },
     "descriptions": {
       "about": "Conoce a Juan Carlos Avila: Desarrollador Web con 8+ años de experiencia y especialización en automatización con IA. WordPress, React, Python y agentes inteligentes.",
@@ -178,7 +179,8 @@
       "experience": "Trayectoria de Juan Carlos Avila: 8+ años desarrollando plataformas web e integrando soluciones de IA que reducen costos operativos.",
       "projects": "Proyectos de Juan Carlos Avila: plataformas web, chatbots IA, asistentes RAG, dashboards y e-commerce.",
       "contact": "Contacta a Juan Carlos Avila para desarrollo web, automatizaciones con IA, chatbots inteligentes o consultoría técnica.",
-      "services": "Servicios de desarrollo web y automatización IA: landing pages, sitios WordPress, e-commerce, chatbots inteligentes y agentes autónomos."
+      "services": "Servicios de desarrollo web y automatización IA: landing pages, sitios WordPress, e-commerce, chatbots inteligentes y agentes autónomos.",
+      "automation": "Chatbots inteligentes, sistemas RAG y agentes autónomos para automatizar procesos de tu negocio. Demo interactiva sin costo."
     },
     "h1": {
       "about": "Sobre Mí – Desarrollo Web y Automatización con IA",
@@ -186,7 +188,8 @@
       "experience": "Trayectoria Profesional – Web Developer & AI Specialist",
       "projects": "Portafolio – Proyectos Web y Automatizaciones",
       "contact": "Contáctame – Hablemos de tu Proyecto",
-      "services": "Servicios – Desarrollo Web y Automatización Inteligente"
+      "services": "Servicios – Desarrollo Web y Automatización Inteligente",
+      "automation": "Automatización con IA que entrega resultados"
     }
   },
   "hero": {
@@ -213,7 +216,8 @@
     "services": {
       "heading": "Servicios orientados a resultados",
       "description": "Landing pages, sitios WordPress, e-commerce, chatbots y agentes autónomos. Todo integrado para capturar y calificar leads.",
-      "linkout": "Ver todos los servicios"
+      "linkout": "Ver todos los servicios",
+      "linkoutAutomation": "Ver automatización con IA"
     },
     "proof": {
       "heading": "Resultados verificables",
@@ -667,7 +671,8 @@
     },
     "ia": {
       "heading": "Automatización Inteligente",
-      "description": "¿Necesitás un chatbot, un agente autónomo o una automatización completa? Usá el cotizador interactivo para obtener un estimado sin compromiso."
+      "description": "¿Necesitás un chatbot, un agente autónomo o una automatización completa? Usá el cotizador interactivo para obtener un estimado sin compromiso.",
+      "demoLink": "Probar la demo interactiva"
     },
     "custom": {
       "heading": "Trabajos a Medida",
@@ -747,6 +752,74 @@
         "name": "Entrega Express",
         "price": 0,
         "description": "+50% del precio base — reducís el tiempo a la mitad"
+      }
+    ]
+  },
+  "automation": {
+    "introHeading": "Chatbots y agentes que trabajan por tu negocio",
+    "introDescription": "El centro de esta página es un demo interactivo de cómo se vería un chatbot en tu web. No está conectado a ningún modelo real: es una simulación. En un proyecto real, ese mismo asistente se entrena con tus datos y se conecta a tus procesos.",
+    "benefits": [
+      "Chatbots 24/7 que responden, califican y convierten sin intervención manual",
+      "Agentes que ejecutan tareas repetitivas y liberan horas de tu equipo",
+      "Sistemas RAG que responden con tu propia base de conocimiento",
+      "Integración con WhatsApp, web y tus herramientas existentes",
+      "Hasta 45% menos carga operativa y tickets de soporte",
+      "Resultados medibles: reportes claros de cada automatización"
+    ],
+    "chatTitle": "~/chatbot-demo",
+    "chatSubtitle": "Demo interactiva — respuestas predefinidas",
+    "chatWelcome": "Hola! Soy el asistente virtual de Juan. ¿Qué te gustaría automatizar?",
+    "chatTyping": "escribiendo",
+    "chatCta": "Hablar con Juan por WhatsApp",
+    "ctaText": "¿Listo para automatizar? Empecemos hoy",
+    "quickReplies": [
+      {
+        "label": "Automatizar un proceso",
+        "reply": "Perfecto. Un agente puede ahorrar horas de trabajo manual cada semana automatizando esa tarea repetitiva, sin intervención constante."
+      },
+      {
+        "label": "Chatbot para mi web",
+        "reply": "Buena elección. Un chatbot atento 24/7 captura leads y responde consultas mientras tu equipo trabaja o descansa."
+      },
+      {
+        "label": "Presupuesto",
+        "reply": "Claro. Incluimos una auditoría gratuita y te enviamos una propuesta sin compromiso en menos de 24 horas."
+      }
+    ],
+    "stats": [
+      {
+        "value": "10+ Agents IA",
+        "label": "Desplegados en producción"
+      },
+      {
+        "value": "5+ Automations",
+        "label": "Flujos activos para clientes"
+      },
+      {
+        "value": "45% Reducción de Costos",
+        "label": "En carga operativa"
+      },
+      {
+        "value": "8+ Años",
+        "label": "Construyendo plataformas web"
+      }
+    ],
+    "services": [
+      {
+        "title": "Chatbots Inteligentes",
+        "description": "Asistentes 24/7 que entienden consultas, procesan pedidos y escalan casos complejos a tu equipo."
+      },
+      {
+        "title": "Sistemas RAG",
+        "description": "Asistentes que responden con tu propia base de conocimiento: documentos, FAQs y manuales. Sin alucinaciones, con fuentes verificables."
+      },
+      {
+        "title": "Agentes Autónomos",
+        "description": "Automatización de flujos completos: clasificación de documentos, reportes, respuestas automáticas y procesamiento de datos."
+      },
+      {
+        "title": "Integración LLMs",
+        "description": "Conexión de modelos OpenAI, Claude y locales con tus plataformas web existentes."
       }
     ]
   },

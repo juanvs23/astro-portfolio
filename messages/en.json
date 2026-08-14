@@ -170,7 +170,8 @@
       "experience": "Experience – Juan Carlos Avila | Web Dev & AI Automation",
       "projects": "Projects – Juan Carlos Avila | Web Dev & AI Automation",
       "contact": "Contact – Juan Carlos Avila | Web Dev + AI Automation",
-      "services": "Services – Juan Carlos Avila | Web Development & AI Automation"
+      "services": "Services – Juan Carlos Avila | Web Development & AI Automation",
+      "automation": "AI Automation – Chatbots & Agents"
     },
     "descriptions": {
       "about": "Meet Juan Carlos Avila: Web Developer with 8+ years of experience specializing in AI automation. WordPress, React, Python, and intelligent agents.",
@@ -178,7 +179,8 @@
       "experience": "Juan Carlos Avila's career: 8+ years building web platforms and integrating AI solutions that reduce operational costs.",
       "projects": "Projects by Juan Carlos Avila: web platforms, AI chatbots, RAG assistants, dashboards, and e-commerce.",
       "contact": "Contact Juan Carlos Avila for web development, AI automation, smart chatbots, or technical consulting.",
-      "services": "Web development and AI automation services: landing pages, WordPress sites, e-commerce, smart chatbots, and autonomous agents."
+      "services": "Web development and AI automation services: landing pages, WordPress sites, e-commerce, smart chatbots, and autonomous agents.",
+      "automation": "Smart chatbots, RAG systems and autonomous agents to automate your business processes. Interactive demo, no cost."
     },
     "h1": {
       "about": "About Me – Web Development & AI Automation",
@@ -186,7 +188,8 @@
       "experience": "Professional Journey – Web Developer & AI Specialist",
       "projects": "Portfolio – Web Projects & Automations",
       "contact": "Get In Touch – Let's Talk About Your Project",
-      "services": "Services – Web Development & Intelligent Automation"
+      "services": "Services – Web Development & Intelligent Automation",
+      "automation": "AI Automation That Delivers Results"
     }
   },
   "hero": {
@@ -213,7 +216,8 @@
     "services": {
       "heading": "Services focused on results",
       "description": "Landing pages, WordPress sites, e-commerce, chatbots and autonomous agents. All integrated to capture and qualify leads.",
-      "linkout": "View all services"
+      "linkout": "View all services",
+      "linkoutAutomation": "See AI automation"
     },
     "proof": {
       "heading": "Verifiable results",
@@ -669,7 +673,8 @@
     "aiNote": "Note: this section was translated using AI-assisted tools. We're working on a fully human translation — thank you for your patience!",
     "ia": {
       "heading": "Intelligent Automation",
-      "description": "Need a chatbot, an autonomous agent, or full automation? Use the interactive calculator below to get a no-obligation estimate."
+      "description": "Need a chatbot, an autonomous agent, or full automation? Use the interactive calculator below to get a no-obligation estimate.",
+      "demoLink": "Try the interactive demo"
     },
     "custom": {
       "heading": "Custom Work",
@@ -749,6 +754,74 @@
         "name": "Express Delivery",
         "price": 0,
         "description": "+50% of base price — cuts delivery time in half"
+      }
+    ]
+  },
+  "automation": {
+    "introHeading": "Chatbots and agents that work for your business",
+    "introDescription": "The centerpiece of this page is an interactive demo of what a chatbot on your website looks like. It's not connected to any real model — it's a simulation. In a real project, that same assistant is trained on your data and wired to your processes.",
+    "benefits": [
+      "24/7 chatbots that answer, qualify and convert without manual work",
+      "Agents that run repetitive tasks and free up your team's hours",
+      "RAG systems that answer using your own knowledge base",
+      "Integration with WhatsApp, web and your existing tools",
+      "Up to 45% less operational load and support tickets",
+      "Measurable results: clear reports for every automation"
+    ],
+    "chatTitle": "~/chatbot-demo",
+    "chatSubtitle": "Interactive demo — pre-scripted responses",
+    "chatWelcome": "Hi! I'm Juan's AI assistant. What would you like to automate?",
+    "chatTyping": "typing",
+    "chatCta": "Talk to Juan on WhatsApp",
+    "ctaText": "Ready to automate? Let's start today",
+    "quickReplies": [
+      {
+        "label": "Automate a process",
+        "reply": "Great choice. An agent can save hours of manual work every week by automating that repetitive task, with no constant supervision."
+      },
+      {
+        "label": "Website chatbot",
+        "reply": "Good pick. A 24/7 chatbot captures leads and answers questions while your team works or rests."
+      },
+      {
+        "label": "Pricing",
+        "reply": "Sure. We include a free audit and send you a no-obligation proposal within 24 hours."
+      }
+    ],
+    "stats": [
+      {
+        "value": "10+ AI Agents",
+        "label": "Deployed in production"
+      },
+      {
+        "value": "5+ Automations",
+        "label": "Active client workflows"
+      },
+      {
+        "value": "45% Cost Reduction",
+        "label": "In operational load"
+      },
+      {
+        "value": "8+ Years",
+        "label": "Building web platforms"
+      }
+    ],
+    "services": [
+      {
+        "title": "Smart Chatbots",
+        "description": "24/7 assistants that understand queries, process orders and escalate complex cases to your team."
+      },
+      {
+        "title": "RAG Systems",
+        "description": "Assistants that answer using your own knowledge base: documents, FAQs and manuals. No hallucinations, verifiable sources."
+      },
+      {
+        "title": "AI Agents",
+        "description": "Full workflow automation: document classification, reports, auto-responses and data processing."
+      },
+      {
+        "title": "LLM Integration",
+        "description": "Connecting OpenAI, Claude and local models to your existing web platforms."
       }
     ]
   },

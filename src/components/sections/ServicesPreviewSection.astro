@@ -38,13 +38,22 @@ const services = t('services.express') as ExpressService[];
     ))}
   </ul>
 
-  <div data-aos="fade-up" data-aos-delay="200">
+  <div class="flex flex-col sm:flex-row gap-md" data-aos="fade-up" data-aos-delay="200">
     <CtaButton
       href={`/${locale}/services`}
       variant="dark"
       class="inline-flex items-center justify-center gap-2 px-lg py-sm"
     >
       {t('funnel.services.linkout')}
+      <span aria-hidden="true">&rarr;</span>
+    </CtaButton>
+
+    <CtaButton
+      href={`/${locale}/automation`}
+      variant="light"
+      class="inline-flex items-center justify-center gap-2 px-lg py-sm"
+    >
+      {t('funnel.services.linkoutAutomation')}
       <span aria-hidden="true">&rarr;</span>
     </CtaButton>
   </div>

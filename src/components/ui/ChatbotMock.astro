@@ -1,0 +1,180 @@
+---
+import type { Locale } from '@/i18n';
+import CtaButton from './CtaButton.astro';
+
+interface QuickReply {
+  label: string;
+  reply: string;
+}
+
+interface Props {
+  locale: Locale;
+  /** Working directory shown in the title bar, e.g. `~/chatbot-demo`. */
+  title: string;
+  /** One-line caption rendered above the message area. */
+  subtitle: string;
+  quickReplies: QuickReply[];
+  /** Initial bot message shown on load. */
+  welcome: string;
+  /** Label shown while the mock "types" a reply, e.g. "typing". */
+  typingLabel: string;
+  ctaText: string;
+  ctaHref: string;
+}
+
+const {
+  locale,
+  title,
+  subtitle,
+  quickReplies,
+  welcome,
+  typingLabel,
+  ctaText,
+  ctaHref,
+} = Astro.props;
+---
+
+<!-- UI-only chatbot mock: pre-scripted conversation with NO model connection.
+     Every interaction is driven by client-side JS that maps each quick reply
+     chip to a hardcoded reply. The component never fetches, never talks to an
+     API and never sends user input anywhere — it is purely a visual demo. -->
+<div
+  class="chatbot-mock bg-surface-dark text-on-dark border border-hairline rounded-sm overflow-hidden"
+  data-chatbot-mock
+  lang={locale}
+  data-typing-label={typingLabel}
+>
+  <!-- Title bar (mirrors TerminalWindow, no macOS dots) -->
+  <div class="flex items-center gap-md px-lg py-sm border-b border-hairline bg-surface-dark-elevated">
+    <span class="text-body-sm text-on-dark-mute whitespace-nowrap overflow-hidden text-ellipsis">
+      ➜ juan@dev: {title}
+    </span>
+  </div>
+
+  <!-- Subtitle caption -->
+  <div class="px-lg pt-md pb-sm">
+    <p class="text-caption-sm text-on-dark-mute">{subtitle}</p>
+  </div>
+
+  <!-- Scrollable message area -->
+  <div
+    class="chatbot-mock-messages flex flex-col space-y-md font-mono text-body-sm overflow-y-auto px-lg py-md h-[380px]"
+    role="log"
+    aria-live="polite"
+    aria-label="Chatbot demo conversation"
+  >
+    <!-- Start state: welcome message -->
+    <div class="chatbot-mock-bubble chatbot-mock-bot self-start bg-surface-dark border border-hairline rounded-sm px-md py-sm max-w-[80%]">
+      {welcome}
+    </div>
+  </div>
+
+  <!-- Quick reply chips -->
+  <div class="chatbot-mock-chips flex flex-wrap gap-sm px-lg py-md">
+    {quickReplies.map((reply) => (
+      <button
+        type="button"
+        data-quick-reply
+        data-label={reply.label}
+        data-reply-text={reply.reply}
+        class="border border-hairline rounded-sm px-sm py-xs text-caption-md text-on-dark-mute hover:text-on-dark hover:border-ash cursor-pointer transition-colors"
+      >
+        {reply.label}
+      </button>
+    ))}
+  </div>
+
+  <!-- Final CTA row, revealed after the first bot reply.
+       Pattern: `hidden` wins over `flex` while present (Tailwind CSS order),
+       so the JS `classList.remove('hidden')` reveals a centered flex row. -->
+  <div class="chatbot-mock-cta hidden flex justify-center px-lg pb-[15px]">
+    <CtaButton
+      href={ctaHref}
+      variant="light"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center justify-center px-lg py-sm font-bold"
+    >
+      {ctaText}
+    </CtaButton>
+  </div>
+</div>
+
+<script data-astro-rerun>
+  (function () {
+    var root = document.querySelector('[data-chatbot-mock]');
+    if (!root) return;
+
+    var messagesEl = root.querySelector('.chatbot-mock-messages');
+    var chipsEl = root.querySelector('.chatbot-mock-chips');
+    var ctaEl = root.querySelector('.chatbot-mock-cta');
+    if (!messagesEl || !chipsEl || !ctaEl) return;
+
+    var chips = Array.prototype.slice.call(chipsEl.querySelectorAll('[data-quick-reply]'));
+    var typingLabel = root.getAttribute('data-typing-label') || '…';
+    var ctaShown = false;
+    var typing = false;
+
+    function scrollToBottom() {
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function appendMessage(text, isUser) {
+      var bubble = document.createElement('div');
+      bubble.className =
+        'chatbot-mock-bubble ' +
+        (isUser
+          ? 'chatbot-mock-user self-end ml-auto bg-surface-dark-elevated border border-hairline rounded-sm px-md py-sm max-w-[80%]'
+          : 'chatbot-mock-bot self-start bg-surface-dark border border-hairline rounded-sm px-md py-sm max-w-[80%]');
+      bubble.textContent = text;
+      messagesEl.appendChild(bubble);
+      scrollToBottom();
+      return bubble;
+    }
+
+    function showTyping() {
+      var bubble = document.createElement('div');
+      bubble.className =
+        'chatbot-mock-bubble chatbot-mock-bot self-start bg-surface-dark border border-hairline rounded-sm px-md py-sm max-w-[80%]';
+      bubble.textContent = typingLabel + ' ';
+      var cursor = document.createElement('span');
+      cursor.className = 'terminal-cursor';
+      cursor.setAttribute('aria-hidden', 'true');
+      bubble.appendChild(cursor);
+      messagesEl.appendChild(bubble);
+      scrollToBottom();
+      return bubble;
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        if (typing) return;
+        typing = true;
+        chips.forEach(function (c) {
+          c.disabled = true;
+        });
+
+        var label = chip.getAttribute('data-label') || '';
+        var reply = chip.getAttribute('data-reply-text') || '';
+
+        appendMessage(label, true);
+        var typingBubble = showTyping();
+
+        window.setTimeout(function () {
+          typingBubble.remove();
+          appendMessage(reply, false);
+
+          if (!ctaShown) {
+            ctaShown = true;
+            ctaEl.classList.remove('hidden');
+          }
+
+          typing = false;
+          chips.forEach(function (c) {
+            c.disabled = false;
+          });
+        }, 900);
+      });
+    });
+  })();
+</script>

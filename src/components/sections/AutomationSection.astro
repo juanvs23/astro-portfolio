@@ -1,0 +1,125 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import AsciiMarker from '../ui/AsciiMarker.astro';
+import CtaButton from '../ui/CtaButton.astro';
+import ChatbotMock from '../ui/ChatbotMock.astro';
+
+interface QuickReply {
+  label: string;
+  reply: string;
+}
+
+interface Stat {
+  value: string;
+  label: string;
+}
+
+interface AutomationService {
+  title: string;
+  description: string;
+}
+
+interface AutomationContent {
+  introHeading: string;
+  introDescription: string;
+  benefits: string[];
+  chatTitle: string;
+  chatSubtitle: string;
+  chatWelcome: string;
+  chatTyping: string;
+  chatCta: string;
+  ctaText: string;
+  quickReplies: QuickReply[];
+  stats: Stat[];
+  services: AutomationService[];
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+
+const automation = t('automation') as AutomationContent;
+const whatsappNumber = t('contact.whatsappNumber') as string;
+const waMessage = encodeURIComponent('Hola Juan! Quiero automatizar un proceso de mi negocio con IA.');
+const waHref = `https://wa.me/${whatsappNumber}?text=${waMessage}`;
+---
+
+<Section id="automation">
+  <!-- Page heading -->
+  <h1 data-typewriter data-aos="fade-down" class="text-h1 md:text-h1-md lg:text-h1-lg font-bold mb-sm">
+    {t('seo.h1.automation')}
+  </h1>
+
+  <div class="border-b border-hairline mb-xl" data-aos="fade-up" data-aos-delay="100"></div>
+
+  <!-- Intro -->
+  <div data-aos="fade-up" data-aos-delay="100">
+    <SectionHeading variant="section" as="h2" marker="add">{automation.introHeading}</SectionHeading>
+    <p class="text-body-md text-body mb-xl">{automation.introDescription}</p>
+  </div>
+
+  <!-- Benefits + Chatbot mock -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-xl items-center mb-xl" data-aos="fade-up" data-aos-delay="150">
+    <ul class="space-y-md">
+      {automation.benefits.map((benefit) => (
+        <li class="text-body-md text-body flex items-start gap-sm">
+          <AsciiMarker state="add" class="shrink-0 mt-[2px]" />
+          <span>{benefit}</span>
+        </li>
+      ))}
+    </ul>
+
+    <ChatbotMock
+      locale={locale}
+      title={automation.chatTitle}
+      subtitle={automation.chatSubtitle}
+      welcome={automation.chatWelcome}
+      typingLabel={automation.chatTyping}
+      ctaText={automation.chatCta}
+      ctaHref={waHref}
+      quickReplies={automation.quickReplies}
+    />
+  </div>
+
+  <!-- Stats -->
+  <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-lg">
+      {automation.stats.map((stat) => (
+        <div class="bg-surface-soft border border-hairline rounded-sm p-lg text-center">
+          <div class="text-h3 lg:text-h3-lg font-bold text-ink">{stat.value}</div>
+          <div class="text-caption-md text-mute mt-xs">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Services grid -->
+  <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+      {automation.services.map((service) => (
+        <div class="bg-surface-soft border border-hairline rounded-sm p-md">
+          <SectionHeading variant="category" as="h3" marker="add">{service.title}</SectionHeading>
+          <p class="text-caption-md text-mute">{service.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="mt-section text-center" data-aos="fade-up" data-aos-delay="100">
+    <CtaButton
+      href={waHref}
+      variant="dark"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center justify-center px-lg py-sm font-bold"
+    >
+      {automation.ctaText}
+    </CtaButton>
+  </section>
+</Section>
