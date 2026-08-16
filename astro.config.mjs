@@ -4,6 +4,7 @@ import tailwindcss from '@astrojs/tailwind';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
+  site: 'https://coltmandev.dev',
   output: 'server',
   adapter: vercel({
     imageService: true,

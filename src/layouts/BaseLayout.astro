@@ -1,6 +1,10 @@
 ---
 import '../styles/global.css';
 import { getTranslations, type Locale } from '@/i18n';
+import { siteInfo } from '@/constants';
+import { buildCanonicalUrl, buildHreflangLinks, resolveOgImageUrl } from '@/lib/seo/head-meta';
+import { buildSiteJsonLd } from '@/lib/seo/jsonld';
+import JsonLd from '../components/JsonLd.astro';
 import { ViewTransitions } from 'astro:transitions';
 
 interface Props {
@@ -20,6 +24,11 @@ const seoTitle = t('seo.title');
 const seoDescription = t('seo.description');
 const finalTitle = title === 'Juan Carlos Ávila – Full Stack Developer' ? seoTitle : title;
 const finalDescription = description === 'Desarrollador Full Stack con 6+ años de experiencia | PHP, Python, JavaScript (React, Next.js), WordPress, Laravel & Django' ? seoDescription : description;
+
+// seo-complete-review: every absolute URL (canonical, og:url, og:image,
+// hreflang) derives from Astro.site — set via `site` in astro.config.mjs.
+// The fallback guards against a missing site config without hardcoding.
+const siteUrl = Astro.site ?? new URL(siteInfo.url);
 ---
 
 <!doctype html>
@@ -35,17 +44,26 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
     <meta name="description" content={finalDescription} />
     <meta name="author" content="Juan Carlos Ávila" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href={`https://coltmandev.dev${Astro.url.pathname}`} />
+    <link rel="canonical" href={buildCanonicalUrl(Astro.url.pathname, siteUrl)} />
+    {
+      buildHreflangLinks(Astro.url.pathname, siteUrl).map((link) => (
+        <link rel="alternate" hreflang={link.hreflang} href={link.href} />
+      ))
+    }
     <meta property="og:title" content={finalTitle} />
     <meta property="og:description" content={finalDescription} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={locale} />
-    <meta property="og:url" content={`https://coltmandev.dev${Astro.url.pathname}`} />
-    <meta property="og:image" content="https://coltmandev.dev/og-image.jpg" />
+    <meta property="og:site_name" content={siteInfo.brandName} />
+    <meta property="og:url" content={buildCanonicalUrl(Astro.url.pathname, siteUrl)} />
+    <meta property="og:image" content={resolveOgImageUrl(locale, siteUrl)} />
+    <meta property="og:image:alt" content={t('seo.ogImageAlt') as string} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={finalTitle} />
     <meta name="twitter:description" content={finalDescription} />
-    <meta name="twitter:image" content="https://coltmandev.dev/og-image.jpg" />
+    <meta name="twitter:site" content={siteInfo.twitterHandle} />
+    <meta name="twitter:image" content={resolveOgImageUrl(locale, siteUrl)} />
+    <JsonLd data={buildSiteJsonLd()} />
     <script is:inline>
       (function() {
         var stored = localStorage.getItem('theme');

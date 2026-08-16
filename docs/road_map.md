@@ -46,8 +46,9 @@ Migración desde Next.js → Astro + TypeScript + Tailwind CSS + Three.js.
   - **Imágenes optimizadas**: Astro `<Image />` con WebP, reducción promedio 70-90%
 
 ### ❌ Pendiente
-- Fase 4: Pulido Visual del Home (imágenes reales, GSAP, mejora del Hero)
-- Fase 5: AI Automation Showcase (Phase 2 del pipeline SDD)
+- ~~Fase 4: Pulido Visual del Home~~ — COMPLETADA (ver abajo)
+- ~~Fase 5: AI Automation Showcase~~ — COMPLETADA (ver abajo)
+- **Revisión SEO completa** — EN CURSO (SDD change `seo-complete-review`: proposal + specs + design aprobados; falta tasks/apply/verify)
 - Fase 6: Testing, validación i18n y despliegue a producción
 
 ---
@@ -356,73 +357,63 @@ src/
 
 ## 🎨 Fase 4: Pulido Visual del Home
 
+**Estado: COMPLETADA (2026-08-14).** Implementada vía SDD `home-visual-polish` (verify PASS: 341 tests, LCP 1766ms) + trabajo directo de la sesión 14/08 (jerarquía de encabezados WCAG, escala tipográfica unificada, nav de funnel, About hub, SectionHeading reutilizable). Nota: las animaciones se hicieron con **Motion One** (~5KB) en vez de GSAP (~47KB) — decisión de sesión por performance.
+
 ### Tareas
 
-- [ ] **4.1 Imágenes reales en el home**
-  - Reemplazar placeholders (`aspect-video` con "img") en AboutPreview, SkillsPreview, ProjectsPreview, CaptureSection
-  - Imágenes optimizadas con `<Image />` de Astro (WebP, múltiples widths)
-  - Assets desde `src/assets/img/`
-
-- [ ] **4.2 Animaciones con GSAP**
-  - Instalar `gsap` como dependencia
-  - Animaciones de entrada suaves en secciones del funnel (no solo AOS)
-  - ScrollTrigger para revelado progresivo de contenido
-  - Animación en el botón CTA del hero
-  - Respetar `prefers-reduced-motion`
-
-- [ ] **4.3 Mejora del Hero**
-  - Rediseño visual del hero banner (actualmente solo texto + gradiente radial)
-  - Posible animación tipográfica o efecto ASCII interactivo
-  - Mejorar el CTA principal (visibilidad, micro-interacciones)
-  - Evaluar si agregar un elemento visual distintivo sin Three.js
+- [x] **4.1 Imágenes reales en el home**
+  - Reemplazados los placeholders: About/Skills/Capture → terminales interactivas (TerminalWindow/AuditTerminal), Projects → tabs interactivos con ProjectItem real
+- [x] **4.2 Animaciones con GSAP**
+  - Hecho con Motion One (`motion` ~5KB gzip, dynamic import): scroll reveals + CTA pulse + reduced-motion guard
+- [x] **4.3 Mejora del Hero**
+  - Rediseñado: h1 typewriter, lateral matrix canvas 2D, fade-in en cadena, cursor invert-blend scoped al hero, sin gradientes
 
 ---
 
 ## 🤖 Fase 5: AI Automation Showcase
 
-**Objetivo:** Agregar página de automatización con IA, refactorizar data de proyectos, y preparar el portfolio para mostrar demos de automatización (sin backend externo aún).
+**Objetivo:** Agregar página de automatización con IA y preparar el portfolio para mostrar demos de automatización (sin backend externo aún).
 
 **Contexto:** No hay automatizaciones reales de clientes (NDA/privacy). Los demos se construirán como proyectos open source separados. Esta fase prepara el portfolio para mostrarlos cuando existan.
 
+**Estado: COMPLETADA (2026-08-14).** Decisiones tomadas:
+- La página se muestra con un **ChatbotMock** (demo interactiva sin conexión a modelo) — no se inventan demos/proyectos falsos.
+- 5.1/5.2 **descartados** (no hay proyectos de IA reales aún — YAGNI; reintroducir `projects.ts` con categorías cuando existan demos open source).
+- El nav se mantiene mínimo por estrategia de funnel; `/automation` se enlaza desde home y `/services` (no desde el nav).
+
 ### Tareas
 
-- [ ] **5.1 Data model de proyectos (`src/constants/projects.ts`)**
-  - Crear interface `Project` (`id`, `name` key, `description` key, `url`, `image`, `category: 'ai' | 'web' | 'fullstack'`, `tags`, `featured?`, `stats?`)
-  - Factory `getProjects(t)` siguiendo el patrón de `getJobs(t)` en `jobs.ts`
-  - Migrar los 17 proyectos existentes desde ProjectsSection.astro
-  - Agregar 5 entries placeholder para AI demos (con `comingSoon: true` o similar)
+- [x] **5.1 Data model de proyectos (`src/constants/projects.ts`)** — DESCARTADO (no hay proyectos IA)
+- [x] **5.2 Refactor ProjectsSection.astro** — DESCARTADO (no hay categorías reales que filtrar)
+- [x] **5.3 StatsGrid component** — IMPLEMENTADO inline en AutomationSection (4 stats: Agents, Automations, Reducción, Años)
+- [x] **5.4 Automation page (`src/pages/[locale]/automation.astro`)** — CREADA (patrón services.astro, prerender, ambos locales)
+- [x] **5.5 AutomationSection component** — CREADO (intro + beneficios + ChatbotMock + stats + 4 servicios + CTA WhatsApp)
+- [x] **5.6 i18n** — COMPLETADA (sección `automation` + SEO keys es/en; traducciones de proyectos AI no aplican sin data model)
+- [x] **5.7 Navegación + Layout** — NO APLICA al nav (funnel); en su lugar CTAs contextuales desde home/services
 
-- [ ] **5.2 Refactor ProjectsSection.astro**
-  - Consumir `getProjects(t)` en vez de datos hardcodeados
-  - Agregar tabs/categorías para filtrar (AI, Web, Fullstack)
-  - Mostrar placeholder visual para demos AI "coming soon"
+---
 
-- [ ] **5.3 StatsGrid component (`src/components/ui/StatsGrid.astro`)**
-  - Componente reutilizable que recibe `stats: { value: string; labelKey: string }[]`
-  - Labels desde i18n
-  - Stats placeholder: "10+ AI Agents", "5+ Automations", "45% Avg. Reduction", "8+ Years"
+## 🔍 Revisión SEO Completa — EN CURSO
 
-- [ ] **5.4 Automation page (`src/pages/[locale]/automation.astro`)**
-  - Nueva página siguiendo el patrón exacto de `projects.astro`
-  - `getStaticPaths()` con ambos locales
-  - `export const prerender = true`
+**Estado (2026-08-14):** SDD change `seo-complete-review` — proposal + 4 specs + design aprobados. Falta: tasks → apply → verify → archive.
 
-- [ ] **5.5 AutomationSection component (`src/components/sections/AutomationSection.astro`)**
-  - Hero/callout: "AI Automation that delivers"
-  - StatsGrid con métricas placeholder
-  - AI demos showcase (grid de proyectos con category='ai', con indicador "coming soon")
-  - Services section: Smart Chatbots, RAG Systems, AI Agents, LLM Integration
-  - CTA a contacto
+**Objetivo:** cerrar gaps SEO verificados (sin dependencias nuevas, strict TDD).
 
-- [ ] **5.6 i18n — `messages/en.json` + `messages/es.json`**
-  - Agregar traducciones para proyectos AI (name + description)
-  - Agregar sección `automation` completa: hero, stats, services, CTA
-  - Agregar SEO keys: `seo.pages.automation`, `seo.descriptions.automation`, `seo.h1.automation`
+### Gaps identificados
 
-- [ ] **5.7 Navegación + Layout**
-  - Agregar `{ key: 'menu.automation', path: '/automation' }` a `nav-links.ts`
-  - Verificar que Header.astro y MobileMenu.astro lo rendericen automáticamente
-  - Agregar `menu.automation` a ambos archivos de traducción
+- [ ] **JSON-LD schema.org** — sin datos estructurados: agregar Person + ProfessionalService en TODAS las páginas + FAQPage solo en home (desde `t('funnel.faq')`, paridad UI/schema). Componente `JsonLd.astro` + `src/constants/site-info.ts` (single source of truth)
+- [ ] **Head meta** — agregar og:site_name, twitter:site, hreflang es/en en `<head>`, og:image por locale (og-image-es/en.jpg, 1200x630) + og:image:alt SEO keys nuevas
+- [ ] **`site` config** — setear `site: 'https://coltmandev.dev'` en astro.config.mjs; migrar canonical/og:url/sitemap a `Astro.site`
+- [ ] **Sitemap** — agregar `/services` + `/automation` + xhtml:link hreflang alternates
+- [ ] **Copy SEO por intención** — revisar `seo.*` es/en: services→precios, automation→IA, projects→casos, about→E-E-A-T, contact→conversión; guard anti-métricas inventadas
+
+### Ya resuelto dentro del cambio
+
+- [x] **og-image es/en creadas** — `public/og-image-es.jpg` + `public/og-image-en.jpg` (1200x630, ~45KB). Prompt en `docs/og-image-prompt.md`
+
+### Artefactos
+
+`openspec/changes/seo-complete-review/` (proposal.md, design.md, specs/{seo-jsonld,seo-head-meta,seo-sitemap,seo-copy-intent}/spec.md) + Engram `sdd/seo-complete-review/*`.
 
 ---
 
