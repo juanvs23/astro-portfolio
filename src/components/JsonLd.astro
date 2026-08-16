@@ -1,0 +1,16 @@
+---
+import type { JsonLdObject } from '@/constants';
+import { serializeJsonLd } from '@/lib/seo/jsonld';
+
+interface Props {
+  /** One schema object, an array of objects, or nothing (null/undefined/[]). */
+  data: JsonLdObject | JsonLdObject[] | null | undefined;
+}
+
+const { data } = Astro.props;
+const scripts = serializeJsonLd(data ?? []);
+---
+
+{
+  scripts.map((json) => <script type="application/ld+json" set:html={json} />)
+}
