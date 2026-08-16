@@ -1,5 +1,8 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
+import { siteInfo } from '@/constants';
+import { buildFaqPageLd } from '../../lib/seo/jsonld';
+import JsonLd from '../JsonLd.astro';
 import Section from '../ui/Section.astro';
 import SectionHeading from '../ui/SectionHeading.astro';
 import CtaButton from '../ui/CtaButton.astro';
@@ -22,9 +25,16 @@ const waHref = buildWhatsAppLink(
   t('contact.whatsappNumber') as string,
   (t('funnel.audit.message') as string),
 );
+
+// seo-complete-review 2.6: FAQPage JSON-LD built from the SAME funnel.faq
+// array rendered below -> UI/schema parity. FaqSection only renders on home,
+// so FAQPage stays home-only for free. buildFaqPageLd returns null when the
+// array is empty, and <JsonLd> renders nothing in that case.
+const faqPageLd = buildFaqPageLd(faq, Astro.site ?? new URL(siteInfo.url));
 ---
 
 <Section id="faq">
+  {faqPageLd && <JsonLd data={faqPageLd} />}
   <div class="max-w-[760px] mx-auto text-center">
     <div data-aos="fade-up">
       <SectionHeading marker="add">{t('funnel.faq_heading')}</SectionHeading>
