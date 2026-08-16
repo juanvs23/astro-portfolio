@@ -162,36 +162,36 @@
     "es": "Español"
   },
   "seo": {
-    "title": "Juan Carlos Avila – Desarrollo Web + Automatización con IA | 8+ Años de Experiencia",
-    "description": "Desarrollador Web especializado en automatización con IA | 8+ años en WordPress, React, Python, PHP | Chatbots inteligentes, RAG, agentes de IA y plataformas web escalables.",
-    "ogImageAlt": "Juan Carlos Ávila – Desarrollo Web + Automatización con IA",
+    "title": "Desarrollo Web y Automatización con IA | Juan Carlos Avila",
+    "description": "Convierta visitas en clientes con desarrollo web orientado a conversión y automatización con IA. Servicios, planes con precios y auditoría gratuita.",
     "pages": {
-      "about": "Sobre Mí – Juan Carlos Avila | Web Dev + Automatización IA",
-      "skills": "Habilidades – Juan Carlos Avila | Desarrollo Web y Automatización",
-      "experience": "Experiencia – Juan Carlos Avila | Web Dev & AI Automation",
-      "projects": "Proyectos – Juan Carlos Avila | Desarrollo Web y Automatización",
-      "contact": "Contacto – Juan Carlos Avila | Web Dev + AI Automation",
-      "services": "Servicios – Juan Carlos Avila | Desarrollo Web y Automatización IA",
-      "automation": "Automatización IA – Chatbots y Agentes"
+      "about": "Sobre Mí | Juan Carlos Avila — Experiencia y Confianza en Desarrollo Web + IA",
+      "skills": "Habilidades y Stack Técnico | Juan Carlos Avila",
+      "experience": "Experiencia y Resultados | Juan Carlos Avila",
+      "projects": "Proyectos y Casos de Estudio | Juan Carlos Avila",
+      "contact": "Contacto | Juan Carlos Avila — Hablemos de su Proyecto",
+      "services": "Servicios de Desarrollo Web con Precios | Juan Carlos Avila",
+      "automation": "Automatización con IA: Chatbots, Agentes y RAG | Juan Carlos Avila"
     },
     "descriptions": {
-      "about": "Conoce a Juan Carlos Avila: Desarrollador Web con 8+ años de experiencia y especialización en automatización con IA. WordPress, React, Python y agentes inteligentes.",
-      "skills": "Habilidades de Juan Carlos Avila: Frontend, Backend, CMS, DevOps, e Integración de IA para automatización de procesos empresariales.",
-      "experience": "Trayectoria de Juan Carlos Avila: 8+ años desarrollando plataformas web e integrando soluciones de IA que reducen costos operativos.",
-      "projects": "Proyectos de Juan Carlos Avila: plataformas web, chatbots IA, asistentes RAG, dashboards y e-commerce.",
-      "contact": "Contacta a Juan Carlos Avila para desarrollo web, automatizaciones con IA, chatbots inteligentes o consultoría técnica.",
-      "services": "Servicios de desarrollo web y automatización IA: landing pages, sitios WordPress, e-commerce, chatbots inteligentes y agentes autónomos.",
-      "automation": "Chatbots inteligentes, sistemas RAG y agentes autónomos para automatizar procesos de tu negocio. Demo interactiva sin costo."
+      "about": "Conozca a Juan Carlos Avila: 8+ años de experiencia en desarrollo web y automatización con IA. Su socio técnico para convertir su web en un canal de ventas.",
+      "skills": "Stack técnico de Juan Carlos Avila: frontend, backend, CMS, DevOps e integración de IA para automatizar procesos empresariales.",
+      "experience": "Resultados entregados por Juan Carlos Avila: 8+ años desarrollando plataformas web e integrando soluciones de IA que reducen costos operativos.",
+      "projects": "Casos de estudio y ejemplos de proyectos: plataformas web, chatbots con IA, sistemas RAG y e-commerce entregados en producción.",
+      "contact": "Contacte a Juan Carlos Avila para desarrollo web, automatización con IA, chatbots o consultoría técnica. Reciba una propuesta sin compromiso en menos de 24 horas.",
+      "services": "Planes de desarrollo web con precios claros: landing pages, sitios WordPress, e-commerce, chatbots con IA y agentes autónomos. Cotice su proyecto sin compromiso.",
+      "automation": "Chatbots inteligentes, sistemas RAG y agentes autónomos que automatizan procesos de su negocio. Pruebe la demo interactiva sin costo."
     },
     "h1": {
-      "about": "Sobre Mí – Desarrollo Web y Automatización con IA",
-      "skills": "Habilidades – Web Development & AI Automation",
-      "experience": "Trayectoria Profesional – Web Developer & AI Specialist",
-      "projects": "Portafolio – Proyectos Web y Automatizaciones",
-      "contact": "Contáctame – Hablemos de tu Proyecto",
-      "services": "Servicios – Desarrollo Web y Automatización Inteligente",
-      "automation": "Automatización con IA que entrega resultados"
-    }
+      "about": "Su Socio Técnico en Desarrollo Web y Automatización con IA",
+      "skills": "Stack Técnico y Capacidades",
+      "experience": "Experiencia y Resultados Entregados",
+      "projects": "Proyectos y Casos de Estudio",
+      "contact": "Hablemos de su Proyecto — Contácteme",
+      "services": "Servicios de Desarrollo Web con Precios Claros",
+      "automation": "Automatización con IA: Chatbots, Agentes y RAG"
+    },
+    "ogImageAlt": "Imagen de portada de Juan Carlos Avila — Desarrollo Web y Automatización con IA"
   },
   "hero": {
     "badge": "Web Dev + Automatización IA",

@@ -487,3 +487,219 @@ describe('hero.* tuned copy i18n (PR₁)', () => {
     }
   });
 });
+
+// ---------------------------------------------------------------------------
+// PR₃ (seo-complete-review / slice 3): seo.* copy intent + i18n guards
+// ---------------------------------------------------------------------------
+
+function flattenI18nKeys(value: unknown, prefix = ''): string[] {
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) {
+    return prefix ? [prefix] : [];
+  }
+  return Object.entries(value as Record<string, unknown>).flatMap(([k, v]) =>
+    flattenI18nKeys(v, prefix ? `${prefix}.${k}` : k),
+  );
+}
+
+function extractNumbers(text: string): string[] {
+  return text.match(/\d+/g) ?? [];
+}
+
+function collectValuesExcept(root: unknown, excludedKey: string): string[] {
+  if (typeof root !== 'object' || root === null) return [];
+  const rest = Object.fromEntries(
+    Object.entries(root as Record<string, unknown>).filter(([k]) => k !== excludedKey),
+  );
+  return collectStringValues(rest);
+}
+
+describe('seo.* copy intent i18n guards (PR₃)', () => {
+  const SEO_INTENT = {
+    services: {
+      es: ['precios', 'servicios de desarrollo'],
+      en: ['pricing', 'web development services'],
+    },
+    automation: {
+      es: ['chatbots', 'agentes', 'rag', 'automatización'],
+      en: ['chatbots', 'agents', 'rag', 'automation'],
+    },
+    projects: {
+      es: ['casos', 'ejemplos'],
+      en: ['case stud', 'examples'],
+    },
+    about: {
+      es: ['experiencia', 'experto', 'confianza', 'trayectoria', 'socio'],
+      en: ['experience', 'expert', 'trust', 'credib', 'partner'],
+    },
+    contact: {
+      es: ['contacta', 'hablemos', 'contacte'],
+      en: ['get in touch', 'contact', "let's talk"],
+    },
+    home: {
+      es: ['conversión', 'convierta', 'clientes', 'auditoría gratuita'],
+      en: ['conversion', 'convert', 'customers', 'clients', 'free audit'],
+    },
+  };
+
+  it('should keep seo key sets identical between es and en (including ogImageAlt)', async () => {
+    const [es, en] = await Promise.all([getFullTranslations('es'), getFullTranslations('en')]);
+    const esKeys = flattenI18nKeys(es.seo).sort();
+    const enKeys = flattenI18nKeys(en.seo).sort();
+    expect(esKeys.length).toBeGreaterThan(0);
+    expect(esKeys).toEqual(enKeys);
+    expect(esKeys).toContain('ogImageAlt');
+  });
+
+  it('every seo.* leaf value should be a non-empty string, never the raw key (es + en)', async () => {
+    for (const locale of ['es', 'en'] as const) {
+      const t = await getTranslations(locale);
+      const full = await getFullTranslations(locale);
+      const keys = flattenI18nKeys(full.seo, 'seo');
+      expect(keys.length).toBeGreaterThan(0);
+      for (const key of keys) {
+        const value = t(key);
+        expect(typeof value).toBe('string');
+        expect((value as string).length).toBeGreaterThan(0);
+        expect(value).not.toBe(key);
+      }
+    }
+  });
+
+  it('seo.ogImageAlt should be non-empty and differ from every seo description (es)', async () => {
+    const es = await getFullTranslations('es');
+    const alt = es.seo.ogImageAlt as string;
+    expect(typeof alt).toBe('string');
+    expect(alt.length).toBeGreaterThan(0);
+    const descriptions = collectStringValues(es.seo.descriptions);
+    expect(descriptions.length).toBeGreaterThan(0);
+    for (const description of descriptions) {
+      expect(alt).not.toBe(description);
+    }
+  });
+
+  it('seo.ogImageAlt should be non-empty and differ from every seo description (en)', async () => {
+    const en = await getFullTranslations('en');
+    const alt = en.seo.ogImageAlt as string;
+    expect(typeof alt).toBe('string');
+    expect(alt.length).toBeGreaterThan(0);
+    const descriptions = collectStringValues(en.seo.descriptions);
+    expect(descriptions.length).toBeGreaterThan(0);
+    for (const description of descriptions) {
+      expect(alt).not.toBe(description);
+    }
+  });
+
+  it('es seo.* values must not contain voseo tokens', async () => {
+    const VOSEO_TOKENS = [
+      'Usá', 'Aprovechá', 'Contame', 'necesitás', 'recibís',
+      'imaginate', 'habla', 'tenés', 'podés', 'querés', 'sabés',
+    ];
+    const es = await getFullTranslations('es');
+    const seoValues = collectStringValues(es.seo);
+    expect(seoValues.length).toBeGreaterThan(0);
+    for (const value of seoValues) {
+      const lower = value.toLowerCase();
+      for (const token of VOSEO_TOKENS) {
+        expect(lower).not.toContain(token.toLowerCase());
+      }
+    }
+  });
+
+  it('numeric claims in seo.* must appear elsewhere in the same locale (es)', async () => {
+    const es = await getFullTranslations('es');
+    const seoNumbers = new Set(collectStringValues(es.seo).flatMap(extractNumbers));
+    const restNumbers = new Set(collectValuesExcept(es, 'seo').flatMap(extractNumbers));
+    for (const num of seoNumbers) {
+      expect(restNumbers.has(num), `es seo number "${num}" must also appear outside seo.*`).toBe(true);
+    }
+  });
+
+  it('numeric claims in seo.* must appear elsewhere in the same locale (en)', async () => {
+    const en = await getFullTranslations('en');
+    const seoNumbers = new Set(collectStringValues(en.seo).flatMap(extractNumbers));
+    const restNumbers = new Set(collectValuesExcept(en, 'seo').flatMap(extractNumbers));
+    for (const num of seoNumbers) {
+      expect(restNumbers.has(num), `en seo number "${num}" must also appear outside seo.*`).toBe(true);
+    }
+  });
+
+  it('services page carries pricing/services intent (es + en)', async () => {
+    for (const locale of ['es', 'en'] as const) {
+      const full = await getFullTranslations(locale);
+      const combined = [
+        full.seo.pages.services,
+        full.seo.descriptions.services,
+        full.seo.h1.services,
+      ].join(' ').toLowerCase();
+      const keywords = SEO_INTENT.services[locale];
+      const hit = keywords.some((k) => combined.includes(k));
+      expect(hit, `${locale} services seo copy should include one of: ${keywords.join(', ')}`).toBe(true);
+    }
+  });
+
+  it('automation page carries AI automation intent (es + en)', async () => {
+    for (const locale of ['es', 'en'] as const) {
+      const full = await getFullTranslations(locale);
+      const combined = [
+        full.seo.pages.automation,
+        full.seo.descriptions.automation,
+        full.seo.h1.automation,
+      ].join(' ').toLowerCase();
+      const keywords = SEO_INTENT.automation[locale];
+      const hits = keywords.filter((k) => combined.includes(k)).length;
+      expect(hits, `${locale} automation seo copy should include at least 2 of: ${keywords.join(', ')}`).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  it('projects page carries case-study intent (es + en)', async () => {
+    for (const locale of ['es', 'en'] as const) {
+      const full = await getFullTranslations(locale);
+      const combined = [
+        full.seo.pages.projects,
+        full.seo.descriptions.projects,
+        full.seo.h1.projects,
+      ].join(' ').toLowerCase();
+      const keywords = SEO_INTENT.projects[locale];
+      const hit = keywords.some((k) => combined.includes(k));
+      expect(hit, `${locale} projects seo copy should frame work as case studies/examples`).toBe(true);
+    }
+  });
+
+  it('about page carries E-E-A-T intent (es + en)', async () => {
+    for (const locale of ['es', 'en'] as const) {
+      const full = await getFullTranslations(locale);
+      const combined = [
+        full.seo.pages.about,
+        full.seo.descriptions.about,
+        full.seo.h1.about,
+      ].join(' ').toLowerCase();
+      const keywords = SEO_INTENT.about[locale];
+      const hits = keywords.filter((k) => combined.includes(k)).length;
+      expect(hits, `${locale} about seo copy should include at least 2 of: ${keywords.join(', ')}`).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  it('contact page carries conversion / CTA intent (es + en)', async () => {
+    for (const locale of ['es', 'en'] as const) {
+      const full = await getFullTranslations(locale);
+      const combined = [
+        full.seo.pages.contact,
+        full.seo.descriptions.contact,
+        full.seo.h1.contact,
+      ].join(' ').toLowerCase();
+      const keywords = SEO_INTENT.contact[locale];
+      const hit = keywords.some((k) => combined.includes(k));
+      expect(hit, `${locale} contact seo copy should include a CTA framing`).toBe(true);
+    }
+  });
+
+  it('home seo title/description carry conversion landing intent (es + en)', async () => {
+    for (const locale of ['es', 'en'] as const) {
+      const full = await getFullTranslations(locale);
+      const combined = [full.seo.title, full.seo.description].join(' ').toLowerCase();
+      const keywords = SEO_INTENT.home[locale];
+      const hit = keywords.some((k) => combined.includes(k));
+      expect(hit, `${locale} home seo copy should include conversion intent`).toBe(true);
+    }
+  });
+});
