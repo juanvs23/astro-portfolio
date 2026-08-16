@@ -5,6 +5,7 @@ import {
   renderSitemapXml,
   type SitemapEntry,
 } from './sitemap';
+import { GET } from '../../pages/sitemap.xml';
 
 // ---------------------------------------------------------------------------
 // seo-complete-review (PR 2 — sitemap): pure sitemap builders.
@@ -142,6 +143,28 @@ describe('renderSitemapXml', () => {
 
   it('keeps every loc and alternate href absolute under the configured site', () => {
     const locs = xml.match(/<loc>(.*?)<\/loc>/g) ?? [];
+    expect(locs).toHaveLength(16);
+    expect(locs.every((loc) => loc.includes('https://coltmandev.dev/'))).toBe(true);
+  });
+});
+
+describe('sitemap endpoint (src/pages/sitemap.xml.ts)', () => {
+  type EndpointArgs = Parameters<typeof GET>[0];
+
+  it('serves XML with 16 url blocks, xhtml namespace and alternates when site is configured', async () => {
+    const response = await GET({ site: new URL('https://coltmandev.dev') } as unknown as EndpointArgs);
+    expect(response.headers.get('Content-Type')).toBe('application/xml');
+    const body = await response.text();
+    expect((body.match(/<url>/g) ?? []).length).toBe(16);
+    expect(body).toContain('xmlns:xhtml="http://www.w3.org/1999/xhtml"');
+    expect(body).toContain('hreflang="en" href="https://coltmandev.dev/en/automation"');
+    expect(body).toContain('hreflang="es" href="https://coltmandev.dev/es/automation"');
+  });
+
+  it('falls back to the production domain when site is unavailable', async () => {
+    const response = await GET({ site: undefined } as unknown as EndpointArgs);
+    const body = await response.text();
+    const locs = body.match(/<loc>(.*?)<\/loc>/g) ?? [];
     expect(locs).toHaveLength(16);
     expect(locs.every((loc) => loc.includes('https://coltmandev.dev/'))).toBe(true);
   });
