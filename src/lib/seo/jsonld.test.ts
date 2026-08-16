@@ -4,6 +4,7 @@ import {
   buildPersonLd,
   buildProfessionalServiceLd,
   buildFaqPageLd,
+  buildSiteJsonLd,
   serializeJsonLd,
 } from './jsonld';
 
@@ -70,6 +71,16 @@ describe('buildFaqPageLd', () => {
 
   it('should return null when the faq array is empty', () => {
     expect(buildFaqPageLd([], SITE_URL)).toBeNull();
+  });
+});
+
+describe('buildSiteJsonLd', () => {
+  it('should combine Person and ProfessionalService for every page injection', () => {
+    const nodes = buildSiteJsonLd();
+    expect(nodes).toHaveLength(2);
+    expect(nodes[0]['@type']).toBe('Person');
+    expect(nodes[1]['@type']).toBe('ProfessionalService');
+    expect(nodes[0]['@id']).toBe(`${siteInfo.url}/#person`);
   });
 });
 
