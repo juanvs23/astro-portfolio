@@ -48,7 +48,7 @@ Migración desde Next.js → Astro + TypeScript + Tailwind CSS + Three.js.
 ### ❌ Pendiente
 - ~~Fase 4: Pulido Visual del Home~~ — COMPLETADA (ver abajo)
 - ~~Fase 5: AI Automation Showcase~~ — COMPLETADA (ver abajo)
-- **Revisión SEO completa** — EN CURSO (SDD change `seo-complete-review`: proposal + specs + design aprobados; falta tasks/apply/verify)
+- **Revisión SEO completa** — MERGEADA a dev (2026-08-16); pendiente verify → archive
 - Fase 6: Testing, validación i18n y despliegue a producción
 
 ---
@@ -393,27 +393,43 @@ src/
 
 ---
 
-## 🔍 Revisión SEO Completa — EN CURSO
+## 🔍 Revisión SEO Completa — MERGEADA (2026-08-16)
 
-**Estado (2026-08-14):** SDD change `seo-complete-review` — proposal + 4 specs + design aprobados. Falta: tasks → apply → verify → archive.
+**Estado (2026-08-15):** SDD change `seo-complete-review` — proposal + 4 specs + design + tasks aprobados. **Implementación 19/21 tareas completada** en 3 PRs stacked-to-dev (pendientes de merge en orden PR 1 → PR 2 → PR 3; luego verify 4.1/4.2 + archive).
+
+**Decisiones de entrega (2026-08-15):** forecast 800–900 líneas > budget 400 → chained PRs con chain strategy **stacked-to-dev** (cada PR mergea a `dev` en orden, no a main). PR 1 jsonld+head-meta, PR 2 sitemap, PR 3 copy.
 
 **Objetivo:** cerrar gaps SEO verificados (sin dependencias nuevas, strict TDD).
 
-### Gaps identificados
+### PR 1 — JSON-LD + Head Meta (`feat/seo-jsonld-head-meta` → PR #1)
 
-- [ ] **JSON-LD schema.org** — sin datos estructurados: agregar Person + ProfessionalService en TODAS las páginas + FAQPage solo en home (desde `t('funnel.faq')`, paridad UI/schema). Componente `JsonLd.astro` + `src/constants/site-info.ts` (single source of truth)
-- [ ] **Head meta** — agregar og:site_name, twitter:site, hreflang es/en en `<head>`, og:image por locale (og-image-es/en.jpg, 1200x630) + og:image:alt SEO keys nuevas
-- [ ] **`site` config** — setear `site: 'https://coltmandev.dev'` en astro.config.mjs; migrar canonical/og:url/sitemap a `Astro.site`
-- [ ] **Sitemap** — agregar `/services` + `/automation` + xhtml:link hreflang alternates
-- [ ] **Copy SEO por intención** — revisar `seo.*` es/en: services→precios, automation→IA, projects→casos, about→E-E-A-T, contact→conversión; guard anti-métricas inventadas
-
-### Ya resuelto dentro del cambio
-
+- [x] **JSON-LD schema.org** — Person + ProfessionalService en TODAS las páginas (vía `JsonLd.astro` + `buildSiteJsonLd`), FAQPage solo en home (desde `t('funnel.faq')`, paridad UI/schema). `src/constants/site-info.ts` como single source of truth (sameAs derivado de social-links)
+- [x] **Head meta** — og:site_name, twitter:site (@juanvs23), hreflang es/en en `<head>`, og:image por locale (og-image-es/en.jpg, 1200x630) + og:image:alt (`seo.ogImageAlt`, valor provisional hasta PR 3)
+- [x] **`site` config** — `site: 'https://coltmandev.dev'` en astro.config.mjs; canonical/og:url migrados a `Astro.site` (fallback `new URL('https://coltmandev.dev')` si undefined)
+- [x] **BaseLayout** — head completo + inyección JSON-LD; removido `/og-image.jpg` heredado
+- [x] **Tests** — 21 nuevos (site-info 5, jsonld 9, head-meta 7); suite 362/362; build OK + spot-check dist
 - [x] **og-image es/en creadas** — `public/og-image-es.jpg` + `public/og-image-en.jpg` (1200x630, ~45KB). Prompt en `docs/og-image-prompt.md`
+
+### PR 2 — Sitemap (`feat/seo-sitemap` → PR #2)
+
+- [x] **Sitemap** — `/services` + `/automation` agregados; xhtml:link hreflang alternates; namespaces conservan lastmod/changefreq/priority; root weekly/1.0. `src/lib/seo/sitemap.ts` (builders puros autocontenidos) + `sitemap.xml.ts` endpoint con `({ site })` + fallback
+- [x] **Tests** — 16 nuevos (lib 14 + endpoint 2); suite 357/357; build OK; runtime GET /sitemap.xml → 200, 16 entries, 32 alternates
+
+### PR 3 — Copy SEO por intención (`feat/seo-copy` → PR #3)
+
+- [x] **Copy SEO por intención** — revisar `seo.*` es/en: services→precios, automation→IA, projects→casos, about→E-E-A-T, contact→conversión; guard anti-métricas inventadas (numeric claims ⊆ números reales del sitio)
+- [x] **i18n guards** — 13 tests (symmetry es/en, no-voseo en `seo`, ogImageAlt ≠ descriptions, numeric claims); suite 354/354
+- [x] **`seo.ogImageAlt`** — agregado en es/en (resuelve referencia de BaseLayout del PR 1 post-merge)
+
+### Pendiente del cambio
+
+- [x] **Merge de la cadena** — PR 1 → PR 2 → PR 3 mergeados a `dev` (2026-08-16; PR3 requirió resolver conflicto en messages es/en, resuelto tomando copy de PR3)
+- [ ] **Verify final** — 4.1 suite completa post-merge (`npx vitest run`) + 4.2 `npm run build` + spot-check dist
+- [ ] **Archive** — sync delta specs + actualizar este roadmap y `context.md` (marcar SEO COMPLETADO)
 
 ### Artefactos
 
-`openspec/changes/seo-complete-review/` (proposal.md, design.md, specs/{seo-jsonld,seo-head-meta,seo-sitemap,seo-copy-intent}/spec.md) + Engram `sdd/seo-complete-review/*`.
+`openspec/changes/seo-complete-review/` (proposal.md, design.md, tasks.md, specs/{seo-jsonld,seo-head-meta,seo-sitemap,seo-copy-intent}/spec.md) + Engram `sdd/seo-complete-review/*`.
 
 ---
 
