@@ -22,69 +22,50 @@
   "jobs": {
     "title": "Experiencia"
   },
+  "newmovement": {
+    "id": 8,
+    "title": "Desarrollador Full Stack — Integración de IA",
+    "start": "2025-11",
+    "end": "2026-6",
+    "company": "New Movement Agency",
+    "description": "Diseñé e implementé soluciones potenciadas con IA integrando APIs de LLM (OpenAI, modelos locales) en plataformas web existentes, reduciendo el procesamiento manual de datos en un 60%. Arquitecté aplicaciones web de alto rendimiento con optimización de servidor, estrategias de caché y ajuste de bases de datos logrando tiempos de carga menores a 2s. Administré infraestructura Linux en la nube (LAMP) asegurando 99.9% de uptime. Implementé arquitectura SEO optimizada mejorando rankings orgánicos en un 40%. Lideré sesiones de discovery con clientes, traduciendo requerimientos de negocio en especificaciones técnicas."
+  },
   "ama": {
     "id": 1,
-    "title": "Desarrollador Wordpress - Fullstack",
-    "start": "2024-8",
-    "end": "2025-4",
+    "title": "Desarrollador Web Senior",
+    "start": "2024-5",
+    "end": "2025-11",
     "company": "Addiction Marketing Agency",
     "description": "Implementé un servidor LAMP en la nube para alojar múltiples proyectos WordPress. Desarrollé un directorio de alto rendimiento con tipos de contenido personalizados, taxonomías avanzadas y metacontenido optimizado para SEO, utilizando PHP nativo y JavaScript. Creé diversos sitios con contenido extenso, priorizando velocidad y posicionamiento orgánico. Diseñé arquitecturas de datos de alto rendimiento con taxonomías avanzadas y meta-información que anticipan cómo las knowledge bases estructuradas alimentan los sistemas RAG actuales."
   },
-  "ciancoder": {
-    "id": 2,
-    "title": "Desarrollador Freelancer - WordPress",
-    "start": "2024-5",
-    "end": "2024-8",
-    "company": "Ciancoders",
-    "description": "Desarrollé dos plataformas WordPress desde cero: una página informativa y un sistema de venta de tickets. Implementé CPTs, campos personalizados y taxonomías con PHP nativo (sin plugins). Para el frontend usé JavaScript vanilla (ES6+) y CSS moderno (Grid/Flexbox), creando componentes dinámicos optimizados para rendimiento y experiencia de usuario. Estos proyectos se realizaron en un ambiente Dockerizado y subidos a un servidor de linux mediante GIT por SSH. La infraestructura contenerizada y el flujo Git→SSH que implementé son los mismos patrones que hoy uso para desplegar servicios de IA — modelos, embeddings y endpoints — con la misma consistencia y reproducibilidad."
-  },
   "tremgroup": {
     "id": 3,
-    "title": "Desarrollador Fullstack/PHP - JavaScript",
+    "title": "Desarrollador Fullstack WordPress",
     "start": "2022-8",
     "end": "2024-4",
     "company": "TREMGROUP LLC",
     "description": "Desarrollé componentes interactivos en React.js para visualización de datos estadísticos de valores inmobiliarios en Miami. Mantuve y optimicé sitios web legacy (8+ años), modernizando su código y añadiendo funcionalidades. Creé soluciones personalizadas con WordPress, Next.js y React, destacando la integración de Google Maps API para sistemas de filtrado de propiedades por precio y rentabilidad. Esos dashboards integraron múltiples fuentes de datos (APIs, MLS, CSV) estableciendo patrones de ETL y normalización que luego apliqué a pipelines de automatización con IA."
   },
-  "conocimiento": {
-    "id": 4,
-    "title": "Desarrollador Front-end/WordPress",
-    "start": "2021-12",
+  "naciondigital": {
+    "title": "Desarrollador Web",
+    "company": "Nación Digital",
+    "start": "2018-10",
     "end": "2022-6",
-    "company": "Conocimiento Corporativo S.A.S",
-    "description": "Desarrollé soluciones WordPress personalizadas desde cero, creando themes y plugins nativos con PHP. Implementé sistemas de contenido avanzado mediante tipos de contenido personalizados, taxonomías a medida y campos personalizados (sin plugins como ACF), optimizados para diversos sectores como educación y seguridad. Cada proyecto se construyó con código limpio y escalable, garantizando alto rendimiento y fácil mantenimiento. La arquitectura de contenido estructurado que construí — custom post types, taxonomías, meta-fields — refleja los mismos patrones que hoy uso para alimentar conocimiento estructurado en asistentes IA y sistemas RAG."
+    "description": "Desarrollé y mantuve sitios WordPress, incluyendo interfaces para clientes y paneles de administración. Creé plugins y themes personalizados para sitios publicitarios y de comercio electrónico. Construí APIs con Node.js. Desarrollé REST APIs con Node.js que establecieron los patrones de integración que hoy aplico para conectar modelos de lenguaje con plataformas web."
   },
-  "nivelics": {
-    "id": 5,
-    "title": "Desarrollador WordPress",
-    "start": "2021-6",
-    "end": "2021-11",
-    "company": "Nivelics SAS",
-    "description": "Desarrollar y mantener sitios en WordPress, tanto en la creación de las interfaces para el cliente, como para el dashboard. Creación de Plugins y themes a medida para sitios publicitarios o ecommerce de la clientela. Creación de API con Nodejs. Desarrollé APIs REST con Node.js que establecieron los patrones de integración que hoy aplico para conectar modelos de lenguaje con plataformas web."
+  "scm255": {
+    "title": "Especialista en soporte técnico",
+    "company": "SCM-255, CA",
+    "start": "2015-9",
+    "end": "2018-10",
+    "description": "Atendí incidencias de equipos de cómputo, creé cuentas de correo y propuse mejoras técnicas. Brindé asistencia y soporte al personal con sus necesidades de ofimática. Reparé y mantuve computadoras, equipos de red, cableado e impresoras."
   },
-  "ztgroup": {
-    "id": 6,
-    "title": "Desarrollador Front-end/WordPress",
-    "start": "2020-3",
-    "end": "2021-6",
-    "company": "ZtGroup LLC",
-    "description": "Desarrollar y mantener sitios en WordPress, tanto en la creación de las interfaces para el cliente, como para el dashboard. Creación de Plugins y themes a medida para sitios publicitarios o ecommerce de la clientela. Construí ecosistemas WordPress modulares con plugins custom que sentaron las bases para arquitecturas de contenido integradas con IA."
-  },
-  "hispano": {
-    "id": 7,
-    "title": "Front-End Developer",
-    "start": "2018-3",
-    "end": "2020-1",
-    "company": "Hispano Soluciones CA",
-    "description": "Desarrollar interfaces para proyectos de clientes en Drupal, WordPress y maquetación para sitios estáticos. Mis primeros proyectos en Drupal y WordPress me dieron la base sólida en arquitectura web sobre la que hoy construyo soluciones con automatización inteligente."
-  },
-  "newmovement": {
-    "id": 8,
-    "title": "Full Stack Developer — AI Integration",
-    "start": "2025-6",
-    "end": "2026-5",
-    "company": "New Movement Agency",
-    "description": "Diseñé e implementé soluciones potenciadas con IA integrando APIs de LLM (OpenAI, modelos locales) en plataformas web existentes, reduciendo el procesamiento manual de datos en un 60%. Arquitecté aplicaciones web de alto rendimiento con optimización de servidor, estrategias de caché y ajuste de bases de datos logrando tiempos de carga menores a 2s. Administré infraestructura Linux en la nube (LAMP) asegurando 99.9% de uptime. Implementé arquitectura SEO optimizada mejorando rankings orgánicos en un 40%. Lideré sesiones de discovery con clientes, traduciendo requerimientos de negocio en especificaciones técnicas."
+  "selfemployed": {
+    "title": "Especialista en soporte técnico",
+    "company": "Autónomo",
+    "start": "2010-8",
+    "end": "2015-8",
+    "description": "Reparación de computadoras y equipos. Diagnóstico de equipos. Mantenimiento de sistemas operativos. Instalación de sistemas operativos."
   },
   "menu": {
     "home": "Inicio",

@@ -22,69 +22,50 @@
   "jobs": {
     "title": "Work Experience"
   },
+  "newmovement": {
+    "id": 8,
+    "title": "Full Stack Developer — AI Integration",
+    "start": "2025-11",
+    "end": "2026-6",
+    "company": "New Movement Agency",
+    "description": "Designed and deployed AI-powered solutions integrating LLM APIs (OpenAI, local models) into existing web platforms, reducing manual data processing by 60%. Architected high-performance web applications with server-side optimization, caching strategies, and database tuning achieving sub-2s load times. Managed Linux cloud infrastructure (LAMP stack) ensuring 99.9% uptime. Implemented SEO-optimized architecture improving organic search rankings by 40%. Led technical discovery sessions with clients, translating business requirements into technical specifications."
+  },
   "ama": {
     "id": 1,
-    "title": "WordPress Developer - Fullstack",
-    "start": "2024-8",
-    "end": "2025-4",
+    "title": "Senior Web Developer",
+    "start": "2024-5",
+    "end": "2025-11",
     "company": "Addiction Marketing Agency",
     "description": "Implemented a LAMP server in the cloud to host multiple WordPress projects. Developed a high-performance directory with custom post types, advanced taxonomies, and SEO-optimized meta content, using native PHP and JavaScript. Built various sites with extensive content, prioritizing speed and organic ranking. Designed high-performance data architectures with advanced taxonomies and meta-information that anticipate how structured knowledge bases feed today's RAG systems."
   },
-  "ciancoder": {
-    "id": 2,
-    "title": "Freelance Developer - WordPress",
-    "start": "2024-5",
-    "end": "2024-8",
-    "company": "Ciancoders",
-    "description": "Developed two WordPress platforms from scratch: an informational page and a ticket sales system. Implemented CPTs, custom fields, and taxonomies with native PHP (no plugins). For the frontend, used vanilla JavaScript (ES6+) and modern CSS (Grid/Flexbox), creating dynamic components optimized for performance and user experience. These projects were Dockerized and deployed to a Linux server via GIT over SSH. The containerized infrastructure and Git→SSH workflow I established are the same patterns I now use to deploy AI services — models, embeddings, and API endpoints — with the same consistency and reproducibility."
-  },
   "tremgroup": {
     "id": 3,
-    "title": "Fullstack/PHP Developer - JavaScript",
+    "title": "WordPress Fullstack Developer",
     "start": "2022-8",
     "end": "2024-4",
     "company": "TREMGROUP LLC",
     "description": "Developed interactive React.js components for visualizing real estate statistics in Miami. Maintained and optimized legacy websites (8+ years old), modernizing their code and adding features. Created custom solutions with WordPress, Next.js, and React, including Google Maps API integrations for filtering properties by price and profitability. Those dashboards integrated multiple data sources (APIs, MLS, CSV) establishing ETL and normalization patterns that I later applied to AI-driven automation pipelines."
   },
-  "conocimiento": {
-    "id": 4,
-    "title": "Front-end/WordPress Developer",
-    "start": "2021-12",
+  "naciondigital": {
+    "title": "Web Developer",
+    "company": "Nación Digital",
+    "start": "2018-10",
     "end": "2022-6",
-    "company": "Conocimiento Corporativo S.A.S",
-    "description": "Developed custom WordPress solutions from scratch, creating native themes and plugins with PHP. Implemented advanced content systems using custom post types, tailored taxonomies, and custom fields (without plugins like ACF), optimized for sectors like education and security. Each project was built with clean, scalable code to ensure high performance and easy maintenance. The structured content architecture I built — custom post types, taxonomies, meta-fields — mirrors the same patterns I now use to feed structured knowledge into AI assistants and RAG systems."
-  },
-  "nivelics": {
-    "id": 5,
-    "title": "WordPress Developer",
-    "start": "2021-6",
-    "end": "2021-11",
-    "company": "Nivelics SAS",
     "description": "Developed and maintained WordPress sites, including client-facing interfaces and dashboards. Created custom plugins and themes for advertising or e-commerce sites for clients. Built APIs with Node.js. Developed REST APIs with Node.js that established the integration patterns I now apply to connect language models with web platforms."
   },
-  "ztgroup": {
-    "id": 6,
-    "title": "Front-end/WordPress Developer",
-    "start": "2020-3",
-    "end": "2021-6",
-    "company": "ZtGroup LLC",
-    "description": "Developed and maintained WordPress sites, including client-facing interfaces and dashboards. Created custom plugins and themes for advertising or e-commerce sites for clients. Built modular WordPress ecosystems with custom plugins that laid the groundwork for AI-integrated content architectures."
+  "scm255": {
+    "title": "Technical Support Specialist",
+    "company": "SCM-255, CA",
+    "start": "2015-9",
+    "end": "2018-10",
+    "description": "Handled computer equipment incidents, created email accounts, and proposed technical improvements. Provided help and support to staff with their office automation needs. Repaired and maintained computers, network equipment and cabling, and printers."
   },
-  "hispano": {
-    "id": 7,
-    "title": "Front-End Developer",
-    "start": "2018-3",
-    "end": "2020-1",
-    "company": "Hispano Soluciones CA",
-    "description": "Developed interfaces for client projects in Drupal, WordPress, and static site layouts. My early projects in Drupal and WordPress gave me the solid web architecture foundation on which I now build AI automation solutions."
-  },
-  "newmovement": {
-    "id": 8,
-    "title": "Full Stack Developer — AI Integration",
-    "start": "2025-6",
-    "end": "2026-5",
-    "company": "New Movement Agency",
-    "description": "Designed and deployed AI-powered solutions integrating LLM APIs (OpenAI, local models) into existing web platforms, reducing manual data processing by 60%. Architected high-performance web applications with server-side optimization, caching strategies, and database tuning achieving sub-2s load times. Managed Linux cloud infrastructure (LAMP stack) ensuring 99.9% uptime. Implemented SEO-optimized architecture improving organic search rankings by 40%. Led technical discovery sessions with clients, translating business requirements into technical specifications."
+  "selfemployed": {
+    "title": "Technical Support Specialist",
+    "company": "Self Employed",
+    "start": "2010-8",
+    "end": "2015-8",
+    "description": "Computer and equipment repair. Equipment diagnostics. Operating system maintenance. Operating system installation."
   },
   "menu": {
     "home": "Home",
