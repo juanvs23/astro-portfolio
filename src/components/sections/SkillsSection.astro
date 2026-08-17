@@ -11,7 +11,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
-const skillCategories = t('skills.categories') as { title: string; skills: { name: string; description: string }[] }[];
+const skillCategories = t.object('skills.categories') as { title: string; skills: { name: string; description: string }[] }[];
 ---
 
 <Section id="skills">
@@ -42,16 +42,17 @@ const skillCategories = t('skills.categories') as { title: string; skills: { nam
 
 <script>
   document.querySelectorAll('.skill-item').forEach(function(item) {
-    item.addEventListener('click', function() {
-      var marker = this.querySelector('.skill-marker');
-      var content = this.querySelector('.skill-content');
+    item.addEventListener('click', function(event) {
+      const current = event.currentTarget as HTMLElement;
+      var marker = current.querySelector('.skill-marker');
+      var content = current.querySelector('.skill-content');
 
-      if (content.classList.contains('open')) {
+      if (content && content.classList.contains('open')) {
         content.classList.remove('open');
-        marker.textContent = '[+]';
+        if (marker) marker.textContent = '[+]';
       } else {
-        content.classList.add('open');
-        marker.textContent = '[-]';
+        content?.classList.add('open');
+        if (marker) marker.textContent = '[-]';
       }
     });
   });

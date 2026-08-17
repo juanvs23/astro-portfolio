@@ -1,7 +1,7 @@
 import type { Locale } from './utils';
 
-type TranslationValue = string | number | boolean | unknown[] | TranslationObject;
-type TranslationObject = { [key: string]: TranslationValue };
+export type TranslationValue = string | number | boolean | unknown[] | TranslationObject;
+export type TranslationObject = { [key: string]: TranslationValue };
 
 let translationsCache: Record<Locale, TranslationObject> = {} as Record<Locale, TranslationObject>;
 
@@ -37,16 +37,20 @@ function getNestedValue(obj: TranslationObject, path: string): TranslationValue 
   return current;
 }
 
-export async function getTranslations(locale: Locale) {
+export interface Translator {
+  (path: string): string;
+  /** Structured accessor: returns the raw nested value (object/array/primitive). */
+  object(path: string): TranslationValue;
+}
+
+export async function getTranslations(locale: Locale): Promise<Translator> {
   const translations = await loadTranslations(locale);
 
-  return function t(path: string): TranslationValue {
-    const value = getNestedValue(translations, path);
-    if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
-      return String(value);
-    }
-    return value;
-  };
+  const t = ((path: string): string => {
+    return String(getNestedValue(translations, path));
+  }) as Translator;
+  t.object = (path: string): TranslationValue => getNestedValue(translations, path);
+  return t;
 }
 
 export async function getFullTranslations(locale: Locale): Promise<TranslationObject> {

@@ -140,8 +140,8 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
         window.__typewriterDone = false; // fresh page state (window survives VT)
 
         import('motion/mini').then(function (m) {
-          var stops = [];
-          var anims = [];
+          var stops: Array<{ stop(): void }> = [];
+          var anims: Array<{ stop(): void }> = [];
           var revealGrids = document.querySelectorAll('[data-reveal]');
           revealGrids.forEach(function (grid) {
             var items = grid.querySelectorAll('[data-reveal-item]');
@@ -170,7 +170,7 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
       // viewport, sharing the same Motion One inView lifecycle as the section
       // reveals. Lines are hidden via Motion only, so reduced-motion and no-JS
       // render everything visible immediately.
-      function initTerminalLines(m, anims, stops) {
+      function initTerminalLines(m: typeof import('motion/mini'), anims: Array<{ stop(): void }>, stops: Array<{ stop(): void }>) {
         var terminals = document.querySelectorAll('[data-terminal]');
         terminals.forEach(function (term) {
           var lines = term.querySelectorAll('[data-terminal-line]');
@@ -187,7 +187,7 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
               line.querySelectorAll('[data-bar-fill]').forEach(function (bar) {
                 var target = bar.getAttribute('data-bar-fill');
                 if (target == null) return;
-                anims.push(m.animate(bar, { transform: 'scaleX(' + target / 100 + ')' }, { delay: staggerDelay(i, 0.22, 0.05) + 0.1, duration: 0.7, easing: 'ease-out' }));
+                anims.push(m.animate(bar, { transform: 'scaleX(' + +target / 100 + ')' }, { delay: staggerDelay(i, 0.22, 0.05) + 0.1, duration: 0.7, ease: 'easeOut' }));
               });
             });
           }, { amount: 0.3 });
@@ -199,7 +199,7 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
       // after the h1 typewriter dispatches 'typewriter:done'. Elements are
       // hidden via Motion (JS-driven) so reduced-motion and no-JS keep them
       // visible immediately.
-      function initHeroFadeIn(m, anims) {
+      function initHeroFadeIn(m: typeof import('motion/mini'), anims: Array<{ stop(): void }>) {
         var els = document.querySelectorAll('[data-fade-after-type]');
         if (!els.length) return;
         if (window.__typewriterDone) return; // typing already finished → keep visible
@@ -207,14 +207,15 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
           document.removeEventListener('typewriter:done', window.__heroFadeHandler);
         }
         m.animate(els, { opacity: 0, y: 8 }, { duration: 0 });
-        window.__heroFadeHandler = function () {
-          document.removeEventListener('typewriter:done', window.__heroFadeHandler);
+        var heroFadeHandler = function () {
+          document.removeEventListener('typewriter:done', heroFadeHandler);
           window.__heroFadeHandler = null;
           els.forEach(function (el, i) {
             anims.push(m.animate(el, { opacity: 1, y: 0 }, { delay: 0.15 * i, duration: 0.45 }));
           });
         };
-        document.addEventListener('typewriter:done', window.__heroFadeHandler);
+        window.__heroFadeHandler = heroFadeHandler;
+        document.addEventListener('typewriter:done', heroFadeHandler);
       }
 
       // Lateral matrix stream behind the hero headline. Decorative only;
@@ -236,43 +237,45 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
         var hero = document.getElementById('hero');
         var cursor = document.querySelector('.hero-cursor');
         if (!hero || !cursor) return;
+        const heroEl = hero;
+        const cursorEl = cursor as HTMLElement;
         var active = false;
         function onEnter() {
           active = true;
-          cursor.classList.add('hero-cursor-active');
+          cursorEl.classList.add('hero-cursor-active');
         }
         function onLeave() {
           active = false;
-          cursor.classList.remove('hero-cursor-active');
+          cursorEl.classList.remove('hero-cursor-active');
         }
-        function onMove(e) {
+        function onMove(e: MouseEvent) {
           if (!active) return;
-          cursor.style.left = e.clientX + 'px';
-          cursor.style.top = e.clientY + 'px';
+          cursorEl.style.left = e.clientX + 'px';
+          cursorEl.style.top = e.clientY + 'px';
         }
-        function onOver(e) {
-          var target = e.target;
+        function onOver(e: MouseEvent) {
+          var target = e.target as HTMLElement | null;
           var interactive = target && target.closest ? target.closest('a, button') : null;
-          cursor.classList.toggle('hero-cursor-grow', !!interactive);
+          cursorEl.classList.toggle('hero-cursor-grow', !!interactive);
         }
-        hero.addEventListener('mouseenter', onEnter);
-        hero.addEventListener('mouseleave', onLeave);
+        heroEl.addEventListener('mouseenter', onEnter);
+        heroEl.addEventListener('mouseleave', onLeave);
         window.addEventListener('pointermove', onMove);
-        hero.addEventListener('mouseover', onOver);
+        heroEl.addEventListener('mouseover', onOver);
         window.__heroCursorDispose = function () {
-          hero.removeEventListener('mouseenter', onEnter);
-          hero.removeEventListener('mouseleave', onLeave);
+          heroEl.removeEventListener('mouseenter', onEnter);
+          heroEl.removeEventListener('mouseleave', onLeave);
           window.removeEventListener('pointermove', onMove);
-          hero.removeEventListener('mouseover', onOver);
-          cursor.classList.remove('hero-cursor-active');
-          cursor.style.left = '';
-          cursor.style.top = '';
+          heroEl.removeEventListener('mouseover', onOver);
+          cursorEl.classList.remove('hero-cursor-active');
+          cursorEl.style.left = '';
+          cursorEl.style.top = '';
         };
       }
 
       function disposeHomeMotion() {
         if (window.__homeMotion) {
-          window.__homeMotion.stops.forEach(function (s) { s(); });
+          window.__homeMotion.stops.forEach(function (s) { s.stop(); });
           window.__homeMotion.anims.forEach(function (a) { a.stop(); });
           window.__homeMotion = null;
         }

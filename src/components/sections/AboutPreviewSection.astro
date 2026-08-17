@@ -12,7 +12,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 const terminalTitle = String(t("funnel.about.terminal.title"));
-const terminalLines = t("funnel.about.terminal.lines") as string[];
+const terminalLines = t.object("funnel.about.terminal.lines") as string[];
 ---
 
 <Section id="about-preview">

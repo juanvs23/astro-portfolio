@@ -92,21 +92,21 @@ interface ProcessStep {
 describe('services.webPlans i18n', () => {
   it('should have 3 web plans in ES', async () => {
     const t = await getTranslations('es');
-    const plans = t('services.webPlans') as WebPlan[];
+    const plans = t.object('services.webPlans') as WebPlan[];
     expect(Array.isArray(plans)).toBe(true);
     expect(plans).toHaveLength(3);
   });
 
   it('should have 3 web plans in EN', async () => {
     const t = await getTranslations('en');
-    const plans = t('services.webPlans') as WebPlan[];
+    const plans = t.object('services.webPlans') as WebPlan[];
     expect(Array.isArray(plans)).toBe(true);
     expect(plans).toHaveLength(3);
   });
 
   it('should have Básico as first plan in ES', async () => {
     const t = await getTranslations('es');
-    const plans = t('services.webPlans') as WebPlan[];
+    const plans = t.object('services.webPlans') as WebPlan[];
     expect(plans[0].name).toBe('Básico');
     expect(plans[0].startingPrice).toBe(120);
     expect(plans[0].delivery).toBe('3 días');
@@ -117,7 +117,7 @@ describe('services.webPlans i18n', () => {
 
   it('should have Profesional as the recommended plan', async () => {
     const t = await getTranslations('es');
-    const plans = t('services.webPlans') as WebPlan[];
+    const plans = t.object('services.webPlans') as WebPlan[];
     expect(plans[1].name).toBe('Profesional');
     expect(plans[1].startingPrice).toBe(250);
     expect(plans[1].recommended).toBe(true);
@@ -125,7 +125,7 @@ describe('services.webPlans i18n', () => {
 
   it('should have E-commerce as third plan with price 500', async () => {
     const t = await getTranslations('en');
-    const plans = t('services.webPlans') as WebPlan[];
+    const plans = t.object('services.webPlans') as WebPlan[];
     expect(plans[2].name).toBe('E-commerce');
     expect(plans[2].startingPrice).toBe(500);
     expect(plans[2].delivery).toBe('14 days');
@@ -136,21 +136,21 @@ describe('services.webPlans i18n', () => {
 describe('services.express i18n', () => {
   it('should have 6 express services in ES', async () => {
     const t = await getTranslations('es');
-    const items = t('services.express') as ExpressService[];
+    const items = t.object('services.express') as ExpressService[];
     expect(Array.isArray(items)).toBe(true);
     expect(items).toHaveLength(6);
   });
 
   it('should have 6 express services in EN', async () => {
     const t = await getTranslations('en');
-    const items = t('services.express') as ExpressService[];
+    const items = t.object('services.express') as ExpressService[];
     expect(Array.isArray(items)).toBe(true);
     expect(items).toHaveLength(6);
   });
 
   it('each express item should have non-empty name and description (ES)', async () => {
     const t = await getTranslations('es');
-    const items = t('services.express') as ExpressService[];
+    const items = t.object('services.express') as ExpressService[];
     for (const item of items) {
       expect(item.name).toBeDefined();
       expect(item.name.length).toBeGreaterThan(0);
@@ -163,21 +163,21 @@ describe('services.express i18n', () => {
 describe('services.process i18n', () => {
   it('should have 3 process steps in ES', async () => {
     const t = await getTranslations('es');
-    const steps = t('services.process') as ProcessStep[];
+    const steps = t.object('services.process') as ProcessStep[];
     expect(Array.isArray(steps)).toBe(true);
     expect(steps).toHaveLength(3);
   });
 
   it('should have 3 process steps in EN', async () => {
     const t = await getTranslations('en');
-    const steps = t('services.process') as ProcessStep[];
+    const steps = t.object('services.process') as ProcessStep[];
     expect(Array.isArray(steps)).toBe(true);
     expect(steps).toHaveLength(3);
   });
 
   it('process steps should have sequential step numbers 1, 2, 3', async () => {
     const t = await getTranslations('es');
-    const steps = t('services.process') as ProcessStep[];
+    const steps = t.object('services.process') as ProcessStep[];
     expect(steps[0].step).toBe(1);
     expect(steps[1].step).toBe(2);
     expect(steps[2].step).toBe(3);
@@ -187,7 +187,7 @@ describe('services.process i18n', () => {
 describe('services.launchPricing i18n', () => {
   it('should have badge and note in ES', async () => {
     const t = await getTranslations('es');
-    const lp = t('services.launchPricing') as Record<string, string>;
+    const lp = t.object('services.launchPricing') as Record<string, string>;
     expect(lp.badge).toBeDefined();
     expect(lp.badge.length).toBeGreaterThan(0);
     expect(lp.note).toBeDefined();
@@ -198,7 +198,7 @@ describe('services.launchPricing i18n', () => {
 describe('services.ia i18n', () => {
   it('should have heading and description in ES', async () => {
     const t = await getTranslations('es');
-    const ia = t('services.ia') as Record<string, string>;
+    const ia = t.object('services.ia') as Record<string, string>;
     expect(ia.heading).toBeDefined();
     expect(ia.heading.length).toBeGreaterThan(0);
     expect(ia.description).toBeDefined();
@@ -207,7 +207,7 @@ describe('services.ia i18n', () => {
 
   it('should have heading and description in EN', async () => {
     const t = await getTranslations('en');
-    const ia = t('services.ia') as Record<string, string>;
+    const ia = t.object('services.ia') as Record<string, string>;
     expect(ia.heading).toBeDefined();
     expect(ia.heading.length).toBeGreaterThan(0);
     expect(ia.description).toBeDefined();
@@ -326,7 +326,7 @@ describe('funnel.* namespace i18n (PR₁)', () => {
 
   it('should have 4-6 FAQ items with non-empty question/answer (es)', async () => {
     const t = await getTranslations('es');
-    const faq = t('funnel.faq') as FaqItem[];
+    const faq = t.object('funnel.faq') as FaqItem[];
     expect(Array.isArray(faq)).toBe(true);
     expect(faq.length).toBeGreaterThanOrEqual(4);
     expect(faq.length).toBeLessThanOrEqual(6);
@@ -338,7 +338,7 @@ describe('funnel.* namespace i18n (PR₁)', () => {
 
   it('should have 4-6 FAQ items with non-empty question/answer (en)', async () => {
     const t = await getTranslations('en');
-    const faq = t('funnel.faq') as FaqItem[];
+    const faq = t.object('funnel.faq') as FaqItem[];
     expect(Array.isArray(faq)).toBe(true);
     expect(faq.length).toBeGreaterThanOrEqual(4);
     expect(faq.length).toBeLessThanOrEqual(6);
@@ -350,8 +350,8 @@ describe('funnel.* namespace i18n (PR₁)', () => {
 
   it('should have non-empty proof.metrics and proof.results arrays (es)', async () => {
     const t = await getTranslations('es');
-    const metrics = t('funnel.proof.metrics') as string[];
-    const results = t('funnel.proof.results') as string[];
+    const metrics = t.object('funnel.proof.metrics') as string[];
+    const results = t.object('funnel.proof.results') as string[];
     expect(metrics.length).toBeGreaterThanOrEqual(4);
     expect(results.length).toBeGreaterThanOrEqual(2);
     for (const m of metrics) {
@@ -364,8 +364,8 @@ describe('funnel.* namespace i18n (PR₁)', () => {
 
   it('should have non-empty proof.metrics and proof.results arrays (en)', async () => {
     const t = await getTranslations('en');
-    const metrics = t('funnel.proof.metrics') as string[];
-    const results = t('funnel.proof.results') as string[];
+    const metrics = t.object('funnel.proof.metrics') as string[];
+    const results = t.object('funnel.proof.results') as string[];
     expect(metrics.length).toBeGreaterThanOrEqual(4);
     expect(results.length).toBeGreaterThanOrEqual(2);
     for (const m of metrics) {
@@ -514,6 +514,14 @@ function collectValuesExcept(root: unknown, excludedKey: string): string[] {
 }
 
 describe('seo.* copy intent i18n guards (PR₃)', () => {
+  interface SeoShape {
+    title: string;
+    description: string;
+    ogImageAlt: string;
+    pages: Record<string, string>;
+    descriptions: Record<string, string>;
+    h1: Record<string, string>;
+  }
   const SEO_INTENT = {
     services: {
       es: ['precios', 'servicios de desarrollo'],
@@ -567,10 +575,10 @@ describe('seo.* copy intent i18n guards (PR₃)', () => {
 
   it('seo.ogImageAlt should be non-empty and differ from every seo description (es)', async () => {
     const es = await getFullTranslations('es');
-    const alt = es.seo.ogImageAlt as string;
+    const alt = (es.seo as unknown as SeoShape).ogImageAlt as string;
     expect(typeof alt).toBe('string');
     expect(alt.length).toBeGreaterThan(0);
-    const descriptions = collectStringValues(es.seo.descriptions);
+    const descriptions = collectStringValues((es.seo as unknown as SeoShape).descriptions);
     expect(descriptions.length).toBeGreaterThan(0);
     for (const description of descriptions) {
       expect(alt).not.toBe(description);
@@ -579,10 +587,10 @@ describe('seo.* copy intent i18n guards (PR₃)', () => {
 
   it('seo.ogImageAlt should be non-empty and differ from every seo description (en)', async () => {
     const en = await getFullTranslations('en');
-    const alt = en.seo.ogImageAlt as string;
+    const alt = (en.seo as unknown as SeoShape).ogImageAlt as string;
     expect(typeof alt).toBe('string');
     expect(alt.length).toBeGreaterThan(0);
-    const descriptions = collectStringValues(en.seo.descriptions);
+    const descriptions = collectStringValues((en.seo as unknown as SeoShape).descriptions);
     expect(descriptions.length).toBeGreaterThan(0);
     for (const description of descriptions) {
       expect(alt).not.toBe(description);
@@ -627,9 +635,9 @@ describe('seo.* copy intent i18n guards (PR₃)', () => {
     for (const locale of ['es', 'en'] as const) {
       const full = await getFullTranslations(locale);
       const combined = [
-        full.seo.pages.services,
-        full.seo.descriptions.services,
-        full.seo.h1.services,
+        (full.seo as unknown as SeoShape).pages.services,
+        (full.seo as unknown as SeoShape).descriptions.services,
+        (full.seo as unknown as SeoShape).h1.services,
       ].join(' ').toLowerCase();
       const keywords = SEO_INTENT.services[locale];
       const hit = keywords.some((k) => combined.includes(k));
@@ -641,9 +649,9 @@ describe('seo.* copy intent i18n guards (PR₃)', () => {
     for (const locale of ['es', 'en'] as const) {
       const full = await getFullTranslations(locale);
       const combined = [
-        full.seo.pages.automation,
-        full.seo.descriptions.automation,
-        full.seo.h1.automation,
+        (full.seo as unknown as SeoShape).pages.automation,
+        (full.seo as unknown as SeoShape).descriptions.automation,
+        (full.seo as unknown as SeoShape).h1.automation,
       ].join(' ').toLowerCase();
       const keywords = SEO_INTENT.automation[locale];
       const hits = keywords.filter((k) => combined.includes(k)).length;
@@ -655,9 +663,9 @@ describe('seo.* copy intent i18n guards (PR₃)', () => {
     for (const locale of ['es', 'en'] as const) {
       const full = await getFullTranslations(locale);
       const combined = [
-        full.seo.pages.projects,
-        full.seo.descriptions.projects,
-        full.seo.h1.projects,
+        (full.seo as unknown as SeoShape).pages.projects,
+        (full.seo as unknown as SeoShape).descriptions.projects,
+        (full.seo as unknown as SeoShape).h1.projects,
       ].join(' ').toLowerCase();
       const keywords = SEO_INTENT.projects[locale];
       const hit = keywords.some((k) => combined.includes(k));
@@ -669,9 +677,9 @@ describe('seo.* copy intent i18n guards (PR₃)', () => {
     for (const locale of ['es', 'en'] as const) {
       const full = await getFullTranslations(locale);
       const combined = [
-        full.seo.pages.about,
-        full.seo.descriptions.about,
-        full.seo.h1.about,
+        (full.seo as unknown as SeoShape).pages.about,
+        (full.seo as unknown as SeoShape).descriptions.about,
+        (full.seo as unknown as SeoShape).h1.about,
       ].join(' ').toLowerCase();
       const keywords = SEO_INTENT.about[locale];
       const hits = keywords.filter((k) => combined.includes(k)).length;
@@ -683,9 +691,9 @@ describe('seo.* copy intent i18n guards (PR₃)', () => {
     for (const locale of ['es', 'en'] as const) {
       const full = await getFullTranslations(locale);
       const combined = [
-        full.seo.pages.contact,
-        full.seo.descriptions.contact,
-        full.seo.h1.contact,
+        (full.seo as unknown as SeoShape).pages.contact,
+        (full.seo as unknown as SeoShape).descriptions.contact,
+        (full.seo as unknown as SeoShape).h1.contact,
       ].join(' ').toLowerCase();
       const keywords = SEO_INTENT.contact[locale];
       const hit = keywords.some((k) => combined.includes(k));
@@ -696,7 +704,7 @@ describe('seo.* copy intent i18n guards (PR₃)', () => {
   it('home seo title/description carry conversion landing intent (es + en)', async () => {
     for (const locale of ['es', 'en'] as const) {
       const full = await getFullTranslations(locale);
-      const combined = [full.seo.title, full.seo.description].join(' ').toLowerCase();
+      const combined = [(full.seo as unknown as SeoShape).title, (full.seo as unknown as SeoShape).description].join(' ').toLowerCase();
       const keywords = SEO_INTENT.home[locale];
       const hit = keywords.some((k) => combined.includes(k));
       expect(hit, `${locale} home seo copy should include conversion intent`).toBe(true);

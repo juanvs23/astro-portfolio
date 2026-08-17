@@ -18,10 +18,10 @@ const t = await getTranslations(locale);
 const skillsLink = t('about.skillsLink');
 
 const jobs = getJobs(t);
-const months = t('common.months') as string[];
+const months = t.object('common.months') as string[];
 
-const highlightSkillNames = t('about.highlightSkills') as string[];
-const skillCategories = t('skills.categories') as { title: string; skills: { name: string; description: string }[] }[];
+const highlightSkillNames = t.object('about.highlightSkills') as string[];
+const skillCategories = t.object('skills.categories') as { title: string; skills: { name: string; description: string }[] }[];
 const highlightSkills: { name: string; description: string }[] = [];
 for (const category of skillCategories) {
   for (const skill of category.skills) {
@@ -42,7 +42,7 @@ for (const category of skillCategories) {
         loading="eager"
         fetchpriority="high"
         widths={[320, 640, 960]}
-        formats={['webp', 'jpeg']}
+        format="webp"
       />
     </div>
 
@@ -125,16 +125,17 @@ for (const category of skillCategories) {
 
 <script>
   document.querySelectorAll('.skill-item').forEach(function (item) {
-    item.addEventListener('click', function () {
-      var marker = this.querySelector('.skill-marker');
-      var content = this.querySelector('.skill-content');
+    item.addEventListener('click', function (event) {
+      const current = event.currentTarget as HTMLElement;
+      var marker = current.querySelector('.skill-marker');
+      var content = current.querySelector('.skill-content');
 
-      if (content.classList.contains('open')) {
+      if (content && content.classList.contains('open')) {
         content.classList.remove('open');
-        marker.textContent = '[+]';
+        if (marker) marker.textContent = '[+]';
       } else {
-        content.classList.add('open');
-        marker.textContent = '[-]';
+        content?.classList.add('open');
+        if (marker) marker.textContent = '[-]';
       }
     });
   });

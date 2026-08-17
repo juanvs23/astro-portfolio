@@ -20,7 +20,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
-const faq = t('funnel.faq') as FaqItem[];
+const faq = t.object('funnel.faq') as FaqItem[];
 const waHref = buildWhatsAppLink(
   t('contact.whatsappNumber') as string,
   (t('funnel.audit.message') as string),
@@ -91,10 +91,10 @@ const faqPageLd = buildFaqPageLd(faq, Astro.site ?? new URL(siteInfo.url));
   (function () {
     var toggles = document.querySelectorAll('.faq-toggle');
     toggles.forEach(function (toggle) {
-      var panel = document.getElementById(toggle.getAttribute('aria-controls'));
+      var panel = document.getElementById(toggle.getAttribute('aria-controls') ?? '');
       var marker = toggle.querySelector('.faq-marker');
 
-      function update(open) {
+      function update(open: boolean) {
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         if (marker) marker.textContent = open ? '[-]' : '[+]';
         if (panel) {

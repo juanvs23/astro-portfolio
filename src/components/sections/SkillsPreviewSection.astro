@@ -12,7 +12,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 const terminalTitle = String(t('funnel.skills.terminal.title'));
-const terminalLines = t('funnel.skills.terminal.lines') as string[];
+const terminalLines = t.object('funnel.skills.terminal.lines') as string[];
 ---
 
 <Section id="skills-preview">

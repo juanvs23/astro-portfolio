@@ -1,5 +1,6 @@
 ---
 interface Props {
+  id?: string;
   href: string;
   variant?: 'dark' | 'light' | 'primary' | 'accent';
   direction?: 'left' | 'bottom';
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const {
+  id,
   href,
   variant = 'dark',
   direction = 'left',
@@ -34,6 +36,7 @@ const variantClasses: Record<string, string> = {
 ---
 
 <a
+  id={id}
   href={href}
   target={target}
   rel={rel}

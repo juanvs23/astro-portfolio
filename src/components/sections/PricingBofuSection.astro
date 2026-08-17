@@ -22,8 +22,8 @@ interface Props {
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
-const webPlans = t('services.webPlans') as WebPlan[];
-const launchPricing = t('services.launchPricing') as { badge: string; note: string };
+const webPlans = t.object('services.webPlans') as WebPlan[];
+const launchPricing = t.object('services.launchPricing') as { badge: string; note: string };
 const whatsappNumber = t('contact.whatsappNumber') as string;
 
 // BOFU standalone display variant (D6): reuse `services.webPlans` + `launchPricing`

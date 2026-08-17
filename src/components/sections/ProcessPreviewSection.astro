@@ -15,7 +15,7 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
-const steps = t('services.process') as ProcessStep[];
+const steps = t.object('services.process') as ProcessStep[];
 ---
 
 <Section id="process">

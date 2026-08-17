@@ -13,7 +13,7 @@ const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
 const jobs = getJobs(t);
-const months = t('common.months') as string[];
+const months = t.object('common.months') as string[];
 ---
 
 <Section id="experience" data-aos="fade-up" data-aos-delay="150">

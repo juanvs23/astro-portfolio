@@ -83,7 +83,7 @@ for (const key of FINAL_SECTION_STRING_KEYS) {
 describe('social proof data shape (funnel.proof)', () => {
   it('metrics ground the 60/40/99.9/45 figures from portfolio data (es)', async () => {
     const t = await getTranslations('es');
-    const metrics = t('funnel.proof.metrics') as string[];
+    const metrics = t.object('funnel.proof.metrics') as string[];
     expect(Array.isArray(metrics)).toBe(true);
     expect(metrics.length).toBeGreaterThanOrEqual(4);
     const joined = metrics.join(' ');
@@ -104,7 +104,7 @@ describe('social proof data shape (funnel.proof)', () => {
 describe('BOFU pricing data shape (services.webPlans + launchPricing)', () => {
   it('webPlans has the 3 tiers with from-prices 120/250/500 and delivery (es)', async () => {
     const t = await getTranslations('es');
-    const plans = t('services.webPlans') as WebPlan[];
+    const plans = t.object('services.webPlans') as WebPlan[];
     expect(Array.isArray(plans)).toBe(true);
     expect(plans).toHaveLength(3);
     expect(plans.map((p) => p.startingPrice)).toEqual([120, 250, 500]);
@@ -119,7 +119,7 @@ describe('BOFU pricing data shape (services.webPlans + launchPricing)', () => {
 
   it('launchPricing badge + note (15% off) resolve and render near cards (es)', async () => {
     const t = await getTranslations('es');
-    const lp = t('services.launchPricing') as { badge: string; note: string };
+    const lp = t.object('services.launchPricing') as { badge: string; note: string };
     expect(lp.badge).toContain('15%');
     expect(lp.note.length).toBeGreaterThan(0);
   });
@@ -128,7 +128,7 @@ describe('BOFU pricing data shape (services.webPlans + launchPricing)', () => {
 describe('FAQ data shape (funnel.faq)', () => {
   it('es FAQ items cover price, delivery, support and no-commitment objections', async () => {
     const t = await getTranslations('es');
-    const faq = t('funnel.faq') as FaqItem[];
+    const faq = t.object('funnel.faq') as FaqItem[];
     expect(Array.isArray(faq)).toBe(true);
     expect(faq.length).toBeGreaterThanOrEqual(4);
     expect(faq.length).toBeLessThanOrEqual(6);

@@ -1,5 +1,6 @@
 ---
 import { getTranslations, type Locale } from "@/i18n";
+import type { ImageMetadata } from "astro";
 import gericht from "../../assets/img/gericht.jpg";
 import stepstogether from "../../assets/img/stepstogether.jpg";
 import institutomia from "../../assets/img/institutomia.jpg";
@@ -11,13 +12,22 @@ interface Props {
   locale: Locale;
 }
 
+interface ProjectTab {
+  id: string;
+  name: string;
+  url: string;
+  img: ImageMetadata;
+  desc: string;
+  enDesc: string;
+}
+
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
 // Tab entries — same projects as the full /projects page (ProjectsSection.astro),
 // with real names, URLs, and es/en descriptions. The active tab's card renders
 // the real ProjectItem component with its hover image-scroll animation.
-const tabs = [
+const tabs: ProjectTab[] = [
   {
     id: "gericht",
     name: "Gericht",
@@ -89,7 +99,16 @@ const tabs = [
       <div id="projects-tabpanel" role="tabpanel" aria-labelledby="projects-tab-gericht" class="projects-tabview">
         {tabs.map((project, index) => (
           <div class:list={["projects-tabpane", index === 0 ? "" : "hidden"]} data-projects-pane={project.id}>
-            <ProjectItem textButton={t("projects.button")} project={{ ...project, desc: locale === "en" ? project.enDesc : project.desc }} />
+            <ProjectItem
+              textButton={t("projects.button")}
+              project={{
+                id: index,
+                name: project.name,
+                url: project.url,
+                img: project.img,
+                desc: locale === "en" ? project.enDesc : project.desc,
+              }}
+            />
           </div>
         ))}
       </div>
@@ -109,14 +128,14 @@ const tabs = [
     const panel = document.getElementById("projects-tabpanel");
     if (!tabs.length || !panes.length) return;
 
-    function select(id) {
+    function select(id: string) {
       tabs.forEach((tab) => {
-        const active = tab.dataset.projectsTab === id;
+        const active = (tab as HTMLElement).dataset.projectsTab === id;
         tab.setAttribute("aria-selected", active ? "true" : "false");
         tab.classList.toggle("is-active", active);
       });
       panes.forEach((pane) => {
-        pane.classList.toggle("hidden", pane.dataset.projectsPane !== id);
+        pane.classList.toggle("hidden", (pane as HTMLElement).dataset.projectsPane !== id);
       });
       if (panel) {
         const activeTab = document.querySelector(`[data-projects-tab="${id}"]`);
@@ -125,7 +144,7 @@ const tabs = [
     }
 
     tabs.forEach((tab) => {
-      tab.addEventListener("click", () => select(tab.dataset.projectsTab));
+      tab.addEventListener("click", () => select((tab as HTMLElement).dataset.projectsTab ?? ""));
     });
   }
 

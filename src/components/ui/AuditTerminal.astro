@@ -14,7 +14,7 @@ interface Props {
 
 const { locale = 'es', class: extraClass = '', ...attrs } = Astro.props;
 const t = await getTranslations(locale);
-const terminal = t('funnel.audit.terminal') as {
+const terminal = t.object('funnel.audit.terminal') as {
   title: string;
   command: string;
   rows: AuditRow[];

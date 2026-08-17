@@ -99,6 +99,7 @@ export function createMatrixStream(
   if (!ctx) {
     return { start() {}, stop() {} };
   }
+  const canvasContext = ctx;
 
   const glyphs = opts.glyphs ?? DEFAULT_GLYPHS;
   const fontSize = opts.fontSize ?? DEFAULT_FONT_SIZE;
@@ -136,8 +137,8 @@ export function createMatrixStream(
     const dt = Math.min(Math.max((t - lastTime) / 1000, 0), 0.1);
     lastTime = t;
 
-    ctx.clearRect(0, 0, width, height);
-    ctx.font = `${fontSize}px ui-monospace, "JetBrains Mono", monospace`;
+    canvasContext.clearRect(0, 0, width, height);
+    canvasContext.font = `${fontSize}px ui-monospace, "JetBrains Mono", monospace`;
     const cols = Math.max(1, Math.floor(width / cellWidth));
 
     streams.forEach((stream, row) => {
@@ -154,11 +155,11 @@ export function createMatrixStream(
         const x = col * cellWidth;
         const y = (row + 1) * fontSize;
         if (i === 0) {
-          ctx.fillStyle = rgba(headColor, 0.9);
+          canvasContext.fillStyle = rgba(headColor, 0.9);
         } else {
-          ctx.fillStyle = rgba(trailColor, Math.max(0.08, 0.5 - i * 0.04));
+          canvasContext.fillStyle = rgba(trailColor, Math.max(0.08, 0.5 - i * 0.04));
         }
-        ctx.fillText(pickGlyph(), x, y);
+        canvasContext.fillText(pickGlyph(), x, y);
       }
     });
 
@@ -166,14 +167,14 @@ export function createMatrixStream(
   }
 
   function drawStaticGrid(): void {
-    ctx.clearRect(0, 0, width, height);
-    ctx.font = `${fontSize}px ui-monospace, "JetBrains Mono", monospace`;
+    canvasContext.clearRect(0, 0, width, height);
+    canvasContext.font = `${fontSize}px ui-monospace, "JetBrains Mono", monospace`;
     const cols = Math.max(1, Math.floor(width / cellWidth));
     const rows = Math.max(1, Math.floor(height / fontSize));
-    ctx.fillStyle = rgba(trailColor, 0.12);
+    canvasContext.fillStyle = rgba(trailColor, 0.12);
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        ctx.fillText(pickGlyph(), c * cellWidth, (r + 1) * fontSize);
+        canvasContext.fillText(pickGlyph(), c * cellWidth, (r + 1) * fontSize);
       }
     }
   }

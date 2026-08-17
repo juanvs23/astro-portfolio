@@ -50,17 +50,17 @@ interface Props {
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
-const webPlans = t('services.webPlans') as WebPlan[];
-const express = t('services.express') as ExpressService[];
-const processSteps = t('services.process') as ProcessStep[];
-const addons = t('services.addons') as Addon[];
-const launchPricing = t('services.launchPricing') as { badge: string; note: string };
-const ia = t('services.ia') as { heading: string; description: string };
-const customWork = t('services.custom') as { heading: string; description: string; cta: string };
+const webPlans = t.object('services.webPlans') as WebPlan[];
+const express = t.object('services.express') as ExpressService[];
+const processSteps = t.object('services.process') as ProcessStep[];
+const addons = t.object('services.addons') as Addon[];
+const launchPricing = t.object('services.launchPricing') as { badge: string; note: string };
+const ia = t.object('services.ia') as { heading: string; description: string };
+const customWork = t.object('services.custom') as { heading: string; description: string; cta: string };
 const whatsappNumber = t('contact.whatsappNumber') as string;
 
-const calcScaleOptions = t('services.calculator.scaleOptions') as CalcScaleOption[];
-const calcUrgencyOptions = t('services.calculator.urgencyOptions') as CalcUrgencyOption[];
+const calcScaleOptions = t.object('services.calculator.scaleOptions') as CalcScaleOption[];
+const calcUrgencyOptions = t.object('services.calculator.urgencyOptions') as CalcUrgencyOption[];
 
 const calcHeading = t('services.calculator.heading') as string;
 const calcSubheading = t('services.calculator.subheading') as string;
@@ -363,16 +363,19 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
       var ctaLink = card.querySelector('.plan-cta');
       var checkboxes = card.querySelectorAll('.plan-addon-checkbox');
       if (!priceEl || !ctaLink) return;
-      var basePrice = parseInt(priceEl.dataset.base, 10);
-      var planName = ctaLink ? ctaLink.textContent.trim() : '';
+      var priceDisplay = priceEl as HTMLElement;
+      var ctaAnchor = ctaLink as HTMLAnchorElement;
+      var basePrice = parseInt(priceDisplay.dataset.base ?? '', 10);
+      var planName = (ctaAnchor.textContent || '').trim();
 
       function updatePrice() {
         var extra = 0;
-        var selectedAddons = [];
+        var selectedAddons: string[] = [];
         checkboxes.forEach(function (cb) {
-          if (cb.checked) {
-            var addonPrice = parseInt(cb.dataset.price, 10);
-            var addonName = cb.dataset.name;
+          var checkbox = cb as HTMLInputElement;
+          if (checkbox.checked) {
+            var addonPrice = parseInt(checkbox.dataset.price ?? '', 10);
+            var addonName = checkbox.dataset.name;
             if (addonPrice === 0) {
               // Express Delivery: 50% of base
               addonPrice = Math.round(basePrice * 0.5);
@@ -382,26 +385,27 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
           }
         });
         var total = basePrice + extra;
-        priceEl.textContent = '$' + total.toLocaleString();
+        priceDisplay.textContent = '$' + total.toLocaleString();
 
         // Update WhatsApp CTA
-        if (ctaLink) {
+        if (ctaAnchor) {
           var phone = '584248310009';
           var msg = 'Hola Juan! Me interesa el plan ' + planName + ' de Desarrollo Web — desde $' + total + ' USD';
           if (selectedAddons.length > 0) {
             msg += '. Extras: ' + selectedAddons.join(', ');
           }
-          ctaLink.href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
+          ctaAnchor.href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
         }
       }
 
       checkboxes.forEach(function (cb) {
-        var indicator = cb.parentElement.querySelector('.plan-addon-indicator');
-        cb.addEventListener('change', function () {
+        var checkbox = cb as HTMLInputElement;
+        var indicator = checkbox.parentElement?.querySelector('.plan-addon-indicator');
+        checkbox.addEventListener('change', function () {
           if (indicator) {
-            indicator.textContent = cb.checked ? '[x]' : '[ ]';
-            indicator.classList.toggle('text-success', cb.checked);
-            indicator.classList.toggle('text-mute', !cb.checked);
+            indicator.textContent = checkbox.checked ? '[x]' : '[ ]';
+            indicator.classList.toggle('text-success', checkbox.checked);
+            indicator.classList.toggle('text-mute', !checkbox.checked);
           }
           updatePrice();
         });
@@ -412,7 +416,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
 <script>
   (function () {
     // Pricing matrix (mirrors src/lib/quote-calculator.ts PRICING_MATRIX)
-    var PRICING = {
+    var PRICING: Record<string, { min: number; max: number }> = {
       'chatbot-rag:relaxed': { min: 300, max: 400 },
       'chatbot-rag:normal': { min: 400, max: 500 },
       'chatbot-rag:urgent': { min: 500, max: 600 },
@@ -424,21 +428,21 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
       'full-automation:urgent': { min: 2000, max: 2500 },
     };
 
-    var SCALE_LABELS = {
+    var SCALE_LABELS: Record<string, string> = {
       'chatbot-rag': 'Chatbot con RAG',
       'autonomous-agents': 'Agentes Autónomos',
       'full-automation': 'Automatización Completa',
     };
 
-    var URGENCY_LABELS = {
+    var URGENCY_LABELS: Record<string, string> = {
       relaxed: 'Tranquilo',
       normal: 'Normal',
       urgent: 'Urgente',
     };
 
     var PHONE = '584248310009';
-    var selectedScale = null;
-    var selectedUrgency = null;
+    var selectedScale: string | null = null;
+    var selectedUrgency: string | null = null;
 
     var stepIndicator = document.getElementById('calc-step-indicator');
     var stepLabel = document.getElementById('calc-step-label');
@@ -452,36 +456,38 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
     // Scale buttons
     var scaleBtns = document.querySelectorAll('.calc-scale-btn');
     scaleBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        selectedScale = this.dataset.scale;
+      btn.addEventListener('click', function (event) {
+        var btnEl = event.currentTarget as HTMLElement;
+        selectedScale = btnEl.dataset.scale ?? null;
 
         // Visual feedback: highlight selected, dim others
         scaleBtns.forEach(function (b) {
           b.classList.remove('border-accent', 'ring-2', 'ring-accent');
         });
-        this.classList.add('border-accent', 'ring-2', 'ring-accent');
+        btnEl.classList.add('border-accent', 'ring-2', 'ring-accent');
 
         // Advance to urgency step
-        stepLabel.textContent = document.querySelector('#calc-step-urgency h4')
-          ? document.querySelector('#calc-step-urgency h4').textContent
-          : 'Paso 2: Urgencia';
-
-        stepScale.classList.add('hidden');
-        stepUrgency.classList.remove('hidden');
+        var urgencyHeading = document.querySelector('#calc-step-urgency h4');
+        if (stepLabel) {
+          stepLabel.textContent = urgencyHeading ? urgencyHeading.textContent : 'Paso 2: Urgencia';
+        }
+        if (stepScale) stepScale.classList.add('hidden');
+        if (stepUrgency) stepUrgency.classList.remove('hidden');
       });
     });
 
     // Urgency buttons
     var urgencyBtns = document.querySelectorAll('.calc-urgency-btn');
     urgencyBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        selectedUrgency = this.dataset.urgency;
+      btn.addEventListener('click', function (event) {
+        var btnEl = event.currentTarget as HTMLElement;
+        selectedUrgency = btnEl.dataset.urgency ?? null;
 
         // Visual feedback
         urgencyBtns.forEach(function (b) {
           b.classList.remove('border-accent', 'ring-2', 'ring-accent');
         });
-        this.classList.add('border-accent', 'ring-2', 'ring-accent');
+        btnEl.classList.add('border-accent', 'ring-2', 'ring-accent');
 
         // Compute result
         var key = selectedScale + ':' + selectedUrgency;
@@ -494,11 +500,11 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
           ' \u2013 ' +
           quote.max.toLocaleString();
 
-        resultRange.textContent = rangeText;
+        if (resultRange) resultRange.textContent = rangeText;
 
         // Build WhatsApp message
-        var scaleLabel = SCALE_LABELS[selectedScale] || selectedScale;
-        var urgencyLabel = URGENCY_LABELS[selectedUrgency] || selectedUrgency;
+        var scaleLabel = SCALE_LABELS[selectedScale ?? ''] || selectedScale;
+        var urgencyLabel = URGENCY_LABELS[selectedUrgency ?? ''] || selectedUrgency;
         var message =
           'Hola Juan! Me interesa un proyecto de IA: ' +
           scaleLabel +
@@ -508,16 +514,19 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
           rangeText +
           '. Contame m\u00e1s.';
 
-        whatsappBtn.href =
-          'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(message);
+        if (whatsappBtn) {
+          (whatsappBtn as HTMLAnchorElement).href =
+            'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(message);
+        }
 
         // Show result
-        stepLabel.textContent = document.querySelector('#calc-step-result #calc-result-content .text-caption-md')
-          ? document.querySelector('#calc-step-result #calc-result-content .text-caption-md').textContent
-          : 'Resultado';
+        var resultCaption = document.querySelector('#calc-step-result #calc-result-content .text-caption-md');
+        if (stepLabel) {
+          stepLabel.textContent = resultCaption ? resultCaption.textContent : 'Resultado';
+        }
 
-        stepUrgency.classList.add('hidden');
-        stepResult.classList.remove('hidden');
+        if (stepUrgency) stepUrgency.classList.add('hidden');
+        if (stepResult) stepResult.classList.remove('hidden');
       });
     });
 
@@ -534,19 +543,21 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
           b.classList.remove('border-accent', 'ring-2', 'ring-accent');
         });
 
-        stepLabel.textContent = document.querySelector('#calc-step-scale .calc-scale-btn')
-          ? 'Paso 1: Tipo de Proyecto'
-          : 'Paso 1';
+        if (stepLabel) {
+          stepLabel.textContent = document.querySelector('#calc-step-scale .calc-scale-btn')
+            ? 'Paso 1: Tipo de Proyecto'
+            : 'Paso 1';
+        }
 
-        stepResult.classList.add('hidden');
-        stepUrgency.classList.add('hidden');
-        stepScale.classList.remove('hidden');
+        if (stepResult) stepResult.classList.add('hidden');
+        if (stepUrgency) stepUrgency.classList.add('hidden');
+        if (stepScale) stepScale.classList.remove('hidden');
       });
     }
 
     // Hide interactive steps if JS is disabled (in case the hidden class default doesn't apply)
     // Steps with .calc-step.hidden are hidden server-side; JS overrides: show scale
-    stepScale.classList.remove('hidden');
+    if (stepScale) stepScale.classList.remove('hidden');
   })();
 </script>
 

@@ -43,7 +43,7 @@ interface Props {
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
-const automation = t('automation') as AutomationContent;
+const automation = t.object('automation') as unknown as AutomationContent;
 const whatsappNumber = t('contact.whatsappNumber') as string;
 const waMessage = encodeURIComponent('Hola Juan! Quiero automatizar un proceso de mi negocio con IA.');
 const waHref = `https://wa.me/${whatsappNumber}?text=${waMessage}`;

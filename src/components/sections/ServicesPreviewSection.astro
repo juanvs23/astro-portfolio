@@ -16,7 +16,7 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
-const services = t('services.express') as ExpressService[];
+const services = t.object('services.express') as ExpressService[];
 ---
 
 <Section id="services-preview">

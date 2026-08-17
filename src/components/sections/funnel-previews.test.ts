@@ -100,7 +100,7 @@ const PREVIEW_TERMINAL_KEYS = ['funnel.about.terminal', 'funnel.skills.terminal'
 for (const key of PREVIEW_TERMINAL_KEYS) {
   it(`terminal ${key} has a non-empty title that is not the key literal (es)`, async () => {
     const t = await getTranslations('es');
-    const terminal = t(key) as TerminalContract;
+    const terminal = t.object(key) as unknown as TerminalContract;
     expect(typeof terminal).toBe('object');
     expect(terminal.title.length).toBeGreaterThan(0);
     expect(terminal.title).not.toBe(key);
@@ -109,7 +109,7 @@ for (const key of PREVIEW_TERMINAL_KEYS) {
 
   it(`terminal ${key} has a non-empty title that is not the key literal (en)`, async () => {
     const t = await getTranslations('en');
-    const terminal = t(key) as TerminalContract;
+    const terminal = t.object(key) as unknown as TerminalContract;
     expect(typeof terminal).toBe('object');
     expect(terminal.title.length).toBeGreaterThan(0);
     expect(terminal.title).not.toBe(key);
@@ -117,7 +117,7 @@ for (const key of PREVIEW_TERMINAL_KEYS) {
 
   it(`terminal ${key} lines are non-empty, not the key literal (es)`, async () => {
     const t = await getTranslations('es');
-    const terminal = t(key) as TerminalContract;
+    const terminal = t.object(key) as unknown as TerminalContract;
     expect(Array.isArray(terminal.lines)).toBe(true);
     expect(terminal.lines.length).toBeGreaterThanOrEqual(2);
     for (const line of terminal.lines) {
@@ -130,7 +130,7 @@ for (const key of PREVIEW_TERMINAL_KEYS) {
 
   it(`terminal ${key} lines are non-empty, not the key literal (en)`, async () => {
     const t = await getTranslations('en');
-    const terminal = t(key) as TerminalContract;
+    const terminal = t.object(key) as unknown as TerminalContract;
     expect(Array.isArray(terminal.lines)).toBe(true);
     expect(terminal.lines.length).toBeGreaterThanOrEqual(2);
     for (const line of terminal.lines) {
@@ -146,8 +146,8 @@ describe('preview terminal line sets differ between locales', () => {
     const tEs = await getTranslations('es');
     const tEn = await getTranslations('en');
     for (const key of PREVIEW_TERMINAL_KEYS) {
-      const esLines = (tEs(key) as TerminalContract).lines;
-      const enLines = (tEn(key) as TerminalContract).lines;
+      const esLines = (tEs.object(key) as unknown as TerminalContract).lines;
+      const enLines = (tEn.object(key) as unknown as TerminalContract).lines;
       expect(esLines.join('|')).not.toBe(enLines.join('|'));
     }
   });
@@ -178,7 +178,7 @@ const AUDIT_TERMINAL_KEYS = ['funnel.audit.terminal'];
 for (const key of AUDIT_TERMINAL_KEYS) {
   it(`audit terminal ${key} has a non-empty title that is not the key literal (es)`, async () => {
     const t = await getTranslations('es');
-    const terminal = t(key) as AuditTerminalContract;
+    const terminal = t.object(key) as unknown as AuditTerminalContract;
     expect(typeof terminal).toBe('object');
     expect(terminal.title.length).toBeGreaterThan(0);
     expect(terminal.title).not.toBe(key);
@@ -187,7 +187,7 @@ for (const key of AUDIT_TERMINAL_KEYS) {
 
   it(`audit terminal ${key} has a non-empty title that is not the key literal (en)`, async () => {
     const t = await getTranslations('en');
-    const terminal = t(key) as AuditTerminalContract;
+    const terminal = t.object(key) as unknown as AuditTerminalContract;
     expect(typeof terminal).toBe('object');
     expect(terminal.title.length).toBeGreaterThan(0);
     expect(terminal.title).not.toBe(key);
@@ -195,7 +195,7 @@ for (const key of AUDIT_TERMINAL_KEYS) {
 
   it(`audit terminal ${key} has a non-empty command that is not the key literal (es)`, async () => {
     const t = await getTranslations('es');
-    const terminal = t(key) as AuditTerminalContract;
+    const terminal = t.object(key) as unknown as AuditTerminalContract;
     expect(terminal.command.length).toBeGreaterThan(0);
     expect(terminal.command).not.toBe(key);
     expect(terminal.command).toContain('npx audit');
@@ -203,7 +203,7 @@ for (const key of AUDIT_TERMINAL_KEYS) {
 
   it(`audit terminal ${key} has a non-empty command that is not the key literal (en)`, async () => {
     const t = await getTranslations('en');
-    const terminal = t(key) as AuditTerminalContract;
+    const terminal = t.object(key) as unknown as AuditTerminalContract;
     expect(terminal.command.length).toBeGreaterThan(0);
     expect(terminal.command).not.toBe(key);
     expect(terminal.command).toContain('npx audit');
@@ -211,7 +211,7 @@ for (const key of AUDIT_TERMINAL_KEYS) {
 
   it(`audit terminal ${key} exposes at least 3 metric rows with label/value/bar (es)`, async () => {
     const t = await getTranslations('es');
-    const terminal = t(key) as AuditTerminalContract;
+    const terminal = t.object(key) as unknown as AuditTerminalContract;
     expect(Array.isArray(terminal.rows)).toBe(true);
     expect(terminal.rows.length).toBeGreaterThanOrEqual(3);
     for (const row of terminal.rows) {
@@ -229,7 +229,7 @@ for (const key of AUDIT_TERMINAL_KEYS) {
 
   it(`audit terminal ${key} exposes at least 3 metric rows with label/value/bar (en)`, async () => {
     const t = await getTranslations('en');
-    const terminal = t(key) as AuditTerminalContract;
+    const terminal = t.object(key) as unknown as AuditTerminalContract;
     expect(Array.isArray(terminal.rows)).toBe(true);
     expect(terminal.rows.length).toBeGreaterThanOrEqual(3);
     for (const row of terminal.rows) {
@@ -247,14 +247,14 @@ for (const key of AUDIT_TERMINAL_KEYS) {
 
   it(`audit terminal ${key} has a non-empty recommendation that is not the key literal (es)`, async () => {
     const t = await getTranslations('es');
-    const terminal = t(key) as AuditTerminalContract;
+    const terminal = t.object(key) as unknown as AuditTerminalContract;
     expect(terminal.recommendation.length).toBeGreaterThan(0);
     expect(terminal.recommendation).not.toBe(key);
   });
 
   it(`audit terminal ${key} has a non-empty recommendation that is not the key literal (en)`, async () => {
     const t = await getTranslations('en');
-    const terminal = t(key) as AuditTerminalContract;
+    const terminal = t.object(key) as unknown as AuditTerminalContract;
     expect(terminal.recommendation.length).toBeGreaterThan(0);
     expect(terminal.recommendation).not.toBe(key);
   });
@@ -265,8 +265,8 @@ describe('audit terminal content differs between locales', () => {
     const tEs = await getTranslations('es');
     const tEn = await getTranslations('en');
     for (const key of AUDIT_TERMINAL_KEYS) {
-      const es = tEs(key) as AuditTerminalContract;
-      const en = tEn(key) as AuditTerminalContract;
+      const es = tEs.object(key) as unknown as AuditTerminalContract;
+      const en = tEn.object(key) as unknown as AuditTerminalContract;
       expect(es.command).not.toBe(en.command);
       expect(es.recommendation).not.toBe(en.recommendation);
     }
@@ -276,8 +276,8 @@ describe('audit terminal content differs between locales', () => {
     const tEs = await getTranslations('es');
     const tEn = await getTranslations('en');
     for (const key of AUDIT_TERMINAL_KEYS) {
-      const es = tEs(key) as AuditTerminalContract;
-      const en = tEn(key) as AuditTerminalContract;
+      const es = tEs.object(key) as unknown as AuditTerminalContract;
+      const en = tEn.object(key) as unknown as AuditTerminalContract;
       const esRows = es.rows.map((r) => `${r.label}|${r.value}|${r.bar}`).join('||');
       const enRows = en.rows.map((r) => `${r.label}|${r.value}|${r.bar}`).join('||');
       expect(esRows).not.toBe(enRows);
@@ -300,7 +300,7 @@ describe('removed preview image alt keys', () => {
 describe('process preview data shape', () => {
   it('services.process is a 3-step sequential array (es)', async () => {
     const t = await getTranslations('es');
-    const steps = t('services.process') as ProcessStep[];
+    const steps = t.object('services.process') as ProcessStep[];
     expect(Array.isArray(steps)).toBe(true);
     expect(steps).toHaveLength(3);
     expect(steps.map((s) => s.step)).toEqual([1, 2, 3]);
@@ -313,8 +313,8 @@ describe('process preview data shape', () => {
   it('process steps differ between locales on title (en)', async () => {
     const tEs = await getTranslations('es');
     const tEn = await getTranslations('en');
-    const esSteps = tEs('services.process') as ProcessStep[];
-    const enSteps = tEn('services.process') as ProcessStep[];
+    const esSteps = tEs.object('services.process') as ProcessStep[];
+    const enSteps = tEn.object('services.process') as ProcessStep[];
     expect(esSteps[0].title).not.toBe(enSteps[0].title);
   });
 });
@@ -324,7 +324,7 @@ describe('services preview list shape', () => {
     const tEs = await getTranslations('es');
     const tEn = await getTranslations('en');
     for (const t of [tEs, tEn]) {
-      const services = t('services.express') as ExpressService[];
+      const services = t.object('services.express') as ExpressService[];
       expect(Array.isArray(services)).toBe(true);
       expect(services.length).toBeGreaterThanOrEqual(4);
       for (const service of services) {
@@ -403,7 +403,7 @@ for (const key of PR4_STRING_KEYS) {
 describe('social proof section data shape', () => {
   it('funnel.proof.metrics provides at least 4 measurable claims (es)', async () => {
     const t = await getTranslations('es');
-    const metrics = t('funnel.proof.metrics') as string[];
+    const metrics = t.object('funnel.proof.metrics') as string[];
     expect(Array.isArray(metrics)).toBe(true);
     expect(metrics.length).toBeGreaterThanOrEqual(4);
     for (const metric of metrics) {
@@ -414,7 +414,7 @@ describe('social proof section data shape', () => {
 
   it('funnel.proof.metrics contains the four key claims (en)', async () => {
     const t = await getTranslations('en');
-    const metrics = t('funnel.proof.metrics') as string[];
+    const metrics = t.object('funnel.proof.metrics') as string[];
     expect(metrics.some((m) => m.includes('60%'))).toBe(true);
     expect(metrics.some((m) => m.includes('40%'))).toBe(true);
     expect(metrics.some((m) => m.includes('99.9%'))).toBe(true);
@@ -424,7 +424,7 @@ describe('social proof section data shape', () => {
   it('funnel.proof.results provides at least 2 result bullets (both locales)', async () => {
     for (const locale of ['es', 'en']) {
       const t = await getTranslations(locale as 'es' | 'en');
-      const results = t('funnel.proof.results') as string[];
+      const results = t.object('funnel.proof.results') as string[];
       expect(Array.isArray(results)).toBe(true);
       expect(results.length).toBeGreaterThanOrEqual(2);
       for (const result of results) {
@@ -438,7 +438,7 @@ describe('social proof section data shape', () => {
 describe('faq section data shape', () => {
   it('funnel.faq provides 4-6 items each with non-empty question and answer (es)', async () => {
     const t = await getTranslations('es');
-    const faq = t('funnel.faq') as FaqItem[];
+    const faq = t.object('funnel.faq') as FaqItem[];
     expect(Array.isArray(faq)).toBe(true);
     expect(faq.length).toBeGreaterThanOrEqual(4);
     expect(faq.length).toBeLessThanOrEqual(6);
@@ -450,7 +450,7 @@ describe('faq section data shape', () => {
 
   it('funnel.faq answers are visible without JS (es static check)', async () => {
     const t = await getTranslations('es');
-    const faq = t('funnel.faq') as FaqItem[];
+    const faq = t.object('funnel.faq') as FaqItem[];
     // Static Q&A content: answers must be present in the data so they render
     // in the no-JS HTML. The accordion component applies hiding via JS only.
     for (const item of faq) {
@@ -462,7 +462,7 @@ describe('faq section data shape', () => {
 
   it('funnel.faq covers key objection themes (es)', async () => {
     const t = await getTranslations('es');
-    const faq = t('funnel.faq') as FaqItem[];
+    const faq = t.object('funnel.faq') as FaqItem[];
     const allText = faq.map((i) => i.question + ' ' + i.answer).join(' ');
     expect(allText).toMatch(/cuesta|precio|presupuesto/i);
     expect(allText).toMatch(/tiempo|día|seman/i);
@@ -481,7 +481,7 @@ describe('pricing bofu section data shape', () => {
   it('services.webPlans provides 3 plans for BOFU display (both locales)', async () => {
     for (const locale of ['es', 'en']) {
       const t = await getTranslations(locale as 'es' | 'en');
-      const plans = t('services.webPlans') as WebPlan[];
+      const plans = t.object('services.webPlans') as WebPlan[];
       expect(Array.isArray(plans)).toBe(true);
       expect(plans).toHaveLength(3);
       expect(plans[0].startingPrice).toBe(120);
@@ -500,7 +500,7 @@ describe('pricing bofu section data shape', () => {
   it('services.launchPricing provides badge and note (both locales)', async () => {
     for (const locale of ['es', 'en']) {
       const t = await getTranslations(locale as 'es' | 'en');
-      const launch = t('services.launchPricing') as { badge: string; note: string };
+      const launch = t.object('services.launchPricing') as { badge: string; note: string };
       expect(launch.badge.length).toBeGreaterThan(0);
       expect(launch.badge).toMatch(/15%/);
       expect(launch.note.length).toBeGreaterThan(0);

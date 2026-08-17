@@ -10,8 +10,8 @@ interface Props {
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
-const metrics = t('funnel.proof.metrics') as string[];
-const results = t('funnel.proof.results') as string[];
+const metrics = t.object('funnel.proof.metrics') as string[];
+const results = t.object('funnel.proof.results') as string[];
 const heading = t('funnel.proof.heading') as string;
 const benefits = t('funnel.proof.benefits') as string;
 ---
