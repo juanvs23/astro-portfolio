@@ -1,0 +1,47 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import CtaButton from '../ui/CtaButton.astro';
+import TerminalWindow from '../ui/TerminalWindow.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+const terminalTitle = String(t('funnel.skills.terminal.title'));
+const terminalLines = t.object('funnel.skills.terminal.lines') as string[];
+---
+
+<Section id="skills-preview">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-xl items-center" data-reveal>
+    <!-- Texto (izquierda en desktop) -->
+    <div class="order-2 md:order-1" data-reveal-item>
+      <SectionHeading marker="add">{t('about.skills')}</SectionHeading>
+      <div class="border-b border-hairline mb-md"></div>
+      <p class="text-body-md text-body mb-xl">{t('funnel.proof.benefits')}</p>
+
+      <CtaButton
+        href={`/${locale}/skills`}
+        variant="dark"
+        class="inline-flex items-center justify-center gap-2 px-lg py-sm"
+      >
+        {t('about.skillsLink')}
+        <span aria-hidden="true">&rarr;</span>
+      </CtaButton>
+    </div>
+
+    <!-- Terminal window (replaces the project screenshot) — keeps grid order
+         and the image block's container contract; data-reveal-item enters
+         with the section reveal. -->
+    <TerminalWindow
+      title={terminalTitle}
+      lines={terminalLines}
+      locale={locale}
+      class="order-1 md:order-2"
+      data-reveal-item
+    />
+  </div>
+</Section>

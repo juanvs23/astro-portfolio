@@ -1,0 +1,21 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: extraClass = '' } = Astro.props;
+---
+
+<!-- Hero-scoped invert cursor follower (home-hero-redesign). The mix-blend
+     lives on this fixed wrapper, positioned via left/top (never transform —
+     a transform on the blended element would isolate the blending group); the
+     inner dot is centered with negative margins and scales ~3.3x when the
+     pointer hovers an interactive element. Purely decorative: aria-hidden,
+     pointer-events-none, and disabled via CSS for reduced motion and
+     non-hover (touch) devices. -->
+<div
+  class={`hero-cursor pointer-events-none fixed left-0 top-0 z-50 ${extraClass}`}
+  aria-hidden="true"
+>
+  <div class="hero-cursor-dot"></div>
+</div>

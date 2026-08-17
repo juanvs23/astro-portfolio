@@ -1,0 +1,90 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+
+interface AuditRow {
+  label: string;
+  value: string;
+  bar: string;
+}
+
+interface Props {
+  locale?: Locale;
+  class?: string;
+}
+
+const { locale = 'es', class: extraClass = '', ...attrs } = Astro.props;
+const t = await getTranslations(locale);
+const terminal = t.object('funnel.audit.terminal') as {
+  title: string;
+  command: string;
+  rows: AuditRow[];
+  recommendation: string;
+};
+
+const title = String(terminal.title);
+const command = String(terminal.command);
+const rows = terminal.rows;
+const recommendation = String(terminal.recommendation);
+---
+
+<!-- Audit terminal (home-capture-audit): a faux `npx audit` run that sells the
+     free-audit CTA with metric rows (CSS progress bars, no canvas/chart lib)
+     and a recommendation line, all driven by funnel.audit.terminal.* (es+en).
+     Mirrors the reusable TerminalWindow structure: title bar with the working
+     directory prompt (no macOS traffic-light dots), command/output lines
+     revealed one by one via the same Motion One inView lifecycle wired in
+     BaseLayout, and a blinking block cursor on the final prompt. Purely
+     decorative (aria-hidden): the visible section content carries the real
+     information. Keeps the replaced block's container contract: aspect-video,
+     hairline border, rounded-sm, surface-dark, overflow-hidden. Bar tone is
+     derived from the row label glyph: "!" rows are warning (orange), all
+     others are success (green). -->
+<div
+  class={`terminal-window bg-surface-dark text-on-dark border border-hairline rounded-sm aspect-video overflow-hidden w-full h-full ${extraClass}`}
+  data-terminal
+  aria-hidden="true"
+  lang={locale}
+  {...attrs}
+>
+  <div class="flex items-center gap-md px-lg py-sm border-b border-hairline bg-surface-dark-elevated">
+    <span class="text-body-sm text-on-dark-mute whitespace-nowrap overflow-hidden text-ellipsis">
+      ➜ juan@dev: {title}
+    </span>
+  </div>
+  <div class="px-lg py-md font-mono text-body-sm">
+    <div class="terminal-lines">
+      <div class="terminal-line whitespace-pre-wrap break-words" data-terminal-line>
+        {command}
+      </div>
+      {rows.map((row) => (
+        <div class="terminal-line audit-row" data-terminal-line>
+          <div class="flex items-center justify-between gap-sm">
+            <span class="audit-row-label whitespace-nowrap overflow-hidden text-ellipsis">
+              {row.label}
+            </span>
+            <span class="audit-row-value text-on-dark-mute whitespace-nowrap">
+              {row.value}
+            </span>
+          </div>
+          <div
+            class="audit-row-bar mt-xs h-1.5 rounded-full bg-surface-dark-elevated overflow-hidden"
+            aria-hidden="true"
+          >
+            <div
+              class={`audit-row-bar-fill h-full rounded-full ${row.label.includes('!') ? 'bg-warning' : 'bg-success'}`}
+              data-bar-fill={row.bar}
+              style={`--bar-w: ${row.bar}%`}
+            ></div>
+          </div>
+        </div>
+      ))}
+      <div class="terminal-line whitespace-pre-wrap break-words" data-terminal-line>
+        {recommendation}
+      </div>
+    </div>
+    <div class="terminal-prompt-row mt-md flex items-center gap-xs">
+      <span class="terminal-prompt">➜</span>
+      <span class="terminal-cursor" aria-hidden="true"></span>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,9 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
+import CtaButton from '../ui/CtaButton.astro';
 
 interface WebPlan {
   name: string;
@@ -48,17 +50,17 @@ interface Props {
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
-const webPlans = t('services.webPlans') as WebPlan[];
-const express = t('services.express') as ExpressService[];
-const processSteps = t('services.process') as ProcessStep[];
-const addons = t('services.addons') as Addon[];
-const launchPricing = t('services.launchPricing') as { badge: string; note: string };
-const ia = t('services.ia') as { heading: string; description: string };
-const customWork = t('services.custom') as { heading: string; description: string; cta: string };
+const webPlans = t.object('services.webPlans') as WebPlan[];
+const express = t.object('services.express') as ExpressService[];
+const processSteps = t.object('services.process') as ProcessStep[];
+const addons = t.object('services.addons') as Addon[];
+const launchPricing = t.object('services.launchPricing') as { badge: string; note: string };
+const ia = t.object('services.ia') as { heading: string; description: string };
+const customWork = t.object('services.custom') as { heading: string; description: string; cta: string };
 const whatsappNumber = t('contact.whatsappNumber') as string;
 
-const calcScaleOptions = t('services.calculator.scaleOptions') as CalcScaleOption[];
-const calcUrgencyOptions = t('services.calculator.urgencyOptions') as CalcUrgencyOption[];
+const calcScaleOptions = t.object('services.calculator.scaleOptions') as CalcScaleOption[];
+const calcUrgencyOptions = t.object('services.calculator.urgencyOptions') as CalcUrgencyOption[];
 
 const calcHeading = t('services.calculator.heading') as string;
 const calcSubheading = t('services.calculator.subheading') as string;
@@ -77,7 +79,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
 
 <Section id="services">
   <!-- Page heading -->
-  <h1 data-typewriter data-aos="fade-down" class="text-[30px] md:text-[35px] lg:text-[38px] font-bold mb-sm">
+  <h1 data-typewriter data-aos="fade-down" class="text-h1 md:text-h1-md lg:text-h1-lg font-bold mb-sm">
     {t('seo.h1.services')}
   </h1>
 
@@ -87,10 +89,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
   <!-- ZONE 1: Desarrollo Web Plans -->
   <!-- ============================================================ -->
   <section data-aos="fade-up" data-aos-delay="100">
-    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
-      <AsciiMarker state="add" class="mr-xs inline" />
-      Desarrollo Web
-    </h2>
+    <SectionHeading variant="category" as="h2" marker="add" underline>Desarrollo Web</SectionHeading>
     <p class="text-body-md text-body mb-md">Planes claros, resultados concretos</p>
 
     <!-- AI translation note (EN only) -->
@@ -116,7 +115,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
             </span>
           ) : null}
 
-          <h3 class="text-heading-md font-bold text-ink mb-sm">{plan.name}</h3>
+          <h3 class="text-h3 lg:text-h3-lg font-bold text-ink mb-sm">{plan.name}</h3>
 
           <div class="text-heading-md font-bold text-ink mt-sm">
             desde <span class="text-accent plan-price" data-base={plan.startingPrice}>${plan.startingPrice}</span> USD
@@ -160,18 +159,15 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
             </div>
           </div>
 
-          <a
+          <CtaButton
             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hola Juan! Me interesa el plan ${plan.name} de Desarrollo Web — desde $${plan.startingPrice} USD`)}`}
+            variant={plan.recommended ? 'accent' : 'dark'}
             target="_blank"
             rel="noopener noreferrer"
-            class={`plan-cta relative overflow-hidden z-10 block text-center py-sm px-lg rounded-sm font-bold mt-lg ${
-              plan.recommended
-                ? 'bg-accent text-on-primary'
-                : 'bg-surface-dark text-on-dark'
-            }`}
+            class="block text-center py-sm px-lg font-bold mt-lg"
           >
             {plan.cta}
-          </a>
+          </CtaButton>
         </div>
       ))}
     </div>
@@ -184,15 +180,23 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
   <!-- ZONE 2: IA Quote Calculator -->
   <!-- ============================================================ -->
   <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
-    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
-      <AsciiMarker state="add" class="mr-xs inline" />
-      {ia.heading}
-    </h2>
-    <p class="text-body-md text-body mb-xl">{ia.description}</p>
+    <SectionHeading variant="category" as="h2" marker="add" underline>{ia.heading}</SectionHeading>
+    <p class="text-body-md text-body mb-lg">{ia.description}</p>
+
+    <div class="mb-xl">
+      <CtaButton
+        href={`/${locale}/automation`}
+        variant="dark"
+        class="inline-flex items-center justify-center gap-2 px-lg py-sm"
+      >
+        {t('services.ia.demoLink')}
+        <span aria-hidden="true">&rarr;</span>
+      </CtaButton>
+    </div>
 
     <div id="ia-calculator" class="bg-surface-card border border-hairline rounded-sm p-lg md:p-xl">
       <!-- Calculator heading -->
-      <h3 class="text-heading-md font-bold text-ink mb-sm">{calcHeading}</h3>
+      <h3 class="text-h3 lg:text-h3-lg font-bold text-ink mb-sm">{calcHeading}</h3>
       <p class="text-body-md text-body mb-lg">{calcSubheading}</p>
 
       <!-- Step indicator -->
@@ -219,7 +223,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
 
       <!-- Step 2: Urgency selection (hidden initially) -->
       <div id="calc-step-urgency" class="calc-step hidden">
-        <h4 class="text-body-md font-bold text-ink mb-md">{calcStepUrgency}</h4>
+        <h4 class="text-h4 lg:text-h4-lg font-bold text-ink mb-md">{calcStepUrgency}</h4>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-md">
           {calcUrgencyOptions.map((opt) => (
             <button
@@ -242,15 +246,16 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
           <div id="calc-result-range" class="text-[24px] font-bold text-accent mb-md">---</div>
           <p id="calc-result-disclaimer" class="text-caption-md text-mute mb-lg">{calcResultDisclaimer}</p>
           <div class="flex flex-col sm:flex-row gap-md justify-center">
-            <a
+            <CtaButton
               id="calc-whatsapp-btn"
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola Juan! Me interesa un proyecto de IA.')}`}
+              variant="dark"
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-block py-sm px-lg bg-surface-dark text-on-dark rounded-sm font-bold"
+              class="inline-flex items-center justify-center py-sm px-lg font-bold"
             >
               {calcCtaWhatsapp}
-            </a>
+            </CtaButton>
             <button
               type="button"
               id="calc-recalculate-btn"
@@ -266,14 +271,15 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
       <noscript>
         <div class="text-center py-lg">
           <p class="text-body-md text-body mb-md">Hablanos por WhatsApp y te armamos un presupuesto personalizado sin compromiso.</p>
-          <a
+          <CtaButton
             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola Juan! Me interesa cotizar un proyecto de IA.')}`}
+            variant="dark"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-block py-sm px-lg bg-surface-dark text-on-dark rounded-sm font-bold"
+            class="inline-flex items-center justify-center py-sm px-lg font-bold"
           >
             {calcCtaWhatsapp}
-          </a>
+          </CtaButton>
         </div>
       </noscript>
     </div>
@@ -283,20 +289,18 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
   <!-- ZONE 2.5: Custom Work -->
   <!-- ============================================================ -->
   <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
-    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
-      <AsciiMarker state="add" class="mr-xs inline" />
-      {customWork.heading}
-    </h2>
+    <SectionHeading variant="category" as="h2" marker="add" underline>{customWork.heading}</SectionHeading>
     <div class="bg-surface-soft border border-hairline rounded-sm p-lg md:p-xl">
       <p class="text-body-md text-body mb-lg max-w-2xl">{customWork.description}</p>
-      <a
+      <CtaButton
         href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola Juan! Tengo un proyecto a medida y quisiera una cotización.')}`}
+        variant="dark"
         target="_blank"
         rel="noopener noreferrer"
-        class="plan-cta relative overflow-hidden z-10 inline-block py-sm px-lg rounded-sm font-bold bg-surface-dark text-on-dark"
+        class="inline-block py-sm px-lg font-bold"
       >
         {customWork.cta}
-      </a>
+      </CtaButton>
     </div>
   </section>
 
@@ -304,15 +308,12 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
   <!-- ZONE 3: Express Services -->
   <!-- ============================================================ -->
   <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
-    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
-      <AsciiMarker state="add" class="mr-xs inline" />
-      Servicios Express
-    </h2>
+    <SectionHeading variant="category" as="h2" marker="add" underline>Servicios Express</SectionHeading>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-lg">
       {express.map((svc) => (
         <div class="bg-surface-soft border border-hairline rounded-sm p-md flex flex-col">
-          <h3 class="text-body-md font-bold text-ink mb-xs">
+          <h3 class="text-h3 lg:text-h3-lg font-bold text-ink mb-xs">
             <AsciiMarker state="done" class="mr-xs text-ink" />
             {svc.name}
           </h3>
@@ -335,10 +336,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
   <!-- ZONE 4: Process Steps -->
   <!-- ============================================================ -->
   <section class="mt-section" data-aos="fade-up" data-aos-delay="100">
-    <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
-      <AsciiMarker state="add" class="mr-xs inline" />
-      C&oacute;mo Trabajo
-    </h2>
+    <SectionHeading variant="category" as="h2" marker="add" underline>C&oacute;mo Trabajo</SectionHeading>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
       {processSteps.map((step) => (
@@ -346,7 +344,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
           <div class="text-[36px] font-bold text-accent mb-sm" aria-hidden="true">
             {String(step.step).padStart(2, '0')}
           </div>
-          <h3 class="text-heading-md font-bold text-ink mb-xs">{step.title}</h3>
+          <h3 class="text-h3 lg:text-h3-lg font-bold text-ink mb-xs">{step.title}</h3>
           <p class="text-caption-md text-mute">{step.description}</p>
         </div>
       ))}
@@ -365,16 +363,19 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
       var ctaLink = card.querySelector('.plan-cta');
       var checkboxes = card.querySelectorAll('.plan-addon-checkbox');
       if (!priceEl || !ctaLink) return;
-      var basePrice = parseInt(priceEl.dataset.base, 10);
-      var planName = ctaLink ? ctaLink.textContent.trim() : '';
+      var priceDisplay = priceEl as HTMLElement;
+      var ctaAnchor = ctaLink as HTMLAnchorElement;
+      var basePrice = parseInt(priceDisplay.dataset.base ?? '', 10);
+      var planName = (ctaAnchor.textContent || '').trim();
 
       function updatePrice() {
         var extra = 0;
-        var selectedAddons = [];
+        var selectedAddons: string[] = [];
         checkboxes.forEach(function (cb) {
-          if (cb.checked) {
-            var addonPrice = parseInt(cb.dataset.price, 10);
-            var addonName = cb.dataset.name;
+          var checkbox = cb as HTMLInputElement;
+          if (checkbox.checked) {
+            var addonPrice = parseInt(checkbox.dataset.price ?? '', 10);
+            var addonName = checkbox.dataset.name;
             if (addonPrice === 0) {
               // Express Delivery: 50% of base
               addonPrice = Math.round(basePrice * 0.5);
@@ -384,26 +385,27 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
           }
         });
         var total = basePrice + extra;
-        priceEl.textContent = '$' + total.toLocaleString();
+        priceDisplay.textContent = '$' + total.toLocaleString();
 
         // Update WhatsApp CTA
-        if (ctaLink) {
+        if (ctaAnchor) {
           var phone = '584248310009';
           var msg = 'Hola Juan! Me interesa el plan ' + planName + ' de Desarrollo Web — desde $' + total + ' USD';
           if (selectedAddons.length > 0) {
             msg += '. Extras: ' + selectedAddons.join(', ');
           }
-          ctaLink.href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
+          ctaAnchor.href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
         }
       }
 
       checkboxes.forEach(function (cb) {
-        var indicator = cb.parentElement.querySelector('.plan-addon-indicator');
-        cb.addEventListener('change', function () {
+        var checkbox = cb as HTMLInputElement;
+        var indicator = checkbox.parentElement?.querySelector('.plan-addon-indicator');
+        checkbox.addEventListener('change', function () {
           if (indicator) {
-            indicator.textContent = cb.checked ? '[x]' : '[ ]';
-            indicator.classList.toggle('text-success', cb.checked);
-            indicator.classList.toggle('text-mute', !cb.checked);
+            indicator.textContent = checkbox.checked ? '[x]' : '[ ]';
+            indicator.classList.toggle('text-success', checkbox.checked);
+            indicator.classList.toggle('text-mute', !checkbox.checked);
           }
           updatePrice();
         });
@@ -414,7 +416,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
 <script>
   (function () {
     // Pricing matrix (mirrors src/lib/quote-calculator.ts PRICING_MATRIX)
-    var PRICING = {
+    var PRICING: Record<string, { min: number; max: number }> = {
       'chatbot-rag:relaxed': { min: 300, max: 400 },
       'chatbot-rag:normal': { min: 400, max: 500 },
       'chatbot-rag:urgent': { min: 500, max: 600 },
@@ -426,21 +428,21 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
       'full-automation:urgent': { min: 2000, max: 2500 },
     };
 
-    var SCALE_LABELS = {
+    var SCALE_LABELS: Record<string, string> = {
       'chatbot-rag': 'Chatbot con RAG',
       'autonomous-agents': 'Agentes Autónomos',
       'full-automation': 'Automatización Completa',
     };
 
-    var URGENCY_LABELS = {
+    var URGENCY_LABELS: Record<string, string> = {
       relaxed: 'Tranquilo',
       normal: 'Normal',
       urgent: 'Urgente',
     };
 
     var PHONE = '584248310009';
-    var selectedScale = null;
-    var selectedUrgency = null;
+    var selectedScale: string | null = null;
+    var selectedUrgency: string | null = null;
 
     var stepIndicator = document.getElementById('calc-step-indicator');
     var stepLabel = document.getElementById('calc-step-label');
@@ -454,36 +456,38 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
     // Scale buttons
     var scaleBtns = document.querySelectorAll('.calc-scale-btn');
     scaleBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        selectedScale = this.dataset.scale;
+      btn.addEventListener('click', function (event) {
+        var btnEl = event.currentTarget as HTMLElement;
+        selectedScale = btnEl.dataset.scale ?? null;
 
         // Visual feedback: highlight selected, dim others
         scaleBtns.forEach(function (b) {
           b.classList.remove('border-accent', 'ring-2', 'ring-accent');
         });
-        this.classList.add('border-accent', 'ring-2', 'ring-accent');
+        btnEl.classList.add('border-accent', 'ring-2', 'ring-accent');
 
         // Advance to urgency step
-        stepLabel.textContent = document.querySelector('#calc-step-urgency h4')
-          ? document.querySelector('#calc-step-urgency h4').textContent
-          : 'Paso 2: Urgencia';
-
-        stepScale.classList.add('hidden');
-        stepUrgency.classList.remove('hidden');
+        var urgencyHeading = document.querySelector('#calc-step-urgency h4');
+        if (stepLabel) {
+          stepLabel.textContent = urgencyHeading ? urgencyHeading.textContent : 'Paso 2: Urgencia';
+        }
+        if (stepScale) stepScale.classList.add('hidden');
+        if (stepUrgency) stepUrgency.classList.remove('hidden');
       });
     });
 
     // Urgency buttons
     var urgencyBtns = document.querySelectorAll('.calc-urgency-btn');
     urgencyBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        selectedUrgency = this.dataset.urgency;
+      btn.addEventListener('click', function (event) {
+        var btnEl = event.currentTarget as HTMLElement;
+        selectedUrgency = btnEl.dataset.urgency ?? null;
 
         // Visual feedback
         urgencyBtns.forEach(function (b) {
           b.classList.remove('border-accent', 'ring-2', 'ring-accent');
         });
-        this.classList.add('border-accent', 'ring-2', 'ring-accent');
+        btnEl.classList.add('border-accent', 'ring-2', 'ring-accent');
 
         // Compute result
         var key = selectedScale + ':' + selectedUrgency;
@@ -496,11 +500,11 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
           ' \u2013 ' +
           quote.max.toLocaleString();
 
-        resultRange.textContent = rangeText;
+        if (resultRange) resultRange.textContent = rangeText;
 
         // Build WhatsApp message
-        var scaleLabel = SCALE_LABELS[selectedScale] || selectedScale;
-        var urgencyLabel = URGENCY_LABELS[selectedUrgency] || selectedUrgency;
+        var scaleLabel = SCALE_LABELS[selectedScale ?? ''] || selectedScale;
+        var urgencyLabel = URGENCY_LABELS[selectedUrgency ?? ''] || selectedUrgency;
         var message =
           'Hola Juan! Me interesa un proyecto de IA: ' +
           scaleLabel +
@@ -510,16 +514,19 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
           rangeText +
           '. Contame m\u00e1s.';
 
-        whatsappBtn.href =
-          'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(message);
+        if (whatsappBtn) {
+          (whatsappBtn as HTMLAnchorElement).href =
+            'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(message);
+        }
 
         // Show result
-        stepLabel.textContent = document.querySelector('#calc-step-result #calc-result-content .text-caption-md')
-          ? document.querySelector('#calc-step-result #calc-result-content .text-caption-md').textContent
-          : 'Resultado';
+        var resultCaption = document.querySelector('#calc-step-result #calc-result-content .text-caption-md');
+        if (stepLabel) {
+          stepLabel.textContent = resultCaption ? resultCaption.textContent : 'Resultado';
+        }
 
-        stepUrgency.classList.add('hidden');
-        stepResult.classList.remove('hidden');
+        if (stepUrgency) stepUrgency.classList.add('hidden');
+        if (stepResult) stepResult.classList.remove('hidden');
       });
     });
 
@@ -536,19 +543,21 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
           b.classList.remove('border-accent', 'ring-2', 'ring-accent');
         });
 
-        stepLabel.textContent = document.querySelector('#calc-step-scale .calc-scale-btn')
-          ? 'Paso 1: Tipo de Proyecto'
-          : 'Paso 1';
+        if (stepLabel) {
+          stepLabel.textContent = document.querySelector('#calc-step-scale .calc-scale-btn')
+            ? 'Paso 1: Tipo de Proyecto'
+            : 'Paso 1';
+        }
 
-        stepResult.classList.add('hidden');
-        stepUrgency.classList.add('hidden');
-        stepScale.classList.remove('hidden');
+        if (stepResult) stepResult.classList.add('hidden');
+        if (stepUrgency) stepUrgency.classList.add('hidden');
+        if (stepScale) stepScale.classList.remove('hidden');
       });
     }
 
     // Hide interactive steps if JS is disabled (in case the hidden class default doesn't apply)
     // Steps with .calc-step.hidden are hidden server-side; JS overrides: show scale
-    stepScale.classList.remove('hidden');
+    if (stepScale) stepScale.classList.remove('hidden');
   })();
 </script>
 
@@ -584,30 +593,4 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
     outline-offset: 2px;
   }
 
-  /* Plan CTA fill-from-left hover */
-  .plan-cta::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-color: inherit;
-    border-radius: inherit;
-    z-index: -2;
-  }
-
-  .plan-cta::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0%;
-    height: 100%;
-    background-color: var(--color-accent-hover, #0056b3);
-    transition: width 0.3s ease;
-    border-radius: inherit;
-    z-index: -1;
-  }
-
-  .plan-cta:hover::before {
-    width: 100%;
-  }
 </style>

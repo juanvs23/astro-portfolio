@@ -1,0 +1,34 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import LeadForm from './LeadForm.astro';
+import AuditTerminal from '../ui/AuditTerminal.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+---
+
+<Section id="audit">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-xl items-start" data-reveal>
+    <!-- Texto + form (izquierda desktop, abajo mobile) -->
+    <div class="order-2 md:order-1" data-reveal-item>
+      <SectionHeading marker="add">{t('funnel.audit.heading')}</SectionHeading>
+      <div class="border-b border-hairline mb-md"></div>
+      <p class="text-body-md text-body mb-xl">{t('funnel.audit.description')}</p>
+
+      <div class="bg-surface-soft border border-hairline rounded-sm p-lg">
+        <LeadForm locale={locale} formId="audit-form" context="audit" />
+      </div>
+    </div>
+
+    <!-- Audit terminal (replaces the screenshot) — keeps grid order and the
+         image block's container contract; data-reveal-item enters with the
+         section reveal. -->
+    <AuditTerminal locale={locale} class="order-1 md:order-2" data-reveal-item />
+  </div>
+</Section>

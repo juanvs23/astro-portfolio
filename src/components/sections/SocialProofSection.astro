@@ -1,0 +1,43 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+
+const metrics = t.object('funnel.proof.metrics') as string[];
+const results = t.object('funnel.proof.results') as string[];
+const heading = t('funnel.proof.heading') as string;
+const benefits = t('funnel.proof.benefits') as string;
+---
+
+<Section id="social-proof">
+  <div class="max-w-[760px] mx-auto text-center">
+    <div data-aos="fade-up">
+      <SectionHeading marker="add">{heading}</SectionHeading>
+      <div class="border-b border-hairline mb-md mx-auto max-w-[200px]" data-aos="fade-up" data-aos-delay="100"></div>
+      <p class="text-body-md text-body mb-xl">{benefits}</p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-md mb-xl" data-aos="fade-up" data-aos-delay="150">
+      {metrics.map((metric) => (
+        <div class="bg-surface-soft border border-hairline rounded-sm p-md text-center">
+          <p class="text-heading-md font-bold text-ink">{metric}</p>
+        </div>
+      ))}
+    </div>
+
+    <ul class="border-t border-hairline text-center" data-aos="fade-up" data-aos-delay="200">
+      {results.map((result) => (
+        <li class="border-b border-hairline py-md">
+          <span class="text-body-md text-body">{result}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Section>

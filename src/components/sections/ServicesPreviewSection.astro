@@ -1,0 +1,60 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import AsciiMarker from '../ui/AsciiMarker.astro';
+import CtaButton from '../ui/CtaButton.astro';
+
+interface ExpressService {
+  name: string;
+  description: string;
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+const services = t.object('services.express') as ExpressService[];
+---
+
+<Section id="services-preview">
+  <div data-aos="fade-up">
+    <SectionHeading marker="add">{t('funnel.services.heading')}</SectionHeading>
+    <div class="border-b border-hairline mb-md" data-aos="fade-up" data-aos-delay="100"></div>
+    <p class="text-body-md text-body mb-xl">{t('funnel.services.description')}</p>
+  </div>
+
+  <ul class="grid grid-cols-1 sm:grid-cols-2 gap-md mb-xl" data-aos="fade-up" data-aos-delay="150">
+    {services.map((service) => (
+      <li class="bg-surface-soft border border-hairline rounded-sm p-md">
+        <h3 class="text-h3 lg:text-h3-lg font-bold text-ink mb-xs">
+          <AsciiMarker state="done" class="mr-xs text-ink" />
+          {service.name}
+        </h3>
+        <p class="text-caption-md text-mute">{service.description}</p>
+      </li>
+    ))}
+  </ul>
+
+  <div class="flex flex-col sm:flex-row gap-md" data-aos="fade-up" data-aos-delay="200">
+    <CtaButton
+      href={`/${locale}/services`}
+      variant="dark"
+      class="inline-flex items-center justify-center gap-2 px-lg py-sm"
+    >
+      {t('funnel.services.linkout')}
+      <span aria-hidden="true">&rarr;</span>
+    </CtaButton>
+
+    <CtaButton
+      href={`/${locale}/automation`}
+      variant="light"
+      class="inline-flex items-center justify-center gap-2 px-lg py-sm"
+    >
+      {t('funnel.services.linkoutAutomation')}
+      <span aria-hidden="true">&rarr;</span>
+    </CtaButton>
+  </div>
+</Section>

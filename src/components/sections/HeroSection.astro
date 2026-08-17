@@ -1,8 +1,9 @@
 ---
 import { getTranslations, type Locale } from "@/i18n";
 import Badge from "../ui/Badge.astro";
-import LanguageSwitcher from "../layout/LanguageSwitcher.astro";
-import ThemeToggle from "../layout/ThemeToggle.astro";
+import CtaButton from "../ui/CtaButton.astro";
+import HeroCursor from "../ui/HeroCursor.astro";
+import { buildWhatsAppLink } from "@/lib/funnel-lead";
 
 interface Props {
   locale: Locale;
@@ -10,81 +11,67 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
+
+// Primary above-the-fold CTA: WhatsApp deep-link. The full audit form (Capture
+// section) arrives in a later PR; `funnel.hero.cta` label reuses the same
+// lead path the funnel centralizes. (D4/D5 — number + copy from i18n.)
+const ctaHref = buildWhatsAppLink(
+  t("contact.whatsappNumber"),
+  t("funnel.audit.message"),
+);
 ---
 
 <section
   id="hero"
-  class="bg-surface-dark text-on-dark min-h-[100dvh] max-h-[100dvh] relative overflow-hidden"
+  class="bg-surface-dark text-on-dark relative overflow-hidden min-h-[60dvh] flex items-center justify-center"
 >
-  <div
-    class="fixed bottom-4 right-4 md:bottom-auto md:top-4 z-50 flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-dark/80 backdrop-blur-sm border border-on-dark-mute/20 text-on-dark"
-  >
-    <LanguageSwitcher locale={locale} currentPath="/" variant="hero" />
-    <ThemeToggle locale={locale} variant="hero" />
-  </div>
+  <!-- Lateral matrix stream depth layer (home-hero-redesign): decorative
+       canvas, aria-hidden, no interaction. Driven by createMatrixStream
+       from the BaseLayout module script (reduced-motion → static grid). -->
+  <canvas
+    id="hero-matrix"
+    class="hero-matrix pointer-events-none absolute inset-0 z-0"
+    aria-hidden="true"
+  ></canvas>
 
-  <div
-    id="three-selector"
-    class="absolute top-[50%] left-0 right-0 h-[50dvh] md:top-0 md:h-full w-full z-0"
-  >
-    <canvas
-      id="three-canvas"
-      class="w-full h-full"
-      role="img"
-      aria-label={t("hero.canvasLabel")}></canvas>
-  </div>
+  <!-- Hero-scoped white invert cursor follower (decoration, aria-hidden). -->
+  <HeroCursor />
 
+  <!-- Hero content: badge/p/CTA start hidden (JS-driven) and fade in
+       staggered after the h1 typewriter dispatches typewriter:done. -->
   <div
-    class="relative z-10 flex flex-col justify-center items-center h-full max-w-[960px] mx-auto px-lg py-xl w-full text-center"
+    class="relative z-10 flex w-full max-w-[1200px] mx-auto flex-col items-center px-lg py-xxl text-center"
   >
-    <Badge variant="news" class="mb-lg">
+    <Badge variant="news" class="mb-lg" data-fade-after-type>
       {t("hero.badge")}
     </Badge>
 
-    <h1 class="text-[20px] md:text-[38px] font-bold leading-[1.5] mb-xl">
-      {t("hero.title")}
+    <h1
+      class="block max-w-[700px] text-[28px] md:text-display-xl font-bold leading-[1.5] mb-xl min-h-[168px] md:min-h-[114px]"
+    >
+      <span class="inline-block" data-typewriter>{t("hero.title")}</span>
     </h1>
 
     <p
-      class="text-body-sm md:text-text-body-md text-on-dark-mute mb-xxl max-w-[640px]"
+      class="max-w-[640px] text-body-md text-on-dark-mute mb-xxl"
+      data-fade-after-type
     >
       {t("hero.description")}
     </p>
+
+    <CtaButton
+      href={ctaHref}
+      variant="light"
+      target="_blank"
+      rel="noopener"
+      pulse
+      data-fade-after-type
+      class="inline-flex items-center justify-center gap-2 px-lg h-[44px]"
+    >
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" class="shrink-0">
+        <path d="M8 0C3.58 0 0 3.58 0 8c0 1.4.37 2.77 1.07 3.97L0 16l4.2-1.03A7.96 7.96 0 0 0 8 16c4.42 0 8-3.58 8-8s-3.58-8-8-8zm3.87 11.3c-.15.42-.75.8-1.23.9-.37.08-.84.15-2.44-.52-2.05-.85-3.37-2.94-3.47-3.07-.1-.14-.83-1.1-.83-2.1s.52-1.49.7-1.7c.18-.2.4-.25.53-.25h.38c.12 0 .28.01.4.3.15.37.52 1.27.57 1.36.05.1.08.2.02.33-.06.12-.1.2-.2.3-.1.1-.2.2-.22.28-.3.1-.1.2-.2.08-.38.12.2.52.85 1.12 1.38.77.68 1.42.9 1.62 1 .2.1.32.08.44-.05.12-.12.5-.58.63-.78.13-.2.26-.17.44-.1.18.07 1.13.53 1.32.63.2.1.33.15.38.23.05.1.05.5-.1.92z"/>
+      </svg>
+      <span>{t("funnel.hero.cta")}</span>
+    </CtaButton>
   </div>
 </section>
-
-<script>
-  let cleanup = null;
-
-  function setupThree() {
-    if (cleanup) return;
-    const container = document.getElementById("three-selector");
-    const canvas = document.getElementById("three-canvas");
-    if (container && canvas) {
-      import("../../lib/three-scene").then(({ initThreeScene }) => {
-        cleanup = initThreeScene(container, canvas);
-      });
-    }
-  }
-
-  function teardownThree() {
-    if (cleanup) {
-      cleanup();
-      cleanup = null;
-    }
-  }
-
-  function deferredThree() {
-    if (document.readyState === "complete") {
-      setTimeout(setupThree, 800);
-    } else {
-      window.addEventListener("load", function () {
-        setTimeout(setupThree, 800);
-      });
-    }
-  }
-
-  deferredThree();
-  document.addEventListener("astro:before-swap", teardownThree);
-  document.addEventListener("astro:page-load", deferredThree);
-</script>

@@ -9,6 +9,7 @@ dist/
 
 # dependencies
 node_modules/
+pnpm-lock.yaml
 
 # logs
 npm-debug.log*
@@ -34,3 +35,4 @@ estrategia/
 
 # SDD temporary artifacts (openspec/changes are work-in-progress, not committed)
 openspec/changes/
+coverage/

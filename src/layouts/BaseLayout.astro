@@ -1,6 +1,10 @@
 ---
 import '../styles/global.css';
 import { getTranslations, type Locale } from '@/i18n';
+import { siteInfo } from '@/constants';
+import { buildCanonicalUrl, buildHreflangLinks, resolveOgImageUrl } from '@/lib/seo/head-meta';
+import { buildSiteJsonLd } from '@/lib/seo/jsonld';
+import JsonLd from '../components/JsonLd.astro';
 import { ViewTransitions } from 'astro:transitions';
 
 interface Props {
@@ -20,6 +24,11 @@ const seoTitle = t('seo.title');
 const seoDescription = t('seo.description');
 const finalTitle = title === 'Juan Carlos Ávila – Full Stack Developer' ? seoTitle : title;
 const finalDescription = description === 'Desarrollador Full Stack con 6+ años de experiencia | PHP, Python, JavaScript (React, Next.js), WordPress, Laravel & Django' ? seoDescription : description;
+
+// seo-complete-review: every absolute URL (canonical, og:url, og:image,
+// hreflang) derives from Astro.site — set via `site` in astro.config.mjs.
+// The fallback guards against a missing site config without hardcoding.
+const siteUrl = Astro.site ?? new URL(siteInfo.url);
 ---
 
 <!doctype html>
@@ -35,17 +44,26 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
     <meta name="description" content={finalDescription} />
     <meta name="author" content="Juan Carlos Ávila" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href={`https://coltmandev.dev${Astro.url.pathname}`} />
+    <link rel="canonical" href={buildCanonicalUrl(Astro.url.pathname, siteUrl)} />
+    {
+      buildHreflangLinks(Astro.url.pathname, siteUrl).map((link) => (
+        <link rel="alternate" hreflang={link.hreflang} href={link.href} />
+      ))
+    }
     <meta property="og:title" content={finalTitle} />
     <meta property="og:description" content={finalDescription} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={locale} />
-    <meta property="og:url" content={`https://coltmandev.dev${Astro.url.pathname}`} />
-    <meta property="og:image" content="https://coltmandev.dev/og-image.jpg" />
+    <meta property="og:site_name" content={siteInfo.brandName} />
+    <meta property="og:url" content={buildCanonicalUrl(Astro.url.pathname, siteUrl)} />
+    <meta property="og:image" content={resolveOgImageUrl(locale, siteUrl)} />
+    <meta property="og:image:alt" content={t('seo.ogImageAlt') as string} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={finalTitle} />
     <meta name="twitter:description" content={finalDescription} />
-    <meta name="twitter:image" content="https://coltmandev.dev/og-image.jpg" />
+    <meta name="twitter:site" content={siteInfo.twitterHandle} />
+    <meta name="twitter:image" content={resolveOgImageUrl(locale, siteUrl)} />
+    <JsonLd data={buildSiteJsonLd()} />
     <script is:inline>
       (function() {
         var stored = localStorage.getItem('theme');
@@ -58,6 +76,14 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
     </script>
   </head>
   <body class="font-mono bg-canvas text-ink antialiased">
+    <!-- D7: no-JS fallback. AOS CSS zeroes [data-aos] opacity before init; without scripting,
+         content must stay visible/reachable. Style inside noscript is body-valid HTML5. -->
+    <noscript>
+      <style>
+        [data-aos] { opacity: 1 !important; transform: none !important; }
+        [data-reveal-item] { opacity: 1 !important; transform: none !important; }
+      </style>
+    </noscript>
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-lg focus:py-md focus:bg-surface-dark focus:text-on-dark focus:rounded-sm">
       {t('navigation.skipToContent')}
     </a>
@@ -96,10 +122,193 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
       import AOS from 'aos';
       window.__AOS = AOS;
     </script>
+    <script>
+      import { shouldEnableMotion } from '@/lib/motion-guard';
+      import { onScrollEnd, staggerDelay } from '@/lib/viewport';
+      import { createMatrixStream } from '@/lib/matrix-stream';
+
+      // Home Motion One lifecycle (home-visual-polish): staggered [data-reveal]
+      // reveals and the one-time CTA pulse. Dynamic import('motion/mini')
+      // code-splits the ~5KB gzip runtime into a lazy chunk fetched only when
+      // the reduced-motion guard passes; the reveal trigger is the tiny
+      // IntersectionObserver helper in viewport.ts. Mirrors the AOS init
+      // pattern in this file: init on astro:page-load, dispose on
+      // astro:before-swap so View Transitions never leak running animations.
+      function initHomeMotion() {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (!shouldEnableMotion(reduce.matches)) return; // CSS shows static states
+        window.__typewriterDone = false; // fresh page state (window survives VT)
+
+        import('motion/mini').then(function (m) {
+          var stops: Array<{ stop(): void }> = [];
+          var anims: Array<{ stop(): void }> = [];
+          var revealGrids = document.querySelectorAll('[data-reveal]');
+          revealGrids.forEach(function (grid) {
+            var items = grid.querySelectorAll('[data-reveal-item]');
+            if (!items.length) return;
+            var stop = onScrollEnd(grid, function () {
+              items.forEach(function (item, i) {
+                anims.push(m.animate(item, { opacity: 1, y: 0 }, { delay: staggerDelay(i), duration: 0.5 }));
+              });
+            }, { amount: 0.2 });
+            stops.push(stop);
+          });
+
+          var pulseEl = document.querySelector('[data-cta-pulse]');
+          if (pulseEl) {
+            anims.push(m.animate(pulseEl, { scale: [1, 1.04, 1] }, { duration: 1, delay: 0.4 }));
+          }
+
+          initHeroFadeIn(m, anims);
+          initTerminalLines(m, anims, stops);
+          window.__homeMotion = { stops: stops, anims: anims };
+        });
+      }
+
+      // Terminal window line reveal (home-skills-terminal): lines type out one
+      // by one (~220ms apart, 160–380ms cadence) once the terminal enters the
+      // viewport, sharing the same Motion One inView lifecycle as the section
+      // reveals. Lines are hidden via Motion only, so reduced-motion and no-JS
+      // render everything visible immediately.
+      function initTerminalLines(m: typeof import('motion/mini'), anims: Array<{ stop(): void }>, stops: Array<{ stop(): void }>) {
+        var terminals = document.querySelectorAll('[data-terminal]');
+        terminals.forEach(function (term) {
+          var lines = term.querySelectorAll('[data-terminal-line]');
+          if (!lines.length) return;
+          m.animate(lines, { opacity: 0 }, { duration: 0 });
+          var stop = onScrollEnd(term, function () {
+            lines.forEach(function (line, i) {
+              anims.push(m.animate(line, { opacity: 1 }, { delay: staggerDelay(i, 0.22, 0.05), duration: 0.3 }));
+              // Audit progress bars (home-capture-audit): fill from 0 to the
+              // target width declared in data-bar-fill when the row appears.
+              // Animate transform: scaleX (motion/mini handles transforms
+              // reliably) with transform-origin left; the CSS variable --bar-w
+              // holds the target for reduced-motion and no-JS.
+              line.querySelectorAll('[data-bar-fill]').forEach(function (bar) {
+                var target = bar.getAttribute('data-bar-fill');
+                if (target == null) return;
+                anims.push(m.animate(bar, { transform: 'scaleX(' + +target / 100 + ')' }, { delay: staggerDelay(i, 0.22, 0.05) + 0.1, duration: 0.7, ease: 'easeOut' }));
+              });
+            });
+          }, { amount: 0.3 });
+          stops.push(stop);
+        });
+      }
+
+      // Home hero fade-in chain: badge → p → CTAs, staggered ~150ms, only
+      // after the h1 typewriter dispatches 'typewriter:done'. Elements are
+      // hidden via Motion (JS-driven) so reduced-motion and no-JS keep them
+      // visible immediately.
+      function initHeroFadeIn(m: typeof import('motion/mini'), anims: Array<{ stop(): void }>) {
+        var els = document.querySelectorAll('[data-fade-after-type]');
+        if (!els.length) return;
+        if (window.__typewriterDone) return; // typing already finished → keep visible
+        if (window.__heroFadeHandler) {
+          document.removeEventListener('typewriter:done', window.__heroFadeHandler);
+        }
+        m.animate(els, { opacity: 0, y: 8 }, { duration: 0 });
+        var heroFadeHandler = function () {
+          document.removeEventListener('typewriter:done', heroFadeHandler);
+          window.__heroFadeHandler = null;
+          els.forEach(function (el, i) {
+            anims.push(m.animate(el, { opacity: 1, y: 0 }, { delay: 0.15 * i, duration: 0.45 }));
+          });
+        };
+        window.__heroFadeHandler = heroFadeHandler;
+        document.addEventListener('typewriter:done', heroFadeHandler);
+      }
+
+      // Lateral matrix stream behind the hero headline. Decorative only;
+      // reduced-motion draws a single static faint grid (no RAF loop).
+      function initHeroMatrix() {
+        var canvas = document.getElementById('hero-matrix');
+        if (!canvas || !(canvas instanceof HTMLCanvasElement)) return;
+        var stream = createMatrixStream(canvas, {});
+        stream.start();
+        window.__heroMatrix = stream;
+      }
+
+      // Hero-scoped white invert cursor follower. Blend on the wrapper,
+      // positioned with left/top; active only while the pointer is inside
+      // the hero. Disabled for reduced motion and non-hover (touch) devices.
+      function initHeroCursor() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        if (!window.matchMedia('(hover: hover)').matches) return;
+        var hero = document.getElementById('hero');
+        var cursor = document.querySelector('.hero-cursor');
+        if (!hero || !cursor) return;
+        const heroEl = hero;
+        const cursorEl = cursor as HTMLElement;
+        var active = false;
+        function onEnter() {
+          active = true;
+          cursorEl.classList.add('hero-cursor-active');
+        }
+        function onLeave() {
+          active = false;
+          cursorEl.classList.remove('hero-cursor-active');
+        }
+        function onMove(e: MouseEvent) {
+          if (!active) return;
+          cursorEl.style.left = e.clientX + 'px';
+          cursorEl.style.top = e.clientY + 'px';
+        }
+        function onOver(e: MouseEvent) {
+          var target = e.target as HTMLElement | null;
+          var interactive = target && target.closest ? target.closest('a, button') : null;
+          cursorEl.classList.toggle('hero-cursor-grow', !!interactive);
+        }
+        heroEl.addEventListener('mouseenter', onEnter);
+        heroEl.addEventListener('mouseleave', onLeave);
+        window.addEventListener('pointermove', onMove);
+        heroEl.addEventListener('mouseover', onOver);
+        window.__heroCursorDispose = function () {
+          heroEl.removeEventListener('mouseenter', onEnter);
+          heroEl.removeEventListener('mouseleave', onLeave);
+          window.removeEventListener('pointermove', onMove);
+          heroEl.removeEventListener('mouseover', onOver);
+          cursorEl.classList.remove('hero-cursor-active');
+          cursorEl.style.left = '';
+          cursorEl.style.top = '';
+        };
+      }
+
+      function disposeHomeMotion() {
+        if (window.__homeMotion) {
+          window.__homeMotion.stops.forEach(function (s) { s.stop(); });
+          window.__homeMotion.anims.forEach(function (a) { a.stop(); });
+          window.__homeMotion = null;
+        }
+        if (window.__heroMatrix) {
+          window.__heroMatrix.stop();
+          window.__heroMatrix = null;
+        }
+        if (window.__heroCursorDispose) {
+          window.__heroCursorDispose();
+          window.__heroCursorDispose = null;
+        }
+        if (window.__heroFadeHandler) {
+          document.removeEventListener('typewriter:done', window.__heroFadeHandler);
+          window.__heroFadeHandler = null;
+        }
+      }
+
+      document.addEventListener('astro:page-load', function () {
+        initHomeMotion();
+        initHeroMatrix();
+        initHeroCursor();
+      });
+
+      document.addEventListener('astro:before-swap', function () {
+        disposeHomeMotion();
+      });
+    </script>
     <script is:inline>
       function initTypewriter() {
         var els = document.querySelectorAll('[data-typewriter]');
         if (!els.length) return;
+        // Reduced motion: headline stays fully visible, no typing.
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
         els.forEach(function(el) {
           var text = el.textContent || '';
           el.textContent = '';
@@ -109,9 +318,15 @@ const finalDescription = description === 'Desarrollador Full Stack con 6+ años 
             if (i < text.length) {
               el.textContent += text[i];
               i++;
-              setTimeout(type, 30 + Math.random() * 40);
+              setTimeout(type, 15 + Math.random() * 20);
             } else {
               el.classList.remove('typewriter');
+              // home-hero-redesign: signal completion so the hero fade-in
+              // chain can start. No behavior change for existing pages.
+              // bubbles:true is REQUIRED — the listener lives on document
+              // and the event fires on the h1 span deep in the tree.
+              window.__typewriterDone = true;
+              el.dispatchEvent(new CustomEvent('typewriter:done', { bubbles: true, detail: { el: el } }));
             }
           }
           type();

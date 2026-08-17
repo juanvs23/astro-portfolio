@@ -1,0 +1,27 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import LeadForm from './LeadForm.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+---
+
+<Section id="contact" bordered={false}>
+  <div class="max-w-[760px] mx-auto">
+    <div data-aos="fade-up">
+      <SectionHeading marker="add">{t('funnel.contact.heading')}</SectionHeading>
+      <div class="border-b border-hairline mb-md" data-aos="fade-up" data-aos-delay="100"></div>
+      <p class="text-body-md text-body mb-xl">{t('funnel.contact.description')}</p>
+    </div>
+
+    <div class="bg-surface-soft border border-hairline rounded-sm p-lg" data-aos="fade-up" data-aos-delay="200">
+      <LeadForm locale={locale} formId="contact-cta-form" context="contact" />
+    </div>
+  </div>
+</Section>

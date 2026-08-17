@@ -12,8 +12,8 @@ export function getStaticPaths() {
 
 const locale = Astro.params.locale as Locale;
 const t = await getTranslations(locale);
-const seoPages = t("seo.pages") as Record<string, string>;
-const seoDescriptions = t("seo.descriptions") as Record<string, string>;
+const seoPages = t.object("seo.pages") as Record<string, string>;
+const seoDescriptions = t.object("seo.descriptions") as Record<string, string>;
 ---
 
 <Layout

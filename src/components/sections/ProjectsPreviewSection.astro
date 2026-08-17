@@ -1,0 +1,203 @@
+---
+import { getTranslations, type Locale } from "@/i18n";
+import type { ImageMetadata } from "astro";
+import gericht from "../../assets/img/gericht.jpg";
+import stepstogether from "../../assets/img/stepstogether.jpg";
+import institutomia from "../../assets/img/institutomia.jpg";
+import Section from "../ui/Section.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+import ProjectItem from "../ui/ProjectItem.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+interface ProjectTab {
+  id: string;
+  name: string;
+  url: string;
+  img: ImageMetadata;
+  desc: string;
+  enDesc: string;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+
+// Tab entries — same projects as the full /projects page (ProjectsSection.astro),
+// with real names, URLs, and es/en descriptions. The active tab's card renders
+// the real ProjectItem component with its hover image-scroll animation.
+const tabs: ProjectTab[] = [
+  {
+    id: "gericht",
+    name: "Gericht",
+    url: "https://restaurant.coltmandev.dev/",
+    img: gericht,
+    desc: "Landing page de restaurante con menú, galería y reservas. Diseño responsivo.",
+    enDesc: "Restaurant landing page with menu, gallery, and reservations. Responsive design.",
+  },
+  {
+    id: "stepstogether",
+    name: "Steps Together",
+    url: "https://stepstogether.co.uk/",
+    img: stepstogether,
+    desc: "Clínica privada de rehabilitación de adicciones en Reino Unido. Desintoxicación médica y tratamiento residencial.",
+    enDesc: "Private addiction rehabilitation clinic in the UK. Medical detox and residential treatment.",
+  },
+  {
+    id: "institutomia",
+    name: "Instituto MIA",
+    url: "https://institutomia.es/",
+    img: institutomia,
+    desc: "Centro de rehabilitación para mujeres en España. Tratamiento de adicciones, drogas y salud mental.",
+    enDesc: "Rehabilitation center for women in Spain. Addiction, drug, and mental health treatment.",
+  },
+];
+---
+
+<Section id="projects-preview">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-xl items-start" data-reveal>
+    <!-- Texto (izquierda en desktop) -->
+    <div class="order-2 md:order-1" data-reveal-item>
+      <SectionHeading marker="add">{t("funnel.projects.heading")}</SectionHeading>
+      <div class="border-b border-hairline mb-md"></div>
+      <p class="text-body-md text-body mb-xl">{t("funnel.projects.description")}</p>
+
+      <div class="space-y-sm" role="tablist" aria-label={t("funnel.projects.heading")}>
+        {tabs.map((tab, index) => (
+          <button
+            type="button"
+            role="tab"
+            id={`projects-tab-${tab.id}`}
+            aria-controls="projects-tabpanel"
+            aria-selected={index === 0 ? "true" : "false"}
+            class:list={[
+              "projects-tab w-full text-left border rounded-sm px-md py-sm cursor-pointer transition-colors duration-150",
+              index === 0 ? "is-active" : "",
+            ]}
+            data-projects-tab={tab.id}
+          >
+            <span class="block text-body-strong font-bold projects-tab-name">{tab.name}</span>
+            <span class="block text-caption-md mt-[2px] projects-tab-desc">
+              {locale === "en" ? tab.enDesc.split(". ")[0] + "." : tab.desc.split(". ")[0] + "."}
+            </span>
+          </button>
+        ))}
+
+        <a
+          href={`/${locale}/projects`}
+          class="projects-tab-more flex items-center justify-between w-full text-left border border-hairline rounded-sm px-md py-sm no-underline transition-colors duration-150"
+        >
+          <span class="text-body-strong font-bold">{t("funnel.projects.linkout")}</span>
+          <span aria-hidden="true" class="projects-tab-arrow transition-transform duration-150">&rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Tab view: real ProjectItem card (derecha en desktop, abajo en mobile) -->
+    <div class="order-1 md:order-2" data-reveal-item>
+      <div id="projects-tabpanel" role="tabpanel" aria-labelledby="projects-tab-gericht" class="projects-tabview">
+        {tabs.map((project, index) => (
+          <div class:list={["projects-tabpane", index === 0 ? "" : "hidden"]} data-projects-pane={project.id}>
+            <ProjectItem
+              textButton={t("projects.button")}
+              project={{
+                id: index,
+                name: project.name,
+                url: project.url,
+                img: project.img,
+                desc: locale === "en" ? project.enDesc : project.desc,
+              }}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Section>
+
+<script>
+  // Interactive tabs for the Projects preview (home-projects-tabs): clicking a
+  // tab activates its pane (the real ProjectItem card) and updates aria-selected.
+  // All three cards render and toggle visibility so the hover image-scroll
+  // transition on ProjectItem keeps working. Progressive enhancement: without
+  // JS the first (gericht) pane stays visible.
+  function initProjectsTabs() {
+    const tabs = document.querySelectorAll("[data-projects-tab]");
+    const panes = document.querySelectorAll("[data-projects-pane]");
+    const panel = document.getElementById("projects-tabpanel");
+    if (!tabs.length || !panes.length) return;
+
+    function select(id: string) {
+      tabs.forEach((tab) => {
+        const active = (tab as HTMLElement).dataset.projectsTab === id;
+        tab.setAttribute("aria-selected", active ? "true" : "false");
+        tab.classList.toggle("is-active", active);
+      });
+      panes.forEach((pane) => {
+        pane.classList.toggle("hidden", (pane as HTMLElement).dataset.projectsPane !== id);
+      });
+      if (panel) {
+        const activeTab = document.querySelector(`[data-projects-tab="${id}"]`);
+        if (activeTab) panel.setAttribute("aria-labelledby", activeTab.id);
+      }
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => select((tab as HTMLElement).dataset.projectsTab ?? ""));
+    });
+  }
+
+  document.addEventListener("astro:page-load", initProjectsTabs);
+</script>
+
+<style>
+  /* Projects preview tabs (home-projects-tabs): the inactive tab reads as a
+     quiet row (body-gray text on canvas, hairline border) so the hover state —
+     ink text, soft surface, ink border — is clearly distinguishable from the
+     resting state. The active tab inverts to the dark surface, matching the
+     site's terminal/ink language. */
+  .projects-tab {
+    background-color: var(--color-canvas);
+    color: var(--color-body);
+    border-color: var(--color-hairline);
+  }
+
+  .projects-tab .projects-tab-desc {
+    color: var(--color-mute);
+  }
+
+  .projects-tab:hover {
+    background-color: var(--color-surface-soft);
+    color: var(--color-ink);
+    border-color: var(--color-ink);
+  }
+
+  .projects-tab:hover .projects-tab-desc {
+    color: var(--color-body);
+  }
+
+  .projects-tab.is-active {
+    background-color: var(--color-ink);
+    color: var(--color-on-dark);
+    border-color: var(--color-ink);
+  }
+
+  .projects-tab.is-active .projects-tab-desc {
+    color: var(--color-on-dark-mute);
+  }
+
+  .projects-tab-more {
+    color: var(--color-ink);
+    border-color: var(--color-hairline);
+  }
+
+  .projects-tab-more:hover {
+    background-color: var(--color-surface-soft);
+    border-color: var(--color-ink);
+  }
+
+  .projects-tab-more:hover .projects-tab-arrow {
+    transform: translateX(4px);
+  }
+</style>

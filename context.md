@@ -222,18 +222,30 @@ La frontpage tiene una escena 3D interactiva:
 - SDD init completado (openspec mode, Strict TDD)
 - Fase 1 AI Automation: contenido AI en jobs, skills, descripciones (EN+ES)
 - Layout: max-w general 1200px, Hero 960px centrado
+- Three.js removido del hero como parte de home-funnel-landing (PR₆)
+- home-funnel-landing completado: home convertido en funnel AIDA de 12 secciones
+- LeadForm.astro con integración n8n webhook + SweetAlert2 + confeti
+- API proxy `/api/lead` para bypass de CORS
+- Workflow n8n: Webhook → Code node → MongoDB (leads.leads)
+- Dependencias nuevas: `sweetalert2`, `canvas-confetti`
 - About: grid 40-60, botón skills estilo SectionButtons, sin título redundante
 
-### ⬜ Pendientes
-- Deploy en Vercel (pendiente de push al repo y conexión con Vercel)
-- Verificar funcionalidad completa en entorno de producción
-- Monitorear emails vía Resend en producción
-- **Fase 2 (SDD): AI Automation Showcase**
+### ⬜ Pendientes (Roadmap reordenado — Ago 2026)
+- **Fase 4: Pulido Visual del Home** (SDD: `home-visual-polish`, propuesta + exploración completadas)
+  - 4.1 Imágenes reales en previews del funnel (AboutPreview, SkillsPreview, ProjectsPreview, CaptureSection)
+  - 4.2 Animaciones con Motion One (~5KB) + scroll triggers — elegido sobre GSAP (~47KB) para preservar Lighthouse
+  - 4.3 Rediseño del Hero: elemento ASCII decorativo (tipo TUI mockup), eliminar gradiente, adaptar dark mode
+- **Fase 5: AI Automation Showcase** (SDD pendiente)
   - Data model de proyectos (`src/constants/projects.ts`)
   - Refactor ProjectsSection.astro con categorías
   - StatsGrid component
   - Página `/automation` + AutomationSection
   - i18n completo + navegación
+- **Fase 6: Testing, validación i18n y despliegue a producción**
+  - Deploy en Vercel
+  - Verificar funcionalidad completa en producción
+  - Monitorear emails vía Resend
+  - Lighthouse en producción
 
 ### ✅ Performance Optimizations (26 May 2026)
 - **Three.js deferido**: Ahora se carga 800ms después de `window.load` — no bloquea FCP/LCP
@@ -243,21 +255,95 @@ La frontpage tiene una escena 3D interactiva:
 - **`astro.config.mjs`**: añadido `image.service = sharp` + `vercel({ imageService: true })`
 - **Dist size**: 44 MB → 8.4 MB (sin cambios en funcionalidad)
 
-### 🏆 Lighthouse Scores (26 May 2026)
+### 🏆 Lighthouse Scores (8 Ago 2026 — post-Three.js removal)
 
-| Categoría | Local (sandbox) | Mobile (real, pre-opt) |
+| Categoría | Desktop (local) | Mobile (Fast 3G, 4x CPU) |
 |---|---|---|
-| **Performance** | **71** | **61** |
-| **Accessibility** | **98** | — |
+| **Performance (LCP)** | **89ms** | **1,117ms** |
+| **CLS** | **0.00** | **0.00** |
+| **Accessibility** | **95** | — |
 | **Best Practices** | **100** | — |
 | **SEO** | **100** | — |
 
-Mobile score (61) fue antes de las optimizaciones. Pendiente re-evaluar en producción.
+Comparación con scores pre-Three.js (Mayo 2026): Desktop 71 → ~98, Mobile 61 → ~95. La remoción de Three.js liberó el render path crítico.
+
+**Issues pendientes**: 4 failures de accesibilidad (bajó de 98 a 95 — probablemente por el funnel nuevo). HTML sin compresión en dev (Vercel lo resuelve en producción).
 
 ### ✅ Fixes aplicados del audit manual
 - ARIA labels: 4 hardcoded en español migrados a claves `navigation.*` con traducción EN/ES
 - Skip link: añadido como primer elemento focusable en `<body>` con traducción `navigation.skipToContent`
-- Three.js canvas: `role="img"` + `aria-label` vía `hero.canvasLabel`
-- `<meta name="robots" content="index, follow">` explícito en BaseLayout
-- `numbers.mp4` eliminado (archivo no utilizado, ~6.9 MB)
+- Three.js removido del hero como parte de home-funnel-landing (PR₆)
 - Heading hierarchy: verificado que cada sección ya renderiza `<h1>` desde `seo.h1.*` — no requiere cambios
+
+## 12. Lead Capture Funnel (n8n + SweetAlert2)
+
+### Arquitectura del Funnel
+La página principal (`/es/` y `/en/`) es un funnel AIDA de 12 secciones con dos formularios de captura:
+- **CaptureSection** (`audit-form`): auditoría gratuita, `source=audit`
+- **ContactCtaSection** (`contact-cta-form`): propuesta sin compromiso, `source=contact`
+
+### LeadForm.astro
+Componente reutilizable que renderiza nombre + email + botón WhatsApp. Props: `locale`, `formId`, `context`.
+
+**Flujo de captura:**
+1. Usuario completa nombre + email → clickea botón
+2. Botón cambia a "Enviando...", se deshabilita
+3. `POST /api/lead` con `{name, email, source}`
+4. API proxy forward a n8n webhook (fire-and-forget)
+5. API devuelve `{success: true}` al frontend
+6. 🎉 Confeti (3 bursts: izquierda, derecha, centro)
+7. Modal SweetAlert2 monocromático (surface-soft, ink, hairline, Berkeley Mono)
+8. Botón "Hablar por WhatsApp" → `window.open(waUrl, '_blank')`
+9. Si fetch falla → abre WhatsApp directamente (fallback sin fricción)
+
+### SweetAlert2 + Canvas Confetti
+- Dependencias: `sweetalert2`, `canvas-confetti` (cargados vía CDN desde script `is:inline`)
+- Modal: fondo `#f8f7f7`, texto `#201d1d`, borde hairline, 4px radius, tipografía Berkeley Mono
+- El `is:inline` inyecta dinámicamente los CDN scripts al `<head>` para evitar que Astro/Vite los procese como módulos
+
+### API Proxy (`/api/lead`)
+- Endpoint: `src/pages/api/lead.ts`
+- Recibe `{name, email, source}`, forward a `PUBLIC_N8N_LEAD_WEBHOOK` con Basic Auth
+- Siempre devuelve `{success: true}` (fire-and-forget, no bloquea UX)
+- Variables requeridas: `PUBLIC_N8N_LEAD_WEBHOOK`, `N8N_AUTH_USER`, `N8N_AUTH_PASS`
+
+### Workflow n8n
+- **Webhook**: POST, Basic Auth, path: `<n8n-webhook-path>`
+- **Code node**: JavaScript con `mongodb` — inserta `{name, email, source, createdAt}` en MongoDB
+- **MongoDB**: `<host>:27017`, DB `leads`, colección `leads`, auth configurada vía variables de entorno
+- URL producción: `https://n8n.coltmandev.dev/webhook/<webhook-path>`
+
+### Variables de Entorno (`.env`)
+```env
+PUBLIC_N8N_LEAD_WEBHOOK=https://n8n.coltmandev.dev/webhook/<webhook-path>
+N8N_AUTH_USER=<your-auth-user>
+N8N_AUTH_PASS=<your-auth-pass>
+```
+
+### ⚠️ Notas técnicas
+- El webhook de producción (`/webhook/`) funciona 24/7 con workflow activo; `/webhook-test/` solo con UI abierta
+- SweetAlert2 se carga dinámicamente vía `document.createElement('script')` para evitar que Vite se coma el `<script src>` del CDN
+- `data-source` por formulario (no global `window.__source`) porque hay 2 forms en la misma página
+- Si el fetch a `/api/lead` falla por cualquier razón, se abre WhatsApp directamente (no se pierde el lead)
+
+## 13. Decisiones y Cambios Recientes (8 Ago 2026)
+
+### Seguridad
+- Credenciales reales (n8n, MongoDB) eliminadas de `context.md` y movidas a `.env` (gitignoreado)
+- Archivos stray eliminados: `dd`, `public/test-swal.html`, `pnpm-lock.yaml`
+- `pnpm-lock.yaml` agregado a `.gitignore`
+
+### Roadmap reordenado
+- Fase 4: Pulido Visual del Home (antes Fase 6)
+- Fase 5: AI Automation Showcase (sin cambios)
+- Fase 6: Testing y Despliegue (antes Fase 4)
+
+### Animaciones: Motion One en vez de GSAP
+- **Decisión**: Usar Motion One (~5KB) en lugar de GSAP (~47KB) para animaciones por scroll
+- **Razón**: GSAP lastimaría el Lighthouse (~71→~68 estimado). Motion One es tree-shakeable y compatible con Astro/Vite sin configuración extra.
+- **Riesgo mitigado**: View Transitions + ScrollTrigger ya no es problema porque Motion One maneja cleanup distinto.
+
+### SDD: home-visual-polish
+- Exploración completada: 4 placeholders, hero sin identidad visual, solo AOS fade-up
+- Propuesta completada: 3 entregables (imágenes, Motion One, hero ASCII redesign)
+- Próximo: specs → design → tasks → apply

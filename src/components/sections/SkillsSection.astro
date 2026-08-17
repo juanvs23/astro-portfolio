@@ -1,8 +1,8 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
 import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
 import Badge from '../ui/Badge.astro';
-import AsciiMarker from '../ui/AsciiMarker.astro';
 
 interface Props {
   locale: Locale;
@@ -11,11 +11,11 @@ interface Props {
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
 
-const skillCategories = t('skills.categories') as { title: string; skills: { name: string; description: string }[] }[];
+const skillCategories = t.object('skills.categories') as { title: string; skills: { name: string; description: string }[] }[];
 ---
 
 <Section id="skills">
-  <h1 data-typewriter data-aos="fade-down" class="text-[30px] md:text-[35px] lg:text-[38px] font-bold mb-sm">
+  <h1 data-typewriter data-aos="fade-down" class="text-h1 md:text-h1-md lg:text-h1-lg font-bold mb-sm">
     {t('seo.h1.skills')}
   </h1>
 
@@ -24,10 +24,7 @@ const skillCategories = t('skills.categories') as { title: string; skills: { nam
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-xl" data-aos="fade-up" data-aos-delay="150">
     {skillCategories.map((category) => (
       <div class="bg-canvas">
-        <h2 class="text-heading-md font-bold text-ink mb-md" data-underline>
-          <AsciiMarker state="add" class="mr-xs inline" />
-          {category.title}
-        </h2>
+        <SectionHeading variant="category" as="h2" marker="add" underline>{category.title}</SectionHeading>
 
         <ul class="space-y-xs">
           {category.skills.map((skill) => (
@@ -45,16 +42,17 @@ const skillCategories = t('skills.categories') as { title: string; skills: { nam
 
 <script>
   document.querySelectorAll('.skill-item').forEach(function(item) {
-    item.addEventListener('click', function() {
-      var marker = this.querySelector('.skill-marker');
-      var content = this.querySelector('.skill-content');
+    item.addEventListener('click', function(event) {
+      const current = event.currentTarget as HTMLElement;
+      var marker = current.querySelector('.skill-marker');
+      var content = current.querySelector('.skill-content');
 
-      if (content.classList.contains('open')) {
+      if (content && content.classList.contains('open')) {
         content.classList.remove('open');
-        marker.textContent = '[+]';
+        if (marker) marker.textContent = '[+]';
       } else {
-        content.classList.add('open');
-        marker.textContent = '[-]';
+        content?.classList.add('open');
+        if (marker) marker.textContent = '[-]';
       }
     });
   });

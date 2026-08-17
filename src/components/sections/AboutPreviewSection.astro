@@ -1,0 +1,52 @@
+---
+import { getTranslations, type Locale } from "@/i18n";
+import Section from "../ui/Section.astro";
+import SectionHeading from "../ui/SectionHeading.astro";
+import CtaButton from "../ui/CtaButton.astro";
+import TerminalWindow from "../ui/TerminalWindow.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+const terminalTitle = String(t("funnel.about.terminal.title"));
+const terminalLines = t.object("funnel.about.terminal.lines") as string[];
+---
+
+<Section id="about-preview">
+  <div
+    class="grid grid-cols-1 md:grid-cols-2 gap-xl items-center"
+    data-reveal
+  >
+    <!-- Terminal window (replaces the personal photo) — keeps grid order and
+         the image block's container contract; data-reveal-item enters with
+         the section reveal. -->
+    <TerminalWindow
+      title={terminalTitle}
+      lines={terminalLines}
+      locale={locale}
+      class="order-1"
+      data-reveal-item
+    />
+
+    <!-- Texto -->
+    <div class="order-2" data-reveal-item>
+      <SectionHeading marker="add">{t("funnel.about.heading")}</SectionHeading>
+      <div class="border-b border-hairline mb-md"></div>
+      <p class="text-body-md text-body mb-xl">
+        {t("funnel.about.description")}
+      </p>
+
+      <CtaButton
+        href={`/${locale}/about`}
+        variant="dark"
+        class="block text-center py-sm px-lg font-bold mt-lg w-fit"
+      >
+        {t("funnel.about.linkout")}
+        <span aria-hidden="true">&rarr;</span>
+      </CtaButton>
+    </div>
+  </div>
+</Section>

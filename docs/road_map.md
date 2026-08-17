@@ -46,8 +46,10 @@ Migración desde Next.js → Astro + TypeScript + Tailwind CSS + Three.js.
   - **Imágenes optimizadas**: Astro `<Image />` con WebP, reducción promedio 70-90%
 
 ### ❌ Pendiente
-- Testing automatizado y despliegue (Fase 4)
-- Fase 5: AI Automation Showcase (Phase 2 del pipeline SDD)
+- ~~Fase 4: Pulido Visual del Home~~ — COMPLETADA (ver abajo)
+- ~~Fase 5: AI Automation Showcase~~ — COMPLETADA (ver abajo)
+- **Revisión SEO completa** — MERGEADA a dev (2026-08-16); pendiente verify → archive
+- Fase 6: Testing, validación i18n y despliegue a producción
 
 ---
 
@@ -212,7 +214,7 @@ Migración desde Next.js → Astro + TypeScript + Tailwind CSS + Three.js.
 
 ---
 
-## 🚀 Fase 4: Testing y Lanzamiento
+## 🚀 Fase 6: Testing y Lanzamiento
 
 **Objetivo:** Validar, optimizar y desplegar en producción.
 
@@ -242,11 +244,65 @@ Migración desde Next.js → Astro + TypeScript + Tailwind CSS + Three.js.
   - URLs con prefijo de locale (`/es/about`, `/en/about`)
   - Fallback a ES si falta traducción EN
 
-- [ ] **4.5 Despliegue**
-  - Configurar adapter de Astro (`@astrojs/node` ya instalado)
-  - Variables de entorno en plataforma de despliegue
-  - Dominio custom configurado
-  - CI/CD con GitHub Actions (opcional)
+- [x] **4.5 Despliegue (parcial)**
+  - ✅ Adapter `@astrojs/vercel` configurado
+  - ✅ Variables de entorno documentadas en `.env.example`
+  - ✅ Build exitoso en Vercel
+  - [ ] Despliegue final en producción
+  - [ ] CI/CD con GitHub Actions (opcional)
+
+---
+
+## 🎯 Fase 4.5: Lead Capture Funnel + n8n + SweetAlert2
+
+**Objetivo:** Integrar captura de leads con webhook n8n, modal de confirmación con SweetAlert2 y confeti, y almacenamiento en MongoDB.
+
+### Tareas
+
+- [x] **4.5.1 LeadForm.astro — Captura de leads**
+  - Formulario con nombre + email + source (`audit` | `contact`)
+  - Validación de nombre requerido
+  - Botón WhatsApp con `e.preventDefault()` y fetch asíncrono
+  - `data-wa-number`, `data-wa-message`, `data-source` por formulario
+
+- [x] **4.5.2 API proxy `/api/lead`**
+  - Endpoint POST en `src/pages/api/lead.ts`
+  - Recibe `{name, email, source}`, forward a n8n webhook con Basic Auth
+  - Fire-and-forget: siempre devuelve `{success: true}` al frontend
+  - Variables de entorno: `PUBLIC_N8N_LEAD_WEBHOOK`, `N8N_AUTH_USER`, `N8N_AUTH_PASS`
+
+- [x] **4.5.3 SweetAlert2 + Canvas Confetti**
+  - Dependencias: `sweetalert2`, `canvas-confetti`
+  - Modal monocromático (surface-soft, ink, hairline, 4px radius, Berkeley Mono)
+  - Confeti en 3 bursts (izquierda, derecha, centro)
+  - Botón "Hablar por WhatsApp" → `window.open(waUrl, '_blank')`
+  - Carga dinámica de CDN desde `is:inline` para evitar conflictos con Vite/Astro
+
+- [x] **4.5.4 Workflow n8n: Webhook → MongoDB**
+  - Webhook POST con Basic Auth (credenciales desde variables de entorno — ver `.env`, no versionado)
+  - Code node con `mongodb` directo: inserta `{name, email, source, createdAt}` en `leads.leads`
+  - Workflow activo en producción (`/webhook/`, no `/webhook-test/`)
+  - MongoDB: host, base y credenciales documentados en `.env` (variables `MONGO_*`)
+
+- [x] **4.5.5 Documentación**
+  - `.env.example` actualizado con `N8N_AUTH_USER`, `N8N_AUTH_PASS`, `PUBLIC_N8N_LEAD_WEBHOOK`
+  - `context.md` actualizado con sección Lead Capture
+
+### Variables de Entorno Nuevas
+
+Definidas en `.env` (no versionado). Ver `.env.example` con placeholders:
+
+```env
+PUBLIC_N8N_LEAD_WEBHOOK=your-n8n-webhook-url
+N8N_AUTH_USER=your-auth-user
+N8N_AUTH_PASS=your-auth-pass
+# MongoDB (workflow n8n, no la usa la app Astro directamente)
+MONGO_HOST=host:port
+MONGO_DB=leads
+MONGO_COLLECTION=leads
+MONGO_AUTH_USER=admin
+MONGO_AUTH_PASS=your-mongo-pass
+```
 
 ---
 
@@ -308,51 +364,81 @@ src/
 
 ---
 
-## 🤖 Fase 5: AI Automation Showcase
+## 🎨 Fase 4: Pulido Visual del Home
 
-**Objetivo:** Agregar página de automatización con IA, refactorizar data de proyectos, y preparar el portfolio para mostrar demos de automatización (sin backend externo aún).
-
-**Contexto:** No hay automatizaciones reales de clientes (NDA/privacy). Los demos se construirán como proyectos open source separados. Esta fase prepara el portfolio para mostrarlos cuando existan.
+**Estado: COMPLETADA (2026-08-14).** Implementada vía SDD `home-visual-polish` (verify PASS: 341 tests, LCP 1766ms) + trabajo directo de la sesión 14/08 (jerarquía de encabezados WCAG, escala tipográfica unificada, nav de funnel, About hub, SectionHeading reutilizable). Nota: las animaciones se hicieron con **Motion One** (~5KB) en vez de GSAP (~47KB) — decisión de sesión por performance.
 
 ### Tareas
 
-- [ ] **5.1 Data model de proyectos (`src/constants/projects.ts`)**
-  - Crear interface `Project` (`id`, `name` key, `description` key, `url`, `image`, `category: 'ai' | 'web' | 'fullstack'`, `tags`, `featured?`, `stats?`)
-  - Factory `getProjects(t)` siguiendo el patrón de `getJobs(t)` en `jobs.ts`
-  - Migrar los 17 proyectos existentes desde ProjectsSection.astro
-  - Agregar 5 entries placeholder para AI demos (con `comingSoon: true` o similar)
+- [x] **4.1 Imágenes reales en el home**
+  - Reemplazados los placeholders: About/Skills/Capture → terminales interactivas (TerminalWindow/AuditTerminal), Projects → tabs interactivos con ProjectItem real
+- [x] **4.2 Animaciones con GSAP**
+  - Hecho con Motion One (`motion` ~5KB gzip, dynamic import): scroll reveals + CTA pulse + reduced-motion guard
+- [x] **4.3 Mejora del Hero**
+  - Rediseñado: h1 typewriter, lateral matrix canvas 2D, fade-in en cadena, cursor invert-blend scoped al hero, sin gradientes
 
-- [ ] **5.2 Refactor ProjectsSection.astro**
-  - Consumir `getProjects(t)` en vez de datos hardcodeados
-  - Agregar tabs/categorías para filtrar (AI, Web, Fullstack)
-  - Mostrar placeholder visual para demos AI "coming soon"
+---
 
-- [ ] **5.3 StatsGrid component (`src/components/ui/StatsGrid.astro`)**
-  - Componente reutilizable que recibe `stats: { value: string; labelKey: string }[]`
-  - Labels desde i18n
-  - Stats placeholder: "10+ AI Agents", "5+ Automations", "45% Avg. Reduction", "8+ Years"
+## 🤖 Fase 5: AI Automation Showcase
 
-- [ ] **5.4 Automation page (`src/pages/[locale]/automation.astro`)**
-  - Nueva página siguiendo el patrón exacto de `projects.astro`
-  - `getStaticPaths()` con ambos locales
-  - `export const prerender = true`
+**Objetivo:** Agregar página de automatización con IA y preparar el portfolio para mostrar demos de automatización (sin backend externo aún).
 
-- [ ] **5.5 AutomationSection component (`src/components/sections/AutomationSection.astro`)**
-  - Hero/callout: "AI Automation that delivers"
-  - StatsGrid con métricas placeholder
-  - AI demos showcase (grid de proyectos con category='ai', con indicador "coming soon")
-  - Services section: Smart Chatbots, RAG Systems, AI Agents, LLM Integration
-  - CTA a contacto
+**Contexto:** No hay automatizaciones reales de clientes (NDA/privacy). Los demos se construirán como proyectos open source separados. Esta fase prepara el portfolio para mostrarlos cuando existan.
 
-- [ ] **5.6 i18n — `messages/en.json` + `messages/es.json`**
-  - Agregar traducciones para proyectos AI (name + description)
-  - Agregar sección `automation` completa: hero, stats, services, CTA
-  - Agregar SEO keys: `seo.pages.automation`, `seo.descriptions.automation`, `seo.h1.automation`
+**Estado: COMPLETADA (2026-08-14).** Decisiones tomadas:
+- La página se muestra con un **ChatbotMock** (demo interactiva sin conexión a modelo) — no se inventan demos/proyectos falsos.
+- 5.1/5.2 **descartados** (no hay proyectos de IA reales aún — YAGNI; reintroducir `projects.ts` con categorías cuando existan demos open source).
+- El nav se mantiene mínimo por estrategia de funnel; `/automation` se enlaza desde home y `/services` (no desde el nav).
 
-- [ ] **5.7 Navegación + Layout**
-  - Agregar `{ key: 'menu.automation', path: '/automation' }` a `nav-links.ts`
-  - Verificar que Header.astro y MobileMenu.astro lo rendericen automáticamente
-  - Agregar `menu.automation` a ambos archivos de traducción
+### Tareas
+
+- [x] **5.1 Data model de proyectos (`src/constants/projects.ts`)** — DESCARTADO (no hay proyectos IA)
+- [x] **5.2 Refactor ProjectsSection.astro** — DESCARTADO (no hay categorías reales que filtrar)
+- [x] **5.3 StatsGrid component** — IMPLEMENTADO inline en AutomationSection (4 stats: Agents, Automations, Reducción, Años)
+- [x] **5.4 Automation page (`src/pages/[locale]/automation.astro`)** — CREADA (patrón services.astro, prerender, ambos locales)
+- [x] **5.5 AutomationSection component** — CREADO (intro + beneficios + ChatbotMock + stats + 4 servicios + CTA WhatsApp)
+- [x] **5.6 i18n** — COMPLETADA (sección `automation` + SEO keys es/en; traducciones de proyectos AI no aplican sin data model)
+- [x] **5.7 Navegación + Layout** — NO APLICA al nav (funnel); en su lugar CTAs contextuales desde home/services
+
+---
+
+## 🔍 Revisión SEO Completa — MERGEADA (2026-08-16)
+
+**Estado (2026-08-15):** SDD change `seo-complete-review` — proposal + 4 specs + design + tasks aprobados. **Implementación 19/21 tareas completada** en 3 PRs stacked-to-dev (pendientes de merge en orden PR 1 → PR 2 → PR 3; luego verify 4.1/4.2 + archive).
+
+**Decisiones de entrega (2026-08-15):** forecast 800–900 líneas > budget 400 → chained PRs con chain strategy **stacked-to-dev** (cada PR mergea a `dev` en orden, no a main). PR 1 jsonld+head-meta, PR 2 sitemap, PR 3 copy.
+
+**Objetivo:** cerrar gaps SEO verificados (sin dependencias nuevas, strict TDD).
+
+### PR 1 — JSON-LD + Head Meta (`feat/seo-jsonld-head-meta` → PR #1)
+
+- [x] **JSON-LD schema.org** — Person + ProfessionalService en TODAS las páginas (vía `JsonLd.astro` + `buildSiteJsonLd`), FAQPage solo en home (desde `t('funnel.faq')`, paridad UI/schema). `src/constants/site-info.ts` como single source of truth (sameAs derivado de social-links)
+- [x] **Head meta** — og:site_name, twitter:site (@juanvs23), hreflang es/en en `<head>`, og:image por locale (og-image-es/en.jpg, 1200x630) + og:image:alt (`seo.ogImageAlt`, valor provisional hasta PR 3)
+- [x] **`site` config** — `site: 'https://coltmandev.dev'` en astro.config.mjs; canonical/og:url migrados a `Astro.site` (fallback `new URL('https://coltmandev.dev')` si undefined)
+- [x] **BaseLayout** — head completo + inyección JSON-LD; removido `/og-image.jpg` heredado
+- [x] **Tests** — 21 nuevos (site-info 5, jsonld 9, head-meta 7); suite 362/362; build OK + spot-check dist
+- [x] **og-image es/en creadas** — `public/og-image-es.jpg` + `public/og-image-en.jpg` (1200x630, ~45KB). Prompt en `docs/og-image-prompt.md`
+
+### PR 2 — Sitemap (`feat/seo-sitemap` → PR #2)
+
+- [x] **Sitemap** — `/services` + `/automation` agregados; xhtml:link hreflang alternates; namespaces conservan lastmod/changefreq/priority; root weekly/1.0. `src/lib/seo/sitemap.ts` (builders puros autocontenidos) + `sitemap.xml.ts` endpoint con `({ site })` + fallback
+- [x] **Tests** — 16 nuevos (lib 14 + endpoint 2); suite 357/357; build OK; runtime GET /sitemap.xml → 200, 16 entries, 32 alternates
+
+### PR 3 — Copy SEO por intención (`feat/seo-copy` → PR #3)
+
+- [x] **Copy SEO por intención** — revisar `seo.*` es/en: services→precios, automation→IA, projects→casos, about→E-E-A-T, contact→conversión; guard anti-métricas inventadas (numeric claims ⊆ números reales del sitio)
+- [x] **i18n guards** — 13 tests (symmetry es/en, no-voseo en `seo`, ogImageAlt ≠ descriptions, numeric claims); suite 354/354
+- [x] **`seo.ogImageAlt`** — agregado en es/en (resuelve referencia de BaseLayout del PR 1 post-merge)
+
+### Pendiente del cambio
+
+- [x] **Merge de la cadena** — PR 1 → PR 2 → PR 3 mergeados a `dev` (2026-08-16; PR3 requirió resolver conflicto en messages es/en, resuelto tomando copy de PR3)
+- [ ] **Verify final** — 4.1 suite completa post-merge (`npx vitest run`) + 4.2 `npm run build` + spot-check dist
+- [ ] **Archive** — sync delta specs + actualizar este roadmap y `context.md` (marcar SEO COMPLETADO)
+
+### Artefactos
+
+`openspec/changes/seo-complete-review/` (proposal.md, design.md, tasks.md, specs/{seo-jsonld,seo-head-meta,seo-sitemap,seo-copy-intent}/spec.md) + Engram `sdd/seo-complete-review/*`.
 
 ---
 

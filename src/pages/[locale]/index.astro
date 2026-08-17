@@ -1,8 +1,21 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroSection from '../../components/sections/HeroSection.astro';
-import SectionButtons from '../../components/layout/SectionButtons.astro';
-import { locales, type Locale } from '@/i18n';
+import PainSection from '../../components/sections/PainSection.astro';
+import ProcessPreviewSection from '../../components/sections/ProcessPreviewSection.astro';
+import ServicesPreviewSection from '../../components/sections/ServicesPreviewSection.astro';
+import SocialProofSection from '../../components/sections/SocialProofSection.astro';
+import AboutPreviewSection from '../../components/sections/AboutPreviewSection.astro';
+import SkillsPreviewSection from '../../components/sections/SkillsPreviewSection.astro';
+import ProjectsPreviewSection from '../../components/sections/ProjectsPreviewSection.astro';
+import CaptureSection from '../../components/sections/CaptureSection.astro';
+import PricingBofuSection from '../../components/sections/PricingBofuSection.astro';
+import FaqSection from '../../components/sections/FaqSection.astro';
+import ContactCtaSection from '../../components/sections/ContactCtaSection.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Header from '../../components/layout/Header.astro';
+import MobileMenu from '../../components/layout/MobileMenu.astro';
+import { locales, type Locale, getPathWithoutLocale } from '@/i18n';
 export const prerender = true;
 
 export function getStaticPaths() {
@@ -12,9 +25,29 @@ export function getStaticPaths() {
 }
 
 const locale = Astro.params.locale as Locale;
+const currentPath = getPathWithoutLocale(Astro.url.pathname);
 ---
 
 <BaseLayout locale={locale}>
+  <Header locale={locale} currentPath={currentPath} />
+  <MobileMenu locale={locale} />
+  <div class="pt-[56px]">
+  <!-- 12-section AIDA conversion funnel (home-funnel-landing spec §Requirement: 12-section funnel composition).
+       Order: 1 Hero → 2 Pain → 3 Process → 4 Services → 5 SocialProof → 6 About → 6 Skills → 7 Projects
+        → 8 Capture → 9 PricingBofu → 10 Faq → 11 ContactCta → 12 Footer.
+        SectionButtons removed in PR₆. -->
   <HeroSection locale={locale} />
-  <SectionButtons locale={locale} />
+  <PainSection locale={locale} />
+  <ProcessPreviewSection locale={locale} />
+  <ServicesPreviewSection locale={locale} />
+  <SocialProofSection locale={locale} />
+  <AboutPreviewSection locale={locale} />
+  <SkillsPreviewSection locale={locale} />
+  <ProjectsPreviewSection locale={locale} />
+  <CaptureSection locale={locale} />
+  <PricingBofuSection locale={locale} />
+  <FaqSection locale={locale} />
+  <ContactCtaSection locale={locale} />
+  <Footer locale={locale} />
+  </div>
 </BaseLayout>

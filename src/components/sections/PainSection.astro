@@ -1,0 +1,30 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+---
+
+<Section id="pain">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-xl" data-aos="fade-up">
+    <!-- Card 1: Pain (left) -->
+    <div class="bg-surface-soft border border-hairline rounded-sm p-lg" data-aos="fade-up" data-aos-delay="50">
+      <SectionHeading marker="remove">{t('funnel.pain.heading')}</SectionHeading>
+      <div class="border-b border-hairline mb-md"></div>
+      <p class="text-body-md text-body">{t('funnel.pain.description')}</p>
+    </div>
+
+    <!-- Card 2: Promise (right) -->
+    <div class="bg-surface-soft border border-hairline rounded-sm p-lg" data-aos="fade-up" data-aos-delay="150">
+      <SectionHeading marker="add">{t('funnel.promise.heading')}</SectionHeading>
+      <div class="border-b border-hairline mb-md"></div>
+      <p class="text-body-md text-body">{t('funnel.promise.description')}</p>
+    </div>
+  </div>
+</Section>

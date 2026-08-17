@@ -1,0 +1,141 @@
+---
+import { getTranslations, type Locale } from '@/i18n';
+import { siteInfo } from '@/constants';
+import { buildFaqPageLd } from '../../lib/seo/jsonld';
+import JsonLd from '../JsonLd.astro';
+import Section from '../ui/Section.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import CtaButton from '../ui/CtaButton.astro';
+import { buildWhatsAppLink } from '../../lib/funnel-lead';
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+
+const faq = t.object('funnel.faq') as FaqItem[];
+const waHref = buildWhatsAppLink(
+  t('contact.whatsappNumber') as string,
+  (t('funnel.audit.message') as string),
+);
+
+// seo-complete-review 2.6: FAQPage JSON-LD built from the SAME funnel.faq
+// array rendered below -> UI/schema parity. FaqSection only renders on home,
+// so FAQPage stays home-only for free. buildFaqPageLd returns null when the
+// array is empty, and <JsonLd> renders nothing in that case.
+const faqPageLd = buildFaqPageLd(faq, Astro.site ?? new URL(siteInfo.url));
+---
+
+<Section id="faq">
+  {faqPageLd && <JsonLd data={faqPageLd} />}
+  <div class="max-w-[760px] mx-auto text-center">
+    <div data-aos="fade-up">
+      <SectionHeading marker="add">{t('funnel.faq_heading')}</SectionHeading>
+      <div class="border-b border-hairline mb-md mx-auto max-w-[200px]" data-aos="fade-up" data-aos-delay="100"></div>
+    </div>
+
+    <dl class="border-t border-hairline text-left" data-aos="fade-up" data-aos-delay="150">
+      {faq.map((item, index) => {
+        const controlId = `faq-q-${index}`;
+        const panelId = `faq-a-${index}`;
+        return (
+          <div class="faq-row border-b border-hairline py-md">
+            <dt>
+              <button
+                id={controlId}
+                type="button"
+                aria-expanded="false"
+                aria-controls={panelId}
+                class="faq-toggle w-full flex items-start gap-sm text-left focus:outline-none focus-visible:outline-2 focus-visible:outline-ink rounded-sm py-xs"
+                style="min-height:44px"
+              >
+                <span class="faq-marker text-ink font-bold mt-[2px] inline shrink-0">[+]</span>
+                <span class="text-body-strong text-ink">{item.question}</span>
+              </button>
+            </dt>
+            <dd id={panelId} class="faq-answer pl-lg" role="region" aria-labelledby={controlId}>
+              <p class="text-body-md text-body pt-sm">{item.answer}</p>
+            </dd>
+          </div>
+        );
+      })}
+    </dl>
+
+    <div class="mt-xl" data-aos="fade-up" data-aos-delay="200">
+      <CtaButton
+        href={waHref}
+        variant="primary"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center gap-2 px-lg h-[44px]"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" class="shrink-0">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 1.4.37 2.77 1.07 3.97L0 16l4.2-1.03A7.96 7.96 0 0 0 8 16c4.42 0 8-3.58 8-8s-3.58-8-8-8zm3.87 11.3c-.15.42-.75.8-1.23.9-.37.08-.84.15-2.44-.52-2.05-.85-3.37-2.94-3.47-3.07-.1-.14-.83-1.1-.83-2.1s.52-1.49.7-1.7c.18-.2.4-.25.53-.25h.38c.12 0 .28.01.4.3.15.37.52 1.27.57 1.36.05.1.08.2.02.33-.06.12-.1.2-.2.3-.1.1-.2.22-.28.3-.1.1-.2.2-.08.38.12.2.52.85 1.12 1.38.77.68 1.42.9 1.62 1 .2.1.32.08.44-.05.12-.12.5-.58.63-.78.13-.2.26-.17.44-.1.18.07 1.13.53 1.32.63.2.1.33.15.38.23.05.1.05.5-.1.92z"/>
+        </svg>
+        {t('funnel.contact.cta')}
+      </CtaButton>
+    </div>
+  </div>
+</Section>
+
+<script>
+  // Smooth accordion (progressive enhancement). FAQ answers start collapsed;
+  // no-JS fallback in <noscript> keeps all answers visible.
+  (function () {
+    var toggles = document.querySelectorAll('.faq-toggle');
+    toggles.forEach(function (toggle) {
+      var panel = document.getElementById(toggle.getAttribute('aria-controls') ?? '');
+      var marker = toggle.querySelector('.faq-marker');
+
+      function update(open: boolean) {
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (marker) marker.textContent = open ? '[-]' : '[+]';
+        if (panel) {
+          if (open) {
+            panel.classList.add('open');
+          } else {
+            panel.classList.remove('open');
+          }
+        }
+      }
+
+      toggle.addEventListener('click', function () {
+        var isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        update(!isOpen);
+      });
+    });
+  })();
+</script>
+
+<style>
+  .faq-answer {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 400ms ease, opacity 300ms ease, padding 300ms ease;
+  }
+  .faq-answer.open {
+    max-height: 600px;
+    opacity: 1;
+  }
+
+  .faq-marker {
+    transition: transform 200ms ease;
+  }
+  .faq-toggle[aria-expanded="true"] .faq-marker {
+    transform: rotate(0deg);
+  }
+</style>
+
+<noscript>
+  <style>
+    .faq-answer { max-height: none; opacity: 1; overflow: visible; }
+  </style>
+</noscript>

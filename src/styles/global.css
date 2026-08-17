@@ -103,7 +103,182 @@
 .typewriter {
   display: inline;
   overflow: hidden;
-  border-right: 2px solid var(--color-ink);
+  border-right: 2px solid currentColor;
   animation: typewriter-cursor 0.8s step-end infinite;
   word-break: break-word;
 }
+
+/* Motion One staggered reveal (home-visual-polish). Same D7 philosophy as AOS:
+   children of a [data-reveal] grid start hidden and Motion One animates them to
+   visible when the grid enters the viewport. The CSS initial state is the
+   single source of truth; the reduced-motion and <noscript> overrides below
+   keep content fully visible without JS. */
+[data-reveal-item] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+/* D7: force-visible guard — AOS reveal must never leave content hidden for
+   users with reduced motion. Content renders static and fully visible.
+   The no-JS equivalent lives in a <noscript> block on the funnel page. */
+@media (prefers-reduced-motion: reduce) {
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  [data-reveal-item] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .typewriter {
+    animation: none;
+    border-right-color: transparent;
+  }
+}
+
+/* Hero invert cursor follower (home-hero-redesign). Blend lives on the fixed
+   wrapper positioned with left/top — a transform on the blended element would
+   isolate the blending group. The dot is centered via negative margins and
+   scales ~3.3x over interactive elements. Disabled for reduced motion and
+   non-hover (touch) devices; the JS guard adds the active class only when the
+   pointer is inside the hero. */
+.hero-cursor {
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  mix-blend-mode: difference;
+  will-change: left, top;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.hero-cursor-active {
+  opacity: 1;
+}
+
+.hero-cursor-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background-color: var(--color-on-dark);
+  transform: scale(1);
+  transition: transform 0.15s ease;
+}
+
+.hero-cursor-grow .hero-cursor-dot {
+  transform: scale(3.3);
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none) {
+  .hero-cursor {
+    display: none;
+  }
+}
+
+/* Terminal window blinking cursor (home-skills-terminal). The block cursor
+   sits on the final prompt after all lines have been revealed; reduced motion
+   keeps it solid and static. */
+.terminal-cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.05em;
+  background-color: var(--color-on-dark);
+  animation: terminal-cursor-blink 1s step-end infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes terminal-cursor-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-cursor {
+    animation: none;
+  }
+}
+
+/* Audit terminal progress bars (home-capture-audit). Each bar starts at
+   scaleX(0) (origin left) and fills to its target width when its row is
+   revealed by Motion One animating transform: scaleX(target/100); reduced
+   motion renders the bar at the full target width immediately so the metric
+   value always matches the bar. */
+.audit-row-bar-fill {
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audit-row-bar-fill {
+    transform: none;
+    width: var(--bar-w, 0%);
+  }
+}
+
+/* Hero lateral matrix stream (home-hero-redesign): decorative canvas depth
+   layer. Low opacity + radial mask keep it behind the headline; the mask
+   fades the grid toward the edges so it does not compete with the copy. */
+.hero-matrix {
+  width: 100%;
+  height: 100%;
+  opacity: 0.35;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 30%, transparent 75%);
+}
+
+/* Plan CTA fill-from-left hover — see docs/context.md for usage rules */
+  .plan-cta::after,
+  .plan-cta-bottom::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: inherit;
+    border-radius: inherit;
+    z-index: -2;
+  }
+
+  .plan-cta::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: var(--color-accent-hover, #0056b3);
+    transition: width 0.3s ease;
+    border-radius: inherit;
+    z-index: -1;
+  }
+
+  .plan-cta:hover::before {
+    width: 100%;
+  }
+
+  /* Plan CTA fill-from-bottom hover */
+  .plan-cta-bottom::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background-color: var(--color-accent-hover, #0056b3);
+    transition: height 0.3s ease;
+    border-radius: inherit;
+    z-index: -1;
+  }
+
+  .plan-cta-bottom:hover::before {
+    height: 100%;
+  }
