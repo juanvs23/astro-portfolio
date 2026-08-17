@@ -279,20 +279,29 @@ Migración desde Next.js → Astro + TypeScript + Tailwind CSS + Three.js.
   - Carga dinámica de CDN desde `is:inline` para evitar conflictos con Vite/Astro
 
 - [x] **4.5.4 Workflow n8n: Webhook → MongoDB**
-  - Webhook POST con Basic Auth (`coltman:Sinal14.`)
+  - Webhook POST con Basic Auth (credenciales desde variables de entorno — ver `.env`, no versionado)
   - Code node con `mongodb` directo: inserta `{name, email, source, createdAt}` en `leads.leads`
   - Workflow activo en producción (`/webhook/`, no `/webhook-test/`)
-  - MongoDB: `62.171.164.5:27017`, auth `admin:Coltm4nM0ng0_2026`
+  - MongoDB: host, base y credenciales documentados en `.env` (variables `MONGO_*`)
 
 - [x] **4.5.5 Documentación**
   - `.env.example` actualizado con `N8N_AUTH_USER`, `N8N_AUTH_PASS`, `PUBLIC_N8N_LEAD_WEBHOOK`
   - `context.md` actualizado con sección Lead Capture
 
 ### Variables de Entorno Nuevas
+
+Definidas en `.env` (no versionado). Ver `.env.example` con placeholders:
+
 ```env
-PUBLIC_N8N_LEAD_WEBHOOK=https://n8n.coltmandev.dev/webhook/ccf837a7-ff2e-415c-b766-9b8abd72d008
-N8N_AUTH_USER=coltman
-N8N_AUTH_PASS=Sinal14.
+PUBLIC_N8N_LEAD_WEBHOOK=your-n8n-webhook-url
+N8N_AUTH_USER=your-auth-user
+N8N_AUTH_PASS=your-auth-pass
+# MongoDB (workflow n8n, no la usa la app Astro directamente)
+MONGO_HOST=host:port
+MONGO_DB=leads
+MONGO_COLLECTION=leads
+MONGO_AUTH_USER=admin
+MONGO_AUTH_PASS=your-mongo-pass
 ```
 
 ---
