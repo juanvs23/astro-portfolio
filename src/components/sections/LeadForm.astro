@@ -163,6 +163,13 @@ const waNumberAttr = waNumber;
         btn.addEventListener('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
+          // gtm-integration (R4/R5): the CTA never bubbles to the delegated
+          // wa.me listener (stopPropagation above), so push the conversion
+          // event here via the bridge exposed by gtm-client.ts. No-op when
+          // GTM is not configured (window.__gtmPush undefined).
+          if (window.__gtmPush) {
+            window.__gtmPush(source === 'audit' ? 'audit_cta' : 'contact_whatsapp_cta');
+          }
           var name = (nameInput && nameInput.value || '').trim();
           if (!name) { nameInput.focus(); return; }
           var email = (emailInput && emailInput.value || '').trim();
