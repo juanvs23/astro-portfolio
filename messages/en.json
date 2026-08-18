@@ -617,7 +617,8 @@
           "Speed optimization",
           "1 hour of support"
         ],
-        "cta": "Hire Basic"
+        "cta": "Hire Basic",
+        "id": "basic"
       },
       {
         "name": "Professional",
@@ -631,7 +632,8 @@
           "Advanced optimization",
           "Documentation included"
         ],
-        "cta": "Hire Professional"
+        "cta": "Hire Professional",
+        "id": "professional"
       },
       {
         "name": "E-commerce",
@@ -645,7 +647,8 @@
           "Admin dashboard",
           "Priority support"
         ],
-        "cta": "Hire E-commerce"
+        "cta": "Hire E-commerce",
+        "id": "ecommerce"
       }
     ],
     "launchPricing": {

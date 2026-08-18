@@ -11,6 +11,7 @@ import { buildFunnelContactPayload, buildWhatsAppLink } from '../../lib/funnel-l
 // ---------------------------------------------------------------------------
 
 interface WebPlan {
+  id: string;
   name: string;
   startingPrice: number;
   delivery: string;
@@ -109,6 +110,7 @@ describe('BOFU pricing data shape (services.webPlans + launchPricing)', () => {
     expect(plans).toHaveLength(3);
     expect(plans.map((p) => p.startingPrice)).toEqual([120, 250, 500]);
     for (const plan of plans) {
+      expect(plan.id).toMatch(/^(basic|professional|ecommerce)$/);
       expect(plan.name.length).toBeGreaterThan(0);
       expect(plan.delivery.length).toBeGreaterThan(0);
       expect(plan.cta.length).toBeGreaterThan(0);
