@@ -616,7 +616,8 @@
           "Optimización de velocidad",
           "1 hora de soporte"
         ],
-        "cta": "Contratar Básico"
+        "cta": "Contratar Básico",
+        "id": "basic"
       },
       {
         "name": "Profesional",
@@ -630,7 +631,8 @@
           "Optimización avanzada",
           "Documentación incluida"
         ],
-        "cta": "Contratar Profesional"
+        "cta": "Contratar Profesional",
+        "id": "professional"
       },
       {
         "name": "E-commerce",
@@ -644,7 +646,8 @@
           "Panel de administración",
           "Soporte prioritario"
         ],
-        "cta": "Contratar E-commerce"
+        "cta": "Contratar E-commerce",
+        "id": "ecommerce"
       }
     ],
     "launchPricing": {

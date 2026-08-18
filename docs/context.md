@@ -78,9 +78,9 @@ La home es una landing AIDA de 12 secciones orientada a conversión (auditoría 
 - **No se inventan proyectos IA** (5.1/5.2 descartados — YAGNI). StatsGrid inline (no componente separado).
 - i18n es/en: `automation.*` + `seo.pages/descriptions/h1.automation`.
 
-## SEO — mergeado a dev, verify + archive pendientes (2026-08-16)
+## SEO — COMPLETADO y ARCHIVADO (2026-08-18)
 
-**Change SDD `seo-complete-review`:** proposal + 4 specs + design + tasks aprobados. **19/21 tareas implementadas** (strict TDD) en 3 PRs stacked-to-dev, **mergeados a dev el 2026-08-16**; falta: verify (4.1/4.2), archive.
+**Change SDD `seo-complete-review`:** proposal + 4 specs + design + tasks aprobados. **21/21 tareas implementadas** (strict TDD) en 3 PRs stacked-to-dev, **mergeados a dev el 2026-08-16**. **Verify PASS WITH WARNINGS (2026-08-18)**: 391/391 tests, build exit 0, 19/19 req, 37/37 escenarios, 100% cobertura archivos cambiados. **Archivado (2026-08-18)**: 4 specs sincronizadas a `openspec/specs/` + cambio movido a `openspec/changes/archive/2026-08-18-seo-complete-review/`.
 
 **Decisiones de entrega:** forecast 800–900 líneas > budget 400 → chained PRs `stacked-to-dev` (cada PR mergea a dev en orden). PR 1 jsonld+head-meta, PR 2 sitemap, PR 3 copy.
 
@@ -97,6 +97,20 @@ Resuelto dentro del cambio:
 - **Copy SEO**: `seo.*` es/en por intención (services→precios, automation→IA, projects→casos, about→E-E-A-T, contact→conversión); guards i18n anti-voseo y anti-métricas inventadas (numeric claims ⊆ números reales)
 - **og-image creadas**: `public/og-image-es.jpg` + `public/og-image-en.jpg` (1200x630). Prompt en `docs/og-image-prompt.md`
 
-Pendiente del cambio: verify (4.1 suite + 4.2 build) → archive (marcar SEO COMPLETADO en este doc y en road_map.md).
+Pendiente del cambio: COMPLETADO — verify (2026-08-18) y archive (2026-08-18) ejecutados. Warnings no bloqueantes: W-1 apply-progress en formato resumido (evidencia de repo sustituye), W-2 deprecación `baseUrl` TS5101 preexistente en tsconfig.json (ajena al cambio SEO).
 
-Artefactos del cambio: `openspec/changes/seo-complete-review/` (proposal.md, design.md, tasks.md, specs/{seo-jsonld,seo-head-meta,seo-sitemap,seo-copy-intent}/spec.md) + Engram topic `sdd/seo-complete-review/*`.
+## GTM / Analytics (gtm-integration, 2026-08-18)
+
+- **Inyección env-gated**: `GtmHead.astro` (loader en `<head>` tras `<ViewTransitions />`) + `GtmBody.astro` (noscript iframe tras `<body>`) en `BaseLayout`. Solo renderizan si `PUBLIC_GTM_CONTAINER_ID` es no vacío — **nunca hardcodear un container id**. Documentada en `.env.example` (vacía por defecto; prod sin GTM hasta setearla en Vercel).
+- **Helpers puros**: `src/lib/gtm.ts` — `shouldLoadGtm(containerId?)`, `buildDataLayerEvent(name, payload?)`, `pushDataLayer(event)` (wrapper DOM que guarda `window.dataLayer`). Patrón espejo de `motion-guard.ts` (contrato puro + wrapper DOM). RED-first en `src/lib/gtm.test.ts` (node, sin DOM).
+- **Client**: `src/lib/gtm-client.ts` (script bundleado en BaseLayout, llama `initGtmClient()`). Guarda doble-init, y con env vacío NO registra listeners ni expone `window.__gtmPush`. Expone `window.__gtmPush(name, payload?)` para handlers `is:inline`.
+- **Eventos (snake_case)**:
+  - `pageview` — en cada `astro:page-load` (carga inicial + soft navs), `page: pathname`. Desactivar auto-pageview en el dashboard GTM para no duplicar la primera carga.
+  - `whatsapp_cta` — listener delegado en `document` sobre `a[href*="wa.me"]` (fase burbuja). Excluye `[data-wa-number]` (LeadForm; su handler hace `stopPropagation()` de todos modos).
+  - `plan_whatsapp_cta` con `plan` — links con `data-gtm-plan` (solo los 3 planes web de ServicesSection).
+  - `contact_whatsapp_cta` (`source='contact'`) y `audit_cta` (`source='audit'`) — push dentro del handler de LeadForm.
+- **ADR — plan id estable no localizado**: `services.webPlans[].id` = `basic|professional|ecommerce` en `messages/es.json`+`en.json` (mismo valor en ambos locales). Es la clave de tracking para `plan_whatsapp_cta`; `name` sigue localizado solo para display. Los tags/triggers de GTM deben matchear el `id`, no el `name`.
+- **Verificación**: `npx vitest run` (402 tests), `npm run build` exit 0. Con env vacío: **0** ocurrencias de `googletagmanager` en el HTML renderizado. Con env seteado: loader en head + noscript iframe + client activo. Client bundleado se inlina en el HTML (`dataLayer` como identificador inerte cuando env vacío — no crea el array).
+- **Pendiente (follow-ups)**: consent mode (GDPR/CCPA), CSP allowlist (`googletagmanager.com`, `google-analytics.com`), tags/triggers en el dashboard GTM.
+
+**Guía paso a paso para configurar GTM en el dashboard**: `docs/gtm-setup-guide.md` (crear container, GA4, tags, triggers, variables, deploy del `PUBLIC_GTM_CONTAINER_ID` en Vercel, publish, preview/debug).

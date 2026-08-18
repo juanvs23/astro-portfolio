@@ -70,6 +70,7 @@ describe('services.calculator i18n', () => {
 // ---------------------------------------------------------------------------
 
 interface WebPlan {
+  id: string;
   name: string;
   startingPrice: number;
   delivery: string;
@@ -130,6 +131,14 @@ describe('services.webPlans i18n', () => {
     expect(plans[2].startingPrice).toBe(500);
     expect(plans[2].delivery).toBe('14 days');
     expect(plans[2].recommended).toBe(false);
+  });
+
+  it('web plans carry stable non-localized ids in both locales', async () => {
+    for (const locale of ['es', 'en'] as const) {
+      const t = await getTranslations(locale);
+      const plans = t.object('services.webPlans') as WebPlan[];
+      expect(plans.map((p) => p.id)).toEqual(['basic', 'professional', 'ecommerce']);
+    }
   });
 });
 

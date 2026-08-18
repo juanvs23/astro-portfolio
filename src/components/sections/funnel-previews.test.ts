@@ -358,6 +358,7 @@ interface FaqItem {
 }
 
 interface WebPlan {
+  id: string;
   name: string;
   startingPrice: number;
   delivery: string;
@@ -488,6 +489,7 @@ describe('pricing bofu section data shape', () => {
       expect(plans[1].startingPrice).toBe(250);
       expect(plans[2].startingPrice).toBe(500);
       for (const plan of plans) {
+        expect(plan.id).toMatch(/^(basic|professional|ecommerce)$/);
         expect(plan.name.length).toBeGreaterThan(0);
         expect(plan.delivery.length).toBeGreaterThan(0);
         expect(Array.isArray(plan.features)).toBe(true);

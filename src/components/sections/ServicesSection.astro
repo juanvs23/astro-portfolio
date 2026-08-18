@@ -6,6 +6,7 @@ import AsciiMarker from '../ui/AsciiMarker.astro';
 import CtaButton from '../ui/CtaButton.astro';
 
 interface WebPlan {
+  id: 'basic' | 'professional' | 'ecommerce';
   name: string;
   startingPrice: number;
   delivery: string;
@@ -161,6 +162,7 @@ const hasAiNote = typeof aiNoteRaw === 'string' && aiNoteRaw !== 'services.aiNot
 
           <CtaButton
             href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hola Juan! Me interesa el plan ${plan.name} de Desarrollo Web — desde $${plan.startingPrice} USD`)}`}
+            data-gtm-plan={plan.id}
             variant={plan.recommended ? 'accent' : 'dark'}
             target="_blank"
             rel="noopener noreferrer"
