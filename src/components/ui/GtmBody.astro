@@ -1,0 +1,12 @@
+---
+// GTM noscript fallback (gtm-integration, spec R1). Renders only when
+// PUBLIC_GTM_CONTAINER_ID is non-empty; the container id is never hardcoded.
+// set:html keeps the iframe outside Astro's processing.
+const containerId = import.meta.env.PUBLIC_GTM_CONTAINER_ID as string | undefined;
+
+const noscriptSnippet = containerId
+  ? `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${containerId}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`
+  : '';
+---
+
+{containerId ? <Fragment set:html={noscriptSnippet} /> : null}

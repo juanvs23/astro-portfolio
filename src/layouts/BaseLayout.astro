@@ -6,6 +6,8 @@ import { buildCanonicalUrl, buildHreflangLinks, resolveOgImageUrl } from '@/lib/
 import { buildSiteJsonLd } from '@/lib/seo/jsonld';
 import JsonLd from '../components/JsonLd.astro';
 import { ViewTransitions } from 'astro:transitions';
+import GtmHead from '../components/ui/GtmHead.astro';
+import GtmBody from '../components/ui/GtmBody.astro';
 
 interface Props {
   title?: string;
@@ -40,6 +42,7 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
     <link rel="icon" href="/favicon.ico?v=2" />
     <meta name="generator" content={Astro.generator} />
     <ViewTransitions />
+    <GtmHead />
     <title>{finalTitle}</title>
     <meta name="description" content={finalDescription} />
     <meta name="author" content="Juan Carlos Ávila" />
@@ -76,6 +79,7 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
     </script>
   </head>
   <body class="font-mono bg-canvas text-ink antialiased">
+    <GtmBody />
     <!-- D7: no-JS fallback. AOS CSS zeroes [data-aos] opacity before init; without scripting,
          content must stay visible/reachable. Style inside noscript is body-valid HTML5. -->
     <noscript>
@@ -84,6 +88,10 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
         [data-reveal-item] { opacity: 1 !important; transform: none !important; }
       </style>
     </noscript>
+    <script>
+      import { initGtmClient } from '@/lib/gtm-client';
+      initGtmClient();
+    </script>
     <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-lg focus:py-md focus:bg-surface-dark focus:text-on-dark focus:rounded-sm">
       {t('navigation.skipToContent')}
     </a>
