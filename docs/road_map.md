@@ -48,7 +48,10 @@ Migración desde Next.js → Astro + TypeScript + Tailwind CSS + Three.js.
 ### ❌ Pendiente
 - ~~Fase 4: Pulido Visual del Home~~ — COMPLETADA (ver abajo)
 - ~~Fase 5: AI Automation Showcase~~ — COMPLETADA (ver abajo)
-- **Revisión SEO completa** — MERGEADA a dev (2026-08-16); pendiente verify → archive
+- **Revisión SEO completa** — COMPLETADA y ARCHIVADA (2026-08-18)
+  - Merge 3 PRs stacked-to-dev (2026-08-16) → verify PASS WITH WARNINGS (391/391, build OK, 19/19 req, 37/37 escenarios)
+  - Archive SDD `seo-complete-review`: 4 specs sincronizadas a `openspec/specs/` + cambio movido a `openspec/changes/archive/2026-08-18-seo-complete-review/`
+  - Warnings no bloqueantes: W-1 apply-progress resumido (evidencia de repo sustituye), W-2 deprecación `baseUrl` TS5101 preexistente
 - Fase 6: Testing, validación i18n y despliegue a producción
 
 ---
@@ -433,12 +436,12 @@ src/
 ### Pendiente del cambio
 
 - [x] **Merge de la cadena** — PR 1 → PR 2 → PR 3 mergeados a `dev` (2026-08-16; PR3 requirió resolver conflicto en messages es/en, resuelto tomando copy de PR3)
-- [ ] **Verify final** — 4.1 suite completa post-merge (`npx vitest run`) + 4.2 `npm run build` + spot-check dist
-- [ ] **Archive** — sync delta specs + actualizar este roadmap y `context.md` (marcar SEO COMPLETADO)
+- [x] **Verify final** — 4.1 suite completa post-merge (`npx vitest run` 391/391) + 4.2 `npm run build` + spot-check dist (2026-08-18)
+- [x] **Archive** — specs sincronizadas a `openspec/specs/` + cambio movido a `openspec/changes/archive/2026-08-18-seo-complete-review/` + este roadmap y `context.md` marcados (2026-08-18)
 
 ### Artefactos
 
-`openspec/changes/seo-complete-review/` (proposal.md, design.md, tasks.md, specs/{seo-jsonld,seo-head-meta,seo-sitemap,seo-copy-intent}/spec.md) + Engram `sdd/seo-complete-review/*`.
+Archivado en `openspec/changes/archive/2026-08-18-seo-complete-review/` (proposal.md, design.md, tasks.md, specs/{seo-jsonld,seo-head-meta,seo-sitemap,seo-copy-intent}/spec.md, verify-report.md, archive-report.md) + specs sincronizadas en `openspec/specs/{seo-jsonld,seo-head-meta,seo-sitemap,seo-copy-intent}/` + Engram `sdd/seo-complete-review/*`.
 
 ---
 
