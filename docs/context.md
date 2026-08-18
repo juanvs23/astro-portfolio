@@ -112,3 +112,5 @@ Pendiente del cambio: COMPLETADO — verify (2026-08-18) y archive (2026-08-18) 
 - **ADR — plan id estable no localizado**: `services.webPlans[].id` = `basic|professional|ecommerce` en `messages/es.json`+`en.json` (mismo valor en ambos locales). Es la clave de tracking para `plan_whatsapp_cta`; `name` sigue localizado solo para display. Los tags/triggers de GTM deben matchear el `id`, no el `name`.
 - **Verificación**: `npx vitest run` (402 tests), `npm run build` exit 0. Con env vacío: **0** ocurrencias de `googletagmanager` en el HTML renderizado. Con env seteado: loader en head + noscript iframe + client activo. Client bundleado se inlina en el HTML (`dataLayer` como identificador inerte cuando env vacío — no crea el array).
 - **Pendiente (follow-ups)**: consent mode (GDPR/CCPA), CSP allowlist (`googletagmanager.com`, `google-analytics.com`), tags/triggers en el dashboard GTM.
+
+**Guía paso a paso para configurar GTM en el dashboard**: `docs/gtm-setup-guide.md` (crear container, GA4, tags, triggers, variables, deploy del `PUBLIC_GTM_CONTAINER_ID` en Vercel, publish, preview/debug).
