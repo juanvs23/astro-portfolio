@@ -2,20 +2,32 @@
 
 ## Purpose
 
-Emit valid schema.org structured data on every page. A `site-info.ts` constants module becomes the single source of truth for person/business data; a reusable `JsonLd.astro` component injects `<script type="application/ld+json">` blocks. Person + ProfessionalService ship on ALL pages (injected via BaseLayout); FAQPage ships on home only, built from the SAME `funnel.faq` array the FAQ section renders — guaranteeing UI/schema parity with zero extra i18n keys.
+Emit valid schema.org structured data on every page. Identity data (name, jobTitle, url, phone, logo, `sameAs`) is sourced from the CMS `siteInfo` API at render time with a fallback to the static `site-info.ts` constants when the API/Mongo is unavailable, so structured data never breaks. A reusable `JsonLd.astro` component injects `<script type="application/ld+json">` blocks. Person + ProfessionalService ship on ALL pages (injected via BaseLayout); FAQPage ships on home only, built from the SAME `funnel.faq` array the FAQ section renders.
 
 ## Requirements
 
-### Requirement: site-info single source of truth
+### Requirement: site-info from CMS API with constant fallback
 
-`src/constants/site-info.ts` MUST define the person/business data used by all JSON-LD builders: name `Juan Carlos Ávila`, jobTitle `Web Developer + AI Automation`, url `https://coltmandev.dev`, phone `+58 424 831 0009`, logo (`/favicon.svg`), and `sameAs` derived from `src/constants/social-links.ts` (GitHub, LinkedIn, X, Facebook hrefs). No other module MAY hardcode this identity data.
+`buildSiteJsonLd` MUST source person/business data (name, jobTitle, url, telephone, logo, `sameAs`) from the CMS `siteInfo` API, falling back to `src/constants/site-info.ts` (including `sameAs` derived from `social-links.ts`) when the API or Mongo is unavailable. No other module MAY hardcode this identity data. The fallback MUST keep the page's structured data valid (no 500, no missing Person node).
 
-#### Scenario: site-info exposes full identity
+#### Scenario: API available supplies identity
 
-- GIVEN `site-info.ts` is imported
-- WHEN its exports are read
-- THEN name, jobTitle, url, phone, and logo match the approved values
-- AND `sameAs` contains exactly the 4 hrefs from `social-links.ts`
+- GIVEN the CMS `siteInfo` API is reachable and returns valid data
+- WHEN `buildSiteJsonLd` runs
+- THEN the emitted identity uses the API values for name, jobTitle, url, phone, logo, and `sameAs`
+
+#### Scenario: API down falls back to constants
+
+- GIVEN the CMS `siteInfo` API or Mongo is unavailable
+- WHEN `buildSiteJsonLd` runs
+- THEN it uses the static `site-info.ts` values
+- AND the page renders a valid Person node without a 500
+
+#### Scenario: Fallback sameAs matches social constants
+
+- GIVEN the fallback path is taken
+- WHEN the `sameAs` array is read
+- THEN it equals the 4 hrefs from `social-links.ts`
 
 ### Requirement: Reusable JSON-LD emitter
 
@@ -36,7 +48,7 @@ A `JsonLd.astro` component MUST accept one or more schema objects and MUST rende
 
 ### Requirement: Typed, pure, testable builders
 
-Person, ProfessionalService, and FAQPage builders MUST be typed functions (not inline literals in components) that derive their data from `site-info.ts` and the locale's translations. They MUST be pure — the same inputs MUST produce the same output — so unit tests can assert exact JSON shape.
+Person, ProfessionalService, and FAQPage builders MUST be typed functions (not inline literals in components) that derive their data from the resolved site-info source and the locale's translations. They MUST be pure — the same inputs MUST produce the same output — so unit tests can assert exact JSON shape.
 
 #### Scenario: Builder output is deterministic
 

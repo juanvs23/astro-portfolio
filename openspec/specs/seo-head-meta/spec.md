@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Complete the social/sharing head metadata in BaseLayout: og:site_name, twitter:site, bidirectional hreflang alternates (es/en), per-locale og:image pointing to the verified 1200x630 assets (`og-image-es.jpg` / `og-image-en.jpg`), and a localized og:image:alt from NEW SEO-oriented i18n keys. Fixes the current broken `og-image.jpg` reference and the hardcoded domain by deriving URLs from `Astro.site` (set via `site: 'https://coltmandev.dev'` in astro.config.mjs).
+Complete the social/sharing head metadata in BaseLayout: og:site_name, twitter:site, bidirectional hreflang alternates (es/en), per-locale og:image pointing to the verified 1200x630 assets (`og-image-es.jpg` / `og-image-en.jpg`), and a localized og:image:alt from SEO-oriented i18n keys. Brand metadata (`og:site_name`, `twitter:site`) is sourced from the CMS `siteInfo` API at render time with a fallback to the static `site-info.ts` constants when the API/Mongo is unavailable. URLs derive from `Astro.site` (set via `site: 'https://coltmandev.dev'`).
 
 ## Requirements
 
@@ -22,15 +22,22 @@ Complete the social/sharing head metadata in BaseLayout: og:site_name, twitter:s
 - WHEN the head HTML is inspected
 - THEN no attribute references `/og-image.jpg`
 
-### Requirement: og:site_name
+### Requirement: og:site_name from CMS API with fallback
 
-The head MUST emit `<meta property="og:site_name">` with the brand name derived from `site-info.ts` (single source of truth), on every page and locale.
+The head MUST emit `<meta property="og:site_name">` with the brand name. The brand name MUST be sourced from the CMS `siteInfo` API, falling back to the `site-info.ts` constant when the API or Mongo is unavailable. The head MUST render on every page and locale even if the API is down (no 500).
 
-#### Scenario: og:site_name present
+#### Scenario: og:site_name from API
 
-- GIVEN any page renders through BaseLayout
-- WHEN the head is inspected
-- THEN an og:site_name meta exists with the site-info brand name
+- GIVEN the CMS `siteInfo` API returns the brand name
+- WHEN any page renders through BaseLayout
+- THEN an og:site_name meta exists with that API brand name
+
+#### Scenario: og:site_name falls back on API failure
+
+- GIVEN the CMS `siteInfo` API or Mongo is unavailable
+- WHEN any page renders
+- THEN an og:site_name meta exists with the static `site-info.ts` brand name
+- AND the page renders without a 500
 
 ### Requirement: twitter:site
 
