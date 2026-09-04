@@ -1,16 +1,18 @@
 import { Schema, model, models, type Model } from 'mongoose';
 
 export interface SocialLinkDoc {
-  platform: string;
-  url: string;
+  name: string;
+  href: string;
+  icon: string;
   order: number;
   visible: boolean;
 }
 
 const socialLinkSchema = new Schema<SocialLinkDoc>(
   {
-    platform: { type: String, required: true },
-    url: { type: String, required: true },
+    name: { type: String, required: true },
+    href: { type: String, required: true },
+    icon: { type: String, default: '' },
     order: { type: Number, default: 0 },
     visible: { type: Boolean, default: true },
   },

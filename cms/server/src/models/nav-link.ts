@@ -1,16 +1,16 @@
 import { Schema, model, models, type Model } from 'mongoose';
 
 export interface NavLinkDoc {
-  label: string;
-  href: string;
+  key: string;
+  path: string;
   order: number;
   visible: boolean;
 }
 
 const navLinkSchema = new Schema<NavLinkDoc>(
   {
-    label: { type: String, required: true },
-    href: { type: String, required: true },
+    key: { type: String, required: true },
+    path: { type: String, required: true },
     order: { type: Number, default: 0 },
     visible: { type: Boolean, default: true },
   },

@@ -3,6 +3,7 @@ import { cors } from 'hono/cors';
 import { loadConfig, type AppConfig } from './config.js';
 import { errorHandler } from './middleware/error.js';
 import { authRoutes } from './routes/auth.js';
+import { publicRoutes } from './routes/public.js';
 
 export interface CreateAppOptions {
   config?: AppConfig;
@@ -36,6 +37,7 @@ export function createApp(opts: CreateAppOptions = {}): Hono {
   app.get('/health', (c) => c.json({ status: 'ok' }));
 
   app.route('/auth', authRoutes(config));
+  app.route('/', publicRoutes());
 
   return app;
 }
