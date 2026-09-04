@@ -1,0 +1,4 @@
+# TypeScript incremental build info (tsc -b composite)
+*.tsbuildinfo
+# build output
+dist/
