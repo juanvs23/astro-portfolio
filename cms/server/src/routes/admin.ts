@@ -20,6 +20,7 @@ import {
   NavLinkModel,
   SocialLinkModel,
 } from '../models/index.js';
+import { usersRoutes } from './users.js';
 import {
   toPublicProject,
   toPublicJob,
@@ -57,6 +58,13 @@ function contentCrud<S extends ZodType, D>(
   writeRoles: Role[],
 ): Hono<AdminEnv> {
   const r = new Hono<AdminEnv>();
+
+  // Admin list: returns ALL docs (visible and invisible) so editors can
+  // re-enable hidden items. Unlike the public routes, no `visible` filter.
+  r.get('/', requireRole(...writeRoles), async (c) => {
+    const docs = await opts.model.find({}).sort({ order: 1 }).lean();
+    return c.json(docs.map((d) => opts.toPublic(d)));
+  });
 
   r.post('/', requireRole(...writeRoles), zValidator('json', opts.write), async (c) => {
     const doc = await opts.model.create(c.req.valid('json'));
@@ -117,6 +125,15 @@ export function adminRoutes(cfg: AppConfig): Hono<AdminEnv> {
     );
     return c.json(toPublicSiteInfo(doc!));
   });
+
+  // Admin read of the current site-info singleton (admin-only).
+  admin.get('/site-info', requireRole('admin'), async (c) => {
+    const doc = await SiteInfoModel.findOne().sort({ _id: 1 }).lean();
+    return c.json(doc ? toPublicSiteInfo(doc) : null);
+  });
+
+  // User management (admin-only) — task 3.6.
+  admin.route('/users', usersRoutes());
 
   return admin;
 }

@@ -191,6 +191,38 @@ describe('admin role gating (tasks 2.3, 2.7)', () => {
     expect(res.status).toBe(403);
   });
 
+  it('admin can list all projects including invisible ones (task 3.5 admin list)', async () => {
+    const token = await loginOk(admin);
+    // One visible + one hidden project.
+    await app.request('/api/v1/admin/projects', {
+      method: 'POST', headers: authed(token), body: JSON.stringify({ ...validProject, name: 'Visible', visible: true }),
+    });
+    await app.request('/api/v1/admin/projects', {
+      method: 'POST', headers: authed(token), body: JSON.stringify({ ...validProject, name: 'Hidden', visible: false }),
+    });
+
+    const adminList = await app.request('/api/v1/admin/projects', {
+      method: 'GET', headers: authed(token),
+    });
+    expect(adminList.status).toBe(200);
+    const all = await adminList.json() as Array<{ name: string; visible: boolean }>;
+    expect(all.map((p) => p.name).sort()).toEqual(['Hidden', 'Visible'].sort());
+    expect(all.some((p) => p.visible === false)).toBe(true); // invisible items are editable
+
+    // The public list still hides the invisible item.
+    const pub = await app.request('/api/v1/projects');
+    const pubBody = await pub.json() as Array<{ name: string }>;
+    expect(pubBody.map((p) => p.name)).not.toContain('Hidden');
+  });
+
+  it('user role can list projects through the admin list (200)', async () => {
+    const token = await loginOk(user);
+    const res = await app.request('/api/v1/admin/projects', {
+      method: 'GET', headers: authed(token),
+    });
+    expect(res.status).toBe(200);
+  });
+
   it('admin can write site-info and it becomes publicly readable', async () => {
     const token = await loginOk(admin);
     const res = await app.request('/api/v1/admin/site-info', {
