@@ -4,6 +4,7 @@ import { loadConfig, type AppConfig } from './config.js';
 import { errorHandler } from './middleware/error.js';
 import { authRoutes } from './routes/auth.js';
 import { publicRoutes } from './routes/public.js';
+import { adminRoutes } from './routes/admin.js';
 
 export interface CreateAppOptions {
   config?: AppConfig;
@@ -38,6 +39,7 @@ export function createApp(opts: CreateAppOptions = {}): Hono {
 
   app.route('/auth', authRoutes(config));
   app.route('/', publicRoutes());
+  app.route('/admin', adminRoutes(config));
 
   return app;
 }
