@@ -11,6 +11,8 @@ export interface AppConfig {
   adminSeed: { email: string; password: string };
   /** Login rate-limit: max attempts per window per email+IP. */
   rateLimit: { windowMs: number; max: number };
+  /** Vercel Blob write token; absent means the upload route returns 503. */
+  blobToken?: string;
 }
 
 const ACCESS_TTL_SEC = 15 * 60; // 15 minutes
@@ -53,5 +55,6 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
       windowMs: RATE_WINDOW_MS,
       max: RATE_MAX,
     },
+    blobToken: env.BLOB_READ_WRITE_TOKEN || undefined,
   };
 }
