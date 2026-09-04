@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens mirroring the portfolio (DESIGN.md): warm cream canvas,
+   near-black ink, charcoal/stone neutral ladder, hairline borders, 4px
+   radius, monospaced type. */
+:root {
+  --color-canvas: #fdfcfc;
+  --color-ink: #201d1d;
+  --color-charcoal: #302c2c;
+  --color-body: #424245;
+  --color-mute: #646262;
+  --color-stone: #6e6e73;
+  --color-ash: #9a9898;
+  --color-surface-soft: #f8f7f7;
+  --color-surface-card: #f1eeee;
+  --color-hairline: rgba(15, 0, 0, 0.12);
+  --color-accent: #007aff;
+  --color-accent-hover: #0056b3;
+  --color-danger: #ff3b30;
+  --color-success: #30d158;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer components {
+  .panel {
+    @apply border border-hairline bg-canvas;
+  }
+  .label {
+    @apply block text-xs uppercase tracking-wider text-mute;
+  }
+  .field-input {
+    @apply w-full border border-hairline bg-surface-soft px-2 py-1.5 text-sm text-ink focus:border-accent focus:outline-none;
+  }
+  .btn {
+    @apply inline-flex items-center gap-1 border border-hairline bg-surface-soft px-3 py-1.5 text-sm text-ink hover:border-accent;
+  }
+  .btn-primary {
+    @apply border-accent bg-accent text-white hover:bg-accent-hover;
+  }
+  .btn-danger {
+    @apply border-danger text-danger hover:bg-danger hover:text-white;
+  }
+  .nav-link {
+    @apply flex items-center justify-between px-3 py-2 text-sm text-ink hover:bg-surface-soft;
+  }
+  .nav-link-active {
+    @apply bg-surface-soft font-semibold;
+  }
+  .th {
+    @apply border-b border-hairline px-3 py-2 text-left text-xs uppercase tracking-wider text-mute;
+  }
+  .td {
+    @apply border-b border-hairline px-3 py-2 text-sm text-ink;
+  }
+}
