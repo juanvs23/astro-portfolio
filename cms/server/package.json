@@ -1,0 +1,29 @@
+{
+  "name": "@cms/server",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Hono REST API for the backoffice-cms feature (MongoDB/Mongoose + JWT auth).",
+  "scripts": {
+    "dev": "node --watch src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@cms/contracts": "file:../../packages/contracts",
+    "@hono/zod-validator": "^0.7.0",
+    "bcryptjs": "^3.0.2",
+    "hono": "^4.13.5",
+    "jose": "^6.0.0",
+    "mongoose": "^8.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.0",
+    "@types/supertest": "^6.0.0",
+    "mongodb-memory-server": "^10.0.0",
+    "supertest": "^7.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.6"
+  }
+}
