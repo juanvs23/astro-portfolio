@@ -1,4 +1,4 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models, type Model } from 'mongoose';
 
 export interface NavLinkDoc {
   label: string;
@@ -17,6 +17,5 @@ const navLinkSchema = new Schema<NavLinkDoc>(
   { timestamps: true },
 );
 
-export const NavLinkModel =
-  (models.NavLink as ReturnType<typeof model<NavLinkDoc>>) ??
-  model<NavLinkDoc>('NavLink', navLinkSchema);
+export const NavLinkModel: Model<NavLinkDoc> =
+  (models.NavLink as Model<NavLinkDoc> | undefined) ?? model('NavLink', navLinkSchema);

@@ -1,4 +1,4 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models, type Model } from 'mongoose';
 
 export type UserRole = 'admin' | 'user';
 
@@ -25,6 +25,5 @@ const userSchema = new Schema<UserDoc>(
   { timestamps: true },
 );
 
-export const UserModel =
-  (models.User as ReturnType<typeof model<UserDoc>>) ??
-  model<UserDoc>('User', userSchema);
+export const UserModel: Model<UserDoc> =
+  (models.User as Model<UserDoc> | undefined) ?? model('User', userSchema);

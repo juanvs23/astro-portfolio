@@ -1,4 +1,4 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models, type Model } from 'mongoose';
 
 export interface JobDoc {
   title_es: string;
@@ -30,5 +30,5 @@ const jobSchema = new Schema<JobDoc>(
   { timestamps: true },
 );
 
-export const JobModel =
-  (models.Job as ReturnType<typeof model<JobDoc>>) ?? model<JobDoc>('Job', jobSchema);
+export const JobModel: Model<JobDoc> =
+  (models.Job as Model<JobDoc> | undefined) ?? model('Job', jobSchema);

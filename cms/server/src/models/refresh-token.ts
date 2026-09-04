@@ -1,4 +1,4 @@
-import { Schema, model, models, type Types } from 'mongoose';
+import { Schema, model, models, type Model, type Types } from 'mongoose';
 
 export interface RefreshTokenDoc {
   tokenHash: string;
@@ -28,6 +28,5 @@ const refreshTokenSchema = new Schema<RefreshTokenDoc>(
 // TTL: Mongo drops tokens automatically when expiresAt passes.
 refreshTokenSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
-export const RefreshTokenModel =
-  (models.RefreshToken as ReturnType<typeof model<RefreshTokenDoc>>) ??
-  model<RefreshTokenDoc>('RefreshToken', refreshTokenSchema);
+export const RefreshTokenModel: Model<RefreshTokenDoc> =
+  (models.RefreshToken as Model<RefreshTokenDoc> | undefined) ?? model('RefreshToken', refreshTokenSchema);

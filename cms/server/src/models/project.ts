@@ -1,4 +1,4 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models, type Model } from 'mongoose';
 
 export interface ProjectDoc {
   name: string;
@@ -23,6 +23,5 @@ const projectSchema = new Schema<ProjectDoc>(
   { timestamps: true },
 );
 
-export const ProjectModel =
-  (models.Project as ReturnType<typeof model<ProjectDoc>>) ??
-  model<ProjectDoc>('Project', projectSchema);
+export const ProjectModel: Model<ProjectDoc> =
+  (models.Project as Model<ProjectDoc> | undefined) ?? model('Project', projectSchema);

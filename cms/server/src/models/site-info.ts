@@ -1,4 +1,4 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models, type Model } from 'mongoose';
 
 export interface SiteInfoDoc {
   name: string;
@@ -21,6 +21,5 @@ const siteInfoSchema = new Schema<SiteInfoDoc>(
   { timestamps: true },
 );
 
-export const SiteInfoModel =
-  (models.SiteInfo as ReturnType<typeof model<SiteInfoDoc>>) ??
-  model<SiteInfoDoc>('SiteInfo', siteInfoSchema);
+export const SiteInfoModel: Model<SiteInfoDoc> =
+  (models.SiteInfo as Model<SiteInfoDoc> | undefined) ?? model('SiteInfo', siteInfoSchema);

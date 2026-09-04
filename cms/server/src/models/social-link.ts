@@ -1,4 +1,4 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models, type Model } from 'mongoose';
 
 export interface SocialLinkDoc {
   platform: string;
@@ -17,6 +17,5 @@ const socialLinkSchema = new Schema<SocialLinkDoc>(
   { timestamps: true },
 );
 
-export const SocialLinkModel =
-  (models.SocialLink as ReturnType<typeof model<SocialLinkDoc>>) ??
-  model<SocialLinkDoc>('SocialLink', socialLinkSchema);
+export const SocialLinkModel: Model<SocialLinkDoc> =
+  (models.SocialLink as Model<SocialLinkDoc> | undefined) ?? model('SocialLink', socialLinkSchema);

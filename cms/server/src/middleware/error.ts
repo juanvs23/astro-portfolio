@@ -9,7 +9,7 @@ export function errorHandler(err: Error, c: Context): Response {
   if (err instanceof HttpError) {
     return c.json(
       { error: { code: err.code ?? 'http_error', message: err.message } },
-      err.status,
+      err.status as 400 | 401 | 403 | 429 | 500,
     );
   }
   // eslint-disable-next-line no-console

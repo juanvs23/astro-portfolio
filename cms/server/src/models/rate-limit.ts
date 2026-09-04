@@ -1,4 +1,4 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, model, models, type Model } from 'mongoose';
 
 export interface RateLimitDoc {
   /** Composite key: `${email}|${ip}` for login throttling. */
@@ -23,6 +23,5 @@ rateLimitSchema.index({ key: 1, resetAt: 1 }, { unique: true });
 // TTL: window expiry cleans up the counter automatically.
 rateLimitSchema.index({ resetAt: 1 }, { expireAfterSeconds: 0 });
 
-export const RateLimitModel =
-  (models.RateLimit as ReturnType<typeof model<RateLimitDoc>>) ??
-  model<RateLimitDoc>('RateLimit', rateLimitSchema);
+export const RateLimitModel: Model<RateLimitDoc> =
+  (models.RateLimit as Model<RateLimitDoc> | undefined) ?? model('RateLimit', rateLimitSchema);
