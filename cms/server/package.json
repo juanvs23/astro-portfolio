@@ -6,6 +6,7 @@
   "description": "Hono REST API for the backoffice-cms feature (MongoDB/Mongoose + JWT auth).",
   "scripts": {
     "dev": "node --watch src/index.ts",
+    "seed": "node src/scripts/seed.ts",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"
