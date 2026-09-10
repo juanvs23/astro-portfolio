@@ -172,7 +172,7 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
         if (!shouldEnableMotion(reduce.matches)) return; // CSS shows static states
         window.__typewriterDone = false; // fresh page state (window survives VT)
 
-        import('framer-motion/dom-mini').then(function (m) {
+        import('framer-motion/dom/mini').then(function (m) {
           var stops: Array<{ stop(): void }> = [];
           var anims: Array<{ stop(): void }> = [];
           var revealGrids = document.querySelectorAll('[data-reveal]');
