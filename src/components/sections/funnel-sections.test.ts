@@ -177,14 +177,14 @@ describe('lead form payload wiring (CaptureSection + ContactCtaSection)', () => 
   it('hybrid WhatsApp deep-link stays available with the audit conversion copy (es)', async () => {
     const t = await getTranslations('es');
     const link = buildWhatsAppLink(t('contact.whatsappNumber') as string, t('funnel.audit.message') as string);
-    expect(link.startsWith('https://wa.me/584248310009?text=')).toBe(true);
+    expect(link.startsWith('https://wa.me/584121825673?text=')).toBe(true);
     expect(decodeURIComponent(link)).toContain('Quiero una auditoría gratuita');
   });
 
   it('hybrid WhatsApp deep-link uses the contact conversion copy for the final CTA (es)', async () => {
     const t = await getTranslations('es');
     const link = buildWhatsAppLink(t('contact.whatsappNumber') as string, t('funnel.contact.message') as string);
-    expect(link.startsWith('https://wa.me/584248310009?text=')).toBe(true);
+    expect(link.startsWith('https://wa.me/584121825673?text=')).toBe(true);
     expect(decodeURIComponent(link)).toContain('propuesta');
   });
 });

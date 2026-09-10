@@ -282,3 +282,25 @@
   .plan-cta-bottom:hover::before {
     height: 100%;
   }
+
+/* Section heading underline reveal (global behavior): the `in-view` class is
+   added by the shared initUnderlines observer in BaseLayout, so these rules
+   live here instead of being duplicated per section. Used via SectionHeading's
+   `underline` prop. */
+[data-underline] {
+  position: relative;
+  padding-bottom: 4px;
+}
+[data-underline]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: currentColor;
+  transition: width 0.5s ease;
+}
+[data-underline].in-view::after {
+  width: 100%;
+}

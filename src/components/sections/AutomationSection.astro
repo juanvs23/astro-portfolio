@@ -1,5 +1,6 @@
 ---
 import { getTranslations, type Locale } from '@/i18n';
+import { buildWhatsAppLink } from '@/lib/funnel-lead';
 import Section from '../ui/Section.astro';
 import SectionHeading from '../ui/SectionHeading.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
@@ -45,8 +46,8 @@ const t = await getTranslations(locale);
 
 const automation = t.object('automation') as unknown as AutomationContent;
 const whatsappNumber = t('contact.whatsappNumber') as string;
-const waMessage = encodeURIComponent('Hola Juan! Quiero automatizar un proceso de mi negocio con IA.');
-const waHref = `https://wa.me/${whatsappNumber}?text=${waMessage}`;
+const waMessage = t('automation.whatsappMessage');
+const waHref = buildWhatsAppLink(whatsappNumber, waMessage);
 ---
 
 <Section id="automation">

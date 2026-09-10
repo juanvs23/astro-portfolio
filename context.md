@@ -229,6 +229,26 @@ La frontpage tiene una escena 3D interactiva:
 - Workflow n8n: Webhook → Code node → MongoDB (leads.leads)
 - Dependencias nuevas: `sweetalert2`, `canvas-confetti`
 - About: grid 40-60, botón skills estilo SectionButtons, sin título redundante
+- ServicesSection: eliminados planes + cotizador IA → solo servicios (a medida, express, proceso) — 598→~77 líneas
+- Página `/services`: sección de Planes (PricingBofuSection) al inicio + Servicios Adicionales debajo de los planes
+- AdditionalServicesSection.astro: 4 servicios (mantenimiento, auditoría, cotización rápida, despliegue), todos con CTA WhatsApp
+- Precios eliminados del home: PricingBofuSection muestra planes sin precios; CTAs WhatsApp genéricos
+- Fix leaks View Transitions en BaseLayout: AOS init-once+refresh, underline observer con disconnect, typewriter timers cancelados
+- Fix SVG paths rotos en LeadForm, FaqSection, HeroSection (octicon oficial con fill-rule="evenodd")
+- quote-calculator.ts + test eliminados (código muerto)
+- Fix 504 dev: cache Vite limpiada (`node_modules/.vite`)
+- AdditionalServicesSection traducido a i18n: 17 strings hardcodeados → `services.additional.heading` + `cards[4]{title,description,cta,whatsappMessage}` en `messages/{es,en}.json`; componente refactorizado a `t.object()` + map (10 Sep 2026)
+- Quick wins i18n completados (10 Sep 2026): ServicesSection (5 strings), LeadForm (6, script inline via define:vars), AutomationSection (1 WA + buildWhatsAppLink), ChatbotMock (1 aria-label), BaseLayout (2 SEO sentinels); typo fix `services.additional.cards[2].description` "Cuentamos" → **"Cuéntanos"** (español neutro); **regionalismos eliminados**: "Imaginate"→"Imagina", "Aprovechá"→"Aprovecha", "Usá"→"Usa", "Necesitás"→"Necesitas", "Tenés"→"Tienes", "Contame"→"Cuéntame"
+- Auditoría i18n completa (54 archivos .astro): restante hardcodeado en ProjectsSection/Preview (36+6 descripciones — candidatas al CMS), Welcome.astro (unused, eliminar)
+
+### 🔄 En progreso (Sep 2026)
+- **Backoffice CMS** (SDD: `backoffice-cms`) — CMS headless a medida con API pública + panel admin. Entrega `single-pr` en `feature/backoffice-cms`.
+  - ✅ Slice 1: workspace pnpm + `packages/contracts` (Zod, 39 tests)
+  - ✅ Slice 2: `cms/server` Hono + auth (JWT access/refresh + rotación, rate-limit, roles) — 116 tests
+  - ✅ Slice 3: content-api (GET públicos + aggregate + CRUD admin + upload Blob + seed 18 proyectos/6 jobs)
+  - ✅ Slice 4: `cms/admin` SPA React (login, guards, CRUD bilingüe, upload, gestión de usuarios)
+  - ⬜ Slice 5: integración del portfolio (consume API + caché + fallback + on-demand + imágenes)
+  - ⬜ PR único a main + deploy (Vercel) + verify/archive
 
 ### ⬜ Pendientes (Roadmap reordenado — Ago 2026)
 - **Fase 4: Pulido Visual del Home** (SDD: `home-visual-polish`, propuesta + exploración completadas)
@@ -347,3 +367,65 @@ N8N_AUTH_PASS=<your-auth-pass>
 - Exploración completada: 4 placeholders, hero sin identidad visual, solo AOS fade-up
 - Propuesta completada: 3 entregables (imágenes, Motion One, hero ASCII redesign)
 - Próximo: specs → design → tasks → apply
+
+## 14. Backoffice CMS (backoffice-cms)
+
+CMS headless a medida para administrar el contenido del portfolio. Entrega `single-pr` en la rama `feature/backoffice-cms` (Sep 2026). Decisión clave del usuario: **single-pr** (solo commits + un PR final), y **contabilidad de intentos desactivada** para este repo (`review mode disable --scope clone`).
+
+### Stack
+- **Monorepo pnpm**: portfolio Astro en raíz + `cms/server` + `cms/admin` + `packages/contracts`
+- **API**: Hono + Mongoose (MongoDB) + jose (JWT HS256) + bcryptjs + @hono/zod-validator
+- **Panel**: Vite + React + TypeScript + Tailwind + react-router + tanstack-query
+- **Imágenes**: Vercel Blob (upload) + Vercel imageService (servir)
+- **Tests**: Vitest + mongodb-memory-server (server) · Vitest + Testing Library (admin). Strict TDD.
+
+### Estructura
+```
+packages/contracts/   → @cms/contracts: schemas Zod compartidos (recursos + auth), 39 tests
+cms/server/           → @cms/server: API Hono (public GET /api/v1/*, admin CRUD, auth), 116 tests
+cms/admin/            → panel SPA React (login, guards auth/rol, CRUD bilingüe, upload, users)
+```
+
+### API pública (consumible)
+```
+GET /api/v1/{projects|jobs|site-info|nav|social|services}   → JSON versionado, orden, visible=false excluido
+GET /api/v1/content                                → aggregate {projects, jobs, siteInfo, nav, social, services}
+POST /api/v1/auth/{login|refresh|logout}           → JWT access 15m + refresh 30d (rotación)
+/api/v1/admin/*                                    → CRUD protegido (user=contenido, admin=site-info/users/upload/hard-delete)
+POST /api/v1/admin/upload                          → Vercel Blob (solo admin)
+```
+
+### Regla de arquitectura: Content-Type Endpoint
+Cada tipo de contenido en el CMS DEBE tener: modelo Mongoose, schema Zod en @cms/contracts, endpoint público GET /api/v1/<tipo>, CRUD admin protegido, e inclusión en GET /api/v1/content. Aplicado a services (planes, adicionales, express).
+
+### Estado (Sep 2026)
+- ✅ Slice 1 (contracts) · Slice 2 (server+auth) · Slice 3 (content-api) · Slice 4 (admin SPA)
+- ⬜ Slice 5: integración portfolio (consumir API on-demand + caché TTL + fallback a constantes, páginas prerender→on-demand, imágenes remote patterns)
+
+### Configs para el deploy (pendiente)
+- `CORS_ORIGINS` del server debe incluir el origen del panel admin
+- `VITE_API_URL` en cms/admin apunta al server del CMS
+- `@cms/contracts` `dist/` está gitignored → buildear contracts antes del deploy del server (o prebuild)
+
+## 15. Servicios y Planes (9 Sep 2026)
+
+### Objetivo
+Reestructurar la oferta comercial: los planes viven en el home y ahora también al inicio de `/services`, sin precios visibles (todo cotiza vía WhatsApp). Se eliminó el cotizador IA y los planes embebidos de `ServicesSection`.
+
+### Cambios de componentes
+
+| Archivo | Cambio |
+|---|---|
+| `src/components/sections/ServicesSection.astro` | 598 → ~77 líneas. Eliminados zona de planes (webPlans) y cotizador IA. Quedan: custom work, express services, proceso. |
+| `src/components/sections/AdditionalServicesSection.astro` | **Nuevo** (extraído de ServicesSection). 4 servicios: Mantenimiento Continuo, Auditoría Gratuita, Formulario de Cotización, Despliegue y Deploy. Cada uno con CTA WhatsApp. |
+| `src/components/sections/PricingBofuSection.astro` | Precios eliminados de la visualización (home + services). Se mantienen nombres, entregas, features y CTA WhatsApp genéricos. Comentario actualizado: "prices are hidden, prompting visitors to inquire via WhatsApp". |
+| `src/pages/[locale]/services.astro` | Orden: `PricingBofuSection` (planes) → `AdditionalServicesSection` (servicios adicionales) → `ServicesSection` (servicios). |
+| `src/layouts/BaseLayout.astro` | Leaks View Transitions corregidos: AOS init-once + `AOS.refresh()`, `initUnderlines()` con observer module-scoped y `disconnect()` en `astro:before-swap`, `initTypewriter()` con timers cancelados en `before-swap`. |
+| `src/components/sections/LeadForm.astro`, `FaqSection.astro`, `HeroSection.astro` | SVG paths rotos (números concatenados) reemplazados por el path oficial de GitHub octicon con `fill-rule="evenodd"`. |
+| `src/lib/quote-calculator.ts` + test | Eliminados (código muerto; solo lo referenciaba su propio test). |
+
+### Detalles técnicos
+- **504 en dev**: `aos.js` y `motion_mini.js` devolvían 504 `Outdated Optimize Dep` por cache Vite corrupta → `rm -rf node_modules/.vite` + restart.
+- Todos los CTAs de servicios usan `buildWhatsAppLink` de `src/lib/funnel-lead.ts` con mensajes genéricos (sin precios).
+- Grid de servicios adicionales: 1 columna mobile, 2 columnas `md+`, mismo estilo visual que el resto (`bg-surface-soft`, `border-hairline`, `rounded-sm`).
+- Estado: 375 tests vitest pasan; `astro check` solo con el error pre-existente de `cms/server/src/models/models.test.ts:48` (fuera de alcance).

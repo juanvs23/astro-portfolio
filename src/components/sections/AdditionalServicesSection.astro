@@ -1,0 +1,48 @@
+---
+import { getTranslations, type Locale } from "@/i18n";
+import { buildWhatsAppLink } from "@/lib/funnel-lead";
+import SectionHeading from "../ui/SectionHeading.astro";
+import CtaButton from "../ui/CtaButton.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = await getTranslations(locale);
+const whatsappNumber = t("contact.whatsappNumber");
+const cards = t.object("services.additional.cards") as {
+  title: string;
+  description: string;
+  cta: string;
+  whatsappMessage: string;
+}[];
+---
+
+<section class="py-16" data-aos="fade-up" data-aos-delay="100">
+  <div class="mx-auto max-w-[1200px]">
+    <SectionHeading variant="category" as="h2" marker="add" underline
+      >{t("services.additional.heading")}</SectionHeading
+    >
+
+    <div class="grid grid-cols-1 md:grid-cols-2 pt-2 gap-lg">
+      {
+        cards.map((card) => (
+          <div class="bg-surface-soft border border-hairline rounded-sm p-lg">
+            <h3 class="text-h3 font-bold text-ink mb-2">{card.title}</h3>
+            <p class="text-caption-md text-mute mb-4">{card.description}</p>
+            <CtaButton
+              href={buildWhatsAppLink(whatsappNumber, card.whatsappMessage)}
+              variant="dark"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block py-sm px-lg font-bold"
+            >
+              {card.cta}
+            </CtaButton>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

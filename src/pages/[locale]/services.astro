@@ -1,7 +1,9 @@
 ---
-import Layout from '../../layouts/SectionLayout.astro';
-import ServicesSection from '../../components/sections/ServicesSection.astro';
-import { getTranslations, locales, type Locale } from '@/i18n';
+import Layout from "../../layouts/SectionLayout.astro";
+import ServicesSection from "../../components/sections/ServicesSection.astro";
+import PricingBofuSection from "../../components/sections/PricingBofuSection.astro";
+import AdditionalServicesSection from "../../components/sections/AdditionalServicesSection.astro";
+import { getTranslations, locales, type Locale } from "@/i18n";
 export const prerender = true;
 
 export function getStaticPaths() {
@@ -12,10 +14,30 @@ export function getStaticPaths() {
 
 const locale = Astro.params.locale as Locale;
 const t = await getTranslations(locale);
-const seoPages = t.object('seo.pages') as Record<string, string>;
-const seoDescriptions = t.object('seo.descriptions') as Record<string, string>;
+const seoPages = t.object("seo.pages") as Record<string, string>;
+const seoDescriptions = t.object("seo.descriptions") as Record<string, string>;
 ---
 
-<Layout locale={locale} title={seoPages.services} description={seoDescriptions.services}>
+<Layout
+  locale={locale}
+  title={seoPages.services}
+  description={seoDescriptions.services}
+>
+  <h1
+    data-typewriter
+    data-aos="fade-down"
+    class="text-h1 md:text-h1-md lg:text-h1-lg font-bold mb-sm"
+  >
+    {t("seo.h1.services")}
+  </h1>
+
+  <div
+    class="border-b border-hairline mb-xl"
+    data-aos="fade-up"
+    data-aos-delay="100"
+  >
+  </div>
+  <PricingBofuSection locale={locale} />
+  <AdditionalServicesSection locale={locale} />
   <ServicesSection locale={locale} />
 </Layout>
