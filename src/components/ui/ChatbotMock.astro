@@ -1,5 +1,5 @@
 ---
-import type { Locale } from '@/i18n';
+import { getTranslations, type Locale } from '@/i18n';
 import CtaButton from './CtaButton.astro';
 
 interface QuickReply {
@@ -32,6 +32,8 @@ const {
   ctaText,
   ctaHref,
 } = Astro.props;
+const t = await getTranslations(locale);
+const ariaLabel = t('chatbotMock.ariaLabel');
 ---
 
 <!-- UI-only chatbot mock: pre-scripted conversation with NO model connection.
@@ -61,7 +63,7 @@ const {
     class="chatbot-mock-messages flex flex-col space-y-md font-mono text-body-sm overflow-y-auto px-lg py-md h-[380px]"
     role="log"
     aria-live="polite"
-    aria-label="Chatbot demo conversation"
+    aria-label={ariaLabel}
   >
     <!-- Start state: welcome message -->
     <div class="chatbot-mock-bubble chatbot-mock-bot self-start bg-surface-dark border border-hairline rounded-sm px-md py-sm max-w-[80%]">

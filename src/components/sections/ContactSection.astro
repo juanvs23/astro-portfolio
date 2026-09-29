@@ -9,6 +9,7 @@ import CtaButton from '../ui/CtaButton.astro';
 import SectionHeading from '../ui/SectionHeading.astro';
 import AsciiMarker from '../ui/AsciiMarker.astro';
 import { socialLinks } from '@/constants/social-links';
+import { getWhatsAppNumber } from '@/lib/whatsapp';
 
 interface Props {
   locale: Locale;
@@ -16,6 +17,7 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = await getTranslations(locale);
+const whatsappNumber = getWhatsAppNumber();
 ---
 
 <Section id="contact">
@@ -104,7 +106,7 @@ const t = await getTranslations(locale);
           {t('contact.emailTitle')}
         </h3>
         <CtaButton
-          href={`https://wa.me/${t('contact.whatsappNumber')}`}
+          href={`https://wa.me/${whatsappNumber}`}
           variant="primary"
           target="_blank"
           rel="noopener noreferrer"

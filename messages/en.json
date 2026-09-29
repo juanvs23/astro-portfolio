@@ -317,6 +317,20 @@
       "subject": "New contact",
       "message": "I would like a no-obligation proposal for my project."
     },
+    "leadForm": {
+      "waLabels": {
+        "name": "*Name:*",
+        "email": "*Email:*"
+      },
+      "modal": {
+        "title": "Done!",
+        "body": "Thanks. I'll contact you shortly.",
+        "confirmText": "Talk on WhatsApp"
+      },
+      "button": {
+        "loading": "Sending..."
+      }
+    },
     "footer": {
       "heading": "Ready to turn more visits into customers?",
       "tagline": "Web + AI Automation"
@@ -543,7 +557,6 @@
   "contact": {
     "emailTitle": "WhatsApp",
     "emailAddress": "Text me on WhatsApp",
-    "whatsappNumber": "584248310009",
     "form": {
       "sending": "Sending...",
       "success": "Message sent successfully!",
@@ -664,7 +677,8 @@
     "custom": {
       "heading": "Custom Work",
       "description": "Have a project that doesn't fit any plan? Custom software development, dashboards, APIs, complex integrations, or whatever you need. Tell me your idea and I'll send you a personalized quote.",
-      "cta": "Tell me about your project"
+      "cta": "Tell me about your project",
+      "whatsappMessage": "Hi Juan! I have a custom project and would like a quote."
     },
     "express": [
       {
@@ -740,7 +754,40 @@
         "price": 0,
         "description": "+50% of base price — cuts delivery time in half"
       }
-    ]
+    ],
+    "additional": {
+      "heading": "Additional Services",
+      "cards": [
+        {
+          "title": "Ongoing Maintenance",
+          "description": "Security updates, content changes, and monthly optimization.",
+          "cta": "Hire",
+          "whatsappMessage": "Hi Juan! I want to hire maintenance"
+        },
+        {
+          "title": "Free Audit",
+          "description": "Diagnostic report within 48h with 3 immediate actions.",
+          "cta": "Request",
+          "whatsappMessage": "Hi Juan! I want an audit"
+        },
+        {
+          "title": "Quote Form",
+          "description": "Tell us about your project and we'll send you a proposal on WhatsApp.",
+          "cta": "Request",
+          "whatsappMessage": "Hi Juan! I want a quick quote"
+        },
+        {
+          "title": "Deployment",
+          "description": "We deploy your site to Vercel/Netlify, configure your domain and email, and run final tests.",
+          "cta": "Get Help",
+          "whatsappMessage": "Hi Juan! I need help deploying my site"
+        }
+      ]
+    },
+    "expressHeading": "Express Services",
+    "expressCtaLabel": "Check Price",
+    "expressWhatsappMessageTemplate": "Hi Juan! I'm interested in the service: {name}",
+    "processHeading": "How I Work"
   },
   "automation": {
     "introHeading": "Chatbots and agents that work for your business",
@@ -808,9 +855,17 @@
         "title": "LLM Integration",
         "description": "Connecting OpenAI, Claude and local models to your existing web platforms."
       }
-    ]
+    ],
+    "whatsappMessage": "Hi Juan! I want to automate a business process with AI."
   },
   "theme": {
     "toggle": "Toggle dark mode"
+  },
+  "chatbotMock": {
+    "ariaLabel": "Chatbot demo conversation"
+  },
+  "baseLayout": {
+    "defaultTitle": "Juan Carlos Ávila – Full Stack Developer",
+    "defaultDescription": "Full Stack Developer with 6+ years of experience | PHP, Python, JavaScript (React, Next.js), WordPress, Laravel & Django"
   }
 }
