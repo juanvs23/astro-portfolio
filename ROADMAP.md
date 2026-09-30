@@ -9,9 +9,9 @@
 ```
 coltmandev.dev (servidor propio)
 └── WordPress headless (admin blindado, sin tema público)
-    ├── CPT `project`: desc_es, desc_en, tech, url, image, show_on, order, visible
+    ├── CPT `projects`: desc_es, desc_en, tech, url, image (featured), show_on, featured, order (menu_order), visible
     ├── Posts (blog — futuro)
-    └── REST: /wp-json/coltman/v1/projects · /wp-json/wp/v2/posts
+    └── REST: /wp-json/wp/v2/portafolio (rest_base del CPT) · /wp-json/wp/v2/posts
 
 astro-portfolio ──fetch en build──► WP API ◄──fetch en build── astro-sales
         │                                                            │
@@ -39,12 +39,12 @@ astro-portfolio ──fetch en build──► WP API ◄──fetch en build─�
 ### Fase 1 — WordPress: adaptar el install existente (servidor)
 > El WP ya está instalado: primero inventario del estado real, luego adaptación. Nunca tocar a ciegas.
 
-- [ ] 1.1 **Inventario**: URL pública y admin, versión WP/PHP, plugins activos, `GET /wp-json/` responde, permalinks
-- [ ] 1.2 **CPT `project`** con `show_in_rest` + meta: `desc_es`, `desc_en`, `url`, `tech`, `image`, `show_on` (portfolio|sales|both), `order`, `visible` — mu-plugin (~100 líneas PHP)
-- [ ] 1.3 **Endpoint limpio** `/wp-json/coltman/v1/projects`: payload bilingüe + media (`_embed`), validado con curl
-- [ ] 1.4 **Seed de los 18 proyectos** desde los arrays inline de `ProjectsSection.astro` (migración única de datos)
-- [ ] 1.5 **Blindaje**: admin protegido (subdominio + fail2ban), 2FA, XML-RPC off, editor de archivos off, auto-updates menores, backups servidor + BD
-- **Salida**: `curl .../wp-json/coltman/v1/projects` devuelve los 18 proyectos bilingües; admin protegido; backup operativo.
+- [x] 1.1 **Inventario** (2026-09-30): WP 7.1.2 · PHP 8.4.24 (mod_php) · wp-cli ✅ · `https://projects.coltmandev.dev/porfolio` · permalinks `/%postname%/` · `blog_public=0` · `coltman-custom-fields-pro` activo (UI de CPT del plugin PRO)
+- [x] 1.2 **CPT + fields** (2026-09-30): el CPT `projects` ya existía (creado vía el plugin PRO; `show_in_rest=true`, `rest_base=portafolio`, soporta `thumbnail`/`custom-fields`/`page-attributes`). Fields vía mu-plugin `coltman-projects-fields.php` usando el engine del plugin (`ColtmanCreateMetabox`, `rest=>true` por campo) — el canvas de fields de la UI no puede setear `rest`/`options` (`field-builder.js:48-58`). Campos: `desc_es`, `desc_en`, `url`, `tech`, `show_on` (portfolio|sales|both), `featured` (nuevo — gap: el preview del home elige 3 proyectos editorialmente), `visible`. Imagen = featured image nativa.
+- [x] 1.3 **Endpoint** (2026-09-30): **eliminado el endpoint custom** — el nativo `GET /wp-json/wp/v2/portafolio?_embed&orderby=menu_order&order=asc` entrega el payload bilingüe completo (meta + media embebida), cero PHP extra. Verificado con curl.
+- [x] 1.4 **Seed de los 18 proyectos** (2026-09-30): wp-cli sobre SSH (script idempotente por slug): 18 posts publish con meta bilingüe + featured images en la media library + `menu_order` 1–18. `featured=on` en gericht, steps-together, instituto-mia (los 3 del preview). Verificación pública: 18/18 con meta, imágenes y orden correcto.
+- [ ] 1.5 **Blindaje** (parcial): `user-data.txt` bloqueado por HTTP vía `.htaccess` raíz (extiende el patrón `.env`; el dashboard sigue leyéndolo por filesystem). Rotación de contraseña admin declinada por el usuario. App password del `.env` truncado (16/24 chars, pendiente). Pendiente: subdominio admin + fail2ban, 2FA, XML-RPC off, editor de archivos off, auto-updates menores, backups servidor + BD
+- **Salida**: ✅ `curl .../wp-json/wp/v2/portafolio?_embed` devuelve los 18 proyectos bilingües (verificado 2026-09-30). Admin protegido: parcial. Backup: pendiente.
 
 ### Fase 2 — astro-portfolio consume la API (TDD estricto)
 > Antes del primer commit de código: crear `odd/tasks/wordpress-headless.md` (protocolo ODD) con la checklist de esta fase.
