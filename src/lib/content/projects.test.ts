@@ -79,7 +79,7 @@ describe('getProjects — happy path', () => {
   });
 
   it('fetches the default endpoint, maps, filters and sorts for site=portfolio', async () => {
-    const fetchStub = vi.fn(async () => jsonResponse(fourItemPayload()));
+    const fetchStub = vi.fn(async (_url: string) => jsonResponse(fourItemPayload()));
     const projects = await getProjects('portfolio', { fetch: fetchStub });
 
     expect(fetchStub).toHaveBeenCalledTimes(1);
