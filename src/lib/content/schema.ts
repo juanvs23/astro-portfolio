@@ -39,7 +39,10 @@ export const wpProjectSchema = z.object({
   }),
 });
 
-export const wpProjectsSchema = z.array(wpProjectSchema);
+// `.min(1)`: an empty collection is treated as an invalid source — the layer
+// must fall back to the committed snapshot instead of silently rendering an
+// empty projects page (the documented contract in src/lib/content/projects.ts).
+export const wpProjectsSchema = z.array(wpProjectSchema).min(1);
 
 export type WPProject = z.infer<typeof wpProjectSchema>;
 

@@ -176,6 +176,19 @@ describe('getProjects — fallback to committed snapshot', () => {
     expect(warn).toHaveBeenCalledTimes(1);
     expect(projects.map((p) => p.slug)).toEqual(['snap-only']);
   });
+
+  it('fetch 200 but EMPTY payload -> snapshot fallback + warning (never silently render an empty page)', async () => {
+    const fetchStub = vi.fn(async () => jsonResponse([]));
+    const loadSnapshot = vi.fn(async () => [
+      wpItem({ slug: 'snap-only', order: 1, showOn: 'portfolio' }),
+    ]);
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    const projects = await getProjects('portfolio', { fetch: fetchStub, loadSnapshot });
+
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(projects.map((p) => p.slug)).toEqual(['snap-only']);
+  });
 });
 
 describe('getProjects — no data source available', () => {
