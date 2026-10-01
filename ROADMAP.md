@@ -4,6 +4,8 @@
 > Nueva arquitectura: **WordPress headless (ya instalado en el servidor coltmandev.dev)** como fuente de verdad única de proyectos y blog, consumida en build por **astro-portfolio** y **astro-sales** vía WP REST API.
 > Rama de trabajo: `feature/wordpress-headless` (nace de `main` + trabajo frontend recuperado). Histórico del CMS: tag `archive/backoffice-cms-experiment` (18 commits, sin merge, sin borrar).
 
+> **Estado (30 Sep 2026):** Fase 0 parcial (3 pendientes) · Fase 1 ✅ (WP sembrado y verificado por REST público) · **Fase 2 ✅ entregada en [PR #4](https://github.com/juanvs23/astro-portfolio/pull/4)** — 389 tests verde, los 18 proyectos renderizados desde WP en ambos idiomas con fallback a snapshot · Siguiente: **Fase 3** (astro-sales), tras el merge del PR #4.
+
 ## Arquitectura objetivo
 
 ```
@@ -71,7 +73,8 @@ astro-portfolio ──fetch en build──► WP API ◄──fetch en build─�
 - [ ] i18n de posts: campos meta es/en (simple) o Polylang (si se necesita traducción completa)
 
 ## Notas
-- Entrega por fases: PR normal a `main` por repo (sin `size:exception`); Fase 2 es la mayor y no se acerca a 400 líneas.
+- Entrega por fases: PR normal a `main` por repo. La Fase 2 quedó en **857 líneas authored** (385 de tests, excl. lockfile+snapshot) — sobre la heurística de 400; entregada como PR único (#4) con la overage documentada en el cuerpo, con opción de rebanar en PRs encadenados antes del merge. Merge = decisión del maintainer.
+- Follow-ups de la Fase 2 (verificación independiente, 2026-09-30): los 18 archivos de imágenes de proyectos en `src/assets/img` quedaron sin referencias (la carpeta sigue usada por `AboutSection`); el fetch del build no lleva `AbortSignal` (un WP colgado cuelga el build); `alt_text` de WP disponible para a11y futuro; app password del `.env` truncado (16/24 chars).
 - Strict TDD (vitest) para todo código de repos; lado PHP se valida con curl/integración.
 - Pendiente heredado del frontend: precios visibles del home y catálogo formal de servicios adicionales.
 
