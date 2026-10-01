@@ -49,12 +49,12 @@ astro-portfolio ──fetch en build──► WP API ◄──fetch en build─�
 ### Fase 2 — astro-portfolio consume la API (TDD estricto)
 > Antes del primer commit de código: crear `odd/tasks/wordpress-headless.md` (protocolo ODD) con la checklist de esta fase.
 
-- [ ] 2.1 **Capa de datos** `src/lib/content/`: fetch en build + validación Zod + **fallback a snapshot** `src/data/snapshot/projects.json` con warning audible
-- [ ] 2.2 **Migrar secciones**: `ProjectsSection`/`ProjectsPreviewSection` eliminan los arrays inline (42 descripciones hardcodeadas — deuda i18n) y consumen la capa
-- [ ] 2.3 **Imágenes remotas**: `image.domains`/remote patterns del dominio WP (imageService Vercel)
-- [ ] 2.4 **Tests** (vitest): esquema Zod · fetch OK · fetch falla → snapshot · snapshot ausente → error loud
-- [ ] 2.5 **SEO**: `seo-jsonld`/`seo-head-meta` siguen con fallback a constantes (siteInfo NO migra a WP por ahora)
-- **Salida**: `vitest run` verde · `astro check` sin errores nuevos · build local renderiza los 18 proyectos desde WP.
+- [x] 2.1 **Capa de datos** `src/lib/content/`: fetch en build + validación Zod + **fallback a snapshot** `src/data/snapshot/projects.json` con warning audible (2026-09-30, 2141aa9): `getProjects()` con deps inyectables y caché por build; 9 tests — fetch OK/fallo→snapshot/snapshot ausente→error loud, todos verde
+- [x] 2.2 **Migrar secciones**: `ProjectsSection`/`ProjectsPreviewSection` eliminan los arrays inline (42 descripciones hardcodeadas — deuda i18n) y consumen la capa (2026-09-30, ad0d38f + 7c554bf): −202 líneas eliminadas en las secciones; build renderiza nombres y descripciones es/en desde WP
+- [x] 2.3 **Imágenes remotas**: `image.domains`/remote patterns del dominio WP (imageService Vercel) (2026-09-30, ad0d38f): `remotePatterns: [{ protocol: 'https', hostname: 'projects.coltmandev.dev' }]`; HTML construido emite `/_vercel/image?url=…` con width/height explícitos
+- [x] 2.4 **Tests** (vitest): esquema Zod · fetch OK · fetch falla → snapshot · snapshot ausente → error loud (2026-09-30): 16 tests nuevos (7 schema + 9 capa); suite completa 389 passed (14 files)
+- [x] 2.5 **SEO**: `seo-jsonld`/`seo-head-meta` siguen con fallback a constantes (siteInfo NO migra a WP por ahora) (2026-09-30, solo verificación): 32 tests seo verde (head-meta, jsonld, sitemap), sin migración
+- **Salida**: ✅ `vitest run` 389 verde · `astro check` 0 errores (hints 84→87 solo por deprecaciones zod v4 en `packages/contracts/dist` preexistente) · build local renderiza los 18 proyectos desde WP en ambos idiomas y degrada al snapshot con warning audible si la API cae (verificado 2026-09-30).
 
 ### Fase 3 — astro-sales consume la API
 - [ ] 3.1 Misma capa de datos en su repo, filtrando `show_on` = sales|both
