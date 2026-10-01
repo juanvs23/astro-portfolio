@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { getTranslations } from '../../i18n';
 import { buildFunnelContactPayload, buildWhatsAppLink } from '../../lib/funnel-lead';
+import { getWhatsAppNumber } from '../../lib/whatsapp';
 
 // ---------------------------------------------------------------------------
 // PR₄ (home-funnel-landing): data contracts consumed by the final funnel
@@ -52,7 +53,6 @@ const FINAL_SECTION_STRING_KEYS = [
   'funnel.footer.heading',
   'funnel.footer.tagline',
   // Contact backend / status copy
-  'contact.whatsappNumber',
   'contact.form.sending',
   'contact.form.success',
   'contact.form.error',
@@ -176,15 +176,15 @@ describe('lead form payload wiring (CaptureSection + ContactCtaSection)', () => 
 
   it('hybrid WhatsApp deep-link stays available with the audit conversion copy (es)', async () => {
     const t = await getTranslations('es');
-    const link = buildWhatsAppLink(t('contact.whatsappNumber') as string, t('funnel.audit.message') as string);
-    expect(link.startsWith('https://wa.me/584248310009?text=')).toBe(true);
+    const link = buildWhatsAppLink(getWhatsAppNumber(), t('funnel.audit.message') as string);
+    expect(link.startsWith('https://wa.me/584121825673?text=')).toBe(true);
     expect(decodeURIComponent(link)).toContain('Quiero una auditoría gratuita');
   });
 
   it('hybrid WhatsApp deep-link uses the contact conversion copy for the final CTA (es)', async () => {
     const t = await getTranslations('es');
-    const link = buildWhatsAppLink(t('contact.whatsappNumber') as string, t('funnel.contact.message') as string);
-    expect(link.startsWith('https://wa.me/584248310009?text=')).toBe(true);
+    const link = buildWhatsAppLink(getWhatsAppNumber(), t('funnel.contact.message') as string);
+    expect(link.startsWith('https://wa.me/584121825673?text=')).toBe(true);
     expect(decodeURIComponent(link)).toContain('propuesta');
   });
 });

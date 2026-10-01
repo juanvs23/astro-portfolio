@@ -12,6 +12,9 @@ export default defineConfig({
   integrations: [tailwindcss()],
   image: {
     service: { entrypoint: 'astro/assets/services/sharp' },
+    // Remote featured images served by the WordPress headless projects API
+    // (consumed at build time by src/lib/content/projects.ts).
+    remotePatterns: [{ protocol: 'https', hostname: 'projects.coltmandev.dev' }],
   },
   i18n: {
     defaultLocale: 'es',

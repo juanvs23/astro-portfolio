@@ -24,8 +24,10 @@ const {
 const t = await getTranslations(locale);
 const seoTitle = t('seo.title');
 const seoDescription = t('seo.description');
-const finalTitle = title === 'Juan Carlos Ávila – Full Stack Developer' ? seoTitle : title;
-const finalDescription = description === 'Desarrollador Full Stack con 6+ años de experiencia | PHP, Python, JavaScript (React, Next.js), WordPress, Laravel & Django' ? seoDescription : description;
+const defaultTitle = t('baseLayout.defaultTitle');
+const defaultDescription = t('baseLayout.defaultDescription');
+const finalTitle = title === defaultTitle ? seoTitle : title;
+const finalDescription = description === defaultDescription ? seoDescription : description;
 
 // seo-complete-review: every absolute URL (canonical, og:url, og:image,
 // hreflang) derives from Astro.site — set via `site` in astro.config.mjs.
@@ -99,31 +101,54 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
       <slot />
     </div>
     <script is:inline>
+      var underlineObserver = null;
+
       function initAOS() {
         try {
-          window.__AOS.init({ duration: 600, once: true });
+          // Init once; refresh on subsequent view-transition navigations so
+          // AOS does not re-register observers/listeners on every swap.
+          if (window.__aosInited) {
+            window.__AOS.refresh();
+          } else {
+            window.__AOS.init({ duration: 600, once: true });
+            window.__aosInited = true;
+          }
         } catch(e) {
           console.warn('AOS init error:', e);
         }
       }
 
+      function disposeUnderlines() {
+        if (underlineObserver) {
+          underlineObserver.disconnect();
+          underlineObserver = null;
+        }
+      }
+
       function initUnderlines() {
+        // Replace any previous observer first so detached DOM from a prior
+        // page is never retained across navigations (memory leak guard).
+        disposeUnderlines();
         var els = document.querySelectorAll('[data-underline]');
         if (!els.length) return;
-        var observer = new IntersectionObserver(function(entries) {
+        underlineObserver = new IntersectionObserver(function(entries) {
           entries.forEach(function(entry) {
             if (entry.isIntersecting) {
               entry.target.classList.add('in-view');
-              observer.unobserve(entry.target);
+              if (underlineObserver) underlineObserver.unobserve(entry.target);
             }
           });
         }, { threshold: 0.1 });
-        els.forEach(function(el) { observer.observe(el); });
+        els.forEach(function(el) { underlineObserver.observe(el); });
       }
 
       document.addEventListener('astro:page-load', function() {
         initAOS();
         initUnderlines();
+      });
+
+      document.addEventListener('astro:before-swap', function() {
+        disposeUnderlines();
       });
     </script>
     <script>
@@ -147,7 +172,7 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
         if (!shouldEnableMotion(reduce.matches)) return; // CSS shows static states
         window.__typewriterDone = false; // fresh page state (window survives VT)
 
-        import('motion/mini').then(function (m) {
+        import('framer-motion/dom/mini').then(function (m) {
           var stops: Array<{ stop(): void }> = [];
           var anims: Array<{ stop(): void }> = [];
           var revealGrids = document.querySelectorAll('[data-reveal]');
@@ -312,6 +337,13 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
       });
     </script>
     <script is:inline>
+      var typewriterTimers = [];
+
+      function cancelTypewriters() {
+        typewriterTimers.forEach(function (t) { clearTimeout(t); });
+        typewriterTimers = [];
+      }
+
       function initTypewriter() {
         var els = document.querySelectorAll('[data-typewriter]');
         if (!els.length) return;
@@ -326,7 +358,7 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
             if (i < text.length) {
               el.textContent += text[i];
               i++;
-              setTimeout(type, 15 + Math.random() * 20);
+              typewriterTimers.push(setTimeout(type, 15 + Math.random() * 20));
             } else {
               el.classList.remove('typewriter');
               // home-hero-redesign: signal completion so the hero fade-in
@@ -343,6 +375,10 @@ const siteUrl = Astro.site ?? new URL(siteInfo.url);
 
       document.addEventListener('astro:page-load', function() {
         initTypewriter();
+      });
+
+      document.addEventListener('astro:before-swap', function() {
+        cancelTypewriters();
       });
     </script>
   </body>

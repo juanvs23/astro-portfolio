@@ -21,7 +21,9 @@ const { project, textButton } = Astro.props;
 >
   <div class="aspect-video overflow-hidden relative bg-surface-card">
     <Image
-      src={project.img}
+      src={project.imageUrl}
+      width={project.imageWidth}
+      height={project.imageHeight}
       alt={project.name}
       class="w-full h-auto object-cover block transition-transform duration-[2000ms] ease-out will-change-transform group-hover:translate-y-[-60%]"
       style="aspect-ratio: 2/3;"

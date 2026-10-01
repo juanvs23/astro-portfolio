@@ -5,6 +5,7 @@ import {
   buildFunnelContactPayload,
   buildWhatsAppLink,
 } from './funnel-lead';
+import { getWhatsAppNumber } from './whatsapp';
 import type { FunnelLeadInput, FunnelLeadMessages } from './funnel-lead';
 import type { ContactFormData } from './contact-form';
 
@@ -118,9 +119,9 @@ describe('buildFunnelContactPayload', () => {
 
 describe('buildWhatsAppLink', () => {
   it('should build a wa.me deep-link encoding the text and keeping the number', () => {
-    const link = buildWhatsAppLink('584248310009', 'Quiero una auditoría gratuita para mi negocio.');
+    const link = buildWhatsAppLink('584121825673', 'Quiero una auditoría gratuita para mi negocio.');
     expect(link).toBe(
-      'https://wa.me/584248310009?text=Quiero%20una%20auditor%C3%ADa%20gratuita%20para%20mi%20negocio.',
+      'https://wa.me/584121825673?text=Quiero%20una%20auditor%C3%ADa%20gratuita%20para%20mi%20negocio.',
     );
   });
 
@@ -130,15 +131,15 @@ describe('buildWhatsAppLink', () => {
   });
 
   it('should still produce a valid link when the text is empty', () => {
-    expect(buildWhatsAppLink('584248310009', '')).toBe('https://wa.me/584248310009?text=');
+    expect(buildWhatsAppLink('584121825673', '')).toBe('https://wa.me/584121825673?text=');
   });
 
-  it('should use contact.whatsappNumber as the number source with funnel audit message copy', async () => {
+  it('should use the env-driven whatsapp number with funnel audit message copy', async () => {
     const t = await getTranslations('es');
-    const number = t('contact.whatsappNumber') as string;
+    const number = getWhatsAppNumber();
     const text = t('funnel.audit.message') as string;
     const link = buildWhatsAppLink(number, text);
-    expect(link).toBe(`https://wa.me/584248310009?text=${encodeURIComponent(text)}`);
-    expect(link.startsWith('https://wa.me/584248310009?text=')).toBe(true);
+    expect(link).toBe(`https://wa.me/584121825673?text=${encodeURIComponent(text)}`);
+    expect(link.startsWith('https://wa.me/584121825673?text=')).toBe(true);
   });
 });

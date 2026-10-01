@@ -1,5 +1,3 @@
-import type { ImageMetadata } from "astro";
-
 export interface ItemView {
   title: string;
   class: string;
@@ -68,11 +66,12 @@ export interface FormInterface {
   inputs: InputInterface[];
 }
 export interface ProjectItem {
-  id: number;
   name: string;
   url: string;
   desc?: string;
-  img: ImageMetadata;
+  imageUrl: string;
+  imageWidth: number;
+  imageHeight: number;
 }
 export interface ProjectSectionType {
   title: string;

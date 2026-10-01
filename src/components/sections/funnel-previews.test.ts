@@ -519,29 +519,13 @@ describe('footer section data contract', () => {
   });
 });
 // ---------------------------------------------------------------------------
-// home-visual-polish (task 3.17 — Projects interactive tabs): the Projects
-// preview renders three project tabs (gericht, stepstogether, institutomia.es)
-// that show the real ProjectItem card. The tab contract is validated here as
-// the unit layer; the component wiring is verified by the build harness.
+// Projects preview (home tabs): the section now derives its three tabs from
+// the WP featured projects via the tested data layer (src/lib/content). The
+// only local contract left here is the i18n copy it renders.
 // ---------------------------------------------------------------------------
 
-describe('projects preview tabs data contract', () => {
-  const expectedProjects = [
-    { name: 'Gericht', url: 'https://restaurant.coltmandev.dev/' },
-    { name: 'Steps Together', url: 'https://stepstogether.co.uk/' },
-    { name: 'Instituto MIA', url: 'https://institutomia.es/' },
-  ];
-
-  it('exposes the three approved projects with real URLs', () => {
-    for (const p of expectedProjects) {
-      expect(p.name.length).toBeGreaterThan(0);
-      expect(p.url.startsWith('https://')).toBe(true);
-    }
-  });
-
-  it('the three approved project names/URLs appear in the home projects messages or page data', async () => {
-    // The projects page embeds the same data as the home tabs; assert the
-    // shared sources exist by loading the i18n keys the page uses.
+describe('projects preview i18n contract', () => {
+  it('renders heading, linkout and button copy in both locales', async () => {
     for (const locale of ['es', 'en']) {
       const t = await getTranslations(locale as 'es' | 'en');
       expect(t('funnel.projects.heading').length).toBeGreaterThan(0);

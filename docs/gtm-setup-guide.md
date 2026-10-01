@@ -32,7 +32,7 @@ The code side is already done and verified (see `openspec/specs/analytics-tracki
 > `ecommerce`). Do **NOT** use the localized names (`Básico`/`Basic`, etc.) — they vary by locale and
 > your tags would break or double-fire.
 
-WhatsApp number used: `584248310009` (Venezuela, `+58 424 831 0009`).
+WhatsApp number used: `584121825673` (Venezuela, `+58 412 182 5673`).
 
 ### How clicks are detected (read this first)
 
